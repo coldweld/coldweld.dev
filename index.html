@@ -6,10 +6,22 @@
 <title>Coldweld</title>
 <meta name="description" content="Coldweld. Independent game studio.">
 
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#FFB040">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#0E0903">
+
 <meta property="og:title" content="Coldweld">
 <meta property="og:description" content="Independent game studio.">
 <meta property="og:url" content="https://coldweld.dev">
 <meta property="og:type" content="website">
+<meta property="og:image" content="https://coldweld.dev/coldweld-og-1200x630.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Coldweld">
+<meta name="twitter:card" content="summary_large_image">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,13 +29,16 @@
 
 <style>
   :root {
-    --bg:        #0b0a08;
-    --panel:     #131109;
+    --bg:        #0E0903;
+    --panel:     #16110a;
     --rule:      #2a2419;
-    --amber:     #ffb000;
+    --amber:     #FFB040;
+    --highlight: #FFD680;
     --amber-dim: #8a6410;
     --bone:      #d6cbb6;
     --muted:     #6f6754;
+    --lockup-w:     clamp(190px, 46vw, 300px);
+    --lockup-clear: calc(var(--lockup-w) * 0.1593);
   }
 
   *, *::before, *::after { box-sizing: border-box; }
@@ -42,6 +57,7 @@
   }
 
   /* BACKGROUND */
+  
   body::before {
     content: "";
     position: fixed;
@@ -49,8 +65,8 @@
     pointer-events: none;
     background: repeating-linear-gradient(
       to bottom,
-      rgba(255, 176, 0, 0.022) 0px,
-      rgba(255, 176, 0, 0.022) 1px,
+      rgba(255, 176, 64, 0.022) 0px,
+      rgba(255, 176, 64, 0.022) 1px,
       transparent 1px,
       transparent 3px
     );
@@ -64,26 +80,34 @@
     margin: 0 auto;
   }
 
-  /* masthead */
-
+  /* MASTHEAD */
+  
   .masthead {
     padding: 88px 0 44px;
     border-bottom: 1px solid var(--rule);
   }
 
-  .wordmark {
-    margin: 0;
-    font-family: "Martian Mono", monospace;
-    font-size: clamp(26px, 7.5vw, 48px);
-    font-weight: 600;
-    letter-spacing: 0.06em;
-    line-height: 1.05;
-    color: var(--amber);
-    text-shadow: 0 0 22px rgba(255, 176, 0, 0.28);
+  .wordmark { margin: 0; line-height: 0; }
+
+  .lockup {
+    display: block;
+    width: var(--lockup-w);
+    height: auto;
+  }
+
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
   }
 
   .role {
-    margin: 18px 0 0;
+    margin: var(--lockup-clear) 0 0;
     font-family: "Martian Mono", monospace;
     font-size: 10px;
     font-weight: 400;
@@ -92,7 +116,7 @@
     color: var(--muted);
   }
 
-  /* blocks */
+  /* BLOCKS */
 
   .block { padding: 34px 0; border-bottom: 1px solid var(--rule); }
 
@@ -120,7 +144,7 @@
     color: var(--muted);
   }
 
-  /* channels */
+  /* CHANNELS */
 
   .channels { list-style: none; margin: 0; padding: 0; }
 
@@ -159,7 +183,7 @@
   .row.is-pending .dot,
   .row.is-pending .state { color: var(--muted); }
 
-  /* contact */
+  /* CONTACT */
 
   .contact-link {
     color: var(--amber);
@@ -174,7 +198,7 @@
 
   .contact-link:focus-visible { outline: 1px solid var(--amber); outline-offset: 3px; }
 
-  /* colophon */
+  /* COLOPHON */
 
   .colophon {
     padding-top: 22px;
@@ -192,7 +216,11 @@
 <main class="sheet">
 
   <header class="masthead">
-    <h1 class="wordmark">COLDWELD</h1>
+    <h1 class="wordmark">
+      <img class="lockup" src="/coldweld-lockup-horizontal.svg"
+           width="675" height="263" alt="">
+      <span class="visually-hidden">Coldweld</span>
+    </h1>
     <p class="role">Independent game studio</p>
   </header>
 
