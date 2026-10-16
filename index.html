@@ -3,18 +3,21 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Coldweld</title>
-<meta name="description" content="Coldweld. Independent game studio.">
+<meta name="color-scheme" content="dark light">
+<title>Coldweld | Independent game studio</title>
+<link rel="canonical" href="https://coldweld.dev/">
+<meta name="description" content="Coldweld is a small, independent game studio. It is the home of The Infinite Diaspora, a text-based hard science fiction trading game.">
 
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#FFB040">
 <link rel="manifest" href="/site.webmanifest">
-<meta name="theme-color" content="#0E0903">
+<meta name="theme-color" content="#0E0903" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#EEF0EF" media="(prefers-color-scheme: light)">
 
 <meta property="og:title" content="Coldweld">
-<meta property="og:description" content="Independent game studio.">
+<meta property="og:description" content="Independent game studio. Home of The Infinite Diaspora, in development.">
 <meta property="og:url" content="https://coldweld.dev">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://coldweld.dev/coldweld-og-1200x630.png">
@@ -25,75 +28,77 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Martian+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 
 <style>
+  /* Dark is the default: amber on near-black, like the lockup. */
   :root {
+    color-scheme: dark light;
+
     --bg:        #0E0903;
     --panel:     #16110a;
     --rule:      #2a2419;
-    --amber:     #FFB040;
-    --highlight: #FFD680;
-    --amber-dim: #8a6410;
-    --bone:      #d6cbb6;
-    --muted:     #6f6754;
-    --lockup-w:     clamp(190px, 46vw, 300px);
-    --lockup-clear: calc(var(--lockup-w) * 0.1593);
+    --text:      #d6cbb6;
+    --strong:    #f1e8d4;
+    --accent:    #FFB040;
+    --accent-2:  #FFD680;
+    --muted:     #9a917c;   /* 6.3:1 on --bg */
+    --accent-dim:#a8801c;   /* 5.4:1 on --bg */
+    --screen:    #0E0903;   /* the masthead plate stays dark in both themes */
+    --screen-muted: #9a917c; /* label on the plate, 6.3:1 on --screen */
+    --lockup-w:  clamp(200px, 56vw, 400px);
+  }
+
+  @media (prefers-color-scheme: light) {
+    :root {
+      /* Cold steel, not cream: the weld is the warm part. */
+      --bg:        #EEF0EF;
+      --panel:     #E0E3E2;
+      --rule:      #C6CBC9;
+      --text:      #221e16;
+      --strong:    #100d08;
+      --accent:    #84520a;
+      --accent-2:  #84520a;
+      --muted:     #5c5849;
+      --accent-dim:#84520a;
+    }
   }
 
   *, *::before, *::after { box-sizing: border-box; }
 
   html { -webkit-text-size-adjust: 100%; }
 
+  /* Text on the accent fill: --bg is 10.9:1 in dark and 5.7:1 in light */
+  ::selection { background: var(--accent); color: var(--bg); }
+
   body {
     margin: 0;
     background: var(--bg);
-    color: var(--bone);
+    color: var(--text);
     font-family: "DM Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
     font-weight: 400;
-    font-size: 15px;
-    line-height: 1.6;
-    padding: 0 24px 96px;
-  }
-
-  /* BACKGROUND */
-  
-  body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    background: repeating-linear-gradient(
-      to bottom,
-      rgba(255, 176, 64, 0.022) 0px,
-      rgba(255, 176, 64, 0.022) 1px,
-      transparent 1px,
-      transparent 3px
-    );
-    z-index: 1;
+    font-size: 16px;
+    line-height: 1.65;
+    padding: 0 24px 80px;
   }
 
   .sheet {
-    position: relative;
-    z-index: 2;
-    max-width: 620px;
+    max-width: 640px;
     margin: 0 auto;
   }
 
   /* MASTHEAD */
-  
+
   .masthead {
-    padding: 88px 0 44px;
-    border-bottom: 1px solid var(--rule);
+    margin: 32px 0 0;
+    padding: clamp(32px, 8vw, 56px) clamp(20px, 6vw, 40px);
+    background: var(--screen);
+    border: 1px solid var(--rule);
   }
 
   .wordmark { margin: 0; line-height: 0; }
 
-  .lockup {
-    display: block;
-    width: var(--lockup-w);
-    height: auto;
-  }
+  .lockup { display: block; width: var(--lockup-w); height: auto; }
 
   .visually-hidden {
     position: absolute;
@@ -107,108 +112,123 @@
   }
 
   .role {
-    margin: var(--lockup-clear) 0 0;
-    font-family: "Martian Mono", monospace;
-    font-size: 10px;
-    font-weight: 400;
-    letter-spacing: 0.20em;
+    margin: 22px 0 0;
+    font-size: 12px;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: var(--muted);
+    color: var(--screen-muted);
   }
 
   /* BLOCKS */
 
-  .block { padding: 34px 0; border-bottom: 1px solid var(--rule); }
+  .block { padding: 40px 0; border-bottom: 1px solid var(--rule); }
 
-  .eyebrow {
-    margin: 0 0 18px;
-    font-family: "Martian Mono", monospace;
-    font-size: 10px;
-    font-weight: 400;
-    letter-spacing: 0.20em;
-    text-transform: uppercase;
-    color: var(--muted);
-  }
-
-  .project-title {
-    margin: 0;
-    font-size: clamp(17px, 4vw, 21px);
-    font-weight: 500;
-    letter-spacing: 0.06em;
-    color: var(--bone);
-  }
-
-  .project-state {
-    margin: 10px 0 0;
+  /* Section labels are quiet, so the game title is the one big thing. */
+  h2 {
+    margin: 0 0 14px;
     font-size: 13px;
-    color: var(--muted);
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    line-height: 1.4;
+    color: var(--accent);
   }
 
-  /* CHANNELS */
+  h2.title {
+    margin: 0 0 16px;
+    font-size: clamp(26px, 7.4vw, 40px);
+    letter-spacing: 0.02em;
+    line-height: 1.15;
+    color: var(--strong);
+  }
 
-  .channels { list-style: none; margin: 0; padding: 0; }
+  p { margin: 0; max-width: 62ch; }
+  p + p { margin-top: 14px; }
 
-  .channels li + li { border-top: 1px solid var(--rule); }
+  .lede { font-size: 19px; line-height: 1.55; color: var(--strong); }
+
+  /* FACTS */
+
+  .facts {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: 6px 22px;
+    margin: 22px 0 0;
+    font-size: 14px;
+  }
+  .facts dt { color: var(--muted); }
+  .facts dd { margin: 0; color: var(--text); }
+
+  /* LINKS */
+
+  .links { list-style: none; margin: 4px 0 0; padding: 0; }
+  .links li + li { border-top: 1px solid var(--rule); }
 
   .row {
     display: grid;
-    grid-template-columns: 12px 1fr auto;
-    align-items: baseline;
-    gap: 14px;
-    padding: 14px 2px;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    column-gap: 16px;
+    min-height: 56px;
+    padding: 10px 6px;
     text-decoration: none;
-    color: var(--bone);
+    color: var(--strong);
   }
 
-  a.row:hover,
-  a.row:focus-visible {
-    background: var(--panel);
-    color: var(--amber);
+  .row .name { font-weight: 500; letter-spacing: 0.04em; }
+  .row .note { font-size: 13px; color: var(--muted); }
+  .row .go {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    width: 18px;
+    height: 18px;
+    color: var(--accent);
+    transition: transform 160ms cubic-bezier(0.22, 1, 0.36, 1);
   }
 
-  a.row:focus-visible { outline: 1px solid var(--amber); outline-offset: 2px; }
-
-  .dot { color: var(--amber); line-height: 1; font-size: 11px; }
-
-  .name { letter-spacing: 0.06em; }
-
-  .state {
-    font-size: 11px;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--amber-dim);
-  }
-
-  .row.is-pending { color: var(--muted); cursor: default; }
-  .row.is-pending .dot,
-  .row.is-pending .state { color: var(--muted); }
+  .row:hover,
+  .row:focus-visible { background: var(--panel); color: var(--accent); }
+  .row:hover .go,
+  .row:focus-visible .go { transform: translate(2px, -2px); }
+  .row:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
   /* CONTACT */
 
   .contact-link {
-    color: var(--amber);
-    text-decoration: none;
-    border-bottom: 1px solid var(--amber-dim);
-    padding-bottom: 2px;
-    font-size: 16px;
+    display: inline-block;
+    padding: 10px 0;          /* about 46px tall, a thumb-sized target */
+    color: var(--accent);
+    text-decoration: underline;
+    text-decoration-color: var(--accent-dim);
+    text-underline-offset: 5px;
   }
-
   .contact-link:hover,
-  .contact-link:focus-visible { border-bottom-color: var(--amber); }
-
-  .contact-link:focus-visible { outline: 1px solid var(--amber); outline-offset: 3px; }
+  .contact-link:focus-visible { text-decoration-color: var(--accent); }
+  .contact-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 
   /* COLOPHON */
 
   .colophon {
-    padding-top: 22px;
+    padding-top: 24px;
     display: flex;
     flex-wrap: wrap;
     gap: 6px 20px;
-    font-size: 10px;
-    letter-spacing: 0.16em;
+    font-size: 12px;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
     color: var(--muted);
+  }
+
+  /* FIRST LOOK */
+
+  .shots { display: grid; gap: 28px; margin: 22px 0 0; }
+  .shots figure { margin: 0; }
+  .shots img { display: block; width: 100%; height: auto; border: 1px solid var(--rule); }
+  .shots figcaption { margin-top: 8px; font-size: 13px; color: var(--muted); max-width: 62ch; }
+  .credit { margin-top: 18px; font-size: 12px; color: var(--muted); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .row .go { transition: none; }
   }
 </style>
 </head>
@@ -224,77 +244,121 @@
     <p class="role">Independent game studio</p>
   </header>
 
-  <section class="block">
-    <p class="eyebrow">Current project</p>
-    <h2 class="project-title">THE INFINITE DIASPORA</h2>
-    <p class="project-state">In development.</p>
+  <section class="block" aria-labelledby="studio">
+    <h2 id="studio">The studio</h2>
+    <p class="lede">Coldweld is a small, independent game studio. It is the home of The Infinite Diaspora, a text-based hard science fiction game.</p>
   </section>
 
-  <section class="block">
-    <p class="eyebrow">Channels</p>
-    <ul class="channels">
+  <section class="block" aria-labelledby="game">
+    <h2 class="title" id="game">The Infinite Diaspora</h2>
+    <p>The Infinite Diaspora is a text-based, hard science fiction, cassette futurism game set in our very own solar system in the year 2500. You take command of your very own ship and its crew to trade, complete missions, form relationships, and more in a setting that does not care that you exist.
+	</p>
+	<p>Based in realism: Where the game can follow real physics or procedure, it does so without sacrificing player fun. The physics (flight models, ballistics, travel time), the economy (stations generate real goods, which are then consumed), and relationships (named NPCs have a personality, opinion, relationships with one another, etc.) all follow this principle.
+	</p>
+    <dl class="facts">
+      <dt>Status</dt><dd>In development</dd>
+      <dt>Release</dt><dd>Not announced</dd>
+      <dt>Platform</dt><dd>Tested only on Windows</dd>
+      <dt>Price</dt><dd>Not announced</dd>
+    </dl>
+  </section>
+  
+  <section class="block" aria-labelledby="look">
+    <h2 id="look">A first look</h2>
+    <p>Three screens from the game as a player sees them. The console around the screen is a placeholder that a human-made version will replace.</p>
+    <div class="shots">
+      <figure>
+        <img src="/img/first-look-bridge.jpg" width="1600" height="900" loading="lazy" alt="The bridge screen during a fight. The ship's hull, heat and guns, one contact with its range and position, a log line from the sensors officer, and three numbered orders from the Second, each with the cost listed under it.">
+        <figcaption>On the bridge, the Second offers three orders and lists what each one costs.</figcaption>
+      </figure>
+      <figure>
+        <img src="/img/first-look-hail.jpg" width="1600" height="900" loading="lazy" alt="A hail from a hostile ship. The toll in credits, the odds that they win a fight, the average yard bill after a fight, and four numbered choices.">
+        <figcaption>A raider hails you: the toll, the odds and the repair bill are on the screen before you choose.</figcaption>
+      </figure>
+      <figure>
+        <img src="/img/first-look-tactical.jpg" width="1600" height="900" loading="lazy" alt="The left console during a fight, showing a tactical display. A radar ring with the contact marked, a camera view of the target ship, a table of contacts with range and state, and readouts for the target, its guns and the observer.">
+        <figcaption>The left console in a fight: the scanner ring, a camera on the target, and the contact table.</figcaption>
+      </figure>
+      <figure>
+        <img src="/img/first-look-engineering.jpg" width="1600" height="900" loading="lazy" alt="The right console during a fight, showing engineering. A table of vitals (heat, drive, reactor, life support, thrust, fins, hull), the standing orders, and the power bank with the draw of each load.">
+        <figcaption>The right console in a fight: vitals, orders, and what each system draws from the power bank.</figcaption>
+      </figure>
+      <figure>
+        <img src="/img/first-look-map.jpg" width="1600" height="900" loading="lazy" alt="A map of the solar system drawn in text. Each body has a number, and the ship's position is marked.">
+        <figcaption>The map: type a body's number to go there.</figcaption>
+      </figure>
+      <figure>
+        <img src="/img/first-look-destinations.jpg" width="1600" height="900" loading="lazy" alt="The destination screen at the ship console. A numbered list of the inner system and the Belt, each place marked with a job available or a mission due.">
+        <figcaption>Choosing a destination: the inner system and the Belt, with the jobs waiting at each.</figcaption>
+      </figure>
+      <figure>
+        <img src="/img/first-look-market.jpg" width="1600" height="900" loading="lazy" alt="A market screen at UNASA Anchor Alpha above Earth. A table of consumer goods with buy and sell prices in credits, and a note on the one good the station produces.">
+        <figcaption>The market at UNASA Anchor Alpha: buy and sell prices, and what the station makes itself.</figcaption>
+      </figure>
+      <figure>
+        <img src="/img/first-look-jobs.jpg" width="1600" height="900" loading="lazy" alt="A job board screen listing five jobs with who offers each, the pay, the days until it is due, and the hold space it needs.">
+        <figcaption>The job board: who is paying, how much, by when, and what each job takes from the hold.</figcaption>
+      </figure>
+    </div>
+    <p class="credit">Console art: renders of "Quadronic 250 - computer that never existed" by AfBu (sketchfab.com/3d-models/quadronic-250-computer-that-never-existed-b945947a2c1d4b18812abe59392f715a), CC BY-SA 4.0. The pictures are changed from the original: the screen is replaced, parts are added, and the plastics are worn. These pictures are shared under the same license, CC BY-SA 4.0 (creativecommons.org/licenses/by-sa/4.0). AfBu does not endorse this game.</p>
+  </section>
+
+<section class="block" aria-labelledby="bar">
+  <h2 id="bar">Four Design Aspects</h2>
+  <dl class="facts">
+    <dt>Feature-complete:</dt><dd> Game features must be thorough. Either the whole feature is implemented, or none of is.</dd>
+    <dt>Mechanic parity:</dt><dd> I aim to ensure that what the player does, an NPC will call the same code.</dd>
+    <dt>Realism:</dt><dd> Most in-game numbers are derived from the Atomic Rockets website and real sources, where one exists, in order to ensure an accurate simulation.</dd>
+    <dt>Fun:</dt><dd> The most important design aspect of The Infinite Diaspora; fun is a player decision that must be weighed, and they are told the number/chance first.</dd>
+  </dl>
+</section>
+
+  <section class="block" aria-labelledby="find">
+    <h2 id="find">Find Coldweld</h2>
+    <ul class="links">
 
       <li>
-        <a class="row" href="https://bsky.app/profile/coldweld.bsky.social">
-          <span class="dot" aria-hidden="true">&#9679;</span>
+        <a class="row" href="https://bsky.app/profile/did:plc:oar5w4iom7sbkvv6iwmtz7sq" rel="noopener">
           <span class="name">Bluesky</span>
-          <span class="state">Online</span>
+          <span class="note">Digestible information regarding The Infinite Diaspora and its features</span>
+          <svg class="go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg>
         </a>
       </li>
 
       <li>
-        <a class="row" href="https://coldweld.itch.io">
-          <span class="dot" aria-hidden="true">&#9679;</span>
+        <a class="row" href="https://coldweld.itch.io" rel="noopener">
           <span class="name">itch.io</span>
-          <span class="state">Online</span>
+          <span class="note">Unreleased demo in development</span>
+          <svg class="go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg>
         </a>
       </li>
 
       <li>
-        <a class="row" href="https://discord.gg/6PKxQutKKp">
-          <span class="dot" aria-hidden="true">&#9679;</span>
+        <a class="row" href="https://discord.gg/6PKxQutKKp" rel="noopener">
           <span class="name">Discord</span>
-          <span class="state">Online</span>
+          <span class="note">Talk with other players and with me</span>
+          <svg class="go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg>
         </a>
-      </li>
-
-      <li>
-        <a class="row" href="https://github.com/coldweld">
-          <span class="dot" aria-hidden="true">&#9679;</span>
-          <span class="name">GitHub</span>
-          <span class="state">Online</span>
-        </a>
-      </li>
-
-      <li>
-        <a class="row" href="https://youtube.com/@coldwelddev">
-          <span class="dot" aria-hidden="true">&#9679;</span>
-          <span class="name">YouTube</span>
-          <span class="state">Online</span>
-        </a>
-      </li>
-
-      <li>
-        <div class="row is-pending">
-          <span class="dot" aria-hidden="true">&#9675;</span>
-          <span class="name">Steam</span>
-          <span class="state">Pending</span>
-        </div>
       </li>
 
     </ul>
   </section>
 
-  <section class="block">
-    <p class="eyebrow">Contact</p>
+  <section class="block" aria-labelledby="made">
+    <h2 id="made">Artificial Intelligence content disclosure</h2>
+    <p>I use an LLM to generate and modify Python-language code. I design the game systems, mechanics, and its overall visual theme. An LLM drafted the first version of the game's text and I am currently rewriting it by hand in order to form a more cohesive story and setting. Music, sounds, and in-game computer model are sourced from human creators, who are credited in the game. The console picture is built by LLM-written code around a human-made model and will be replaced by a human-made picture.</p>
+  </section>
+
+  <section class="block" aria-labelledby="contact">
+    <h2 id="contact">Contact</h2>
     <a class="contact-link" href="mailto:hello@coldweld.dev">hello@coldweld.dev</a>
   </section>
 
-  <div class="colophon">
-    <span>coldweld.dev</span>
-    <span>&copy; 2026 Coldweld</span>
-  </div>
-
 </main>
+
+<footer class="sheet colophon">
+  <span>coldweld.dev</span>
+  <span>&copy; 2026 Coldweld</span>
+</footer>
 </body>
 </html>
