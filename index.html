@@ -227,6 +227,18 @@
   .shots figcaption { margin-top: 8px; font-size: 13px; color: var(--muted); max-width: 62ch; }
   .credit { margin-top: 18px; font-size: 12px; color: var(--muted); }
 
+  /* ENLARGE */
+
+  .zoom { display: block; cursor: zoom-in; }
+  .zoom:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  #viewer { border: 0; padding: 0; width: 100vw; height: 100vh; max-width: 100vw; max-height: 100vh; background: #000; color: #d6cbb6; }
+  #viewer::backdrop { background: #000; }
+  #viewer .stage { display: grid; grid-template-rows: 1fr auto; width: 100%; height: 100%; }
+  #viewer img { width: 100%; height: 100%; min-height: 0; object-fit: contain; cursor: zoom-out; }
+  #viewer p { margin: 0; padding: 10px 56px 14px 16px; font-size: 13px; max-width: none; }
+  #viewer button { position: fixed; top: 10px; right: 10px; min-width: 44px; min-height: 44px; font: inherit; font-size: 13px; background: #16110a; color: #ffd680; border: 1px solid #5a4a1a; cursor: pointer; }
+  #viewer button:focus-visible { outline: 2px solid #ffb040; outline-offset: 2px; }
+
   @media (prefers-reduced-motion: reduce) {
     .row .go { transition: none; }
   }
@@ -265,38 +277,38 @@
   
   <section class="block" aria-labelledby="look">
     <h2 id="look">A first look</h2>
-    <p>Three screens from the game as a player sees them. The console around the screen is a placeholder that a human-made version will replace.</p>
+    <p>Screens from the game as a player sees them. Click one to enlarge it. The environment around the consoles is a placeholder that will be replaced by a human-made version.</p>
     <div class="shots">
       <figure>
-        <img src="/img/first-look-bridge.jpg" width="1600" height="900" loading="lazy" alt="The bridge screen during a fight. The ship's hull, heat and guns, one contact with its range and position, a log line from the sensors officer, and three numbered orders from the Second, each with the cost listed under it.">
+        <a class="zoom" href="/img/large/first-look-bridge.jpg" title="Enlarge" aria-label="Enlarge this screenshot"><img src="/img/first-look-bridge.jpg" width="1600" height="900" loading="lazy" alt="The bridge screen during a fight. The ship's hull, heat and guns, one contact with its range and position, a log line from the sensors officer, and three numbered orders from the Second, each with the cost listed under it."></a>
         <figcaption>On the bridge, the Second offers three orders and lists what each one costs.</figcaption>
       </figure>
       <figure>
-        <img src="/img/first-look-hail.jpg" width="1600" height="900" loading="lazy" alt="A hail from a hostile ship. The toll in credits, the odds that they win a fight, the average yard bill after a fight, and four numbered choices.">
+        <a class="zoom" href="/img/large/first-look-hail.jpg" title="Enlarge" aria-label="Enlarge this screenshot"><img src="/img/first-look-hail.jpg" width="1600" height="900" loading="lazy" alt="A hail from a hostile ship. The toll in credits, the odds that they win a fight, the average yard bill after a fight, and four numbered choices."></a>
         <figcaption>A raider hails you: the toll, the odds and the repair bill are on the screen before you choose.</figcaption>
       </figure>
       <figure>
-        <img src="/img/first-look-tactical.jpg" width="1600" height="900" loading="lazy" alt="The left console during a fight, showing a tactical display. A radar ring with the contact marked, a camera view of the target ship, a table of contacts with range and state, and readouts for the target, its guns and the observer.">
+        <a class="zoom" href="/img/large/first-look-tactical.jpg" title="Enlarge" aria-label="Enlarge this screenshot"><img src="/img/first-look-tactical.jpg" width="1600" height="900" loading="lazy" alt="The left console during a fight, showing a tactical display. A radar ring with the contact marked, a camera view of the target ship, a table of contacts with range and state, and readouts for the target, its guns and the observer."></a>
         <figcaption>The left console in a fight: the scanner ring, a camera on the target, and the contact table.</figcaption>
       </figure>
       <figure>
-        <img src="/img/first-look-engineering.jpg" width="1600" height="900" loading="lazy" alt="The right console during a fight, showing engineering. A table of vitals (heat, drive, reactor, life support, thrust, fins, hull), the standing orders, and the power bank with the draw of each load.">
+        <a class="zoom" href="/img/large/first-look-engineering.jpg" title="Enlarge" aria-label="Enlarge this screenshot"><img src="/img/first-look-engineering.jpg" width="1600" height="900" loading="lazy" alt="The right console during a fight, showing engineering. A table of vitals (heat, drive, reactor, life support, thrust, fins, hull), the standing orders, and the power bank with the draw of each load."></a>
         <figcaption>The right console in a fight: vitals, orders, and what each system draws from the power bank.</figcaption>
       </figure>
       <figure>
-        <img src="/img/first-look-map.jpg" width="1600" height="900" loading="lazy" alt="A map of the solar system drawn in text. Each body has a number, and the ship's position is marked.">
+        <a class="zoom" href="/img/large/first-look-map.jpg" title="Enlarge" aria-label="Enlarge this screenshot"><img src="/img/first-look-map.jpg" width="1600" height="900" loading="lazy" alt="A map of the solar system drawn in text. Each body has a number, and the ship's position is marked."></a>
         <figcaption>The map: type a body's number to go there.</figcaption>
       </figure>
       <figure>
-        <img src="/img/first-look-destinations.jpg" width="1600" height="900" loading="lazy" alt="The destination screen at the ship console. A numbered list of the inner system and the Belt, each place marked with a job available or a mission due.">
+        <a class="zoom" href="/img/large/first-look-destinations.jpg" title="Enlarge" aria-label="Enlarge this screenshot"><img src="/img/first-look-destinations.jpg" width="1600" height="900" loading="lazy" alt="The destination screen at the ship console. A numbered list of the inner system and the Belt, each place marked with a job available or a mission due."></a>
         <figcaption>Choosing a destination: the inner system and the Belt, with the jobs waiting at each.</figcaption>
       </figure>
       <figure>
-        <img src="/img/first-look-market.jpg" width="1600" height="900" loading="lazy" alt="A market screen at UNASA Anchor Alpha above Earth. A table of consumer goods with buy and sell prices in credits, and a note on the one good the station produces.">
+        <a class="zoom" href="/img/large/first-look-market.jpg" title="Enlarge" aria-label="Enlarge this screenshot"><img src="/img/first-look-market.jpg" width="1600" height="900" loading="lazy" alt="A market screen at UNASA Anchor Alpha above Earth. A table of consumer goods with buy and sell prices in credits, and a note on the one good the station produces."></a>
         <figcaption>The market at UNASA Anchor Alpha: buy and sell prices, and what the station makes itself.</figcaption>
       </figure>
       <figure>
-        <img src="/img/first-look-jobs.jpg" width="1600" height="900" loading="lazy" alt="A job board screen listing five jobs with who offers each, the pay, the days until it is due, and the hold space it needs.">
+        <a class="zoom" href="/img/large/first-look-jobs.jpg" title="Enlarge" aria-label="Enlarge this screenshot"><img src="/img/first-look-jobs.jpg" width="1600" height="900" loading="lazy" alt="A job board screen listing five jobs with who offers each, the pay, the days until it is due, and the hold space it needs."></a>
         <figcaption>The job board: who is paying, how much, by when, and what each job takes from the hold.</figcaption>
       </figure>
     </div>
@@ -360,5 +372,31 @@
   <span>coldweld.dev</span>
   <span>&copy; 2026 Coldweld</span>
 </footer>
+<dialog id="viewer" aria-label="Enlarged screenshot">
+  <div class="stage">
+    <img alt="">
+    <p></p>
+  </div>
+  <button type="button">Close</button>
+</dialog>
+<script>
+(function () {
+  var d = document.getElementById("viewer");
+  if (!d || typeof d.showModal !== "function") return;
+  var img = d.querySelector("img"), cap = d.querySelector("p");
+  document.querySelectorAll("a.zoom").forEach(function (a) {
+    a.addEventListener("click", function (e) {
+      if (e.ctrlKey || e.metaKey || e.shiftKey) return;
+      e.preventDefault();
+      var small = a.querySelector("img"), fc = a.parentNode.querySelector("figcaption");
+      img.src = a.getAttribute("href");
+      img.alt = small ? small.alt : "";
+      cap.textContent = fc ? fc.textContent : "";
+      d.showModal();
+    });
+  });
+  d.addEventListener("click", function () { d.close(); });
+})();
+</script>
 </body>
 </html>
