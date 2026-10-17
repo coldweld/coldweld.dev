@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mining the belt</title>
+<meta name="description" content="What the game does for mining the belt, its numbers, and where each comes from.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+:root {
+  color-scheme: light dark;
+  --bg: #fbf8f1; --panel: #f0eadb; --rule: #b9ae94; --text: #231c0f; --muted: #51493a; --accent: #7a4300;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #0e0903; --panel: #16110a; --rule: #4a4130; --text: #d6cbb6; --muted: #a89f88; --accent: #ffb040; }
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 1rem/1.65 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; padding: 0 1rem 4rem; }
+.skip { position: absolute; left: 1rem; top: -4rem; background: var(--accent); color: var(--bg); padding: .5rem 1rem; z-index: 10; }
+.skip:focus { top: .5rem; }
+.wrap { max-width: 64rem; margin: 0 auto; }
+.mono, h1, h2, h3, caption, th, nav, .brand, .stamp, .grade, .val { font-family: "DM Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+a { color: var(--accent); text-underline-offset: .2em; }
+a:focus-visible, .region:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.top { padding: 2rem 0 1rem; border-bottom: 1px solid var(--rule); }
+.brand { margin: 0 0 .75rem; font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .25rem 1.5rem; }
+nav a { display: inline-block; padding: .35rem 0; }
+h1 { font-size: clamp(1.4rem, 5vw, 2rem); line-height: 1.25; margin: 2rem 0 1rem; font-weight: 500; }
+h2 { font-size: 1.25rem; margin: 2.5rem 0 .75rem; padding-top: 1.25rem; border-top: 1px solid var(--rule); font-weight: 500; }
+h3 { font-size: 1.05rem; margin: 1.5rem 0 .5rem; font-weight: 500; }
+p, li { max-width: 46rem; }
+li + li { margin-top: .35rem; }
+code { font-family: "DM Mono", ui-monospace, Consolas, monospace; font-size: .92em; overflow-wrap: anywhere; }
+.lead { font-size: 1.1rem; }
+.note { background: var(--panel); border-left: 4px solid var(--accent); padding: .75rem 1rem; max-width: 46rem; }
+.region { overflow-x: auto; margin: 1rem 0; border: 1px solid var(--rule); }
+table { border-collapse: collapse; width: 100%; min-width: 46rem; font-size: .92rem; line-height: 1.5; }
+caption { text-align: left; padding: .75rem; font-size: .95rem; color: var(--muted); }
+th, td { text-align: left; vertical-align: top; padding: .55rem .75rem; border-top: 1px solid var(--rule); }
+thead th { background: var(--panel); font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; white-space: nowrap; }
+tbody th { font-weight: 400; font-family: inherit; min-width: 14rem; }
+td.val { overflow-wrap: anywhere; min-width: 7rem; }
+.numbers td:nth-child(5), .numbers td:nth-child(6) { min-width: 13rem; }
+td.count { text-align: right; font-variant-numeric: tabular-nums; }
+.grade { display: inline-block; border: 2px solid currentColor; border-radius: 4px; min-width: 1.6rem; text-align: center; padding: 0 .3rem; font-weight: 600; margin-right: .4rem; }
+.gradeitem { white-space: nowrap; }
+.stamp { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--rule); font-size: .8rem; color: var(--muted); }
+.toc { padding-left: 1.2rem; }
+dl.keys dt { font-weight: 600; margin-top: 1rem; }
+dl.keys dd { margin: .25rem 0 0; max-width: 46rem; }
+@media (max-width: 40rem) { body { padding: 0 1rem 3rem; } th, td { padding: .5rem; } }
+@media print { .skip { display: none; } }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to the content</a>
+<div class="wrap">
+<header class="top">
+<p class="brand"><a href="https://coldweld.dev/">Coldweld</a> / The Infinite Diaspora / Reference shelf</p>
+<nav aria-label="Reference shelf"><ul>
+<li><a href="index.html">Mechanics</a></li>
+<li><a href="grades.html">Grades</a></li>
+<li><a href="sources.html">Sources</a></li>
+</ul></nav>
+</header>
+<main id="main">
+<h1>Mining the belt</h1>
+<ul class="toc">
+<li><a href="#brief">In brief</a></li>
+<li><a href="#does">What the game does</a></li>
+<li><a href="#numbers">The numbers</a></li>
+<li><a href="#why">Why: the real physics or procedure</a></li>
+<li><a href="#departs">Where the game departs from reality</a></li>
+<li><a href="#silent">Where the sources are silent</a></li>
+<li><a href="#sources">Sources</a></li>
+<li><a href="#code">Code files</a></li>
+</ul>
+<h2 id="brief">In brief</h2>
+<p class="lead">Mining is the work of pulling ore out of a rock in a field, which is a place where a crew can find and work rocks.</p>
+<h2 id="does">What the game does</h2>
+<h3>In Brief</h3>
+<ul>
+<li>A field is a place where rock and ice can be worked, and each field holds a finite, real set of rocks.</li>
+<li>The three belt zones and Saturn's rings carry them.</li>
+<li>The inner, middle and outer belt are separate crossings, and each yields different ore: metal inward, carbon and ice outward.</li>
+</ul>
+<h3>Working A Rock</h3>
+<ul>
+<li>Scan for contacts first, then qualify one with a PROSPECTOR ARRAY to reveal what it is made of and how rich it is.</li>
+<li>Then decide how hard to work it.</li>
+<li>Push the drones harder and you pull more ore, but you draw attention and risk an accident.</li>
+<li>Extraction runs for hours and burns fuel and stores the whole time.</li>
+<li>A rock you work is worked out for good, and whatever danger the field carries does not pause while you sit still.</li>
+</ul>
+<h3>Other Miners</h3>
+<ul>
+<li>The local stations mine these fields too, so a busy field is thinner and poorer than a quiet one.</li>
+<li>Anything that knocks local extraction offline leaves better rock for the next crew to show up.</li>
+<li>The local stations' rigs are out there in person, holding claims on the better rocks.</li>
+<li>Hail one for a tip, hire yourself out as its guard, or take its ore and take the reputation hit.</li>
+<li>A rig that finishes its claim takes that rock with it.</li>
+</ul>
+<h2 id="numbers">The numbers</h2>
+<p>35 numbers, read from the game code. None has a grade yet.</p>
+<div class="region" role="region" tabindex="0" aria-label="Numbers the game runs for mining the belt">
+<table class="numbers">
+<caption>Numbers the game runs for mining the belt</caption>
+<thead><tr>
+<th scope="col">Quantity</th>
+<th scope="col">Value</th>
+<th scope="col">Unit</th>
+<th scope="col">Grade</th>
+<th scope="col">Source</th>
+<th scope="col">Basis</th>
+</tr></thead>
+<tbody>
+<tr id="n-1"><th scope="row">Rock sizes: hours to work, ore unit range, survey rating to find</th><td class="val">SMALL hours 12, orerange 8,000, 14,000, surveyrequirement 10, MEDIUM hours 24, orerange 18,000, 28,000, surveyrequirement 30, LARGE hours 36, orerange 30,000, 45,000, surveyrequirement 60</td><td>hours, units, rating</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-2"><th scope="row">Rock grades: ore multiplier and roll weight</th><td class="val">POOR multiplier 0.7, weight 25, STANDARD multiplier 1, weight 45, RICH multiplier 1.35, weight 22, PRISTINE multiplier 1.8, weight 8</td><td>multiplier, weight</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-3"><th scope="row">Extraction intensities: yield, encounter change, accident chance</th><td class="val">CAUTIOUS yield 0.8, encounter -4, accident 0, STANDARD yield 1, encounter 0, accident 0, AGGRESSIVE yield 1.4, encounter 11, accident 22</td><td>multiplier, points, percent</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-4"><th scope="row">Hull damage range from a rig accident</th><td class="val">6, 18</td><td>hull points</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-5"><th scope="row">Yield lost to a rig accident</th><td class="val">0.45</td><td>fraction</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-6"><th scope="row">Rocks in a field at the start</th><td class="val">4</td><td>rocks</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-7"><th scope="row">Most rocks a field holds</th><td class="val">7</td><td>rocks</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-8"><th scope="row">Days between new rocks drifting in</th><td class="val">5</td><td>days</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-9"><th scope="row">Resting pressure target of each field</th><td class="val">Inner Belt 1.2, Middle Belt 1, Outer Belt 0.8, Saturn 0.75</td><td>multiplier</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-10"><th scope="row">Lowest pressure multiplier</th><td class="val">0.5</td><td>multiplier</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-11"><th scope="row">Highest pressure multiplier</th><td class="val">1.8</td><td>multiplier</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-12"><th scope="row">Drift slowed by heavy working, per point of pressure over 1</th><td class="val">0.6</td><td>fraction</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-13"><th scope="row">Pressure the captain adds per unit pulled out</th><td class="val">0.0004</td><td>pressure per unit</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-14"><th scope="row">Days the captain&#x27;s pressure takes to fade</th><td class="val">20</td><td>days</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-15"><th scope="row">Most rigs in one field</th><td class="val">3</td><td>rigs</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-16"><th scope="row">Days a rig works its claim</th><td class="val">4, 11</td><td>days</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-17"><th scope="row">Ore a rig pulls from its claim</th><td class="val">4,000, 16,000</td><td>units</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-18"><th scope="row">Fee for guarding a rig, per day</th><td class="val">120</td><td>Cr</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-19"><th scope="row">Survey rating of the weakest prospector array (PA-1)</th><td class="val">15</td><td>rating points</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-20"><th scope="row">Survey rating of the strongest prospector array (PA-6)</th><td class="val">100</td><td>rating points</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-21"><th scope="row">Real spacing of bodies over 1 km, as the game records it</th><td class="val">900,000</td><td>km</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-22"><th scope="row">Width of the dense part of a game field</th><td class="val">300</td><td>km</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-23"><th scope="row">Length of a cloud chord that blocks sight at pressure 1.0</th><td class="val">40</td><td>km</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-24"><th scope="row">Ceres: size in km and mass in kg</th><td class="val">975, 975, 909, 947,000,000,000,000,000,000, Atomic Rockets, mining.php</td><td>km, kg, source</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-25"><th scope="row">Pallas: size in km and mass in kg</th><td class="val">582, 556, 500, 214,000,000,000,000,000,000, Atomic Rockets, mining.php</td><td>km, kg, source</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-26"><th scope="row">Vesta: size in km and mass in kg</th><td class="val">569, 555, 453, 259,000,000,000,000,000,000, Atomic Rockets, mining.php</td><td>km, kg, source</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-27"><th scope="row">Hygiea: size in km and mass in kg</th><td class="val">450, 430, 424, 87,400,000,000,000,000,000, Wikipedia, 10 Hygiea (2021)</td><td>km, kg, source</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-28"><th scope="row">Inner Belt distance from the sun</th><td class="val">2.282</td><td>AU</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-29"><th scope="row">Middle Belt distance from the sun</th><td class="val">2.662</td><td>AU</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-30"><th scope="row">Outer Belt distance from the sun</th><td class="val">3.05</td><td>AU</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-31"><th scope="row">Ceres distance from the sun</th><td class="val">2.77</td><td>AU</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-32"><th scope="row">Vesta distance from the sun</th><td class="val">2.362</td><td>AU</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-33"><th scope="row">Pallas distance from the sun</th><td class="val">2.772</td><td>AU</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-34"><th scope="row">Hygiea distance from the sun</th><td class="val">3.139</td><td>AU</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-35"><th scope="row">People living on Ceres</th><td class="val">400,000,000</td><td>people</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+</tbody></table></div>
+<h2 id="why">Why: the real physics or procedure</h2>
+<ul>
+<li>The real asteroid belt is nearly empty, because it is a huge volume with few large bodies.</li>
+<li>Bodies wider than 1 km sit about 900,000 km apart, which is more than twice the distance from Earth to the Moon.</li>
+<li>Most known asteroids are carbonaceous, so they hold water and carbon compounds, and fewer are stony or metallic.</li>
+<li>A stony asteroid holds a great deal of metal, and the rare metals are a small share of it.</li>
+<li>The four largest bodies are Ceres, Vesta, Pallas and Hygiea, and Ceres is about 975 km across.</li>
+<li>Miners must look at a rock before they know its makeup, because the type cannot be told from far away.</li>
+</ul>
+<h2 id="departs">Where the game departs from reality</h2>
+<ul>
+<li>The game packs a field into a sphere about 300 km wide with clouds of boulders. docs/setting-canon.md section 6 says this is about 2e16 times the real belt's density, and names it a fiction chosen so a fight can have cover.</li>
+<li>A field holds a handful of rocks, each tens of kilotonnes of ore. Real asteroids of that mass are tiny, and the setting canon notes that these rocks are 4 to 17 meters across.</li>
+<li>Pressure is derived from what the stations at a body produce, so a busy field is poorer. This is a design rule (docs/notes/mining.md, 'Local extraction pressure'), not a measured fact.</li>
+<li>Real Vesta is dry. docs/setting-canon.md section 3 notes that the game's Vesta is not, because a dry 500 million person body would multiply water demand by 27.</li>
+<li>The named giants carry the game's own belt zones: Vesta in the Inner Belt, Pallas and Ceres in the Middle, Hygiea in the Outer (combat/newtonian/terrain.py GIANT_BELT). Each sits at its real distance.</li>
+</ul>
+<h2 id="silent">Where the sources are silent</h2>
+<ul>
+<li>The mirror has no entry for Hygiea. The game uses 450 x 430 x 424 km and 8.74e19 kg, cited in combat/newtonian/terrain.py to Wikipedia '10 Hygiea' (2021). UNVERIFIED by this note, since that page is not in the mirror.</li>
+<li>The mirror gives no size or mass for the mid-size bodies (Lutetia, Mathilde, Ida and the rest). The game takes shapes from Wikipedia and sets density at 2,000 kg/m^3, which is a chosen number (combat/newtonian/terrain.py).</li>
+<li>The mirror does not explain the Kirkwood gaps that bound the three belt zones. The game derives them from Jupiter's period (comment in locations/stellarbodydata.py). UNVERIFIED here.</li>
+<li>No source covers how a prospector array reads a rock, so ratings, grades, and the hidden-grade rule are authored.</li>
+<li>No source covers extraction pressure, rig claims or guard fees. All are game design, recorded in docs/notes/mining.md.</li>
+</ul>
+<h2 id="sources">Sources</h2>
+<ul>
+<li><a href="https://www.projectrho.com/public_html/rocket/prelimnotes.php">Atomic Rockets, prelimnotes</a>, the asteroid-belt trope (Annoying Trope #1): Bodies wider than 1 km are on average about 900,000 km apart. A fleet does not meet them by chance, and small bodies are mostly captured by larger ones. (<a href="sources.html#doc-rocket-prelimnotes-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/mining.php">Atomic Rockets, mining</a>, the table of the largest asteroids: Ceres is 975 x 909 km at 9.47e20 kg, Pallas 582 x 556 x 500 km at 2.14e20 kg, Vesta 569 x 555 x 453 km at 2.59e20 kg, and Juno 234 km at 2.00e19 kg. (<a href="sources.html#doc-rocket-mining-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/mining.php">Atomic Rockets, mining</a>, the text under the table of the largest asteroids: The average separation between asteroids in the belt is about sixteen times the distance from Earth to the Moon. Standing on one, a person cannot see another without a telescope. (<a href="sources.html#doc-rocket-mining-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/mining.php">Atomic Rockets, mining</a>, the list of asteroid types (C, S, M, D): About 75 percent of known asteroids are C-type, with up to about 10 percent water. About 17 percent are S-type. A 10 meter S-type holds about 650 tonnes of metal. D-type are found in the outer belt and beyond. (<a href="sources.html#doc-rocket-mining-php-html">all uses</a>)</li>
+<li>The setting — canon, Section 6, subsection: The belt is nearly empty, and a fighting field is not: The repo records the real spacing, the real sizes of the giants, and the choice to cluster the game's fields. It marks the placing of mid-size bodies in each belt as UNVERIFIED. (<a href="sources.html#doc-docs-setting-canon-md">all uses</a>)</li>
+</ul>
+<h2 id="code">Code files</h2>
+<ul>
+<li><code>locations/mining.py</code></li>
+<li><code>locations/stellarbodydata.py</code></li>
+<li><code>combat/newtonian/terrain.py</code></li>
+<li><code>vehicles/ship/modules/prospector.py</code></li>
+<li><code>vehicles/ship/modules/prospectordata.py</code></li>
+</ul>
+</main>
+<footer class="stamp">
+<p>Read from game commit 702fad0f (committed 2026-10-16). Pages written 2026-10-16.
+The explanations are stand-in text and may change.</p>
+</footer>
+</div>
+</body>
+</html>

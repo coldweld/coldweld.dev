@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Armor and the six faces</title>
+<meta name="description" content="What the game does for armor and the six faces, its numbers, and where each comes from.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+:root {
+  color-scheme: light dark;
+  --bg: #fbf8f1; --panel: #f0eadb; --rule: #b9ae94; --text: #231c0f; --muted: #51493a; --accent: #7a4300;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #0e0903; --panel: #16110a; --rule: #4a4130; --text: #d6cbb6; --muted: #a89f88; --accent: #ffb040; }
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 1rem/1.65 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; padding: 0 1rem 4rem; }
+.skip { position: absolute; left: 1rem; top: -4rem; background: var(--accent); color: var(--bg); padding: .5rem 1rem; z-index: 10; }
+.skip:focus { top: .5rem; }
+.wrap { max-width: 64rem; margin: 0 auto; }
+.mono, h1, h2, h3, caption, th, nav, .brand, .stamp, .grade, .val { font-family: "DM Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+a { color: var(--accent); text-underline-offset: .2em; }
+a:focus-visible, .region:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.top { padding: 2rem 0 1rem; border-bottom: 1px solid var(--rule); }
+.brand { margin: 0 0 .75rem; font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .25rem 1.5rem; }
+nav a { display: inline-block; padding: .35rem 0; }
+h1 { font-size: clamp(1.4rem, 5vw, 2rem); line-height: 1.25; margin: 2rem 0 1rem; font-weight: 500; }
+h2 { font-size: 1.25rem; margin: 2.5rem 0 .75rem; padding-top: 1.25rem; border-top: 1px solid var(--rule); font-weight: 500; }
+h3 { font-size: 1.05rem; margin: 1.5rem 0 .5rem; font-weight: 500; }
+p, li { max-width: 46rem; }
+li + li { margin-top: .35rem; }
+code { font-family: "DM Mono", ui-monospace, Consolas, monospace; font-size: .92em; overflow-wrap: anywhere; }
+.lead { font-size: 1.1rem; }
+.note { background: var(--panel); border-left: 4px solid var(--accent); padding: .75rem 1rem; max-width: 46rem; }
+.region { overflow-x: auto; margin: 1rem 0; border: 1px solid var(--rule); }
+table { border-collapse: collapse; width: 100%; min-width: 46rem; font-size: .92rem; line-height: 1.5; }
+caption { text-align: left; padding: .75rem; font-size: .95rem; color: var(--muted); }
+th, td { text-align: left; vertical-align: top; padding: .55rem .75rem; border-top: 1px solid var(--rule); }
+thead th { background: var(--panel); font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; white-space: nowrap; }
+tbody th { font-weight: 400; font-family: inherit; min-width: 14rem; }
+td.val { overflow-wrap: anywhere; min-width: 7rem; }
+.numbers td:nth-child(5), .numbers td:nth-child(6) { min-width: 13rem; }
+td.count { text-align: right; font-variant-numeric: tabular-nums; }
+.grade { display: inline-block; border: 2px solid currentColor; border-radius: 4px; min-width: 1.6rem; text-align: center; padding: 0 .3rem; font-weight: 600; margin-right: .4rem; }
+.gradeitem { white-space: nowrap; }
+.stamp { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--rule); font-size: .8rem; color: var(--muted); }
+.toc { padding-left: 1.2rem; }
+dl.keys dt { font-weight: 600; margin-top: 1rem; }
+dl.keys dd { margin: .25rem 0 0; max-width: 46rem; }
+@media (max-width: 40rem) { body { padding: 0 1rem 3rem; } th, td { padding: .5rem; } }
+@media print { .skip { display: none; } }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to the content</a>
+<div class="wrap">
+<header class="top">
+<p class="brand"><a href="https://coldweld.dev/">Coldweld</a> / The Infinite Diaspora / Reference shelf</p>
+<nav aria-label="Reference shelf"><ul>
+<li><a href="index.html">Mechanics</a></li>
+<li><a href="grades.html">Grades</a></li>
+<li><a href="sources.html">Sources</a></li>
+</ul></nav>
+</header>
+<main id="main">
+<h1>Armor and the six faces</h1>
+<ul class="toc">
+<li><a href="#brief">In brief</a></li>
+<li><a href="#does">What the game does</a></li>
+<li><a href="#numbers">The numbers</a></li>
+<li><a href="#why">Why: the real physics or procedure</a></li>
+<li><a href="#departs">Where the game departs from reality</a></li>
+<li><a href="#silent">Where the sources are silent</a></li>
+<li><a href="#sources">Sources</a></li>
+<li><a href="#code">Code files</a></li>
+</ul>
+<h2 id="brief">In brief</h2>
+<p class="lead">Armor is plate on the hull that a round must break through before it reaches anything inside, and the game gives a hull six faces of plate, each a grid of pools that wear one at a time.</p>
+<h2 id="does">What the game does</h2>
+<h3>Your Six Faces</h3>
+<ul>
+<li>Your hull has six faces: fore, port, starboard, upper, lower and aft.</li>
+<li>A round meets the face it arrives at, and the bow carries the most plate.</li>
+<li>Each face is a grid of 3 by 3 pools of plate, 54 on the hull.</li>
+<li>A round wears only the pool it strikes, and the pool beside it is untouched.</li>
+<li>A fresh pool is as deep as the plate, so a fresh face stops several hits.</li>
+<li>A round into a holed pool meets no plate. The yard counts the HOLED pools.</li>
+<li>Running shows a hostile your stern, where the main drive sits.</li>
+</ul>
+<h3>Slope</h3>
+<ul>
+<li>A slope is how far a plate leans from square to the round that hits it.</li>
+<li>A sloped plate reads thicker along the line of fire, so more rounds stop on it.</li>
+<li>Warships are built with a sloped bow. Freighters are built square.</li>
+<li>A round that strikes at an angle meets a sloped plate too.</li>
+<li>The helm may angle a face 30 or 45 degrees, and the angle shows a wider hull.</li>
+</ul>
+<h3>Plate Weight</h3>
+<ul>
+<li>Plate is mass the drive has to push, like cargo in the hold.</li>
+<li>A heavier ship accelerates slower, so it dodges worse and a lighter hostile runs it down.</li>
+<li>Each trip also takes longer and burns more fuel.</li>
+<li>STEEL is the heaviest plate, then LAMINATE, then CERAMIC. SPRAYED ABLATIVE is the lightest.</li>
+<li>The shipyard gives the weight and the acceleration it leaves before you buy.</li>
+</ul>
+<h2 id="numbers">The numbers</h2>
+<p>29 numbers, read from the game code. None has a grade yet.</p>
+<div class="region" role="region" tabindex="0" aria-label="Numbers the game runs for armor and the six faces">
+<table class="numbers">
+<caption>Numbers the game runs for armor and the six faces</caption>
+<thead><tr>
+<th scope="col">Quantity</th>
+<th scope="col">Value</th>
+<th scope="col">Unit</th>
+<th scope="col">Grade</th>
+<th scope="col">Source</th>
+<th scope="col">Basis</th>
+</tr></thead>
+<tbody>
+<tr id="n-1"><th scope="row">The six faces, in print order</th><td class="val">FORE, PORT, STARBOARD, UPPER, LOWER, AFT</td><td>faces</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-2"><th scope="row">Share of the plate each face gets, in the same order (bow heaviest)</th><td class="val">4, 2, 2, 2, 2, 3</td><td>parts</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-3"><th scope="row">Pools along one side of a face</th><td class="val">3</td><td>pools</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-4"><th scope="row">Pools in one face</th><td class="val">9</td><td>pools</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-5"><th scope="row">Depth of a fresh pool, as a multiple of its face&#x27;s share</th><td class="val">6</td><td>multiple</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-6"><th scope="row">Impact speed where a plate&#x27;s hardness starts to fade</th><td class="val">3</td><td>km/s</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-7"><th scope="row">Rating a laminate plate reads per point of depth, the anchor of the speed rule</th><td class="val">0.5</td><td>rating per point</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-8"><th scope="row">Density of each plate material</th><td class="val">ROLLED STEEL 7.85, LAMINATE 4.8, SINTERED CERAMIC 3.21, SPRAYED ABLATIVE 1</td><td>t/m^3</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-9"><th scope="row">Thickness of one point of plate depth</th><td class="val">0.0001</td><td>m</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-10"><th scope="row">Most a plate reads as leaning, to keep the line-of-sight factor finite</th><td class="val">75</td><td>degrees</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-11"><th scope="row">Ceiling a full replate costs, by material</th><td class="val">ROLLED STEEL 0.02, SPRAYED ABLATIVE 0.03, LAMINATE 0.06, SINTERED CERAMIC 0.12</td><td>share of ceiling</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-12"><th scope="row">Share of its original depth below which a yard calls a plate scrap</th><td class="val">0.25</td><td>share</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-13"><th scope="row">Angles the helm can turn a face to a contact</th><td class="val">0, 30, 45</td><td>degrees</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-14"><th scope="row">Warship hull slopes by face</th><td class="val">FORE 35, PORT 15, STARBOARD 15, UPPER 10, LOWER 10, AFT 0</td><td>degrees</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-15"><th scope="row">Blunt hull slopes by face (carriers, troop transports, multirole)</th><td class="val">FORE 20, PORT 0, STARBOARD 0, UPPER 0, LOWER 0, AFT 0</td><td>degrees</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-16"><th scope="row">Freighter hull slopes by face</th><td class="val">FORE 0, PORT 0, STARBOARD 0, UPPER 0, LOWER 0, AFT 0</td><td>degrees</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-17"><th scope="row">Muzzle speed of an autocannon</th><td class="val">1.5</td><td>km/s</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-18"><th scope="row">Muzzle speed of a coilgun</th><td class="val">4</td><td>km/s</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-19"><th scope="row">Muzzle speed of a railgun</th><td class="val">6</td><td>km/s</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-20"><th scope="row">Standard laminate plate, rating</th><td class="val">80</td><td>rating</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-21"><th scope="row">Standard laminate plate, depth</th><td class="val">160</td><td>points</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-22"><th scope="row">Standard sintered ceramic plate, rating</th><td class="val">105</td><td>rating</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-23"><th scope="row">Standard sintered ceramic plate, depth</th><td class="val">100</td><td>points</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-24"><th scope="row">Standard sprayed ablative plate, rating</th><td class="val">60</td><td>rating</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-25"><th scope="row">Standard sprayed ablative plate, depth</th><td class="val">230</td><td>points</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-26"><th scope="row">Standard rolled steel plate, rating</th><td class="val">48</td><td>rating</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-27"><th scope="row">Standard rolled steel plate, depth</th><td class="val">178</td><td>points</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-28"><th scope="row">Girth of the hull model, half-girth over length (sets skin area and the target&#x27;s width)</th><td class="val">0.08</td><td>ratio</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-29"><th scope="row">Length of the median MEDIUM hull, the one anchor the scale uses</th><td class="val">100</td><td>m</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+</tbody></table></div>
+<h2 id="why">Why: the real physics or procedure</h2>
+<ul>
+<li>A fast round meets a plate differently from a slow one, because above about 3 km/s the round begins to melt on impact.</li>
+<li>At that speed the round and the plate both flow like a fluid, so strength matters less and density matters more.</li>
+<li>A first guide from Los Alamos says a shield must have the same mass per area as the projectile it stops.</li>
+<li>A Whipple shield is a thin outer sheet set apart from the main armor. It breaks a fast round into a cloud the main armor can handle.</li>
+<li>At the speeds of orbital debris, such a shield protects as well as a single solid wall 10 to 20 times as massive.</li>
+<li>A sloped plate is hit at an angle, so the round must cross more plate. A ship that turns to raise the angle cuts the penetration.</li>
+<li>A plate has mass, and the drive must push every kilogram, so designers always look for ways to save mass.</li>
+</ul>
+<h2 id="departs">Where the game departs from reality</h2>
+<ul>
+<li>A plate is one layer, so the game has no Whipple shield or standoff gap. It models the speed effect by fading hardness and leaning on mass per area (docs/armor-direction.md, 'Stage 2: the speed rule').</li>
+<li>The fade starts at 3 km/s, the mirror's melt line, by Austen's call on 2026-10-04, over the 1.5 km/s the arc first planned (docs/notes/armor.md, 'getspeedrating').</li>
+<li>The shape of the fade, (3 / v) squared, is AUTHORED. The mirror gives only the 3 to 7 km/s band (docs/notes/armor.md, 'getspeedrating').</li>
+<li>The joust ignores closing speed and uses muzzle speed, though physically a head-on pass is hypervelocity (docs/armor-direction.md, 'Open, not built').</li>
+<li>A plate weighs density times thickness times the hull's skin, with 0.15 mm a point of depth as the one free number. Austen's goal was a median plated hull about 20 percent slower in laminate (docs/notes/armor.md, 'MATERIAL_DENSITY_T_M3').</li>
+<li>The areal-density rule would make plate 3 to 20 times the hull's own dry mass, so the game's plate is a coat, not a full shield (docs/notes/armor.md, 'The physics anchor could not set it').</li>
+<li>Slope is the plate reading rating divided by the cosine of the angle, capped at 75 degrees. This is authored, and the mirror's remark on deflection at shallow angles is not modeled (docs/notes/armor.md).</li>
+<li>Armor faces are 3 by 3 pools, so a round holes one pool and its neighbor is untouched. Austen made this call on 2026-10-08 (comment above POOL_GRID in vehicles/ship/modules/armor.py).</li>
+<li>Hostile plate is doctrine, not a computed rule: brutes and Mars weld rolled steel, raiders keep light plate, and Earth and the Guild keep laminate and ceramic (docs/armor-direction.md, 'Hostile plate under the speed rule').</li>
+<li>A material differs by how it fails and how a yard mends it: steel welds back almost whole, ceramic spalls and patches poorly. The loss fractions are chosen so ceramic is scrap after about eight hard fights (docs/notes/armor.md, 'REPAIR_LOSS_BY_MATERIAL').</li>
+<li>The bow carries the most plate, with shares of 4, 2, 2, 2, 2, 3 in print order, for the dust reason in the mirror and because the drive sits aft (docs/notes/armor.md, 'Six faces').</li>
+</ul>
+<h2 id="silent">Where the sources are silent</h2>
+<ul>
+<li>The mirror gives no density for any of the four plate materials. The game's steel and silicon carbide densities are handbook figures, and laminate and ablative are chosen (docs/notes/armor.md).</li>
+<li>The mirror names the 3 to 7 km/s band where a Whipple shield works best, and gives no curve for how hardness fades inside it.</li>
+<li>The mirror defines obliquity for rods and gives no formula for the extra plate along a sloped line of fire (docs/notes/armor.md, 'geteffectiverating and MAX_OBLIQUITY').</li>
+<li>The mirror has no armor grid, no pool, and no rule for a plate wearing one spot at a time.</li>
+<li>The Los Alamos paper behind the areal-density rule is not found, so its limits are unknown (rocket/spacewardefense.php.html).</li>
+<li>No source says how thick a plate on a game ship is. The 'point of depth' is a game unit.</li>
+</ul>
+<h2 id="sources">Sources</h2>
+<ul>
+<li><a href="https://www.projectrho.com/public_html/rocket/spacewardefense.php">Atomic Rockets, spacewardefense</a>, Section 10: Armor, Damage and Survivability, Whipple shield passage: Whipple shields start to become worthwhile at about 3 km/s, when projectiles begin to melt on impact. They are most efficient at 7 km/s, and above that the projectile vaporizes, which is less effective but still far better than solid plate of the same mass. (<a href="sources.html#doc-rocket-spacewardefense-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/spacewardefense.php">Atomic Rockets, spacewardefense</a>, Section 10, standoff and Orbital Debris citation: At typical orbital-debris speeds, a Whipple shield protects as well as a single barrier 10 to 20 times as massive. The page cites 'Orbital Debris: A Technical Assessment', p. 124. (<a href="sources.html#doc-rocket-spacewardefense-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/spacewardefense.php">Atomic Rockets, spacewardefense</a>, Section 10, long-rod formula and Los Alamos rule: The page's penetration formula, from Luke Campbell, approaches the correct hydrodynamic limit at high velocities. It also says Los Alamos documents give a first rule that an effective shield needs the same areal density as the projectile, and notes the cited paper could not be found. (<a href="sources.html#doc-rocket-spacewardefense-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/spacewardefense.php">Atomic Rockets, spacewardefense</a>, Section 10, armor ladder: Metallic armors are the cheapest option but have a very high mass-to-strength ratio, and are likely used only where nothing else is available, such as an improvised vessel. Silicon carbide ceramic is tough, light and heat-resistant, and layering it with tungsten gives a composite. Laminating plates of different materials helps stop spalling. "nothing else is available" (<a href="sources.html#doc-rocket-spacewardefense-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/spacewardefense.php">Atomic Rockets, spacewardefense</a>, Section 10, defense against low-mass/high-speed projectiles: A fast light round can be deflected if the armor sits at a shallow enough angle, but the angle must be very shallow and the round very light, so this cannot be relied on. (<a href="sources.html#doc-rocket-spacewardefense-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/spacewardefense.php">Atomic Rockets, spacewardefense</a>, Opening fiction passage on a ship&#x27;s hull: A fictional ship description puts a thick sprayed-on foamed-composite ablative layer on the outside, whose vapor scatters energy weapon fire. It is a design aimed at lasers, not at kinetic rounds. (<a href="sources.html#doc-rocket-spacewardefense-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/spacegunconvent.php">Atomic Rockets, spacegunconvent</a>, Kinetics: rods and obliquity: Obliquity is the angle between the line of impact and the line perpendicular to the surface. A defending vessel can turn slightly to raise the obliquity and so significantly reduce penetration. (<a href="sources.html#doc-rocket-spacegunconvent-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/spacegunconvent.php">Atomic Rockets, spacegunconvent</a>, Whipple shield and standoff: There must be enough standoff between the Whipple shield and the main armor, or the inner plate is hit by a concentrated cloud of fragments and penetrated. The page says there is almost no test data above about 10 km/s. (<a href="sources.html#doc-rocket-spacegunconvent-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/basicdesign.php">Atomic Rockets, basicdesign</a>, Section before &#x27;Everything Is Connected&#x27;: Mass is the main cost of a rocket ship, so designers look for ways to conserve it. A station can use heavy iron, but a rocket vehicle uses light metals. "always looking for ways to conserve mass" (<a href="sources.html#doc-rocket-basicdesign-php-html">all uses</a>)</li>
+</ul>
+<h2 id="code">Code files</h2>
+<ul>
+<li><code>vehicles/ship/modules/armor.py</code></li>
+<li><code>vehicles/ship/modules/armordata.py</code></li>
+<li><code>vehicles/ship/faceslopedata.py</code></li>
+<li><code>vehicles/ship/hullform.py</code></li>
+<li><code>combat/newtonian/hullphysics.py</code></li>
+<li><code>combat/equipment.py</code></li>
+<li><code>combat/resolution.py</code></li>
+</ul>
+</main>
+<footer class="stamp">
+<p>Read from game commit 702fad0f (committed 2026-10-16). Pages written 2026-10-16.
+The explanations are stand-in text and may change.</p>
+</footer>
+</div>
+</body>
+</html>

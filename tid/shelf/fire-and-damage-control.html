@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fire and damage control</title>
+<meta name="description" content="What the game does for fire and damage control, its numbers, and where each comes from.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+:root {
+  color-scheme: light dark;
+  --bg: #fbf8f1; --panel: #f0eadb; --rule: #b9ae94; --text: #231c0f; --muted: #51493a; --accent: #7a4300;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #0e0903; --panel: #16110a; --rule: #4a4130; --text: #d6cbb6; --muted: #a89f88; --accent: #ffb040; }
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 1rem/1.65 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; padding: 0 1rem 4rem; }
+.skip { position: absolute; left: 1rem; top: -4rem; background: var(--accent); color: var(--bg); padding: .5rem 1rem; z-index: 10; }
+.skip:focus { top: .5rem; }
+.wrap { max-width: 64rem; margin: 0 auto; }
+.mono, h1, h2, h3, caption, th, nav, .brand, .stamp, .grade, .val { font-family: "DM Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+a { color: var(--accent); text-underline-offset: .2em; }
+a:focus-visible, .region:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.top { padding: 2rem 0 1rem; border-bottom: 1px solid var(--rule); }
+.brand { margin: 0 0 .75rem; font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .25rem 1.5rem; }
+nav a { display: inline-block; padding: .35rem 0; }
+h1 { font-size: clamp(1.4rem, 5vw, 2rem); line-height: 1.25; margin: 2rem 0 1rem; font-weight: 500; }
+h2 { font-size: 1.25rem; margin: 2.5rem 0 .75rem; padding-top: 1.25rem; border-top: 1px solid var(--rule); font-weight: 500; }
+h3 { font-size: 1.05rem; margin: 1.5rem 0 .5rem; font-weight: 500; }
+p, li { max-width: 46rem; }
+li + li { margin-top: .35rem; }
+code { font-family: "DM Mono", ui-monospace, Consolas, monospace; font-size: .92em; overflow-wrap: anywhere; }
+.lead { font-size: 1.1rem; }
+.note { background: var(--panel); border-left: 4px solid var(--accent); padding: .75rem 1rem; max-width: 46rem; }
+.region { overflow-x: auto; margin: 1rem 0; border: 1px solid var(--rule); }
+table { border-collapse: collapse; width: 100%; min-width: 46rem; font-size: .92rem; line-height: 1.5; }
+caption { text-align: left; padding: .75rem; font-size: .95rem; color: var(--muted); }
+th, td { text-align: left; vertical-align: top; padding: .55rem .75rem; border-top: 1px solid var(--rule); }
+thead th { background: var(--panel); font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; white-space: nowrap; }
+tbody th { font-weight: 400; font-family: inherit; min-width: 14rem; }
+td.val { overflow-wrap: anywhere; min-width: 7rem; }
+.numbers td:nth-child(5), .numbers td:nth-child(6) { min-width: 13rem; }
+td.count { text-align: right; font-variant-numeric: tabular-nums; }
+.grade { display: inline-block; border: 2px solid currentColor; border-radius: 4px; min-width: 1.6rem; text-align: center; padding: 0 .3rem; font-weight: 600; margin-right: .4rem; }
+.gradeitem { white-space: nowrap; }
+.stamp { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--rule); font-size: .8rem; color: var(--muted); }
+.toc { padding-left: 1.2rem; }
+dl.keys dt { font-weight: 600; margin-top: 1rem; }
+dl.keys dd { margin: .25rem 0 0; max-width: 46rem; }
+@media (max-width: 40rem) { body { padding: 0 1rem 3rem; } th, td { padding: .5rem; } }
+@media print { .skip { display: none; } }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to the content</a>
+<div class="wrap">
+<header class="top">
+<p class="brand"><a href="https://coldweld.dev/">Coldweld</a> / The Infinite Diaspora / Reference shelf</p>
+<nav aria-label="Reference shelf"><ul>
+<li><a href="index.html">Mechanics</a></li>
+<li><a href="grades.html">Grades</a></li>
+<li><a href="sources.html">Sources</a></li>
+</ul></nav>
+</header>
+<main id="main">
+<h1>Fire and damage control</h1>
+<ul class="toc">
+<li><a href="#brief">In brief</a></li>
+<li><a href="#does">What the game does</a></li>
+<li><a href="#numbers">The numbers</a></li>
+<li><a href="#why">Why: the real physics or procedure</a></li>
+<li><a href="#departs">Where the game departs from reality</a></li>
+<li><a href="#silent">Where the sources are silent</a></li>
+<li><a href="#sources">Sources</a></li>
+<li><a href="#code">Code files</a></li>
+</ul>
+<h2 id="brief">In brief</h2>
+<p class="lead">Damage control is the work of the ship's own crew to put out fires and seal vents after a round gets inside the hull, and a fire order is a captain's choice to vent, cut power to or throw out the thing that burns.</p>
+<h2 id="does">What the game does</h2>
+<h3>Damage Control</h3>
+<ul>
+<li>A round inside the hull can start a FIRE, and it burns 3% of your hull every 20 s.</li>
+<li>A fire nobody fights grows a level every 40 s.</li>
+<li>A big hole VENTS 6 life support every 20 s until it is sealed.</li>
+<li>LOCKERS | none, light (10%), standard (20%) or heavy (35%) of the hands, set at Engineering [4].</li>
+<li>Your ship sends standard, a raider light, and a merchant none.</li>
+<li>Your Damage Control department makes them faster.</li>
+<li>FIRST RESPONSE | up to 5 hands fight a new fire or vent for 40 s, even at none.</li>
+<li>A hurt or killed Damage Control head stops the parties lending hands for 40 s.</li>
+<li>A fire still going after the fight burns 60 s more. Hostiles fight theirs the same way.</li>
+</ul>
+<h3>Fire Classes</h3>
+<ul>
+<li>A fire's class is what burns: A is ordinary stuff, B a liquid or gas, C live electrics, D metal.</li>
+<li>The crew names the class of the worst fire in each space.</li>
+<li>SMOKE | every fire costs life support every 20 s. A D fire smokes least.</li>
+<li>REACTOR | a D fire, or a C fire with the power on, in the machinery space takes containment. At 0 the ship is lost.</li>
+<li>LOOP LEAK | a hit plant or a hot loop can leak lithium: a D fire.</li>
+<li>The first-response team has no breathing sets, so it fights only level 1 A, B and C fires.</li>
+<li>Every hand fights a live C fire at half pace.</li>
+<li>A suited crew lets the team fight a bigger fire. Only the locker parties fight a D fire.</li>
+</ul>
+<h3>Freight Fire</h3>
+<ul>
+<li>A fire in the hold burns the lot it started in: 2% of the hold's room every 20 s for each level.</li>
+<li>When that lot is gone the fire takes the next lot that burns. With none left, it goes out.</li>
+<li>A OR B | the class a lot feeds. Ore, water, metal ingots and most gases will not burn.</li>
+<li>VOLATILE | a flammable gas or liquid flashes a level higher and grows every 20 s.</li>
+<li>OXIDIZER | oxygen does not burn, but a cargo fire beside it starts a level higher.</li>
+<li>The market and the CARGO HOLD say what each good does in a fire before you load it.</li>
+</ul>
+<h3>Fire Orders</h3>
+<ul>
+<li>A fire order is your own, and it quotes its price before you give it.</li>
+<li>VENT | the fire burns 20 s more while the crew gets out, then dies. The space bleeds 6 life support every 20 s until sealed.</li>
+<li>The hold cools 60 s and refills for minutes or hours. Nobody goes in unsuited, and a berth sells you the air.</li>
+<li>DE-ENERGIZE | a live C fire burns on as A. For 40 s the space is dark. A warship's engineer does it unasked.</li>
+<li>JETTISON | a burning lot goes overboard with its fire, if it sits by the hatch.</li>
+<li>The crew stops the clock when a fire is worth an order.</li>
+<li>[4] ENGINEERING | its fire orders row gives one at any time.</li>
+<li>The Second and every other captain use one rule.</li>
+</ul>
+<h2 id="numbers">The numbers</h2>
+<p>28 numbers, read from the game code. None has a grade yet.</p>
+<div class="region" role="region" tabindex="0" aria-label="Numbers the game runs for fire and damage control">
+<table class="numbers">
+<caption>Numbers the game runs for fire and damage control</caption>
+<thead><tr>
+<th scope="col">Quantity</th>
+<th scope="col">Value</th>
+<th scope="col">Unit</th>
+<th scope="col">Grade</th>
+<th scope="col">Source</th>
+<th scope="col">Basis</th>
+</tr></thead>
+<tbody>
+<tr id="n-1"><th scope="row">Length of one fight tick, which every fire and vent number below is per</th><td class="val">20</td><td>seconds</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-2"><th scope="row">Chance one interior breach starts a fire</th><td class="val">0.5</td><td>chance</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-3"><th scope="row">Hull a fire burns per tick, per level, as a share of the hull&#x27;s maximum health</th><td class="val">0.03</td><td>share</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-4"><th scope="row">Highest level a fire reaches</th><td class="val">3</td><td>level</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-5"><th scope="row">Ticks an unfought fire waits before it grows a level</th><td class="val">2</td><td>ticks</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-6"><th scope="row">Ticks a fire still burning after the shooting costs the hull</th><td class="val">3</td><td>ticks</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-7"><th scope="row">Life support a venting compartment bleeds per tick</th><td class="val">6</td><td>life support</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-8"><th scope="row">Share of the hands in the repair lockers, by locker level</th><td class="val">NONE 0, LIGHT 0.1, STANDARD 0.2, HEAVY 0.35</td><td>share of hands</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-9"><th scope="row">Locker level the player&#x27;s own ship starts at</th><td class="val">STANDARD</td><td>level</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-10"><th scope="row">Hostile warship lockers (level, competence)</th><td class="val">STANDARD, 70</td><td>level, competence</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-11"><th scope="row">Hostile raider lockers (level, competence)</th><td class="val">LIGHT, 40</td><td>level, competence</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-12"><th scope="row">Hostile merchant lockers (level, competence)</th><td class="val">NONE, 20</td><td>level, competence</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-13"><th scope="row">Aim lost per step of hands in the lockers</th><td class="val">1</td><td>aim</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-14"><th scope="row">Size of that step, as a share of the hands</th><td class="val">0.05</td><td>share</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-15"><th scope="row">Share of the reactor top-up lost for each share of hands in the lockers</th><td class="val">0.5</td><td>share</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-16"><th scope="row">Most hands the first-response team can send</th><td class="val">5</td><td>hands</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-17"><th scope="row">Ticks the first-response team works a new fire or vent</th><td class="val">2</td><td>ticks</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-18"><th scope="row">Classes the first-response team can fight</th><td class="val">A, B, C</td><td>classes</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-19"><th scope="row">Pace of every hand against a live electrical fire</th><td class="val">0.5</td><td>share of full pace</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-20"><th scope="row">Burn tier by fire class (multiplier on the hull burn)</th><td class="val">A 1, C 1, B 1.5, K 1.5, D 2</td><td>multiplier</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-21"><th scope="row">Life support a fire takes per tick, per level, by class</th><td class="val">A 2, C 3, B 3, K 3, D 1</td><td>life support</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-22"><th scope="row">Reactor containment lost per tick, per level, by class, in the machinery space</th><td class="val">C 4, D 8</td><td>containment</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-23"><th scope="row">Where each class can start (class and weight out of 100, by place)</th><td class="val">the machinery space C, 70, D, 30, a passageway A, 70, C, 30, the air plant C, 60, A, 40, the crew spaces A, 80, C, 20</td><td>weight</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-24"><th scope="row">Share of the hold&#x27;s room a cargo fire burns per tick, per level</th><td class="val">0.02</td><td>share</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-25"><th scope="row">Ticks between growth steps for a volatile cargo fire</th><td class="val">1</td><td>ticks</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-26"><th scope="row">Ticks a de-energized space stays dark</th><td class="val">2</td><td>ticks</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-27"><th scope="row">Aim lost while a passageway is dark</th><td class="val">5</td><td>aim</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-28"><th scope="row">Ticks a vented hold stays open while its cargo cools</th><td class="val">3</td><td>ticks</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+</tbody></table></div>
+<h2 id="why">Why: the real physics or procedure</h2>
+<ul>
+<li>A real ship treats fire as the work of the whole crew, so every hand has a damage control duty.</li>
+<li>A fire needs fuel, heat and oxygen, and flame also needs the chain reaction, so removing any one stops it.</li>
+<li>Fire has four classes by fuel: A is ordinary solids, B is liquids and gases, C is live electrics, D is burning metal.</li>
+<li>A class C fire is best handled by cutting the power first and then fighting it as class A.</li>
+<li>A burning metal fire is different, because water can make hydrogen from it, so the crew uses dry powder or sand.</li>
+<li>A pure oxygen atmosphere makes any fire violent, and the Apollo 1 fire killed its crew in one.</li>
+<li>A small first team goes to a new fire without breathing sets, because speed matters most. A larger team relieves it if it fails.</li>
+<li>A merchant ship writes these duties on a muster list before the voyage, so its master holds the authority in advance.</li>
+</ul>
+<h2 id="departs">Where the game departs from reality</h2>
+<ul>
+<li>The captain splits the hands into NONE, LIGHT, STANDARD and HEAVY lockers, where the Navy manual has fixed lockers fully manned at general quarters. Austen chose the split on 2026-09-26 so that hands in the lockers are hands off the guns (docs/notes/damagecontrol.md, 'Why it exists').</li>
+<li>A hostile merchant hull gets no lockers, which follows the Weuve line in the mirror that its damage control is its lifeboat. The first-response team still works every hull, after the manual's rapid response team.</li>
+<li>All fire numbers are AUTHORED, because the sources give no rates (docs/notes/damagecontrol.md, 'Numbers, all AUTHORED'). The game uses a 20 second tick rather than minutes of real time.</li>
+<li>A class starts only where its fuel exists on that hull. No hull carries oil or burnable structure, so the only burning metal is the lithium in the cooling loop (docs/fire-direction.md, 'A class starts only where its fuel physically exists').</li>
+<li>Titanium Ingot is inert and no cargo is class D, because the hazmat table names only titanium powder and sponge (docs/sources/49-cfr-hazmat-classes.md, Austen's ruling of 2026-10-08).</li>
+<li>The game takes both sources on class D: the team's water and CO2 make it worse, as the mirror says, and only a locker party working from cover fights it, as the Navy manual says (docs/fire-direction.md, 'The sources, and where they are silent').</li>
+<li>Vent and jettison are a captain's press on every hull, by Austen's ruling of 2026-10-08, because no source names who holds them. The nearest cases are SORM 6.4.1 e for sprinkling a magazine and 46 CFR 35.35-75 for the senior officer's emergency action (docs/fire-direction.md, 'Who holds each fire order').</li>
+<li>De-energize follows the sources: a warship's engineer cuts the power unasked (SORM 6.4.1 e), and a merchant captain presses it. The merchant rule is a fair reading of a precaution, not a quote (docs/sources/46-cfr-merchant-fire.md).</li>
+<li>The 'evacuate the compartment' line is fiction, so the game charges venting its real cost in breathing mix (docs/fire-direction.md, 'Venting').</li>
+<li>The game's smoke, containment loss and cargo fire are authored to make a fire a ship-ending risk (docs/fire-direction.md, 'Picks', item 1).</li>
+</ul>
+<h2 id="silent">Where the sources are silent</h2>
+<ul>
+<li>No source gives a burn rate, a smoke rate or a time to put out a fire. The Navy chapter defines flash point and fire point and gives no figure.</li>
+<li>The Navy chapter says nothing on merchant crews, vacuum, venting or reactors. The Atomic Rockets mirror gives no damage control rates (docs/notes/damagecontrol.md).</li>
+<li>Who orders a compartment vented or a fixed agent released is silent in the Navy chapter, the 46 CFR parts and MGN 71. Jettison is silent in all of them, and the word does not appear in the four 46 CFR parts.</li>
+<li>Who leads a merchant fire party on the scene is silent. MGN 71 says only that a party must not be left without a leader.</li>
+<li>No source covers lithium metal as a coolant, or a class K fire in a ship's galley beyond the Navy's inspection list.</li>
+<li>The 49 CFR table classes a cargo and does not say how fast a lot burns. The mirror is silent too (docs/sources/49-cfr-hazmat-classes.md).</li>
+<li>NSTM chapter 555 is only a 6-page extract, and it names no fire order or officer.</li>
+</ul>
+<h2 id="sources">Sources</h2>
+<ul>
+<li>US Navy training manual, &quot;Damage Control&quot; (chapter 12), All hands, 12-1: The US Navy training chapter says damage control belongs to all hands, from the commanding officer to the newest recruit. (<a href="sources.html#doc-docs-sources-navy-damage-control-manual-md">all uses</a>)</li>
+<li>US Navy training manual, &quot;Damage Control&quot; (chapter 12), Rapid response team, 12-8: Each ship has a rapid response team of at least four fire-team-qualified people plus the fire marshal. It does not stop to put on protective clothing or breathing apparatus, and a full team relieves it if it cannot gain control in a preset time. (<a href="sources.html#doc-docs-sources-navy-damage-control-manual-md">all uses</a>)</li>
+<li>US Navy training manual, &quot;Damage Control&quot; (chapter 12), Fire, 12-18 to 12-21: A fire not controlled quickly can do more damage than the first casualty and can lose the ship. Fire needs fuel, heat and oxygen, and flame needs the chain reaction too. Hot smoke runs along passageways and up hatches, so openings to the fire area stay closed until the party is in place. (<a href="sources.html#doc-docs-sources-navy-damage-control-manual-md">all uses</a>)</li>
+<li>US Navy training manual, &quot;Damage Control&quot; (chapter 12), Figure 12-9, the four classes, 12-22: A is wood, cloth, paper (water or fog). B is flammable liquids and gases (secure the flow first). C is energized electrical (de-energize and fight as class A). D is combustible metal such as magnesium or titanium (water in quantity from a safe distance, because explosions may occur). (<a href="sources.html#doc-docs-sources-navy-damage-control-manual-md">all uses</a>)</li>
+<li>NSTM chapter 555, volume 1: Surface Ship Firefighting (an EXTRACT of 6 pages), 555-8.14, lithium battery fires: A 6-page extract of the Navy's firefighting manual covers batteries only. It says dry chemical and CO2 do not work on a lithium battery fire and that a narrow-angle fog of water is preferred. It says Navy batteries hold little free lithium, so this does not carry over to liquid metal lithium. (<a href="sources.html#doc-docs-sources-nstm-555-extract-md">all uses</a>)</li>
+<li><a href="https://www.ecfr.gov/current/title-46">46 CFR parts 35, 95, 97 and 199: US merchant vessel fire and emergency rules</a>, 46 CFR 199.80(b) and 97.55-1: The master writes the muster list and posts it before the voyage. The list assigns each fire duty, including the emergency squad for fires, and names substitutes. Only the master has the rule to de-energize a cargo hold's circuits, and that rule is a precaution before loading. (<a href="sources.html#doc-docs-sources-46-cfr-merchant-fire-md">all uses</a>)</li>
+<li>MGN 71 (M): Musters, drills, on-board training and instructions, and Decision Support Systems, Sections 2.1, 2.4, 7.5, 7.10: The UK note says the master compiles the muster list, which shows each crew member's fire duties and the closing of openings. It says crews drill closing openings to cut the air to a fire. It says on a small-crew cargo ship every member will usually need to know all the fire-fighting. (<a href="sources.html#doc-docs-sources-mgn71-md">all uses</a>)</li>
+<li><a href="https://www.law.cornell.edu/cfr/text/49/173">49 CFR 172.101 and 173: US hazardous materials classes (the UN classes the IMDG Code uses)</a>, 49 CFR 173.2, 173.120, 173.127: The US hazardous materials table sets the classes the freight rules use: a flammable gas, a flammable liquid with a flash point of 60 C or less, and an oxidizer that yields oxygen and so helps other things burn. (<a href="sources.html#doc-docs-sources-49-cfr-hazmat-classes-md">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/crew.php">Atomic Rockets, crew</a>, Damage Control: Atomic Rockets says all crew get basic damage control training, and the focus is fire suppression, controlling decompression and keeping the ship working. A damage control officer sets up parties by section, and the parties take orders from a central watch center. It also says the Mir fire in 1997 hid the extinguisher in smoke. "stabilize the damage as quick as possible" (<a href="sources.html#doc-rocket-crew-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/emergency.php">Atomic Rockets, emergency</a>, Escape Craft, and again under damage control: The page quotes Christopher Weuve, who says a merchant ship's primary piece of damage control equipment is a lifeboat. It also says to throw the threat overboard instead of building a lifeboat. (<a href="sources.html#doc-rocket-emergency-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/basicdesign.php">Atomic Rockets, basicdesign</a>, Fire: Titanium and magnesium burn fiercely in an oxygen atmosphere. Water on burning magnesium makes hydrogen, and CO2 does not work either, so the page recommends a class D extinguisher or a lot of sand. (<a href="sources.html#doc-rocket-basicdesign-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/lifesupport.php">Atomic Rockets, lifesupport</a>, Atmosphere discussion near the oxygen consumption figures: The page says pure oxygen as a ship's atmosphere is very dangerous, and gives the Apollo 1 accident as the proof. It recommends a breathing mix of oxygen and nitrogen. "insanely dangerous to use as the ship&#x27;s atmosphere" (<a href="sources.html#doc-rocket-lifesupport-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/advdesign.php">Atomic Rockets, advdesign</a>, Airlock discussion: Venting an airlock to space is a waste of limited breathing mix, and is done only in an emergency. (<a href="sources.html#doc-rocket-advdesign-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/prelimnotes.php">Atomic Rockets, prelimnotes</a>, A story excerpt, not a measured claim: A fiction passage says a fire in space can nearly always be put out by evacuating the compartment, but that a power room fire can get out of hand and reach the reactor control circuits. The game treats this as fiction. (<a href="sources.html#doc-rocket-prelimnotes-php-html">all uses</a>)</li>
+</ul>
+<h2 id="code">Code files</h2>
+<ul>
+<li><code>combat/damagecontrol.py</code></li>
+<li><code>combat/newtonian/bridge.py</code></li>
+<li><code>combat/newtonian/world.py</code></li>
+<li><code>combat/newtonian/views.py</code></li>
+<li><code>combat/hazards.py</code></li>
+<li><code>combat/power.py</code></li>
+<li><code>combat/resolution.py</code></li>
+<li><code>commodities/commoditiesdata.py</code></li>
+</ul>
+</main>
+<footer class="stamp">
+<p>Read from game commit 702fad0f (committed 2026-10-16). Pages written 2026-10-16.
+The explanations are stand-in text and may change.</p>
+</footer>
+</div>
+</body>
+</html>

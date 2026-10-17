@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Radiation dose</title>
+<meta name="description" content="What the game does for radiation dose, its numbers, and where each comes from.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+:root {
+  color-scheme: light dark;
+  --bg: #fbf8f1; --panel: #f0eadb; --rule: #b9ae94; --text: #231c0f; --muted: #51493a; --accent: #7a4300;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #0e0903; --panel: #16110a; --rule: #4a4130; --text: #d6cbb6; --muted: #a89f88; --accent: #ffb040; }
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 1rem/1.65 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; padding: 0 1rem 4rem; }
+.skip { position: absolute; left: 1rem; top: -4rem; background: var(--accent); color: var(--bg); padding: .5rem 1rem; z-index: 10; }
+.skip:focus { top: .5rem; }
+.wrap { max-width: 64rem; margin: 0 auto; }
+.mono, h1, h2, h3, caption, th, nav, .brand, .stamp, .grade, .val { font-family: "DM Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+a { color: var(--accent); text-underline-offset: .2em; }
+a:focus-visible, .region:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.top { padding: 2rem 0 1rem; border-bottom: 1px solid var(--rule); }
+.brand { margin: 0 0 .75rem; font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .25rem 1.5rem; }
+nav a { display: inline-block; padding: .35rem 0; }
+h1 { font-size: clamp(1.4rem, 5vw, 2rem); line-height: 1.25; margin: 2rem 0 1rem; font-weight: 500; }
+h2 { font-size: 1.25rem; margin: 2.5rem 0 .75rem; padding-top: 1.25rem; border-top: 1px solid var(--rule); font-weight: 500; }
+h3 { font-size: 1.05rem; margin: 1.5rem 0 .5rem; font-weight: 500; }
+p, li { max-width: 46rem; }
+li + li { margin-top: .35rem; }
+code { font-family: "DM Mono", ui-monospace, Consolas, monospace; font-size: .92em; overflow-wrap: anywhere; }
+.lead { font-size: 1.1rem; }
+.note { background: var(--panel); border-left: 4px solid var(--accent); padding: .75rem 1rem; max-width: 46rem; }
+.region { overflow-x: auto; margin: 1rem 0; border: 1px solid var(--rule); }
+table { border-collapse: collapse; width: 100%; min-width: 46rem; font-size: .92rem; line-height: 1.5; }
+caption { text-align: left; padding: .75rem; font-size: .95rem; color: var(--muted); }
+th, td { text-align: left; vertical-align: top; padding: .55rem .75rem; border-top: 1px solid var(--rule); }
+thead th { background: var(--panel); font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; white-space: nowrap; }
+tbody th { font-weight: 400; font-family: inherit; min-width: 14rem; }
+td.val { overflow-wrap: anywhere; min-width: 7rem; }
+.numbers td:nth-child(5), .numbers td:nth-child(6) { min-width: 13rem; }
+td.count { text-align: right; font-variant-numeric: tabular-nums; }
+.grade { display: inline-block; border: 2px solid currentColor; border-radius: 4px; min-width: 1.6rem; text-align: center; padding: 0 .3rem; font-weight: 600; margin-right: .4rem; }
+.gradeitem { white-space: nowrap; }
+.stamp { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--rule); font-size: .8rem; color: var(--muted); }
+.toc { padding-left: 1.2rem; }
+dl.keys dt { font-weight: 600; margin-top: 1rem; }
+dl.keys dd { margin: .25rem 0 0; max-width: 46rem; }
+@media (max-width: 40rem) { body { padding: 0 1rem 3rem; } th, td { padding: .5rem; } }
+@media print { .skip { display: none; } }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to the content</a>
+<div class="wrap">
+<header class="top">
+<p class="brand"><a href="https://coldweld.dev/">Coldweld</a> / The Infinite Diaspora / Reference shelf</p>
+<nav aria-label="Reference shelf"><ul>
+<li><a href="index.html">Mechanics</a></li>
+<li><a href="grades.html">Grades</a></li>
+<li><a href="sources.html">Sources</a></li>
+</ul></nav>
+</header>
+<main id="main">
+<h1>Radiation dose</h1>
+<ul class="toc">
+<li><a href="#brief">In brief</a></li>
+<li><a href="#does">What the game does</a></li>
+<li><a href="#numbers">The numbers</a></li>
+<li><a href="#why">Why: the real physics or procedure</a></li>
+<li><a href="#departs">Where the game departs from reality</a></li>
+<li><a href="#silent">Where the sources are silent</a></li>
+<li><a href="#sources">Sources</a></li>
+<li><a href="#code">Code files</a></li>
+</ul>
+<h2 id="brief">In brief</h2>
+<p class="lead">A radiation dose is the energy that radiation leaves in a body, and the game counts it in millisieverts (mSv), once for a whole career and once for a sudden burst.</p>
+<h2 id="does">What the game does</h2>
+<h3>Radiation</h3>
+<ul>
+<li>Radiation is measured in mSv, and every hand carries two doses.</li>
+<li>The lifetime dose never goes down, and open space adds about two mSv a day to it.</li>
+<li>Past 1,000 mSv of lifetime dose, a hand asks to go ashore.</li>
+<li>A solar storm or a radiation belt gives an acute dose in a few hours.</li>
+<li>Past 1,000 mSv of acute dose a hand is radiation sick, so they fight worse.</li>
+<li>The body clears acute dose over weeks, and a sickbay or a hospital makes that faster.</li>
+<li>Each fixed layer of shielding halves a dose, so no shield removes it.</li>
+<li>A storm is halved by a thinner layer than the background.</li>
+<li>A storm is weaker far from the Sun.</li>
+<li>Every screen that quotes a dose also says what it means in years of permitted exposure.</li>
+</ul>
+<h3>Jupiter&#x27;S Moons</h3>
+<ul>
+<li>Jupiter's moons are the exception, and they are not close.</li>
+<li>Io sits inside a trapped belt worth tens of thousands of mSv a day.</li>
+<li>Europa is thousands and Ganymede is tens.</li>
+<li>Callisto sits outside the belt and is quieter than open space.</li>
+</ul>
+<h2 id="numbers">The numbers</h2>
+<p>25 numbers, read from the game code. None has a grade yet.</p>
+<div class="region" role="region" tabindex="0" aria-label="Numbers the game runs for radiation dose">
+<table class="numbers">
+<caption>Numbers the game runs for radiation dose</caption>
+<thead><tr>
+<th scope="col">Quantity</th>
+<th scope="col">Value</th>
+<th scope="col">Unit</th>
+<th scope="col">Grade</th>
+<th scope="col">Source</th>
+<th scope="col">Basis</th>
+</tr></thead>
+<tbody>
+<tr id="n-1"><th scope="row">Open-space dose with no shielding</th><td class="val">1.84</td><td>mSv per day</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-2"><th scope="row">Shielding that halves the cosmic-ray background</th><td class="val">18</td><td>g/cm^2</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-3"><th scope="row">Shielding that halves a solar storm dose</th><td class="val">4.3</td><td>g/cm^2</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-4"><th scope="row">Solar events a year</th><td class="val">10</td><td>events</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-5"><th scope="row">Years in one solar cycle</th><td class="val">11</td><td>years</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-6"><th scope="row">Chance of an event on any one day</th><td class="val">0.0274</td><td>chance</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-7"><th scope="row">Slope of the size law for events</th><td class="val">0.4</td><td>index</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-8"><th scope="row">Worst event, bare hull at 1 AU, once a cycle</th><td class="val">5,000</td><td>mSv</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-9"><th scope="row">Smallest event the size law draws</th><td class="val">0.0394</td><td>mSv</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-10"><th scope="row">Exponent for how fast a storm weakens with distance from the Sun</th><td class="val">2</td><td>power of 1/R</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-11"><th scope="row">Nearest distance from the Sun the storm scale uses</th><td class="val">0.3</td><td>AU</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-12"><th scope="row">Annual limit the screens quote</th><td class="val">50</td><td>mSv</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-13"><th scope="row">Five-year limit the screens quote</th><td class="val">100</td><td>mSv</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-14"><th scope="row">Lifetime dose at which a hand asks to go ashore</th><td class="val">1,000</td><td>mSv</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-15"><th scope="row">Acute dose at which a hand is radiation sick</th><td class="val">1,000</td><td>mSv</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-16"><th scope="row">Acute dose the body clears each day</th><td class="val">35</td><td>mSv per day</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-17"><th scope="row">Time inside a belt per visit</th><td class="val">0.25</td><td>hours</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-18"><th scope="row">Morale lost each day while radiation sick</th><td class="val">4</td><td>morale per day</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-19"><th scope="row">Acute dose bands (floor, grade, term)</th><td class="val">2,000, 6, radiation sickness, 1,000, 5, mild radiation sickness, 750, 4, nausea risk, 500, 3, immune impairment, 250, 2, subclinical, 50, 1, over annual limit, 0, 0, within annual limit</td><td>mSv</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-20"><th scope="row">Io belt dose (read by getbeltdoseforvisit)</th><td class="val">36,000</td><td>mSv per day</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-21"><th scope="row">Europa belt dose</th><td class="val">5,000</td><td>mSv per day</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-22"><th scope="row">Ganymede belt dose</th><td class="val">80</td><td>mSv per day</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-23"><th scope="row">Callisto belt dose</th><td class="val">0.1</td><td>mSv per day</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-24"><th scope="row">Shielding of the RS-1 module</th><td class="val">2</td><td>g/cm^2</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-25"><th scope="row">Shielding of the RS-6 module</th><td class="val">25</td><td>g/cm^2</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+</tbody></table></div>
+<h2 id="why">Why: the real physics or procedure</h2>
+<ul>
+<li>A dose is the energy that radiation leaves in a body, and the sievert is the unit that weighs the damage by the kind of radiation.</li>
+<li>A chronic dose builds up slowly and raises the chance of cancer, so it never heals.</li>
+<li>An acute dose lands in hours and burns tissue, so it can make a person sick but the body can heal it.</li>
+<li>In open space the dose is steady: Curiosity measured 1.84 mSv a day on the way to Mars, with no shielding.</li>
+<li>The danger is the solar storm: the 1972 event reached about 50 Sv outside a ship and 5 Sv inside a command module.</li>
+<li>Solar protons are easier to stop than cosmic rays, so a storm shelter of about 25 g/cm^2 makes a storm survivable.</li>
+<li>Jupiter's magnetic field traps particles, so a belt around Io gives about 36 Sv a day while Callisto sits outside it.</li>
+<li>A career limit of 1 Sv is the ESA astronaut limit, and the yearly limit for an adult is 50 mSv.</li>
+</ul>
+<h2 id="departs">Where the game departs from reality</h2>
+<ul>
+<li>Gray and sievert are treated as the same unit for this radiation (docs/notes/travel.md, DOSE_BANDS).</li>
+<li>A belt visit counts as an acute dose, although the mirror files belts under chronic. A visit lasts a fraction of an hour, which is the mirror's own idea of acute (docs/notes/travel.md, 'Two doses: LIFETIME and ACUTE').</li>
+<li>The time in a belt is the one authored number in the model. Three Io visits come to about one sievert by design (docs/notes/travel.md, BELT_APPROACH_HOURS).</li>
+<li>The clearing rate for acute dose is derived from the chart's recovery times, about six weeks for the 1 to 2 Gy band (docs/notes/travel.md, 'Two doses').</li>
+<li>The lifetime limit uses the ESA figure of 1 Sv. The NASA career table, which depends on age and sex, is not used.</li>
+<li>The captain carries no dose, and death at the LD50 level is not modeled (docs/notes/travel.md, 'Not built').</li>
+<li>The mirror says a crew often gets warning of a storm. The game reports the dose after it lands (gameplay/gameplay.py, applyradiationexposure).</li>
+</ul>
+<h2 id="silent">Where the sources are silent</h2>
+<ul>
+<li>The mirror gives no clearing rate in mSv a day. It gives recovery times in weeks and months for each acute band only.</li>
+<li>The mirror gives no storm size law past 1 AU. The distance scaling for the outer system is an extrapolation (docs/notes/travel.md, 'Solar particle events as a size law').</li>
+<li>The mirror does not say how long a ship spends in a belt on a visit.</li>
+</ul>
+<h2 id="sources">Sources</h2>
+<ul>
+<li><a href="https://www.projectrho.com/public_html/rocket/radiation.php">Atomic Rockets, radiation</a>, Galactic Cosmic Radiation (Curiosity measurement): Curiosity measured 1.84 mSv a day on the trip to Mars from cosmic rays and solar storms, with no shielding. It flew at the peak of the 11-year solar cycle, when cosmic ray flux is relatively low. (<a href="sources.html#doc-rocket-radiation-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/radiation.php">Atomic Rockets, radiation</a>, Radiation levels on the way to Mars: A round trip of 360 days in space and 500 days on the surface adds up to about 1.01 Sv. The ESA astronaut limit is 1 Sv. (<a href="sources.html#doc-rocket-radiation-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/radiation.php">Atomic Rockets, radiation</a>, Solar storms: A shelter of about 25 g/cm^2 keeps astronauts out of serious risk, and 30 g/cm^2 of water is also called enough. Solar particles are easier to stop than cosmic rays. (<a href="sources.html#doc-rocket-radiation-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/radiation.php">Atomic Rockets, radiation</a>, Space Radiation Risks: GCR vs SFE: One event in 1972, between Apollo 16 and 17, reached about 5,000 REM (50 Sv) outside a ship. About 20 g/cm^2 of aluminum cuts a 5 Sv dose inside a command module to 0.2 Sv. 15 to 20 g/cm^2 of water cuts the cosmic-ray dose to about half. (<a href="sources.html#doc-rocket-radiation-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/radiation.php">Atomic Rockets, radiation</a>, Gradual SPEs (NASA text): About 10 gradual solar particle events happen each year. They are erratic, run for days, and usually follow a visible coronal mass ejection, so a crew often has warning. (<a href="sources.html#doc-rocket-radiation-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/radiation.php">Atomic Rockets, radiation</a>, Trapped Radiation (Jupiter dose table): Dose a day: Io 36 Sv, Europa 5 Sv, Ganymede 0.08 Sv, Callisto 0.0001 Sv. Callisto lies at 26.4 Jupiter radii, outside the belt. The single-year limit is 50 mSv and the five-year limit is 100 mSv. (<a href="sources.html#doc-rocket-radiation-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/radiation.php">Atomic Rockets, radiation</a>, Chronic Radiation Syndrome Chart: The annual limit for an adult is 0.05 Sv. (<a href="sources.html#doc-rocket-radiation-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/radiation.php">Atomic Rockets, radiation</a>, Acute Radiation Syndrome Chart: Mild acute symptoms appear from 1 Gy and become common near 2 Gy, after a latent phase of 10 to 14 days. The fatality rate in the 1 to 2 Gy band is about 10%, and LD50 is near 4.5 Gy. (<a href="sources.html#doc-rocket-radiation-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/radiation.php">Atomic Rockets, radiation</a>, Acute and chronic exposure (paragraph beginning &#x27;There are two kinds of radiation exposure&#x27;): Acute damage heals with time, and chronic damage gradually builds up over a lifetime. Chronic dose raises the cancer risk decades later. "acute radiation damage will heal. Chronic damage does not." (<a href="sources.html#doc-rocket-radiation-php-html">all uses</a>)</li>
+</ul>
+<h2 id="code">Code files</h2>
+<ul>
+<li><code>travel/travel.py</code></li>
+<li><code>gameplay/gameplay.py</code></li>
+<li><code>locations/stellarbodydata.py</code></li>
+<li><code>vehicles/ship/modules/radiationshieldingdata.py</code></li>
+<li><code>vehicles/ship/ship.py</code></li>
+<li><code>crew/firstmate.py</code></li>
+<li><code>crew/captainsquarters.py</code></li>
+</ul>
+</main>
+<footer class="stamp">
+<p>Read from game commit 702fad0f (committed 2026-10-16). Pages written 2026-10-16.
+The explanations are stand-in text and may change.</p>
+</footer>
+</div>
+</body>
+</html>

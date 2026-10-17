@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The sources</title>
+<meta name="description" content="Every document the reference shelf cites, with the numbers that cite it.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+:root {
+  color-scheme: light dark;
+  --bg: #fbf8f1; --panel: #f0eadb; --rule: #b9ae94; --text: #231c0f; --muted: #51493a; --accent: #7a4300;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #0e0903; --panel: #16110a; --rule: #4a4130; --text: #d6cbb6; --muted: #a89f88; --accent: #ffb040; }
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 1rem/1.65 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; padding: 0 1rem 4rem; }
+.skip { position: absolute; left: 1rem; top: -4rem; background: var(--accent); color: var(--bg); padding: .5rem 1rem; z-index: 10; }
+.skip:focus { top: .5rem; }
+.wrap { max-width: 64rem; margin: 0 auto; }
+.mono, h1, h2, h3, caption, th, nav, .brand, .stamp, .grade, .val { font-family: "DM Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+a { color: var(--accent); text-underline-offset: .2em; }
+a:focus-visible, .region:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.top { padding: 2rem 0 1rem; border-bottom: 1px solid var(--rule); }
+.brand { margin: 0 0 .75rem; font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .25rem 1.5rem; }
+nav a { display: inline-block; padding: .35rem 0; }
+h1 { font-size: clamp(1.4rem, 5vw, 2rem); line-height: 1.25; margin: 2rem 0 1rem; font-weight: 500; }
+h2 { font-size: 1.25rem; margin: 2.5rem 0 .75rem; padding-top: 1.25rem; border-top: 1px solid var(--rule); font-weight: 500; }
+h3 { font-size: 1.05rem; margin: 1.5rem 0 .5rem; font-weight: 500; }
+p, li { max-width: 46rem; }
+li + li { margin-top: .35rem; }
+code { font-family: "DM Mono", ui-monospace, Consolas, monospace; font-size: .92em; overflow-wrap: anywhere; }
+.lead { font-size: 1.1rem; }
+.note { background: var(--panel); border-left: 4px solid var(--accent); padding: .75rem 1rem; max-width: 46rem; }
+.region { overflow-x: auto; margin: 1rem 0; border: 1px solid var(--rule); }
+table { border-collapse: collapse; width: 100%; min-width: 46rem; font-size: .92rem; line-height: 1.5; }
+caption { text-align: left; padding: .75rem; font-size: .95rem; color: var(--muted); }
+th, td { text-align: left; vertical-align: top; padding: .55rem .75rem; border-top: 1px solid var(--rule); }
+thead th { background: var(--panel); font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; white-space: nowrap; }
+tbody th { font-weight: 400; font-family: inherit; min-width: 14rem; }
+td.val { overflow-wrap: anywhere; min-width: 7rem; }
+.numbers td:nth-child(5), .numbers td:nth-child(6) { min-width: 13rem; }
+td.count { text-align: right; font-variant-numeric: tabular-nums; }
+.grade { display: inline-block; border: 2px solid currentColor; border-radius: 4px; min-width: 1.6rem; text-align: center; padding: 0 .3rem; font-weight: 600; margin-right: .4rem; }
+.gradeitem { white-space: nowrap; }
+.stamp { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--rule); font-size: .8rem; color: var(--muted); }
+.toc { padding-left: 1.2rem; }
+dl.keys dt { font-weight: 600; margin-top: 1rem; }
+dl.keys dd { margin: .25rem 0 0; max-width: 46rem; }
+@media (max-width: 40rem) { body { padding: 0 1rem 3rem; } th, td { padding: .5rem; } }
+@media print { .skip { display: none; } }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to the content</a>
+<div class="wrap">
+<header class="top">
+<p class="brand"><a href="https://coldweld.dev/">Coldweld</a> / The Infinite Diaspora / Reference shelf</p>
+<nav aria-label="Reference shelf"><ul>
+<li><a href="index.html">Mechanics</a></li>
+<li><a href="grades.html">Grades</a></li>
+<li><a href="sources.html" aria-current="page">Sources</a></li>
+</ul></nav>
+</header>
+<main id="main">
+<h1>The sources</h1>
+<p class="lead">Every document the shelf cites, with each number that cites it. Where a document has a public link, the title is a link.</p>
+<ul class="toc"><li><a href="#group-rocket">Atomic Rockets pages</a></li><li><a href="#group-source">Public documents</a></li><li><a href="#group-notes">The game&#x27;s own design notes</a></li></ul>
+<h2 id="group-rocket">Atomic Rockets pages</h2>
+<h3 id="doc-rocket-advdesign-php-html"><a href="https://www.projectrho.com/public_html/rocket/advdesign.php">Atomic Rockets, advdesign</a></h3>
+<p>Cited by these mechanics:</p>
+<ul>
+<li><a href="fire-and-damage-control.html#sources">Fire and damage control</a>: Airlock discussion</li>
+</ul>
+<p>No single number cites this document yet.</p>
+<h3 id="doc-rocket-appworkedexample-php-html"><a href="https://www.projectrho.com/public_html/rocket/appworkedexample.php">Atomic Rockets, appworkedexample</a></h3>
+<p>Cited by these mechanics:</p>
+<ul>
+<li><a href="hull-wear-and-repair.html#sources">Hull wear and repair</a>: Structure</li>
+</ul>
+<p>No single number cites this document yet.</p>
+<h3 id="doc-rocket-atomicfuel-php-html"><a href="https://www.projectrho.com/public_html/rocket/atomicfuel.php">Atomic Rockets, atomicfuel</a></h3>
+<p>Cited by these mechanics:</p>
+<ul>
+<li><a href="the-power-model.html#sources">The power model</a>: Power reactors (decay heat)</li>
+<li><a href="fuel-and-the-torch-drive.html#sources">Fuel and the torch drive</a>: The Details</li>
+</ul>
+<p>No single number cites this document yet.</p>
+<h3 id="doc-rocket-basicdesign-php-html"><a href="https://www.projectrho.com/public_html/rocket/basicdesign.php">Atomic Rockets, basicdesign</a></h3>
+<p>Cited by these mechanics:</p>
+<ul>
+<li><a href="fire-and-damage-control.html#sources">Fire and damage control</a>: Fire</li>
+<li><a href="armor-and-the-six-faces.html#sources">Armor and the six faces</a>: Section before &#x27;Everything Is Connected&#x27;</li>
+<li><a href="hold-balance-and-the-gimbal.html#sources">Hold balance and the gimbal</a>: Rocket Tumble</li>
+<li><a href="hold-balance-and-the-gimbal.html#sources">Hold balance and the gimbal</a>: Saddle Truss</li>
+</ul>
+<p>No single number cites this document yet.</p>
+<h3 id="doc-rocket-celss-php-html"><a href="https://www.projectrho.com/public_html/rocket/celss.php">Atomic Rockets, celss</a></h3>
+<p>Cited by these mechanics:</p>
+<ul>
+<li><a href="life-support-food-and-water.html#sources">Life support, food and water</a>: Controlled Ecological Life Support System (opening and Biosphere II note)</li>
+</ul>
+<p>No single number cites this document yet.</p>
+<h3 id="doc-rocket-controldeck-php-html"><a href="https://www.projectrho.com/public_html/rocket/controldeck.php">Atomic Rockets, controldeck</a></h3>
+<p>Cited by these mechanics:</p>
+<ul>
+<li><a href="the-newtonian-fight.html#sources">The Newtonian fight</a>: Moment of Inertia</li>
+<li><a href="hold-balance-and-the-gimbal.html#sources">Hold balance and the gimbal</a>: Gimbaled Engines</li>
+<li><a href="hold-balance-and-the-gimbal.html#sources">Hold balance and the gimbal</a>: Atomic Rocket Pilot Console</li>
+</ul>
+<p>No single number cites this document yet.</p>
+<h3 id="doc-rocket-crew-php-html"><a href="https://www.projectrho.com/public_html/rocket/crew.php">Atomic Rockets, crew</a></h3>
+<p>Cited by these mechanics:</p>
+<ul>
+<li><a href="fire-and-damage-control.html#sources">Fire and damage control</a>: Damage Control</li>
+<li><a href="ship-s-organization-and-the-second.html#sources">Ship&#x27;s organization and the Second</a>: Command</li>
+</ul>
+<p>No single number cites this document yet.</p>
+<h3 id="doc-rocket-emergency-php-html"><a href="https://www.projectrho.com/public_html/rocket/emergency.php">Atomic Rockets, emergency</a></h3>
+<p>Cited by these mechanics:</p>
+<ul>
+<li><a href="fire-and-damage-control.html#sources">Fire and damage control</a>: Escape Craft, and again under damage control</li>
+</ul>
+<p>No single number cites this document yet.</p>
+<h3 id="doc-rocket-enginelist2-php-html"><a href="https://www.projectrho.com/public_html/rocket/enginelist2.php">Atomic Rockets, enginelist2</a></h3>
+<p>Cited by these mechanics:</p>
+<ul>
+<li><a href="fuel-and-the-torch-drive.html#sources">Fuel and the torch drive</a>: Nuclear Salt Water (NSWR)</li>
+</ul>
+<p>No single number cites this document yet.</p>
+<h3 id="doc-rocket-enginelist3-php-html"><a href="https://www.projectrho.com/public_html/rocket/enginelist3.php">Atomic Rockets, enginelist3</a></h3>
+<p>Cited by these mechanics:</p>
+<ul>
+<li><a href="fuel-and-the-torch-drive.html#sources">Fuel and the torch drive</a>: Epstein Drive</li>
+</ul>
+<p>No single number cites this document yet.</p>
+<h3 id="doc-rocket-heatrad-php-html"><a href="https://www.projectrho.com/public_html/rocket/heatrad.php">Atomic Rockets, heatrad</a></h3>
+<p>Cited by these mechanics:</p>
+<ul>
+<li><a href="heat-and-radiators.html#sources">Heat and radiators</a>: Radiator Details (Stefan-Boltzmann law)</li>
+<li><a href="heat-and-radiators.html#sources">Heat and radiators</a>: Combat Radiators (the Achilles Heel passage)</li>
+<li><a href="heat-and-radiators.html#sources">Heat and radiators</a>: Sikon, Combat Heat Sinks</li>
+<li><a href="running-dark.html#sources">Running dark</a>: Radiator vulnerability (text beginning &#x27;Solutions for reducing the vulnerability of radiators&#x27;)</li>
+</ul>
+<p>No single number cites this document yet.</p>
+<h3 id="doc-rocket-lifesupport-php-html"><a href="https://www.projectrho.com/public_html/rocket/lifesupport.php">Atomic Rockets, lifesupport</a></h3>
+<p>Cited by these mechanics:</p>
+<ul>
+<li><a href="fire-and-damage-control.html#sources">Fire and damage control</a>: Atmosphere discussion near the oxygen consumption figures</li>
+<li><a href="life-support-food-and-water.html#sources">Life support, food and water</a>: Introduction (person-day accounting)</li>
+<li><a href="life-support-food-and-water.html#sources">Life support, food and water</a>: Eeking Out</li>
+<li><a href="life-support-food-and-water.html#sources">Life support, food and water</a>: Food (USS Wyoming figures)</li>
+<li><a href="life-support-food-and-water.html#sources">Life support, food and water</a>: alternate figures from the NC State document</li>
+<li><a href="life-support-food-and-water.html#sources">Life support, food and water</a>: Breathing Mix</li>
+<li><a href="life-support-food-and-water.html#sources">Life support, food and water</a>: carbon dioxide in the air (percent list)</li>
+</ul>
+<p>No single number cites this document yet.</p>
+<h3 id="doc-rocket-mining-php-html"><a href="https://www.projectrho.com/public_html/rocket/mining.php">Atomic Rockets, mining</a></h3>
+<p>Cited by these mechanics:</p>
+<ul>
+<li><a href="mining-the-belt.html#sources">Mining the belt</a>: the table of the largest asteroids</li>
+<li><a href="mining-the-belt.html#sources">Mining the belt</a>: the text under the table of the largest asteroids</li>
+<li><a href="mining-the-belt.html#sources">Mining the belt</a>: the list of asteroid types (C, S, M, D)</li>
+</ul>
+<p>No single number cites this document yet.</p>
+<h3 id="doc-rocket-misconceptions-php-html"><a href="https://www.projectrho.com/public_html/rocket/misconceptions.php">Atomic Rockets, misconceptions</a></h3>
+<p>Cited by these mechanics:</p>
+<ul>
+<li><a href="the-newtonian-fight.html#sources">The Newtonian fight</a>: There Is No Friction In Space</li>
+<li><a href="the-newtonian-fight.html#sources">The Newtonian fight</a>: Rockets Are Not Fighter Planes</li>
+<li><a href="the-newtonian-fight.html#sources">The Newtonian fight</a>: Rockets Are Not Arrows</li>
+</ul>
+<p>No single number cites this document yet.</p>
+<h3 id="doc-rocket-pirate-php-html"><a href="https://www.projectrho.com/public_html/rocket/pirate.php">Atomic Rockets, pirate</a></h3>
+<p>Cited by these mechanics:</p>
+<ul>
+<li><a href="the-newtonian-fight.html#sources">The Newtonian fight</a>: Intercepting the target</li>
+<li><a href="the-newtonian-fight.html#sources">The Newtonian fight</a>: Approach</li>
+<li><a href="hailing-boarding-and-prize-law.html#sources">Hailing, boarding and prize law</a>: Piracy</li>
+</ul>
+<p>No single number cites this document yet.</p>
+<h3 id="doc-rocket-power-php-html"><a href="https://www.projectrho.com/public_html/rocket/power.php">Atomic Rockets, power</a></h3>
+<p>Cited by these mechanics:</p>
+<ul>
+<li><a href="the-power-model.html#sources">The power model</a>: Fission power (SAFE-400 heatpipe reactor)</li>
+<li><a href="the-power-model.html#sources">The power model</a>: batteries table (Lithium-Ion rechargeables)</li>
+</ul>
+<p>No single number cites this document yet.</p>
+<h3 id="doc-rocket-prelimnotes-php-html"><a href="https://www.projectrho.com/public_html/rocket/prelimnotes.php">Atomic Rockets, prelimnotes</a></h3>
+<p>Cited by these mechanics:</p>
+<ul>
+<li><a href="fire-and-damage-control.html#sources">Fire and damage control</a>: A story excerpt, not a measured claim</li>
+<li><a href="mining-the-belt.html#sources">Mining the belt</a>: the asteroid-belt trope (Annoying Trope #1)</li>
+</ul>
+<p>No single number cites this document yet.</p>
+<h3 id="doc-rocket-radiation-php-html"><a href="https://www.projectrho.com/public_html/rocket/radiation.php">Atomic Rockets, radiation</a></h3>
+<p>Cited by these mechanics:</p>
+<ul>
+<li><a href="radiation-dose.html#sources">Radiation dose</a>: Galactic Cosmic Radiation (Curiosity measurement)</li>
+<li><a href="radiation-dose.html#sources">Radiation dose</a>: Radiation levels on the way to Mars</li>
+<li><a href="radiation-dose.html#sources">Radiation dose</a>: Solar storms</li>
+<li><a href="radiation-dose.html#sources">Radiation dose</a>: Space Radiation Risks: GCR vs SFE</li>
+<li><a href="radiation-dose.html#sources">Radiation dose</a>: Gradual SPEs (NASA text)</li>
+<li><a href="radiation-dose.html#sources">Radiation dose</a>: Trapped Radiation (Jupiter dose table)</li>
+<li><a href="radiation-dose.html#sources">Radiation dose</a>: Chronic Radiation Syndrome Chart</li>
+<li><a href="radiation-dose.html#sources">Radiation dose</a>: Acute Radiation Syndrome Chart</li>
+<li><a href="radiation-dose.html#sources">Radiation dose</a>: Acute and chronic exposure (paragraph beginning &#x27;There are two kinds of radiation exposure&#x27;)</li>
+</ul>
+<p>No single number cites this document yet.</p>
+<h3 id="doc-rocket-rescue-php-html"><a href="https://www.projectrho.com/public_html/rocket/rescue.php">Atomic Rockets, rescue</a></h3>
+<p>Cited by these mechanics:</p>
+<ul>
+<li><a href="salvage-and-distress.html#sources">Salvage and distress</a>: Introduction</li>
+</ul>
+<p>No single number cites this document yet.</p>
+<h3 id="doc-rocket-sidearmintro-php-html"><a href="https://www.projectrho.com/public_html/rocket/sidearmintro.php">Atomic Rockets, sidearmintro</a></h3>
+<p>Cited by these mechanics:</p>
+<ul>
+<li><a href="kinetic-guns-and-point-defense.html#sources">Kinetic guns and point defense</a>: Which Gun Is Better?</li>
+</ul>
+<p>No single number cites this document yet.</p>
+<h3 id="doc-rocket-spacegunconvent-php-html"><a href="https://www.projectrho.com/public_html/rocket/spacegunconvent.php">Atomic Rockets, spacegunconvent</a></h3>
+<p>Cited by these mechanics:</p>
+<ul>
+<li><a href="armor-and-the-six-faces.html#sources">Armor and the six faces</a>: Kinetics: rods and obliquity</li>
+<li><a href="armor-and-the-six-faces.html#sources">Armor and the six faces</a>: Whipple shield and standoff</li>
+<li><a href="the-power-model.html#sources">The power model</a>: railgun efficiency</li>
+<li><a href="kinetic-guns-and-point-defense.html#sources">Kinetic guns and point defense</a>: Equations (Robinson&#x27;s First Law of Space Combat)</li>
+<li><a href="kinetic-guns-and-point-defense.html#sources">Kinetic guns and point defense</a>: Equations (hypervelocity impact)</li>
+<li><a href="kinetic-guns-and-point-defense.html#sources">Kinetic guns and point defense</a>: Railguns</li>
+<li><a href="kinetic-guns-and-point-defense.html#sources">Kinetic guns and point defense</a>: Coilgun (Ferromagnetic projectiles)</li>
+<li><a href="kinetic-guns-and-point-defense.html#sources">Kinetic guns and point defense</a>: Kinetic Kill Weapons</li>
+<li><a href="kinetic-guns-and-point-defense.html#sources">Kinetic guns and point defense</a>: Equations (Combustion Light Gas Gun and ETC guns)</li>
+<li><a href="kinetic-guns-and-point-defense.html#sources">Kinetic guns and point defense</a>: Equations (seekers)</li>
+</ul>
+<p>No single number cites this document yet.</p>
+<h3 id="doc-rocket-spacegunconvent2-php-html"><a href="https://www.projectrho.com/public_html/rocket/spacegunconvent2.php">Atomic Rockets, spacegunconvent2</a></h3>
+<p>Cited by these mechanics:</p>
+<ul>
+<li><a href="kinetic-guns-and-point-defense.html#sources">Kinetic guns and point defense</a>: Equations (kinetic particle attacks, in the laser cannon section)</li>
+</ul>
+<p>No single number cites this document yet.</p>
+<h3 id="doc-rocket-spacegunintro-php-html"><a href="https://www.projectrho.com/public_html/rocket/spacegunintro.php">Atomic Rockets, spacegunintro</a></h3>
+<p>Cited by these mechanics:</p>
+<ul>
+<li><a href="kinetic-guns-and-point-defense.html#sources">Kinetic guns and point defense</a>: Introduction</li>
+</ul>
+<p>No single number cites this document yet.</p>
+<h3 id="doc-rocket-spacewardefense-php-html"><a href="https://www.projectrho.com/public_html/rocket/spacewardefense.php">Atomic Rockets, spacewardefense</a></h3>
+<p>Cited by these mechanics:</p>
+<ul>
+<li><a href="armor-and-the-six-faces.html#sources">Armor and the six faces</a>: Section 10: Armor, Damage and Survivability, Whipple shield passage</li>
+<li><a href="armor-and-the-six-faces.html#sources">Armor and the six faces</a>: Section 10, standoff and Orbital Debris citation</li>
+<li><a href="armor-and-the-six-faces.html#sources">Armor and the six faces</a>: Section 10, long-rod formula and Los Alamos rule</li>
+<li><a href="armor-and-the-six-faces.html#sources">Armor and the six faces</a>: Section 10, armor ladder</li>
+<li><a href="armor-and-the-six-faces.html#sources">Armor and the six faces</a>: Section 10, defense against low-mass/high-speed projectiles</li>
+<li><a href="armor-and-the-six-faces.html#sources">Armor and the six faces</a>: Opening fiction passage on a ship&#x27;s hull</li>
+<li><a href="kinetic-guns-and-point-defense.html#sources">Kinetic guns and point defense</a>: Kinetic PD</li>
+<li><a href="kinetic-guns-and-point-defense.html#sources">Kinetic guns and point defense</a>: Laser vs. Missile</li>
+<li><a href="kinetic-guns-and-point-defense.html#sources">Kinetic guns and point defense</a>: Armor</li>
+</ul>
+<p>No single number cites this document yet.</p>
+<h3 id="doc-rocket-spacewardetect-php-html"><a href="https://www.projectrho.com/public_html/rocket/spacewardetect.php">Atomic Rockets, spacewardetect</a></h3>
+<p>Cited by these mechanics:</p>
+<ul>
+<li><a href="running-dark.html#sources">Running dark</a>: What If I Run Silent And Cold?</li>
+<li><a href="running-dark.html#sources">Running dark</a>: Surely Sheer Distance Will Hide Engine Burns</li>
+<li><a href="running-dark.html#sources">Running dark</a>: Section 3: Stealth Problems Overview</li>
+<li><a href="running-dark.html#sources">Running dark</a>: There Ain&#x27;t No Stealth In Space</li>
+</ul>
+<p>No single number cites this document yet.</p>
+<h3 id="doc-rocket-spacewarintro-php-html"><a href="https://www.projectrho.com/public_html/rocket/spacewarintro.php">Atomic Rockets, spacewarintro</a></h3>
+<p>Cited by these mechanics:</p>
+<ul>
+<li><a href="the-newtonian-fight.html#sources">The Newtonian fight</a>: 4. Everything Happens Super Fast</li>
+<li><a href="the-newtonian-fight.html#sources">The Newtonian fight</a>: 1. Space Is Really Big</li>
+</ul>
+<p>No single number cites this document yet.</p>
+<h3 id="doc-rocket-spacewarship-php-html"><a href="https://www.projectrho.com/public_html/rocket/spacewarship.php">Atomic Rockets, spacewarship</a></h3>
+<p>Cited by these mechanics:</p>
+<ul>
+<li><a href="heat-and-radiators.html#sources">Heat and radiators</a>: the coilgun in the example design</li>
+<li><a href="the-power-model.html#sources">The power model</a>: Space Warships: Power Generation, Waste Heat, and Firepower</li>
+</ul>
+<p>No single number cites this document yet.</p>
+<h3 id="doc-rocket-spacewarshipart-php-html"><a href="https://www.projectrho.com/public_html/rocket/spacewarshipart.php">Atomic Rockets, spacewarshipart</a></h3>
+<p>Cited by these mechanics:</p>
+<ul>
+<li><a href="heat-and-radiators.html#sources">Heat and radiators</a>: Heat Radiators and the multi-mode reactor passage</li>
+<li><a href="the-power-model.html#sources">The power model</a>: multi-mode reactor for burst power</li>
+</ul>
+<p>No single number cites this document yet.</p>
+<h3 id="doc-rocket-spacewartactic-php-html"><a href="https://www.projectrho.com/public_html/rocket/spacewartactic.php">Atomic Rockets, spacewartactic</a></h3>
+<p>Cited by these mechanics:</p>
+<ul>
+<li><a href="the-newtonian-fight.html#sources">The Newtonian fight</a>: No &quot;stop-onna-dime&quot;</li>
+<li><a href="the-newtonian-fight.html#sources">The Newtonian fight</a>: Hard to hit distant moving object</li>
+<li><a href="the-newtonian-fight.html#sources">The Newtonian fight</a>: The Trumpet Bell Effect</li>
+<li><a href="the-newtonian-fight.html#sources">The Newtonian fight</a>: Tactical Effects</li>
+</ul>
+<p>No single number cites this document yet.</p>
+<h3 id="doc-rocket-starshipowner-php-html"><a href="https://www.projectrho.com/public_html/rocket/starshipowner.php">Atomic Rockets, starshipowner</a></h3>
+<p>Cited by these mechanics:</p>
+<ul>
+<li><a href="hull-wear-and-repair.html#sources">Hull wear and repair</a>: cost of running a cargo starship</li>
+<li><a href="hull-wear-and-repair.html#sources">Hull wear and repair</a>: maintenance remarks</li>
+</ul>
+<p>No single number cites this document yet.</p>
+<h3 id="doc-rocket-thermodynamics-php-html"><a href="https://www.projectrho.com/public_html/rocket/thermodynamics.php">Atomic Rockets, thermodynamics</a></h3>
+<p>Cited by these mechanics:</p>
+<ul>
+<li><a href="heat-and-radiators.html#sources">Heat and radiators</a>: the heat radiator Achilles heel passage and the thermocouple answer</li>
+</ul>
+<p>No single number cites this document yet.</p>
+<h3 id="doc-rocket-torchships-php-html"><a href="https://www.projectrho.com/public_html/rocket/torchships.php">Atomic Rockets, torchships</a></h3>
+<p>Cited by these mechanics:</p>
+<ul>
+<li><a href="fuel-and-the-torch-drive.html#sources">Fuel and the torch drive</a>: Introduction</li>
+<li><a href="fuel-and-the-torch-drive.html#sources">Fuel and the torch drive</a>: Torchship Performance (Rocketpunk Manifesto, On Torchships)</li>
+<li><a href="fuel-and-the-torch-drive.html#sources">Fuel and the torch drive</a>: Constant-acceleration Delta-V</li>
+<li><a href="fuel-and-the-torch-drive.html#sources">Fuel and the torch drive</a>: Low Gear / High Gear (Robinson and Campbell)</li>
+</ul>
+<p>No single number cites this document yet.</p>
+<h2 id="group-source">Public documents</h2>
+<h3 id="doc-docs-sources-46-cfr-merchant-fire-md"><a href="https://www.ecfr.gov/current/title-46">46 CFR parts 35, 95, 97 and 199: US merchant vessel fire and emergency rules</a></h3>
+<p>Cited by these mechanics:</p>
+<ul>
+<li><a href="fire-and-damage-control.html#sources">Fire and damage control</a>: 46 CFR 199.80(b) and 97.55-1</li>
+</ul>
+<p>No single number cites this document yet.</p>
+<h3 id="doc-docs-sources-49-cfr-hazmat-classes-md"><a href="https://www.law.cornell.edu/cfr/text/49/173">49 CFR 172.101 and 173: US hazardous materials classes (the UN classes the IMDG Code uses)</a></h3>
+<p>Cited by these mechanics:</p>
+<ul>
+<li><a href="fire-and-damage-control.html#sources">Fire and damage control</a>: 49 CFR 173.2, 173.120, 173.127</li>
+</ul>
+<p>No single number cites this document yet.</p>
+<h3 id="doc-docs-sources-acp-125-g-radiotelephone-md">ACP 125(G), Communications Instructions: Radiotelephone Procedures</h3>
+<p>No public link is recorded for this document yet.</p>
+<p>Cited by these mechanics:</p>
+<ul>
+<li><a href="radio-voice.html#sources">Radio voice</a>: Paragraphs 520, 522, 536 and 901, Annex A to chapter 3, chapter 7 example C</li>
+</ul>
+<p>No single number cites this document yet.</p>
+<h3 id="doc-docs-sources-iamsar-manual-2016-md">IAMSAR Manual, volumes I and III (2016), with SOLAS V/33</h3>
+<p>No public link is recorded for this document yet.</p>
+<p>Cited by these mechanics:</p>
+<ul>
+<li><a href="salvage-and-distress.html#sources">Salvage and distress</a>: Volume III section 1 and appendix A (SOLAS V/33.1, 33.2), section 2 figures 2-3 and 2-4, and p. 4-7</li>
+</ul>
+<p>No single number cites this document yet.</p>
+<h3 id="doc-docs-sources-salvage-convention-1989-md">International Convention on Salvage, 1989</h3>
+<p>No public link is recorded for this document yet.</p>
+<p>Cited by these mechanics:</p>
+<ul>
+<li><a href="hull-wear-and-repair.html#sources">Hull wear and repair</a>: What the game does with it</li>
+<li><a href="salvage-and-distress.html#sources">Salvage and distress</a>: Articles 1(a), 4(1), 12, 13, 16, 18 and 19</li>
+</ul>
+<p>No single number cites this document yet.</p>
+<h3 id="doc-docs-sources-lloyds-open-form-2020-md">Lloyd&#x27;s Standard Form of Salvage Agreement (Lloyd&#x27;s Open Form, LOF 2020)</h3>
+<p>No public link is recorded for this document yet.</p>
+<p>Cited by these mechanics:</p>
+<ul>
+<li><a href="salvage-and-distress.html#sources">Salvage and distress</a>: Heading and clauses A, G and K</li>
+</ul>
+<p>No single number cites this document yet.</p>
+<h3 id="doc-docs-sources-stcw-conference-volume-md">Marine Navigation and Safety of Sea Transportation: STCW, MET, Human Resources and Crew Manning</h3>
+<p>No public link is recorded for this document yet.</p>
+<p>Cited by these mechanics:</p>
+<ul>
+<li><a href="ship-s-organization-and-the-second.html#sources">Ship&#x27;s organization and the Second</a>: PDF pages 57, 75, 137, 145 and 146</li>
+</ul>
+<p>No single number cites this document yet.</p>
+<h3 id="doc-docs-sources-mgn71-md">MGN 71 (M): Musters, drills, on-board training and instructions, and Decision Support Systems</h3>
+<p>No public link is recorded for this document yet.</p>
+<p>Cited by these mechanics:</p>
+<ul>
+<li><a href="fire-and-damage-control.html#sources">Fire and damage control</a>: Sections 2.1, 2.4, 7.5, 7.10</li>
+</ul>
+<p>No single number cites this document yet.</p>
+<h3 id="doc-docs-sources-nstm-555-extract-md">NSTM chapter 555, volume 1: Surface Ship Firefighting (an EXTRACT of 6 pages)</h3>
+<p>No public link is recorded for this document yet.</p>
+<p>Cited by these mechanics:</p>
+<ul>
+<li><a href="fire-and-damage-control.html#sources">Fire and damage control</a>: 555-8.14, lithium battery fires</li>
+</ul>
+<p>No single number cites this document yet.</p>
+<h3 id="doc-docs-sources-sorm-md">Standard Organization and Regulations of the U.S. Navy (SORM)</h3>
+<p>No public link is recorded for this document yet.</p>
+<p>Cited by these mechanics:</p>
+<ul>
+<li><a href="the-power-model.html#sources">The power model</a>: 6.4.1 e, engineer officer, item 7</li>
+<li><a href="hailing-boarding-and-prize-law.html#sources">Hailing, boarding and prize law</a>: Section 6.3.21 d(1), e(1), f(1), f(6)</li>
+<li><a href="ship-s-organization-and-the-second.html#sources">Ship&#x27;s organization and the Second</a>: Sections 3.1.2, 3.5, 3.11, 3.14.1, 3.15, 3.16, 3.17, 3.22 and 4.15.3</li>
+</ul>
+<p>No single number cites this document yet.</p>
+<h3 id="doc-docs-sources-navy-commanders-handbook-1995-md">The Commander&#x27;s Handbook on the Law of Naval Operations (NWP 1-14M), 1995 edition</h3>
+<p>No public link is recorded for this document yet.</p>
+<p>Cited by these mechanics:</p>
+<ul>
+<li><a href="hailing-boarding-and-prize-law.html#sources">Hailing, boarding and prize law</a>: Sections 3.4, 3.11.5.2, 7.6.1 and 7.10</li>
+</ul>
+<p>No single number cites this document yet.</p>
+<h3 id="doc-docs-sources-msis003-electrical-md"><a href="https://assets.publishing.service.gov.uk/media/5a7c6454ed915d696ccfc775/con1_2a_pt7_1-2.pdf">UK MCA, MSIS003 Part 7: Electrical Equipment and Installations</a></h3>
+<p>Cited by these mechanics:</p>
+<ul>
+<li><a href="the-power-model.html#sources">The power model</a>: 7.6, Load shedding</li>
+<li><a href="hold-balance-and-the-gimbal.html#sources">Hold balance and the gimbal</a>: 7.6 (essential services)</li>
+</ul>
+<p>No single number cites this document yet.</p>
+<h3 id="doc-docs-sources-unclos-md"><a href="https://www.un.org/depts/los/convention_agreements/texts/unclos/unclos_e.pdf">United Nations Convention on the Law of the Sea (UNCLOS), 1982</a></h3>
+<p>Cited by these mechanics:</p>
+<ul>
+<li><a href="hailing-boarding-and-prize-law.html#sources">Hailing, boarding and prize law</a>: Articles 33, 105, 106, 107, 110 and 111</li>
+</ul>
+<p>No single number cites this document yet.</p>
+<h3 id="doc-docs-sources-navy-damage-control-manual-md">US Navy training manual, &quot;Damage Control&quot; (chapter 12)</h3>
+<p>No public link is recorded for this document yet.</p>
+<p>Cited by these mechanics:</p>
+<ul>
+<li><a href="fire-and-damage-control.html#sources">Fire and damage control</a>: All hands, 12-1</li>
+<li><a href="fire-and-damage-control.html#sources">Fire and damage control</a>: Rapid response team, 12-8</li>
+<li><a href="fire-and-damage-control.html#sources">Fire and damage control</a>: Fire, 12-18 to 12-21</li>
+<li><a href="fire-and-damage-control.html#sources">Fire and damage control</a>: Figure 12-9, the four classes, 12-22</li>
+<li><a href="life-support-food-and-water.html#sources">Life support, food and water</a>: What it says (General quarters, 12-8) and Life support and fire (12-14 to 12-24)</li>
+<li><a href="hull-wear-and-repair.html#sources">Hull wear and repair</a>: What it says (repair lockers) and Where the source is silent</li>
+</ul>
+<p>No single number cites this document yet.</p>
+<h2 id="group-notes">The game&#x27;s own design notes</h2>
+<p>These notes are not published. A number that cites one is a design choice with no outside source.</p>
+<h3 id="doc-docs-notes-comms-md">Notes: combat/comms.py</h3>
+<p>Cited by these mechanics:</p>
+<ul>
+<li><a href="radio-voice.html#sources">Radio voice</a>: _opensbycallingitself</li>
+</ul>
+<p>No single number cites this document yet.</p>
+<h3 id="doc-docs-notes-newtonian-md">Notes: combat/newtonian/</h3>
+<p>Cited by these mechanics:</p>
+<ul>
+<li><a href="ship-s-organization-and-the-second.html#sources">Ship&#x27;s organization and the Second</a>: The XO chain (XO_MIN_HANDS), Door.handback and Door.captainanswer</li>
+</ul>
+<p>No single number cites this document yet.</p>
+<h3 id="doc-docs-notes-travelevents-md">Notes: events/travelevents.py</h3>
+<p>Cited by these mechanics:</p>
+<ul>
+<li><a href="salvage-and-distress.html#sources">Salvage and distress</a>: handledistresscall, against IAMSAR and SOLAS V/33</li>
+</ul>
+<p>No single number cites this document yet.</p>
+<h3 id="doc-docs-notes-repair-md">Notes: vehicles/ship/repair.py</h3>
+<p>Cited by these mechanics:</p>
+<ul>
+<li><a href="hull-wear-and-repair.html#sources">Hull wear and repair</a>: HOURS_PER_TONNE, 230 (Butler, A Guide to Ship Repair Estimates in Man-Hours, Table 3.1)</li>
+</ul>
+<p>No single number cites this document yet.</p>
+<h3 id="doc-docs-setting-canon-md">The setting — canon</h3>
+<p>Cited by these mechanics:</p>
+<ul>
+<li><a href="kinetic-guns-and-point-defense.html#sources">Kinetic guns and point defense</a>: 2. Safeguards</li>
+<li><a href="mining-the-belt.html#sources">Mining the belt</a>: Section 6, subsection: The belt is nearly empty, and a fighting field is not</li>
+</ul>
+<p>No single number cites this document yet.</p>
+</main>
+<footer class="stamp">
+<p>Read from game commit 702fad0f (committed 2026-10-16). Pages written 2026-10-16.
+The explanations are stand-in text and may change.</p>
+</footer>
+</div>
+</body>
+</html>

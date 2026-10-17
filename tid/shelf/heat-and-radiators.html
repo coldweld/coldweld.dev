@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Heat and radiators</title>
+<meta name="description" content="What the game does for heat and radiators, its numbers, and where each comes from.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+:root {
+  color-scheme: light dark;
+  --bg: #fbf8f1; --panel: #f0eadb; --rule: #b9ae94; --text: #231c0f; --muted: #51493a; --accent: #7a4300;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #0e0903; --panel: #16110a; --rule: #4a4130; --text: #d6cbb6; --muted: #a89f88; --accent: #ffb040; }
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 1rem/1.65 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; padding: 0 1rem 4rem; }
+.skip { position: absolute; left: 1rem; top: -4rem; background: var(--accent); color: var(--bg); padding: .5rem 1rem; z-index: 10; }
+.skip:focus { top: .5rem; }
+.wrap { max-width: 64rem; margin: 0 auto; }
+.mono, h1, h2, h3, caption, th, nav, .brand, .stamp, .grade, .val { font-family: "DM Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+a { color: var(--accent); text-underline-offset: .2em; }
+a:focus-visible, .region:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.top { padding: 2rem 0 1rem; border-bottom: 1px solid var(--rule); }
+.brand { margin: 0 0 .75rem; font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .25rem 1.5rem; }
+nav a { display: inline-block; padding: .35rem 0; }
+h1 { font-size: clamp(1.4rem, 5vw, 2rem); line-height: 1.25; margin: 2rem 0 1rem; font-weight: 500; }
+h2 { font-size: 1.25rem; margin: 2.5rem 0 .75rem; padding-top: 1.25rem; border-top: 1px solid var(--rule); font-weight: 500; }
+h3 { font-size: 1.05rem; margin: 1.5rem 0 .5rem; font-weight: 500; }
+p, li { max-width: 46rem; }
+li + li { margin-top: .35rem; }
+code { font-family: "DM Mono", ui-monospace, Consolas, monospace; font-size: .92em; overflow-wrap: anywhere; }
+.lead { font-size: 1.1rem; }
+.note { background: var(--panel); border-left: 4px solid var(--accent); padding: .75rem 1rem; max-width: 46rem; }
+.region { overflow-x: auto; margin: 1rem 0; border: 1px solid var(--rule); }
+table { border-collapse: collapse; width: 100%; min-width: 46rem; font-size: .92rem; line-height: 1.5; }
+caption { text-align: left; padding: .75rem; font-size: .95rem; color: var(--muted); }
+th, td { text-align: left; vertical-align: top; padding: .55rem .75rem; border-top: 1px solid var(--rule); }
+thead th { background: var(--panel); font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; white-space: nowrap; }
+tbody th { font-weight: 400; font-family: inherit; min-width: 14rem; }
+td.val { overflow-wrap: anywhere; min-width: 7rem; }
+.numbers td:nth-child(5), .numbers td:nth-child(6) { min-width: 13rem; }
+td.count { text-align: right; font-variant-numeric: tabular-nums; }
+.grade { display: inline-block; border: 2px solid currentColor; border-radius: 4px; min-width: 1.6rem; text-align: center; padding: 0 .3rem; font-weight: 600; margin-right: .4rem; }
+.gradeitem { white-space: nowrap; }
+.stamp { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--rule); font-size: .8rem; color: var(--muted); }
+.toc { padding-left: 1.2rem; }
+dl.keys dt { font-weight: 600; margin-top: 1rem; }
+dl.keys dd { margin: .25rem 0 0; max-width: 46rem; }
+@media (max-width: 40rem) { body { padding: 0 1rem 3rem; } th, td { padding: .5rem; } }
+@media print { .skip { display: none; } }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to the content</a>
+<div class="wrap">
+<header class="top">
+<p class="brand"><a href="https://coldweld.dev/">Coldweld</a> / The Infinite Diaspora / Reference shelf</p>
+<nav aria-label="Reference shelf"><ul>
+<li><a href="index.html">Mechanics</a></li>
+<li><a href="grades.html">Grades</a></li>
+<li><a href="sources.html">Sources</a></li>
+</ul></nav>
+</header>
+<main id="main">
+<h1>Heat and radiators</h1>
+<ul class="toc">
+<li><a href="#brief">In brief</a></li>
+<li><a href="#does">What the game does</a></li>
+<li><a href="#numbers">The numbers</a></li>
+<li><a href="#why">Why: the real physics or procedure</a></li>
+<li><a href="#departs">Where the game departs from reality</a></li>
+<li><a href="#silent">Where the sources are silent</a></li>
+<li><a href="#sources">Sources</a></li>
+<li><a href="#code">Code files</a></li>
+</ul>
+<h2 id="brief">In brief</h2>
+<p class="lead">A radiator is a fin that sheds a ship's waste heat into space, and it is the only way a ship in vacuum can get rid of heat for good.</p>
+<h2 id="does">What the game does</h2>
+<h3>Waste Heat</h3>
+<ul>
+<li>Waste heat comes from your drive and your reactor plant, and it fills your coolant loop.</li>
+<li>A drive at full burn makes 1 heat a second.</li>
+<li>Intact radiators shed 12 heat every 20 s, and damaged ones less.</li>
+<li>Pumps carry 8 every 20 s into your water tank until it is warm.</li>
+<li>Your loop holds 32. Past that the tank boils, so water goes out as steam.</li>
+<li>With the tank dry the loop climbs to 64, and there the drive must go cold.</li>
+<li>Each gun has its own heat sink, and a gun with a full sink waits until it cools.</li>
+<li>The crew can swap in one of 3 spare sinks, in 10 s.</li>
+</ul>
+<h2 id="numbers">The numbers</h2>
+<p>23 numbers, read from the game code. None has a grade yet.</p>
+<div class="region" role="region" tabindex="0" aria-label="Numbers the game runs for heat and radiators">
+<table class="numbers">
+<caption>Numbers the game runs for heat and radiators</caption>
+<thead><tr>
+<th scope="col">Quantity</th>
+<th scope="col">Value</th>
+<th scope="col">Unit</th>
+<th scope="col">Grade</th>
+<th scope="col">Source</th>
+<th scope="col">Basis</th>
+</tr></thead>
+<tbody>
+<tr id="n-1"><th scope="row">Length of one fight round</th><td class="val">20</td><td>seconds</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-2"><th scope="row">Heat the drive adds at full burn, per second (1 heat = 1 second of full drive waste)</th><td class="val">1</td><td>heat a second</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-3"><th scope="row">Share of the drive&#x27;s full heat that whole fins shed</th><td class="val">0.6</td><td>heat a second per heat of drive</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-4"><th scope="row">Heat a whole set of fins sheds in one round (the index&#x27;s 12)</th><td class="val">12</td><td>heat a round</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-5"><th scope="row">Share the tank pumps move into the water tank (1 minus the fin share)</th><td class="val">0.4</td><td>heat a second per heat of drive</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-6"><th scope="row">Heat the coolant loop holds before the tank boils</th><td class="val">32</td><td>heat</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-7"><th scope="row">Heat the loop climbs to when the tank is dry; the drive goes cold here</th><td class="val">64</td><td>heat</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-8"><th scope="row">Heat the active sweep adds each second</th><td class="val">0.25</td><td>heat a second</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-9"><th scope="row">Temperature rise the tank water may take before it boils</th><td class="val">80</td><td>kelvin</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-10"><th scope="row">Specific heat of water used for the tank</th><td class="val">4,180</td><td>J per kg per kelvin</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-11"><th scope="row">Energy to warm one kg of tank water to boiling and then boil it off</th><td class="val">2,594,400</td><td>J per kg</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-12"><th scope="row">Share of the drive&#x27;s jet power kept as heat (the unit&#x27;s size)</th><td class="val">0.0001</td><td>share</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-13"><th scope="row">Spare heat sinks each gun carries</th><td class="val">3</td><td>sinks</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-14"><th scope="row">Time to swap a cold sink in</th><td class="val">10</td><td>seconds</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-15"><th scope="row">Standing orders for spending a spare sink</th><td class="val">kill zone, freely, never</td><td>orders</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-16"><th scope="row">Heat one firing puts in a gun&#x27;s sink, by size</th><td class="val">Micro 4, Light 6, Compact 9, Standard 13, Heavy 18, Superheavy 24</td><td>heat a firing</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-17"><th scope="row">Seconds between firings, by size (the sink&#x27;s shed rate is read from it)</th><td class="val">Micro 5, Light 6, Compact 8, Standard 12, Heavy 16, Superheavy 22</td><td>seconds</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-18"><th scope="row">Firings a rail gun&#x27;s sink takes before the gun must wait</th><td class="val">10</td><td>firings</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-19"><th scope="row">Cycles a rail gun&#x27;s own fins take to shed one firing&#x27;s heat</th><td class="val">10</td><td>cycles</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-20"><th scope="row">Firings a coilgun&#x27;s smaller sink takes</th><td class="val">6</td><td>firings</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-21"><th scope="row">Cycles a coilgun&#x27;s sink takes to shed one firing&#x27;s heat</th><td class="val">14</td><td>cycles</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-22"><th scope="row">Seconds of fire a cartridge gun&#x27;s barrel takes</th><td class="val">10</td><td>seconds</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-23"><th scope="row">Seconds a cartridge gun&#x27;s barrel needs to cool one second of fire</th><td class="val">3</td><td>seconds</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+</tbody></table></div>
+<h2 id="why">Why: the real physics or procedure</h2>
+<ul>
+<li>A ship in vacuum has no air or water around it to carry heat away.</li>
+<li>So heat leaves a ship only as light, from a hot surface called a radiator.</li>
+<li>A radiator sheds more heat the hotter it runs, and the gain grows with the fourth power of its temperature.</li>
+<li>Every engine and generator wastes heat, and a machine that turns heat into power adds more waste of its own.</li>
+<li>A fin is large and thin, so one hit can cripple it, and that makes radiators the weak point of a warship.</li>
+<li>A warship can carry a heat sink instead: a cold block, such as ice, that melts as it takes heat in.</li>
+<li>A sink holds only a few minutes of heat, so it buys time for a fight and does not end the need for fins.</li>
+<li>Boiling water carries away a great deal of heat for its mass, so a ship can burn its water as a last resort.</li>
+</ul>
+<h2 id="departs">Where the game departs from reality</h2>
+<ul>
+<li>The game keeps heat in one unit, a point equal to one second of the hull's full drive waste. Real radiators are rated in watts per square meter. The reason is one model for both fights (docs/notes/plant.md, 'The unit').</li>
+<li>The game's fins are a flat 0.6 of drive heat for every hull, not a computed area. Fin damage cuts it through combat/hazards.py (docs/notes/plant.md, 'Fin panels').</li>
+<li>The coolant loop is the tank, and the tank is the ship's own propellant water. Burning water as propellant leaves tank warmth unchanged, since warmth is stored as a share (docs/notes/plant.md, 'tickhull').</li>
+<li>Fins act before the pumps, so a quiet plant keeps a cold tank for a fight. A first draft pumped first and the tank was full when needed (docs/notes/plant.md, 'tickhull').</li>
+<li>A gun's sink sheds into the ship through its own small fins, not into the loop. The mirror describes a sink that is pumped out or boiled off, so the game's shed rate is a simplification (docs/notes/plant.md, 'Gun sinks').</li>
+<li>The menu fight's heat on the hull was replaced by a sink per gun on 2026-10-02, at Austen's choice (docs/notes/plant.md, 'Gun sinks').</li>
+</ul>
+<h2 id="silent">Where the sources are silent</h2>
+<ul>
+<li>No source gives the game's loop size of 32 heat or its ceiling of 64. The repo marks LOOP_POINTS as authored (combat/plant.py, docs/notes/plant.md).</li>
+<li>No source gives the share of drive power a ship keeps as heat. LOSS_SHARE is marked authored in combat/plant.py as the setting's one impossible number.</li>
+<li>The mirror has no figure for the fin share of 0.6. The repo cites Mo/Li heat-pipe panels at 10 to 34% of hull mass in a comment, and the mirror was not searched for that figure here (UNVERIFIED).</li>
+<li>The mirror does not state the heat needed to boil water. The 2.26 MJ per kg inside WATER_BOIL_J_PER_KG is a textbook value, UNVERIFIED against the mirror.</li>
+<li>The mirror page heatrad.php.html says a megawatt source can boil a ton of water in under seven minutes. At the game's 2,594,400 J per kg (warming plus boiling), one megawatt takes about 43 minutes, so the page is about six times fast. No game number uses the page's figure (docs/notes/plant.md, WATER_BOIL_J_PER_KG).</li>
+<li>No source says how many firings a sink takes, except that the mirror's coilgun carries coolant for 10 shots. The sink's shed rates are authored (combat/newtonian/world.py comment).</li>
+<li>No source covers a spare sink swapped in by a crew. The swap time of 10 seconds and the count of 3 are authored.</li>
+</ul>
+<h2 id="sources">Sources</h2>
+<ul>
+<li><a href="https://www.projectrho.com/public_html/rocket/heatrad.php">Atomic Rockets, heatrad</a>, Radiator Details (Stefan-Boltzmann law): Radiated power equals area times emissivity times the Stefan-Boltzmann constant times temperature to the fourth power, with space taken as zero kelvin. A hotter radiator needs far less area and mass. (<a href="sources.html#doc-rocket-heatrad-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/heatrad.php">Atomic Rockets, heatrad</a>, Combat Radiators (the Achilles Heel passage): Drives, power plants and most weapons make huge waste heat, and radiators are hard or impossible to armor, so they are likely the first thing an enemy shoots. "&quot;Achilles Heel&quot; of combat spacecraft are the heat radiators" (<a href="sources.html#doc-rocket-heatrad-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/heatrad.php">Atomic Rockets, heatrad</a>, Sikon, Combat Heat Sinks: A warship can pump heat into a cold block of phase change material, such as ice, which absorbs heat by melting. It stores only a few minutes of heat, so it puts a time limit on a fight. (<a href="sources.html#doc-rocket-heatrad-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/spacewarship.php">Atomic Rockets, spacewarship</a>, the coilgun in the example design: A coilgun makes waste heat too fast for a radiator to take it directly, so each shot's heat goes first into a heat sink (there, boiling coolant). The page gives 413 MJ of heat a shot and coolant for 10 shots. "It must be transferred to a heat sink first" (<a href="sources.html#doc-rocket-spacewarship-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/thermodynamics.php">Atomic Rockets, thermodynamics</a>, the heat radiator Achilles heel passage and the thermocouple answer: Heat cannot be destroyed, only moved, and making power from heat adds waste heat. Radiators are therefore the fragile price of any power plant. (<a href="sources.html#doc-rocket-thermodynamics-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/spacewarshipart.php">Atomic Rockets, spacewarshipart</a>, Heat Radiators and the multi-mode reactor passage: Burst power is cooled by open-cycle cooling that dumps coolant overboard, while decay heat goes to radiators. The page says open-cycle wastes coolant at an alarming rate. (<a href="sources.html#doc-rocket-spacewarshipart-php-html">all uses</a>)</li>
+</ul>
+<h2 id="code">Code files</h2>
+<ul>
+<li><code>combat/plant.py</code></li>
+<li><code>combat/newtonian/world.py</code></li>
+<li><code>combat/newtonian/condition.py</code></li>
+<li><code>combat/hazards.py</code></li>
+</ul>
+</main>
+<footer class="stamp">
+<p>Read from game commit 702fad0f (committed 2026-10-16). Pages written 2026-10-16.
+The explanations are stand-in text and may change.</p>
+</footer>
+</div>
+</body>
+</html>

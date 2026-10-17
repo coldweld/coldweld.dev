@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hold balance and the gimbal</title>
+<meta name="description" content="What the game does for hold balance and the gimbal, its numbers, and where each comes from.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+:root {
+  color-scheme: light dark;
+  --bg: #fbf8f1; --panel: #f0eadb; --rule: #b9ae94; --text: #231c0f; --muted: #51493a; --accent: #7a4300;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #0e0903; --panel: #16110a; --rule: #4a4130; --text: #d6cbb6; --muted: #a89f88; --accent: #ffb040; }
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 1rem/1.65 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; padding: 0 1rem 4rem; }
+.skip { position: absolute; left: 1rem; top: -4rem; background: var(--accent); color: var(--bg); padding: .5rem 1rem; z-index: 10; }
+.skip:focus { top: .5rem; }
+.wrap { max-width: 64rem; margin: 0 auto; }
+.mono, h1, h2, h3, caption, th, nav, .brand, .stamp, .grade, .val { font-family: "DM Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+a { color: var(--accent); text-underline-offset: .2em; }
+a:focus-visible, .region:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.top { padding: 2rem 0 1rem; border-bottom: 1px solid var(--rule); }
+.brand { margin: 0 0 .75rem; font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .25rem 1.5rem; }
+nav a { display: inline-block; padding: .35rem 0; }
+h1 { font-size: clamp(1.4rem, 5vw, 2rem); line-height: 1.25; margin: 2rem 0 1rem; font-weight: 500; }
+h2 { font-size: 1.25rem; margin: 2.5rem 0 .75rem; padding-top: 1.25rem; border-top: 1px solid var(--rule); font-weight: 500; }
+h3 { font-size: 1.05rem; margin: 1.5rem 0 .5rem; font-weight: 500; }
+p, li { max-width: 46rem; }
+li + li { margin-top: .35rem; }
+code { font-family: "DM Mono", ui-monospace, Consolas, monospace; font-size: .92em; overflow-wrap: anywhere; }
+.lead { font-size: 1.1rem; }
+.note { background: var(--panel); border-left: 4px solid var(--accent); padding: .75rem 1rem; max-width: 46rem; }
+.region { overflow-x: auto; margin: 1rem 0; border: 1px solid var(--rule); }
+table { border-collapse: collapse; width: 100%; min-width: 46rem; font-size: .92rem; line-height: 1.5; }
+caption { text-align: left; padding: .75rem; font-size: .95rem; color: var(--muted); }
+th, td { text-align: left; vertical-align: top; padding: .55rem .75rem; border-top: 1px solid var(--rule); }
+thead th { background: var(--panel); font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; white-space: nowrap; }
+tbody th { font-weight: 400; font-family: inherit; min-width: 14rem; }
+td.val { overflow-wrap: anywhere; min-width: 7rem; }
+.numbers td:nth-child(5), .numbers td:nth-child(6) { min-width: 13rem; }
+td.count { text-align: right; font-variant-numeric: tabular-nums; }
+.grade { display: inline-block; border: 2px solid currentColor; border-radius: 4px; min-width: 1.6rem; text-align: center; padding: 0 .3rem; font-weight: 600; margin-right: .4rem; }
+.gradeitem { white-space: nowrap; }
+.stamp { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--rule); font-size: .8rem; color: var(--muted); }
+.toc { padding-left: 1.2rem; }
+dl.keys dt { font-weight: 600; margin-top: 1rem; }
+dl.keys dd { margin: .25rem 0 0; max-width: 46rem; }
+@media (max-width: 40rem) { body { padding: 0 1rem 3rem; } th, td { padding: .5rem; } }
+@media print { .skip { display: none; } }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to the content</a>
+<div class="wrap">
+<header class="top">
+<p class="brand"><a href="https://coldweld.dev/">Coldweld</a> / The Infinite Diaspora / Reference shelf</p>
+<nav aria-label="Reference shelf"><ul>
+<li><a href="index.html">Mechanics</a></li>
+<li><a href="grades.html">Grades</a></li>
+<li><a href="sources.html">Sources</a></li>
+</ul></nav>
+</header>
+<main id="main">
+<h1>Hold balance and the gimbal</h1>
+<ul class="toc">
+<li><a href="#brief">In brief</a></li>
+<li><a href="#does">What the game does</a></li>
+<li><a href="#numbers">The numbers</a></li>
+<li><a href="#why">Why: the real physics or procedure</a></li>
+<li><a href="#departs">Where the game departs from reality</a></li>
+<li><a href="#silent">Where the sources are silent</a></li>
+<li><a href="#sources">Sources</a></li>
+<li><a href="#code">Code files</a></li>
+</ul>
+<h2 id="brief">In brief</h2>
+<p class="lead">Hold balance is the rule that a ship's center of mass must sit on the line of its thrust, which means its cargo has to be spread evenly around the axis.</p>
+<h2 id="does">What the game does</h2>
+<p>The game does not model this yet.</p>
+<h2 id="numbers">The numbers</h2>
+<p>This mechanic has no numbers read from the code.</p>
+<h2 id="why">Why: the real physics or procedure</h2>
+<ul>
+<li>A rocket pushes along its thrust axis. If that axis passes through the center of gravity, the ship speeds up in a straight line.</li>
+<li>If the axis misses the center of gravity, the ship spins around it, which is called rocket tumble.</li>
+<li>So the center of gravity must sit on the central axis, and cargo must be spread evenly around that axis.</li>
+<li>Items that can be dropped, such as tanks and cargo, go in pairs on opposite sides of the spine and leave in pairs.</li>
+<li>If one side leaves alone, the center of gravity moves off the thrust axis, and the next burn starts a spin.</li>
+<li>A gimbaled engine can swing its thrust a few degrees, and a crew can use that to cope with cargo that shifts.</li>
+<li>A small ship can also carry trim tanks, which are small tanks of water that are pumped to adjust the balance.</li>
+<li>Heavy gyroscopes help, but there is a limit to how much imbalance they can fix.</li>
+</ul>
+<h2 id="departs">Where the game departs from reality</h2>
+<ul>
+<li>The game does not model this yet. A grep of the code finds no model of cargo center of mass, drive gimbal or trim tanks.</li>
+<li>A hold is one stack of lots in loading order (combat/damagecontrol.py getstack), with no position off the axis. A jettison removes a whole lot with no effect on balance (Ship.jettisonlot in vehicles/ship/ship.py).</li>
+<li>Hold mass changes acceleration and turning only as a total (combat/newtonian/hullphysics.py angularaccel reads the laden to dry mass ratio), never as a position.</li>
+<li>The only gimbal in code is the keel gun's lay cone (SPINAL_CONE_DEG in combat/newtonian/encounter.py), which is a gun mount and not the drive.</li>
+<li>The plan is docs/power-direction.md, The gimbal and hold balance (item 14), and dev/handoffs/main-2026-10-08/decisions.md, decision 14. The hold is a ring of paired sections around the spine. Balance costs something on loading and on jettison. The gimbal is the first fix, and its price is steering margin. Past the gimbal limit the order is trim water, then a paired jettison. A damaged drive loses its gimbal.</li>
+<li>The plan says to measure first: if every loading fits inside the gimbal, balance is a tax with no decision, and the design must say so (decisions.md, item 14).</li>
+<li>The gimbal actuators and trim pumps are to register as essential loads that the power rule never sheds, when item 14 builds them (docs/power-direction.md).</li>
+</ul>
+<h2 id="silent">Where the sources are silent</h2>
+<ul>
+<li>The mirror gives no number for how far a hold can be unbalanced before a gimbal runs out, because that depends on the hull. The game needs its own hull and hold figures.</li>
+<li>The mirror gives no rule for who loads a ship or how a crew balances it. Austen's call is that the crew or the yard's loaders do it, never a captain prompt (dev/handoffs/main-2026-10-08/decisions.md, item 14).</li>
+<li>The mirror does not say how much power a gimbal actuator or a trim pump draws.</li>
+</ul>
+<h2 id="sources">Sources</h2>
+<ul>
+<li><a href="https://www.projectrho.com/public_html/rocket/basicdesign.php">Atomic Rockets, basicdesign</a>, Rocket Tumble: When the thrust axis misses the center of gravity the ship spins. Some engines gimbal a few degrees, and a crew can use that in an emergency when cargo shifts. The center of gravity should sit on the central axis, and every deck should be radially symmetric. The Grumman Space Tug gimbals plus or minus 20 degrees after it drops a drop tank. Small ships may have trim tanks, and gyroscopes can only fix so much imbalance. The problem is worse on tiny ships than on large ones. (<a href="sources.html#doc-rocket-basicdesign-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/basicdesign.php">Atomic Rockets, basicdesign</a>, Saddle Truss: Jettisonable items must sit in pairs on opposite sides of the spine and be dropped in pairs. A NASA saddle truss avoids the pairs by cocking the thrust axis a fraction of a degree off center, so a tank can be kicked out through the open side. "it&#x27;s pinwheel time" (<a href="sources.html#doc-rocket-basicdesign-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/controldeck.php">Atomic Rockets, controldeck</a>, Gimbaled Engines: A gimbaled engine can pivot its thrust off center. The old Reusable Nuclear Shuttle design had a NERVA engine that could pivot 3 degrees in any direction, at no more than 0.25 degrees a second. "up to three degrees off-center in any direction" (<a href="sources.html#doc-rocket-controldeck-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/controldeck.php">Atomic Rockets, controldeck</a>, Atomic Rocket Pilot Console: An engine is limited to vectoring its thrust to about ten degrees off the axis. (<a href="sources.html#doc-rocket-controldeck-php-html">all uses</a>)</li>
+<li><a href="https://assets.publishing.service.gov.uk/media/5a7c6454ed915d696ccfc775/con1_2a_pt7_1-2.pdf">UK MCA, MSIS003 Part 7: Electrical Equipment and Installations</a>, 7.6 (essential services): Load shedding must not cut services essential for propulsion and safety. The list includes steering gear, which is the nearest real-world rule for a gimbal actuator. (<a href="sources.html#doc-docs-sources-msis003-electrical-md">all uses</a>)</li>
+</ul>
+<h2 id="code">Code files</h2>
+<p>No code file is listed.</p>
+</main>
+<footer class="stamp">
+<p>Read from game commit 702fad0f (committed 2026-10-16). Pages written 2026-10-16.
+The explanations are stand-in text and may change.</p>
+</footer>
+</div>
+</body>
+</html>

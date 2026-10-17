@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Salvage and distress</title>
+<meta name="description" content="What the game does for salvage and distress, its numbers, and where each comes from.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+:root {
+  color-scheme: light dark;
+  --bg: #fbf8f1; --panel: #f0eadb; --rule: #b9ae94; --text: #231c0f; --muted: #51493a; --accent: #7a4300;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #0e0903; --panel: #16110a; --rule: #4a4130; --text: #d6cbb6; --muted: #a89f88; --accent: #ffb040; }
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 1rem/1.65 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; padding: 0 1rem 4rem; }
+.skip { position: absolute; left: 1rem; top: -4rem; background: var(--accent); color: var(--bg); padding: .5rem 1rem; z-index: 10; }
+.skip:focus { top: .5rem; }
+.wrap { max-width: 64rem; margin: 0 auto; }
+.mono, h1, h2, h3, caption, th, nav, .brand, .stamp, .grade, .val { font-family: "DM Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+a { color: var(--accent); text-underline-offset: .2em; }
+a:focus-visible, .region:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.top { padding: 2rem 0 1rem; border-bottom: 1px solid var(--rule); }
+.brand { margin: 0 0 .75rem; font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .25rem 1.5rem; }
+nav a { display: inline-block; padding: .35rem 0; }
+h1 { font-size: clamp(1.4rem, 5vw, 2rem); line-height: 1.25; margin: 2rem 0 1rem; font-weight: 500; }
+h2 { font-size: 1.25rem; margin: 2.5rem 0 .75rem; padding-top: 1.25rem; border-top: 1px solid var(--rule); font-weight: 500; }
+h3 { font-size: 1.05rem; margin: 1.5rem 0 .5rem; font-weight: 500; }
+p, li { max-width: 46rem; }
+li + li { margin-top: .35rem; }
+code { font-family: "DM Mono", ui-monospace, Consolas, monospace; font-size: .92em; overflow-wrap: anywhere; }
+.lead { font-size: 1.1rem; }
+.note { background: var(--panel); border-left: 4px solid var(--accent); padding: .75rem 1rem; max-width: 46rem; }
+.region { overflow-x: auto; margin: 1rem 0; border: 1px solid var(--rule); }
+table { border-collapse: collapse; width: 100%; min-width: 46rem; font-size: .92rem; line-height: 1.5; }
+caption { text-align: left; padding: .75rem; font-size: .95rem; color: var(--muted); }
+th, td { text-align: left; vertical-align: top; padding: .55rem .75rem; border-top: 1px solid var(--rule); }
+thead th { background: var(--panel); font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; white-space: nowrap; }
+tbody th { font-weight: 400; font-family: inherit; min-width: 14rem; }
+td.val { overflow-wrap: anywhere; min-width: 7rem; }
+.numbers td:nth-child(5), .numbers td:nth-child(6) { min-width: 13rem; }
+td.count { text-align: right; font-variant-numeric: tabular-nums; }
+.grade { display: inline-block; border: 2px solid currentColor; border-radius: 4px; min-width: 1.6rem; text-align: center; padding: 0 .3rem; font-weight: 600; margin-right: .4rem; }
+.gradeitem { white-space: nowrap; }
+.stamp { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--rule); font-size: .8rem; color: var(--muted); }
+.toc { padding-left: 1.2rem; }
+dl.keys dt { font-weight: 600; margin-top: 1rem; }
+dl.keys dd { margin: .25rem 0 0; max-width: 46rem; }
+@media (max-width: 40rem) { body { padding: 0 1rem 3rem; } th, td { padding: .5rem; } }
+@media print { .skip { display: none; } }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to the content</a>
+<div class="wrap">
+<header class="top">
+<p class="brand"><a href="https://coldweld.dev/">Coldweld</a> / The Infinite Diaspora / Reference shelf</p>
+<nav aria-label="Reference shelf"><ul>
+<li><a href="index.html">Mechanics</a></li>
+<li><a href="grades.html">Grades</a></li>
+<li><a href="sources.html">Sources</a></li>
+</ul></nav>
+</header>
+<main id="main">
+<h1>Salvage and distress</h1>
+<ul class="toc">
+<li><a href="#brief">In brief</a></li>
+<li><a href="#does">What the game does</a></li>
+<li><a href="#numbers">The numbers</a></li>
+<li><a href="#why">Why: the real physics or procedure</a></li>
+<li><a href="#departs">Where the game departs from reality</a></li>
+<li><a href="#silent">Where the sources are silent</a></li>
+<li><a href="#sources">Sources</a></li>
+<li><a href="#code">Code files</a></li>
+</ul>
+<h2 id="brief">In brief</h2>
+<p class="lead">Salvage is help given to a ship or cargo in danger that earns a reward only if it saves something, and a distress call is a message that asks nearby ships for that help.</p>
+<h2 id="does">What the game does</h2>
+<h3>In Brief</h3>
+<ul>
+<li>Travel between two stellar bodies takes real in-game days.</li>
+<li>Each travel day rolls for a contact. The odds start at 10% and rise with the route's danger and the value of your cargo.</li>
+<li>A contact is hostile 35% of the time or more. Near a body, a quiet day has a 15% chance of one of six other events.</li>
+<li>At cruise speed nothing can come alongside, so only a distress call or a malfunction happens, at 5% a day.</li>
+<li>Time moves while you are docked as well, so factions, markets and station news all change while you sit still.</li>
+</ul>
+<h3>Salvage</h3>
+<ul>
+<li>HULK: A hulk is a hull too wrecked to fly, sold for scrap at a Belt yard. She flies again once she is spaceworthy.</li>
+<li>SPACEWORTHY: A hulk is spaceworthy once half her structure is renewed. From then she can fly, and her work crew can finish the job under way.</li>
+<li>SALVAGE TITLE: A salvage title marks a hull that was once a wreck, and the salvage yard sells every hull under one. She resells for 30% of her new price instead of 45%.</li>
+</ul>
+<h3>Condition</h3>
+<ul>
+<li>A hull has health, and combat and travel hazards take it down.</li>
+<li>SHIPYARD &gt; REPAIR puts it back, for a fee and the days the yard's gang takes. A bigger station has a bigger gang.</li>
+<li>A job longer than a day offers a day's work instead, because a holed hull still flies but lets more rounds reach what matters.</li>
+<li>Under way, REPAIR HULL has your hands mend hull and drive with hold steel, far slower than a yard.</li>
+<li>STANDING ORDERS &gt; REPAIR PARTIES sets which job the hands work first, the drive or the hull, and shows the steel and days.</li>
+<li>A hulk from a Belt salvage lot is restored by the yard, or by your own hands under RESTORE A HULK.</li>
+<li>Damage is not the same as wear. See RUNNING COSTS for wear.</li>
+</ul>
+<h2 id="numbers">The numbers</h2>
+<p>22 numbers, read from the game code. None has a grade yet.</p>
+<div class="region" role="region" tabindex="0" aria-label="Numbers the game runs for salvage and distress">
+<table class="numbers">
+<caption>Numbers the game runs for salvage and distress</caption>
+<thead><tr>
+<th scope="col">Quantity</th>
+<th scope="col">Value</th>
+<th scope="col">Unit</th>
+<th scope="col">Grade</th>
+<th scope="col">Source</th>
+<th scope="col">Basis</th>
+</tr></thead>
+<tbody>
+<tr id="n-1"><th scope="row">Capture bonus on a boarded wreck, as a share of the kill bounty (a game number, not salvage law)</th><td class="val">0.25</td><td>fraction</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-2"><th scope="row">Share of structure a hulk needs before it can fly</th><td class="val">0.5</td><td>fraction</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-3"><th scope="row">Days of work the steel row offers to load for a work crew</th><td class="val">30</td><td>days</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-4"><th scope="row">Resale value of a hull with a salvage title, as a share of its new price</th><td class="val">0.3</td><td>fraction</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-5"><th scope="row">Condition range of a hull on the salvage lot</th><td class="val">0.05, 0.25</td><td>fraction of full health</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-6"><th scope="row">Days of air and water a stranded crew has</th><td class="val">14, 26</td><td>days (low, high)</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-7"><th scope="row">Days a bait beacon stays on the band</th><td class="val">5, 11</td><td>days (low, high)</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-8"><th scope="row">Hands aboard a stranded hull</th><td class="val">2, 9</td><td>people (low, high)</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-9"><th scope="row">Daily chance that a new beacon is born</th><td class="val">0.05</td><td>fraction</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-10"><th scope="row">Daily chance traffic overhears a beacon beside a busy berth</th><td class="val">0.42</td><td>fraction</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-11"><th scope="row">Daily chance traffic overhears a beacon at the edge of anybody&#x27;s reach</th><td class="val">0.04</td><td>fraction</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-12"><th scope="row">Reach of a rescue cutter from its base</th><td class="val">5</td><td>days of flight</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-13"><th scope="row">Reach multiplier when you relay the beacon&#x27;s exact position</th><td class="val">1.7</td><td>times</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-14"><th scope="row">Burn of a rescue cutter</th><td class="val">14</td><td>m/s^2</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-15"><th scope="row">Contact chance added each day for the rest of the leg after you relay</th><td class="val">6</td><td>percent points</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-16"><th scope="row">Lowest chance that a distress call is bait</th><td class="val">0.1</td><td>fraction</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-17"><th scope="row">Highest chance that a distress call is bait</th><td class="val">0.75</td><td>fraction</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-18"><th scope="row">Share of your stores capacity a stranded crew asks for</th><td class="val">0.15</td><td>fraction</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-19"><th scope="row">Share of the drawn reward the stranded crew actually pays</th><td class="val">0.5</td><td>fraction</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-20"><th scope="row">Lowest base reward drawn for answering a call, before the body&#x27;s danger scaling</th><td class="val">200</td><td>Cr</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-21"><th scope="row">Highest base reward drawn for answering a call, before the body&#x27;s danger scaling</th><td class="val">600</td><td>Cr</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-22"><th scope="row">Relative weights of what a boarded derelict holds</th><td class="val">salvage 38, survivor 14, recorder 14, hazard 12, ambush 10, empty 12</td><td>weight</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+</tbody></table></div>
+<h2 id="why">Why: the real physics or procedure</h2>
+<ul>
+<li>Salvage law pays for a useful result: an operation that saves nothing earns no reward, which Lloyd's Open Form words as no cure, no pay.</li>
+<li>The reward comes from the owners of the property saved, and it may never exceed the value saved.</li>
+<li>A salvor loses the reward if the salvor's own fault made the danger, or if the owner or master forbade the help.</li>
+<li>A person saved owes nothing, and the convention does not apply to warships with sovereign immunity.</li>
+<li>The master of a ship must go to people in distress with all speed, so far as it does not seriously endanger the ship.</li>
+<li>A master who cannot help, or thinks it unreasonable, writes the reason in the log, and that is the whole penalty.</li>
+<li>A ship that hears an alert tells the rescue service it is coming, or tells the service when it cannot help.</li>
+<li>A false alert is cancelled as soon as it is known, and one sent on purpose is a hoax.</li>
+</ul>
+<h2 id="departs">Where the game departs from reality</h2>
+<ul>
+<li>Capture is not salvage: the game used to call the 25% on a boarded wreck a salvage bonus, but the boarding side made the danger and the enemy master resists. It now says capture bonus, and the word salvage stays for a derelict found abandoned and for the hulk work (docs/notes/fleetops.md, Capture bonus, B1).</li>
+<li>The relay price: relaying adds 6 percentage points of contact chance a day for the rest of the leg. The source gives relaying no cost at all, and the repo's reason is that a plain voice call tells raiders where a hull is (docs/notes/travelevents.md, handledistresscall).</li>
+<li>A bait beacon: the game has a real hazard aimed at the captain alone, and the berth checks the register before it launches a cutter, so relaying bait costs nobody anything (docs/notes/travelevents.md, Relaying a beacon).</li>
+<li>Holding your course costs nothing: the source agrees, since V/33.1 asks only for a log entry (docs/sources/iamsar-manual-2016.md).</li>
+<li>A distress reward: the game draws a base reward of 200 to 600 Cr, scales it by the body's danger, and pays 50 percent of it, and the repo says a stranded crew pays what it has, which is less than a salvage fee (comment in events/travelevents.py, DISTRESS_GRATITUDE_FRACTION). No source sets a figure.</li>
+<li>A beacon's clock and a cutter's reach are authored game numbers, kept so that rescue usually works near a berth and fails far from one (docs/notes/beacons.md).</li>
+</ul>
+<h2 id="silent">Where the sources are silent</h2>
+<ul>
+<li>The amount of a reward: article 13 lists criteria and sets no rate, and Lloyd's Open Form leaves the sum to an arbitrator in London.</li>
+<li>Who pays for a wreck that nobody owns: article 13(2) has the owners of the salved property pay.</li>
+<li>Seizure or prize: the Salvage Convention has no article on capture, which belongs to the law of naval warfare.</li>
+<li>Search patterns and the on-scene coordinator: they sit in IAMSAR Volume II, which is not read and is WAITING.</li>
+<li>Space: no document on the shelf covers a ship that cannot stop, and the game's physics reason sits inside the SOLAS exception for a master who finds help unreasonable.</li>
+<li>A penalty for holding your course: V/33.1 asks for a log entry and names no fine or loss of standing.</li>
+<li>A reward for relaying: IAMSAR gives none, because salvage law and not search and rescue pays for a rescue.</li>
+<li>The mirror gives no legal figure for rescue, and it gives no rescue burn figure either (docs/notes/beacons.md, RESPONDER_ACCELERATION).</li>
+<li>Articles 20 to 30 of the Salvage Convention and the Scopic Clause of Lloyd's Open Form were not read.</li>
+</ul>
+<h2 id="sources">Sources</h2>
+<ul>
+<li>International Convention on Salvage, 1989, Articles 1(a), 4(1), 12, 13, 16, 18 and 19: Salvage is an act to assist property in danger (1). Only a useful result earns a reward (12). The reward may not exceed the salved value (13(3)). Nothing is due from persons whose lives are saved (16). Fault or fraud by the salvor can cut the reward (18), and a forbidden service earns none (19). Warships with sovereign immunity are outside the convention (4). (<a href="sources.html#doc-docs-sources-salvage-convention-1989-md">all uses</a>)</li>
+<li>Lloyd&#x27;s Standard Form of Salvage Agreement (Lloyd&#x27;s Open Form, LOF 2020), Heading and clauses A, G and K: The form is headed no cure, no pay. The contractors promise best endeavours (A). Either side may end the services when no reasonable prospect of a useful result remains (G). The master signs for the owners as their agent (K). (<a href="sources.html#doc-docs-sources-lloyds-open-form-2020-md">all uses</a>)</li>
+<li>IAMSAR Manual, volumes I and III (2016), with SOLAS V/33, Volume III section 1 and appendix A (SOLAS V/33.1, 33.2), section 2 figures 2-3 and 2-4, and p. 4-7: A master who hears of people in distress and can help must go with all speed and tell them or the rescue service (V/33.1). A ship that cannot help logs the reason. A requisitioned ship must comply (V/33.2). A false alert is cancelled quickly, and a deliberate one is a hoax. "whenever they can safely do so" (<a href="sources.html#doc-docs-sources-iamsar-manual-2016-md">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/rescue.php">Atomic Rockets, rescue</a>, Introduction: The page treats rescue as something that comes from a base, since matching the course of a drifting hull costs a great deal of delta-v. Its remark that all vessels must answer distress signals is a line from a fiction excerpt about the 1967 treaty, so it is not used as a legal source. (<a href="sources.html#doc-rocket-rescue-php-html">all uses</a>)</li>
+<li>Notes: events/travelevents.py, handledistresscall, against IAMSAR and SOLAS V/33: The repo's own reading: relay is the inform-the-rescue-service step, hold your course is the unable-to-assist branch, and the source prices neither. (<a href="sources.html#doc-docs-notes-travelevents-md">all uses</a>)</li>
+</ul>
+<h2 id="code">Code files</h2>
+<ul>
+<li><code>combat/fleetops.py</code></li>
+<li><code>locations/salvagework.py</code></li>
+<li><code>events/travelevents.py</code></li>
+<li><code>events/beacons.py</code></li>
+<li><code>locations/shipyard.py</code></li>
+</ul>
+</main>
+<footer class="stamp">
+<p>Read from game commit 702fad0f (committed 2026-10-16). Pages written 2026-10-16.
+The explanations are stand-in text and may change.</p>
+</footer>
+</div>
+</body>
+</html>

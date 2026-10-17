@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hailing, boarding and prize law</title>
+<meta name="description" content="What the game does for hailing, boarding and prize law, its numbers, and where each comes from.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+:root {
+  color-scheme: light dark;
+  --bg: #fbf8f1; --panel: #f0eadb; --rule: #b9ae94; --text: #231c0f; --muted: #51493a; --accent: #7a4300;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #0e0903; --panel: #16110a; --rule: #4a4130; --text: #d6cbb6; --muted: #a89f88; --accent: #ffb040; }
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 1rem/1.65 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; padding: 0 1rem 4rem; }
+.skip { position: absolute; left: 1rem; top: -4rem; background: var(--accent); color: var(--bg); padding: .5rem 1rem; z-index: 10; }
+.skip:focus { top: .5rem; }
+.wrap { max-width: 64rem; margin: 0 auto; }
+.mono, h1, h2, h3, caption, th, nav, .brand, .stamp, .grade, .val { font-family: "DM Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+a { color: var(--accent); text-underline-offset: .2em; }
+a:focus-visible, .region:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.top { padding: 2rem 0 1rem; border-bottom: 1px solid var(--rule); }
+.brand { margin: 0 0 .75rem; font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .25rem 1.5rem; }
+nav a { display: inline-block; padding: .35rem 0; }
+h1 { font-size: clamp(1.4rem, 5vw, 2rem); line-height: 1.25; margin: 2rem 0 1rem; font-weight: 500; }
+h2 { font-size: 1.25rem; margin: 2.5rem 0 .75rem; padding-top: 1.25rem; border-top: 1px solid var(--rule); font-weight: 500; }
+h3 { font-size: 1.05rem; margin: 1.5rem 0 .5rem; font-weight: 500; }
+p, li { max-width: 46rem; }
+li + li { margin-top: .35rem; }
+code { font-family: "DM Mono", ui-monospace, Consolas, monospace; font-size: .92em; overflow-wrap: anywhere; }
+.lead { font-size: 1.1rem; }
+.note { background: var(--panel); border-left: 4px solid var(--accent); padding: .75rem 1rem; max-width: 46rem; }
+.region { overflow-x: auto; margin: 1rem 0; border: 1px solid var(--rule); }
+table { border-collapse: collapse; width: 100%; min-width: 46rem; font-size: .92rem; line-height: 1.5; }
+caption { text-align: left; padding: .75rem; font-size: .95rem; color: var(--muted); }
+th, td { text-align: left; vertical-align: top; padding: .55rem .75rem; border-top: 1px solid var(--rule); }
+thead th { background: var(--panel); font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; white-space: nowrap; }
+tbody th { font-weight: 400; font-family: inherit; min-width: 14rem; }
+td.val { overflow-wrap: anywhere; min-width: 7rem; }
+.numbers td:nth-child(5), .numbers td:nth-child(6) { min-width: 13rem; }
+td.count { text-align: right; font-variant-numeric: tabular-nums; }
+.grade { display: inline-block; border: 2px solid currentColor; border-radius: 4px; min-width: 1.6rem; text-align: center; padding: 0 .3rem; font-weight: 600; margin-right: .4rem; }
+.gradeitem { white-space: nowrap; }
+.stamp { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--rule); font-size: .8rem; color: var(--muted); }
+.toc { padding-left: 1.2rem; }
+dl.keys dt { font-weight: 600; margin-top: 1rem; }
+dl.keys dd { margin: .25rem 0 0; max-width: 46rem; }
+@media (max-width: 40rem) { body { padding: 0 1rem 3rem; } th, td { padding: .5rem; } }
+@media print { .skip { display: none; } }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to the content</a>
+<div class="wrap">
+<header class="top">
+<p class="brand"><a href="https://coldweld.dev/">Coldweld</a> / The Infinite Diaspora / Reference shelf</p>
+<nav aria-label="Reference shelf"><ul>
+<li><a href="index.html">Mechanics</a></li>
+<li><a href="grades.html">Grades</a></li>
+<li><a href="sources.html">Sources</a></li>
+</ul></nav>
+</header>
+<main id="main">
+<h1>Hailing, boarding and prize law</h1>
+<ul class="toc">
+<li><a href="#brief">In brief</a></li>
+<li><a href="#does">What the game does</a></li>
+<li><a href="#numbers">The numbers</a></li>
+<li><a href="#why">Why: the real physics or procedure</a></li>
+<li><a href="#departs">Where the game departs from reality</a></li>
+<li><a href="#silent">Where the sources are silent</a></li>
+<li><a href="#sources">Sources</a></li>
+<li><a href="#code">Code files</a></li>
+</ul>
+<h2 id="brief">In brief</h2>
+<p class="lead">A hail is a radio call that asks another ship to identify itself or stop, and a boarding is a party crossing to a ship that has stopped or been disabled so it can search the ship or take it.</p>
+<h2 id="does">What the game does</h2>
+<h3>Ways Out</h3>
+<ul>
+<li>[M] | every way out, and why a blocked one is blocked.</li>
+<li>HAND IT TO THE SECOND | the Second fights on by your standing orders.</li>
+<li>YIELD | only when the hostiles offer terms.</li>
+<li>DEMAND SURRENDER | orders every breaking hostile to stand down.</li>
+<li>CRACK THEIR CHANNEL | names the ship each hostile is on. The last of 3 tries works.</li>
+<li>A demand or a crack holds your fire for 20 s.</li>
+<li>BREAK OFF AND RUN | on the helm, a full burn away.</li>
+<li>You are clear when every hostile is past 3,000 km.</li>
+</ul>
+<h3>Boarding</h3>
+<ul>
+<li>A raider boards by matching your speed inside 5 km for 20 s.</li>
+<li>The helm breaks a boarding match unless that procedure asks you first.</li>
+<li>THE DECK FIGHT | your armed crew and boarding party meet the boarders.</li>
+<li>You command it, even when the Second flies the ship.</li>
+<li>GENERAL QUARTERS has the crew suited before they arrive.</li>
+<li>Win, and that raider has nobody left to board with.</li>
+<li>Lose, and the raiders fill their hold from yours, the most valuable goods first.</li>
+<li>They take the ship only if you fought on after the Second's warning.</li>
+</ul>
+<h2 id="numbers">The numbers</h2>
+<p>40 numbers, read from the game code. None has a grade yet.</p>
+<div class="region" role="region" tabindex="0" aria-label="Numbers the game runs for hailing, boarding and prize law">
+<table class="numbers">
+<caption>Numbers the game runs for hailing, boarding and prize law</caption>
+<thead><tr>
+<th scope="col">Quantity</th>
+<th scope="col">Value</th>
+<th scope="col">Unit</th>
+<th scope="col">Grade</th>
+<th scope="col">Source</th>
+<th scope="col">Basis</th>
+</tr></thead>
+<tbody>
+<tr id="n-1"><th scope="row">Base chance a DEMAND ID hail works, before sensor and Communications bonuses</th><td class="val">30</td><td>percent</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-2"><th scope="row">Base chance an OFFER PASSAGE hail works, before standing and Communications bonus</th><td class="val">30</td><td>percent</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-3"><th scope="row">Chance a THREATEN hail works, by size class of the other ship, before the Communications bonus</th><td class="val">LIGHT CRAFT 65, MEDIUM CRAFT 45, HEAVY CRAFT 20</td><td>percent</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-4"><th scope="row">Communications bonus to every hail roll, per point of department competence</th><td class="val">0.15</td><td>percent points</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-5"><th scope="row">Base chance a patrol opens fire after you refuse, before standing and Communications bonus (a raider always fires)</th><td class="val">50</td><td>percent</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-6"><th scope="row">The Second&#x27;s odds of a lost fight (the two ways a raider wins) when it expects to lose; a raider prices its demand on them</th><td class="val">0.5, 0.22</td><td>fraction</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-7"><th scope="row">The Second&#x27;s odds of a lost fight when it calls it even</th><td class="val">0.13, 0.07</td><td>fraction</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-8"><th scope="row">The Second&#x27;s odds of a lost fight when it expects to win</th><td class="val">0.06, 0.05</td><td>fraction</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-9"><th scope="row">The odds the boarders take the ship when you fight on after the Second&#x27;s warning and it expects to lose</th><td class="val">0.43</td><td>fraction</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-10"><th scope="row">The odds the boarders take the ship when you fight on after the Second&#x27;s warning, on any other call</th><td class="val">0.2</td><td>fraction</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-11"><th scope="row">Base chance a haggle with a raider wins, before Persuade or Pressure</th><td class="val">0.35</td><td>fraction</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-12"><th scope="row">Share a haggle cuts from a raider&#x27;s price on a win, and adds on a loss</th><td class="val">0.25</td><td>fraction</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-13"><th scope="row">The yard bill after a refusal, as a share of the ship&#x27;s price, when the Second expects to lose</th><td class="val">0.2</td><td>fraction</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-14"><th scope="row">The yard bill after a refusal, as a share of the ship&#x27;s price, when the Second calls it even</th><td class="val">0.63</td><td>fraction</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-15"><th scope="row">The yard bill after a refusal, as a share of the ship&#x27;s price, when the Second expects to win</th><td class="val">0.49</td><td>fraction</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-16"><th scope="row">Cargo a refusal destroys outside a lost fight, as a share of the hold&#x27;s value, when the Second expects to lose</th><td class="val">0.0049</td><td>fraction</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-17"><th scope="row">Cargo a refusal destroys outside a lost fight, as a share of the hold&#x27;s value, when the Second calls it even</th><td class="val">0.0092</td><td>fraction</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-18"><th scope="row">Cargo a refusal destroys outside a lost fight, as a share of the hold&#x27;s value, when the Second expects to win</th><td class="val">0.0123</td><td>fraction</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-19"><th scope="row">Largest credit transfer a raider forces from a thin hold in a yield</th><td class="val">3,000</td><td>Cr</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-20"><th scope="row">Credits a raider always leaves the captain in a yield (one dock shift)</th><td class="val">150</td><td>Cr</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-21"><th scope="row">Standing lost with the flag when you refuse its terms of surrender</th><td class="val">-4</td><td>standing points</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-22"><th scope="row">Heat gained for refusing a lawful inspection</th><td class="val">6</td><td>heat</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-23"><th scope="row">Chance a flag&#x27;s patrol offers a stand-down order on each opening it gets</th><td class="val">0.45</td><td>fraction</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-24"><th scope="row">Hull share a patrol must still hold to give a stand-down order</th><td class="val">0.5</td><td>fraction</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-25"><th scope="row">Fine on contraband found in a search, as a share of its value</th><td class="val">0.3</td><td>fraction</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-26"><th scope="row">Chance a hostile at its break point answers a demand to surrender, each roll</th><td class="val">40</td><td>percent</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-27"><th scope="row">Same chance after the hostile&#x27;s captain has fallen</th><td class="val">75</td><td>percent</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-28"><th scope="row">Range inside which a raider can board</th><td class="val">5</td><td>km</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-29"><th scope="row">Largest relative speed a boarding match allows</th><td class="val">0.05</td><td>km/s</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-30"><th scope="row">Time the match must hold before the boarders are across</th><td class="val">20</td><td>s</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-31"><th scope="row">Base chance a thorough strip of a beaten wreck works</th><td class="val">15</td><td>percent</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-32"><th scope="row">Chance added per point of the fleet&#x27;s marine combat score</th><td class="val">0.5</td><td>percent per point</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-33"><th scope="row">Highest chance a boarding can reach</th><td class="val">90</td><td>percent</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-34"><th scope="row">Capture bonus on a boarded wreck, as a share of the kill bounty</th><td class="val">0.25</td><td>fraction</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-35"><th scope="row">Hull damage when a strip is driven back</th><td class="val">10</td><td>hull points</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-36"><th scope="row">Cabin berths one captured crew takes</th><td class="val">8</td><td>berths</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-37"><th scope="row">Value of a captured crew, as a share of the surrendered hull&#x27;s catalog price</th><td class="val">0.05</td><td>fraction</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-38"><th scope="row">Lowest value of a captured crew</th><td class="val">250</td><td>Cr</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-39"><th scope="row">Standing gained with the flag per crew handed in</th><td class="val">1.5</td><td>standing points</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-40"><th scope="row">Standing lost with a crew&#x27;s own flag when you hand it to that flag&#x27;s enemy</th><td class="val">-2.5</td><td>standing points</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+</tbody></table></div>
+<h2 id="why">Why: the real physics or procedure</h2>
+<ul>
+<li>A warship may approach any ship at sea to check its nationality, but it may stop and board only on a short list of grounds.</li>
+<li>The grounds are piracy, the slave trade, unauthorized broadcasting, no nationality, and a false flag.</li>
+<li>The check runs in order: a signal to stop, then a boat with an officer, then the papers, and force only if the ship will not stop.</li>
+<li>A warning shot counts as a signal and not as a use of force, so disabling fire comes later, aimed at the steering gear or engine room.</li>
+<li>The boarding officer examines the papers and then recommends release, or detaining the ship and sending it in for adjudication.</li>
+<li>A captured ship goes to a port under the captor's control as a prize for a court, so the capturing crew does not own it.</li>
+<li>Only warships and marked government ships may seize a pirate ship, and a seizure without good grounds makes the seizing state pay for the loss.</li>
+<li>A coastal state may stop a ship in its own zone for customs, tax, immigration and health laws, and hot pursuit starts inside its own waters.</li>
+</ul>
+<h2 id="departs">Where the game departs from reality</h2>
+<ul>
+<li>Who may stop you: choosehostilefleet lets any flag's patrol stop a captain in any flag's space, but the sources limit a stop at sea to five grounds or to the coastal state's own zone. The repo marks this DEPARTURE, unexplained (docs/notes/hailing.md, demandinspection, B6).</li>
+<li>Order of force: the game goes from REFUSE to a roll to a fight, with no warning-shot step shown. The stand-down screen's line about disabled thrusters and cold guns implies the disabling-fire aim (docs/notes/hailing.md, B6).</li>
+<li>Contraband: the hail path pays the whole contraband value and keeps the cargo, while the combat stand-down impounds it and fines 30%. The sources support impound and adjudication, so the hail path is the departure. The repo marks it NOT FIXED and says no source sets a fine, so the figure is a price (docs/notes/hailing.md, A1).</li>
+<li>Capture bonus: the 25% paid on a boarded wreck is a game number, because no source gives a captor a share. The label was changed from salvage bonus to capture bonus for this reason (docs/notes/fleetops.md, Capture bonus, B1).</li>
+<li>Prisoners: the Handbook sends pirates to the nearest port for the capturing state's law, but the game pays the captain for a crew and moves standing with the flag. The repo gives no source for the payment and says only that a crew taken alive costs berths and a trip (comment in combat/prisoners.py).</li>
+<li>A private captain seizing: UNCLOS 107 gives seizure to warships and marked government ships, but the player boards and takes prisoners in a private hull. The repo gives no reason, so this is unexplained.</li>
+<li>No cost for a patrol that stops you with no grounds: UNCLOS 106 and 110(3) make the stopper liable, and the game has no such cost (docs/sources/unclos.md, What the game does with it).</li>
+</ul>
+<h2 id="silent">Where the sources are silent</h2>
+<ul>
+<li>Payment to a captor: the Handbook names the prize court and gives no share, fee or bounty, and UNCLOS sets no fine, bounty or share.</li>
+<li>A surrender: SORM never says who may strike colors, because Navy Regulations is the document that would speak and it is not on the shelf.</li>
+<li>Rules of engagement: the Handbook only points to them, and the text is classified.</li>
+<li>Bounty hunters and bail: no source on the shelf covers them (docs/notes/hailing.md, B11).</li>
+<li>A feigned surrender followed by a shot (the TRICK row): no page on the shelf covers it.</li>
+<li>Space: there is no sea, coastal state or zone in the setting, so the articles give a shape and not a map.</li>
+<li>The Atomic Rockets mirror gives only the jurisdiction point and says nothing on boarding steps.</li>
+<li>These sources were read through their shelf pages, and the original PDFs were not reopened for this note.</li>
+</ul>
+<h2 id="sources">Sources</h2>
+<ul>
+<li><a href="https://www.un.org/depts/los/convention_agreements/texts/unclos/unclos_e.pdf">United Nations Convention on the Law of the Sea (UNCLOS), 1982</a>, Articles 33, 105, 106, 107, 110 and 111: A warship boards a foreign ship on the high seas only on reasonable ground (article 110). Only warships or marked government ships may seize for piracy (107). A stop with no adequate grounds makes the stopper liable (106). Hot pursuit begins inside the coastal state's waters after a signal to stop (111). A coastal state controls customs, tax, immigration and health in a 24 nautical mile zone (33). (<a href="sources.html#doc-docs-sources-unclos-md">all uses</a>)</li>
+<li>The Commander&#x27;s Handbook on the Law of Naval Operations (NWP 1-14M), 1995 edition, Sections 3.4, 3.11.5.2, 7.6.1 and 7.10: Visit and search runs: summon by signal, boat with an officer, papers first, then force if the ship flees (7.6.1). Disabling fire follows ignored warning shots (3.11.5.2). A captured ship goes to a port as prize for a court, with a prize master and crew (7.10). "does not constitute a use of force" (<a href="sources.html#doc-docs-sources-navy-commanders-handbook-1995-md">all uses</a>)</li>
+<li>Standard Organization and Regulations of the U.S. Navy (SORM), Section 6.3.21 d(1), e(1), f(1), f(6): The executive officer names an examining officer, a boarding officer and a Prize Master. The examining officer recommends release, or detain and send in for adjudication. The prize crew delivers a seized ship to the proper authorities. (<a href="sources.html#doc-docs-sources-sorm-md">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/pirate.php">Atomic Rockets, pirate</a>, Piracy: Piracy is an offense of universal jurisdiction today, so any state can board and seize a ship engaged in it. This is a secondary summary of the same law. (<a href="sources.html#doc-rocket-pirate-php-html">all uses</a>)</li>
+</ul>
+<h2 id="code">Code files</h2>
+<ul>
+<li><code>combat/hailing.py</code></li>
+<li><code>combat/prisoners.py</code></li>
+<li><code>combat/fleetops.py</code></li>
+<li><code>combat/combat.py</code></li>
+<li><code>locations/crimes.py</code></li>
+<li><code>combat/newtonian/world.py</code></li>
+</ul>
+</main>
+<footer class="stamp">
+<p>Read from game commit 702fad0f (committed 2026-10-16). Pages written 2026-10-16.
+The explanations are stand-in text and may change.</p>
+</footer>
+</div>
+</body>
+</html>

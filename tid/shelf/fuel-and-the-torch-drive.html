@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fuel and the torch drive</title>
+<meta name="description" content="What the game does for fuel and the torch drive, its numbers, and where each comes from.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+:root {
+  color-scheme: light dark;
+  --bg: #fbf8f1; --panel: #f0eadb; --rule: #b9ae94; --text: #231c0f; --muted: #51493a; --accent: #7a4300;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #0e0903; --panel: #16110a; --rule: #4a4130; --text: #d6cbb6; --muted: #a89f88; --accent: #ffb040; }
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 1rem/1.65 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; padding: 0 1rem 4rem; }
+.skip { position: absolute; left: 1rem; top: -4rem; background: var(--accent); color: var(--bg); padding: .5rem 1rem; z-index: 10; }
+.skip:focus { top: .5rem; }
+.wrap { max-width: 64rem; margin: 0 auto; }
+.mono, h1, h2, h3, caption, th, nav, .brand, .stamp, .grade, .val { font-family: "DM Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+a { color: var(--accent); text-underline-offset: .2em; }
+a:focus-visible, .region:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.top { padding: 2rem 0 1rem; border-bottom: 1px solid var(--rule); }
+.brand { margin: 0 0 .75rem; font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .25rem 1.5rem; }
+nav a { display: inline-block; padding: .35rem 0; }
+h1 { font-size: clamp(1.4rem, 5vw, 2rem); line-height: 1.25; margin: 2rem 0 1rem; font-weight: 500; }
+h2 { font-size: 1.25rem; margin: 2.5rem 0 .75rem; padding-top: 1.25rem; border-top: 1px solid var(--rule); font-weight: 500; }
+h3 { font-size: 1.05rem; margin: 1.5rem 0 .5rem; font-weight: 500; }
+p, li { max-width: 46rem; }
+li + li { margin-top: .35rem; }
+code { font-family: "DM Mono", ui-monospace, Consolas, monospace; font-size: .92em; overflow-wrap: anywhere; }
+.lead { font-size: 1.1rem; }
+.note { background: var(--panel); border-left: 4px solid var(--accent); padding: .75rem 1rem; max-width: 46rem; }
+.region { overflow-x: auto; margin: 1rem 0; border: 1px solid var(--rule); }
+table { border-collapse: collapse; width: 100%; min-width: 46rem; font-size: .92rem; line-height: 1.5; }
+caption { text-align: left; padding: .75rem; font-size: .95rem; color: var(--muted); }
+th, td { text-align: left; vertical-align: top; padding: .55rem .75rem; border-top: 1px solid var(--rule); }
+thead th { background: var(--panel); font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; white-space: nowrap; }
+tbody th { font-weight: 400; font-family: inherit; min-width: 14rem; }
+td.val { overflow-wrap: anywhere; min-width: 7rem; }
+.numbers td:nth-child(5), .numbers td:nth-child(6) { min-width: 13rem; }
+td.count { text-align: right; font-variant-numeric: tabular-nums; }
+.grade { display: inline-block; border: 2px solid currentColor; border-radius: 4px; min-width: 1.6rem; text-align: center; padding: 0 .3rem; font-weight: 600; margin-right: .4rem; }
+.gradeitem { white-space: nowrap; }
+.stamp { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--rule); font-size: .8rem; color: var(--muted); }
+.toc { padding-left: 1.2rem; }
+dl.keys dt { font-weight: 600; margin-top: 1rem; }
+dl.keys dd { margin: .25rem 0 0; max-width: 46rem; }
+@media (max-width: 40rem) { body { padding: 0 1rem 3rem; } th, td { padding: .5rem; } }
+@media print { .skip { display: none; } }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to the content</a>
+<div class="wrap">
+<header class="top">
+<p class="brand"><a href="https://coldweld.dev/">Coldweld</a> / The Infinite Diaspora / Reference shelf</p>
+<nav aria-label="Reference shelf"><ul>
+<li><a href="index.html">Mechanics</a></li>
+<li><a href="grades.html">Grades</a></li>
+<li><a href="sources.html">Sources</a></li>
+</ul></nav>
+</header>
+<main id="main">
+<h1>Fuel and the torch drive</h1>
+<ul class="toc">
+<li><a href="#brief">In brief</a></li>
+<li><a href="#does">What the game does</a></li>
+<li><a href="#numbers">The numbers</a></li>
+<li><a href="#why">Why: the real physics or procedure</a></li>
+<li><a href="#departs">Where the game departs from reality</a></li>
+<li><a href="#silent">Where the sources are silent</a></li>
+<li><a href="#sources">Sources</a></li>
+<li><a href="#code">Code files</a></li>
+</ul>
+<h2 id="brief">In brief</h2>
+<p class="lead">A torch drive is a rocket that throws water out of its nozzle at a very high speed, so a ship can push at about one g for days instead of coasting on a slow orbit.</p>
+<h2 id="does">What the game does</h2>
+<h3>Range And The Destination Tags</h3>
+<ul>
+<li>A trip burns the whole way while the fuel its BURN PROFILE spends allows, and coasts on the rest when it does not.</li>
+<li>It always keeps enough fuel to land and to break off one fight.</li>
+<li>A richer THRUSTER GRADE throws the same water faster, so a trip burns longer and coasts less.</li>
+<li>NEEDS FUEL | too little fuel aboard, so the coast runs longer than the stores. Refuel.</li>
+<li>OUT OF RANGE: cargo too heavy | even on a full tank the load makes the coast outlast the stores, so vent cargo.</li>
+<li>OUT OF RANGE: tank too small | even empty and full, the coast outlasts the stores, so a richer grade or a faster hull is the answer.</li>
+<li>OUT OF RANGE means no SINGLE crossing reaches it. It never means the place cannot be reached.</li>
+</ul>
+<h3>Burn Profile</h3>
+<ul>
+<li>A burn profile is how much speed one trip buys, chosen before you leave.</li>
+<li>Every profile flies at the drive's rated thrust, so the fuel spent is what changes.</li>
+<li>ECONOMY | the cheapest trip: the fuel bill plus each day's wages, upkeep and stores.</li>
+<li>FASTEST | all the fuel above the reserve.</li>
+<li>ARRIVE BY | the cheapest trip in all, fuel and days, that makes the day you name.</li>
+<li>Fuel you do not spend stays in the tank for the next leg.</li>
+<li>A slower trip eats more food and water and rolls for more contacts, and it can outlast the stores.</li>
+<li>A hull rated above 1 g strains its crew, shown as CREW STRAIN in fatigue per day.</li>
+</ul>
+<h3>Fuel And Stores</h3>
+<ul>
+<li>Fuel is water that the drive throws out the back, bought by the tonne at the station's water price.</li>
+<li>Food and water are scaled by the days and by how many people are aboard.</li>
+<li>CHOOSE THE WORK lists every service with its bill and its wait, and you pick how much of each.</li>
+<li>REFUEL, REPAIR, RESUPPLY and SERVICE do them one at a time.</li>
+</ul>
+<h2 id="numbers">The numbers</h2>
+<p>17 numbers, read from the game code. None has a grade yet.</p>
+<div class="region" role="region" tabindex="0" aria-label="Numbers the game runs for fuel and the torch drive">
+<table class="numbers">
+<caption>Numbers the game runs for fuel and the torch drive</caption>
+<thead><tr>
+<th scope="col">Quantity</th>
+<th scope="col">Value</th>
+<th scope="col">Unit</th>
+<th scope="col">Grade</th>
+<th scope="col">Source</th>
+<th scope="col">Basis</th>
+</tr></thead>
+<tbody>
+<tr id="n-1"><th scope="row">Exhaust speed with no thruster grade fitted</th><td class="val">2,500</td><td>km/s</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-2"><th scope="row">Exhaust speed of the top rung (TH-6)</th><td class="val">11,000</td><td>km/s</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-3"><th scope="row">Every rung of the exhaust ladder, no grade then TH-1 to TH-6</th><td class="val">2,500, 3,200.2368, 4,096.6064, 5,244.0442, 6,712.8734, 8,593.114, 11,000</td><td>km/s</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-4"><th scope="row">Number of enrichment grades</th><td class="val">6</td><td>grades</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-5"><th scope="row">Water in a full tank, as a share of the hull&#x27;s dry mass</th><td class="val">1</td><td>share</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-6"><th scope="row">Salt charge for one tonne of water at the base grade (the pad scales it with exhaust speed squared)</th><td class="val">10</td><td>Cr per tonne</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-7"><th scope="row">Burn a trip must always keep in reserve to break off one fight</th><td class="val">0.25</td><td>days of full thrust</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-8"><th scope="row">Change of speed for a hop between two berths at one body</th><td class="val">4,040</td><td>m/s</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-9"><th scope="row">Change of speed to hold station at a body for a year</th><td class="val">100</td><td>m/s per year</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-10"><th scope="row">Acceleration a crew bears with no strain</th><td class="val">9.8</td><td>m/s^2</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-11"><th scope="row">The three burn profiles</th><td class="val">economy, fastest, arriveby</td><td>profiles</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-12"><th scope="row">Longest trip the game will quote</th><td class="val">36,525</td><td>days</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-13"><th scope="row">Highest grade a hull burns without custody rights taken (light craft)</th><td class="val">2</td><td>grade</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-14"><th scope="row">Price of the TH-1 kit</th><td class="val">2,500</td><td>Cr</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-15"><th scope="row">Price of the TH-6 kit</th><td class="val">55,000</td><td>Cr</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-16"><th scope="row">Grade the TH-1 kit burns</th><td class="val">1</td><td>grade</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-17"><th scope="row">Grade the TH-6 kit burns</th><td class="val">6</td><td>grade</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+</tbody></table></div>
+<h2 id="why">Why: the real physics or procedure</h2>
+<ul>
+<li>A rocket gains speed by throwing mass backward, so a faster exhaust gains more speed from the same mass.</li>
+<li>A torch drive has both high thrust and high exhaust speed, so it can push the whole way, flip at the midpoint and brake.</li>
+<li>A salt-water rocket dissolves a fissile salt in water, so the water is the propellant and the salt is the fuel.</li>
+<li>Zubrin's 20% enriched design gives an exhaust of 66 km/s, and a speculative 90% enriched design gives 4,725 km/s.</li>
+<li>Each U-235 fission releases a fixed 202.5 MeV, so a faster exhaust needs more fissions in every tonne.</li>
+<li>The energy in a tonne of exhaust grows with the square of its speed, which is why the salt charge scales that way.</li>
+<li>A ship that does not need to hurry can burn, drift for most of the distance and brake at the end.</li>
+<li>Thrust stays fixed while the tank empties, so acceleration rises as the ship gets lighter.</li>
+</ul>
+<h2 id="departs">Where the game departs from reality</h2>
+<ul>
+<li>The ladder runs far past a published design. The real salt-water figures are 66 km/s and, in the speculative case, 4,725 km/s. Austen chose to keep one-g trips, so the ladder is a labeled fiction (docs/notes/propellant.md, EXHAUST_LADDER_KMS).</li>
+<li>The top rung is the Epstein figure, a fiction on the mirror's own page. Robinson calls an exhaust that fast wasteful for most solar system routes; the game keeps it so a torch can fly one-g trips (docs/notes/propellant.md).</li>
+<li>The base rung is derived so a full tank flies the close Mars run at one g. The spacing of the middle rungs is authored (docs/notes/propellant.md).</li>
+<li>A thruster grade changes only the exhaust speed and adds no thrust. The old design added acceleration and was removed (docs/notes/propellant.md, 'Thruster grades are the enrichment').</li>
+<li>A grade above the base burns only while the hull's custody rights are taken. Safeguards holds every gram of fissile material, and nobody can grant it (docs/setting-canon.md, section 2 'Safeguards' and 'The torch, and the Chief Designer').</li>
+<li>The salt charge is a custody bill, scaled by exhaust speed squared. A physical price was unusable because the upper rungs need more energy than fission can give (docs/salt-direction.md, 'What the salt IS').</li>
+<li>Gravity and orbits are ignored in the trip time; a trip is a brachistochrone, or burn, coast and brake when the water is short (travel/propellant.py, tripdays).</li>
+<li>The tank holds water equal to an authored 100 percent of the dry mass, so with an empty hold the mass ratio is 1 plus that share. The mirror's torch designs run from 2 to 10, so the game takes the low end (docs/notes/propellant.md, TANK_MASS_FRACTION).</li>
+</ul>
+<h2 id="silent">Where the sources are silent</h2>
+<ul>
+<li>No source prices salt, custody or a refill, so the Cr figures are the game's own.</li>
+<li>No source sets how much water a tank holds against the dry mass, so the tank share is the game's own.</li>
+<li>No source covers a reserve to land and to break off a fight.</li>
+<li>The mirror has no rule for who may hold enrichment grades, because that is fiction.</li>
+<li>The mirror does not rank a burn profile, a cost-to-arrive plan or an arrive-by day.</li>
+</ul>
+<h2 id="sources">Sources</h2>
+<ul>
+<li><a href="https://www.projectrho.com/public_html/rocket/enginelist2.php">Atomic Rockets, enginelist2</a>, Nuclear Salt Water (NSWR): A 2% solution of uranium tetrabromide in water. At 20% enrichment the exhaust speed is 66,000 m/s (6,728 s). The 90% enriched case lists 4,725,000 m/s. The page says the water is the remass. "considered far-fetched by many scientists" (<a href="sources.html#doc-rocket-enginelist2-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/torchships.php">Atomic Rockets, torchships</a>, Introduction: A torch drive has high thrust and high specific impulse, so it can fly a brachistochrone. Heinlein coined the word in 1953 for his story Sky Lift. (<a href="sources.html#doc-rocket-torchships-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/torchships.php">Atomic Rockets, torchships</a>, Torchship Performance (Rocketpunk Manifesto, On Torchships): A 1,000 ton example with a mass ratio of 2 and a 300 km/s exhaust gets about 200 km/s of speed change. It shows a tank equal to the dry mass is a plausible design. (<a href="sources.html#doc-rocket-torchships-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/torchships.php">Atomic Rockets, torchships</a>, Constant-acceleration Delta-V: At a fixed thrust the acceleration rises as the mass falls. The page says to cut thrust to hold the acceleration steady. (<a href="sources.html#doc-rocket-torchships-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/torchships.php">Atomic Rockets, torchships</a>, Low Gear / High Gear (Robinson and Campbell): A 1,000 ton ship with a 10,000 km/s exhaust crosses 1 AU in 10.5 days, flipping at the midpoint, and burns 66 tons. A variant accelerates for a tenth of the distance, drifts for eight tenths and brakes for a tenth. Robinson says a 10,000 km/s exhaust is wasteful for most routes in the solar system. (<a href="sources.html#doc-rocket-torchships-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/enginelist3.php">Atomic Rockets, enginelist3</a>, Epstein Drive: A fictional fusion drive from The Expanse, listed at 11,000,000 m/s exhaust speed and 1,100,000 s of specific impulse. The 11,000 km/s figure is the page's conjecture from a mass ratio of 4. (<a href="sources.html#doc-rocket-enginelist3-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/atomicfuel.php">Atomic Rockets, atomicfuel</a>, The Details: One U-235 fission gives 202.5 MeV, which is 3.244e-11 joules per atom. (<a href="sources.html#doc-rocket-atomicfuel-php-html">all uses</a>)</li>
+</ul>
+<h2 id="code">Code files</h2>
+<ul>
+<li><code>travel/propellant.py</code></li>
+<li><code>travel/travel.py</code></li>
+<li><code>vehicles/ship/modules/thruster.py</code></li>
+<li><code>vehicles/ship/modules/thrusterdata.py</code></li>
+<li><code>vehicles/ship/hulllicence.py</code></li>
+<li><code>combat/combat.py</code></li>
+</ul>
+</main>
+<footer class="stamp">
+<p>Read from game commit 702fad0f (committed 2026-10-16). Pages written 2026-10-16.
+The explanations are stand-in text and may change.</p>
+</footer>
+</div>
+</body>
+</html>

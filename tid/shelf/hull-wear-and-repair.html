@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hull wear and repair</title>
+<meta name="description" content="What the game does for hull wear and repair, its numbers, and where each comes from.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+:root {
+  color-scheme: light dark;
+  --bg: #fbf8f1; --panel: #f0eadb; --rule: #b9ae94; --text: #231c0f; --muted: #51493a; --accent: #7a4300;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #0e0903; --panel: #16110a; --rule: #4a4130; --text: #d6cbb6; --muted: #a89f88; --accent: #ffb040; }
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 1rem/1.65 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; padding: 0 1rem 4rem; }
+.skip { position: absolute; left: 1rem; top: -4rem; background: var(--accent); color: var(--bg); padding: .5rem 1rem; z-index: 10; }
+.skip:focus { top: .5rem; }
+.wrap { max-width: 64rem; margin: 0 auto; }
+.mono, h1, h2, h3, caption, th, nav, .brand, .stamp, .grade, .val { font-family: "DM Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+a { color: var(--accent); text-underline-offset: .2em; }
+a:focus-visible, .region:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.top { padding: 2rem 0 1rem; border-bottom: 1px solid var(--rule); }
+.brand { margin: 0 0 .75rem; font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .25rem 1.5rem; }
+nav a { display: inline-block; padding: .35rem 0; }
+h1 { font-size: clamp(1.4rem, 5vw, 2rem); line-height: 1.25; margin: 2rem 0 1rem; font-weight: 500; }
+h2 { font-size: 1.25rem; margin: 2.5rem 0 .75rem; padding-top: 1.25rem; border-top: 1px solid var(--rule); font-weight: 500; }
+h3 { font-size: 1.05rem; margin: 1.5rem 0 .5rem; font-weight: 500; }
+p, li { max-width: 46rem; }
+li + li { margin-top: .35rem; }
+code { font-family: "DM Mono", ui-monospace, Consolas, monospace; font-size: .92em; overflow-wrap: anywhere; }
+.lead { font-size: 1.1rem; }
+.note { background: var(--panel); border-left: 4px solid var(--accent); padding: .75rem 1rem; max-width: 46rem; }
+.region { overflow-x: auto; margin: 1rem 0; border: 1px solid var(--rule); }
+table { border-collapse: collapse; width: 100%; min-width: 46rem; font-size: .92rem; line-height: 1.5; }
+caption { text-align: left; padding: .75rem; font-size: .95rem; color: var(--muted); }
+th, td { text-align: left; vertical-align: top; padding: .55rem .75rem; border-top: 1px solid var(--rule); }
+thead th { background: var(--panel); font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; white-space: nowrap; }
+tbody th { font-weight: 400; font-family: inherit; min-width: 14rem; }
+td.val { overflow-wrap: anywhere; min-width: 7rem; }
+.numbers td:nth-child(5), .numbers td:nth-child(6) { min-width: 13rem; }
+td.count { text-align: right; font-variant-numeric: tabular-nums; }
+.grade { display: inline-block; border: 2px solid currentColor; border-radius: 4px; min-width: 1.6rem; text-align: center; padding: 0 .3rem; font-weight: 600; margin-right: .4rem; }
+.gradeitem { white-space: nowrap; }
+.stamp { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--rule); font-size: .8rem; color: var(--muted); }
+.toc { padding-left: 1.2rem; }
+dl.keys dt { font-weight: 600; margin-top: 1rem; }
+dl.keys dd { margin: .25rem 0 0; max-width: 46rem; }
+@media (max-width: 40rem) { body { padding: 0 1rem 3rem; } th, td { padding: .5rem; } }
+@media print { .skip { display: none; } }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to the content</a>
+<div class="wrap">
+<header class="top">
+<p class="brand"><a href="https://coldweld.dev/">Coldweld</a> / The Infinite Diaspora / Reference shelf</p>
+<nav aria-label="Reference shelf"><ul>
+<li><a href="index.html">Mechanics</a></li>
+<li><a href="grades.html">Grades</a></li>
+<li><a href="sources.html">Sources</a></li>
+</ul></nav>
+</header>
+<main id="main">
+<h1>Hull wear and repair</h1>
+<ul class="toc">
+<li><a href="#brief">In brief</a></li>
+<li><a href="#does">What the game does</a></li>
+<li><a href="#numbers">The numbers</a></li>
+<li><a href="#why">Why: the real physics or procedure</a></li>
+<li><a href="#departs">Where the game departs from reality</a></li>
+<li><a href="#silent">Where the sources are silent</a></li>
+<li><a href="#sources">Sources</a></li>
+<li><a href="#code">Code files</a></li>
+</ul>
+<h2 id="brief">In brief</h2>
+<p class="lead">Hull wear is the slow loss of drive performance that comes with use, and repair is the work of renewing the structure that damage has taken.</p>
+<h2 id="does">What the game does</h2>
+<h3>Condition</h3>
+<ul>
+<li>A hull has health, and combat and travel hazards take it down.</li>
+<li>SHIPYARD &gt; REPAIR puts it back, for a fee and the days the yard's gang takes. A bigger station has a bigger gang.</li>
+<li>A job longer than a day offers a day's work instead, because a holed hull still flies but lets more rounds reach what matters.</li>
+<li>Under way, REPAIR HULL has your hands mend hull and drive with hold steel, far slower than a yard.</li>
+<li>STANDING ORDERS &gt; REPAIR PARTIES sets which job the hands work first, the drive or the hull, and shows the steel and days.</li>
+<li>A hulk from a Belt salvage lot is restored by the yard, or by your own hands under RESTORE A HULK.</li>
+<li>Damage is not the same as wear. See RUNNING COSTS for wear.</li>
+</ul>
+<h3>Trading A Hull In</h3>
+<ul>
+<li>The salvage yard pays 45% of the hull price, less the cost of any repairs it needs, plus half the price of every module still fitted.</li>
+<li>A restored wreck, and every hull the salvage yard sells, carries a salvage title and fetches 30% instead.</li>
+<li>So a hull loses value the moment you fly it.</li>
+<li>Buy the hull the work needs, not the hull you want to own.</li>
+</ul>
+<h3>Maintenance</h3>
+<ul>
+<li>A hull wears with USE and not with time, so a ship sitting at a dock wears nothing.</li>
+<li>The yard shows the bill as MAINTENANCE DUE, and you settle it under SERVICE.</li>
+<li>Every two weeks of travel left unpaid drops the drive a step: 85%, then 70%, then 55%.</li>
+<li>It never falls below 55%, so a neglected hull always still flies.</li>
+<li>A worn drive pushes less and wastes fuel, so each leg is slower and dearer.</li>
+<li>Unpaid wear stays with the hull, so a sale pays the yard first.</li>
+<li>CHOOSE THE WORK runs only when you can pay its whole bill. SERVICE pays what you hold.</li>
+</ul>
+<h2 id="numbers">The numbers</h2>
+<p>26 numbers, read from the game code. None has a grade yet.</p>
+<div class="region" role="region" tabindex="0" aria-label="Numbers the game runs for hull wear and repair">
+<table class="numbers">
+<caption>Numbers the game runs for hull wear and repair</caption>
+<thead><tr>
+<th scope="col">Quantity</th>
+<th scope="col">Value</th>
+<th scope="col">Unit</th>
+<th scope="col">Grade</th>
+<th scope="col">Source</th>
+<th scope="col">Basis</th>
+</tr></thead>
+<tbody>
+<tr id="n-1"><th scope="row">Share of rated thrust lost per wear step</th><td class="val">0.15</td><td>fraction of thrust</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-2"><th scope="row">Lowest share of rated thrust a worn drive delivers</th><td class="val">0.55</td><td>fraction of thrust</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-3"><th scope="row">Maintenance owed per travel day, as a share of hull upkeep value</th><td class="val">0.0016</td><td>fraction of value</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-4"><th scope="row">Maintenance owed that drops the drive one step, as a share of hull upkeep value</th><td class="val">0.022</td><td>fraction of value</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-5"><th scope="row">Share of dry mass that is structure</th><td class="val">0.4</td><td>fraction</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-6"><th scope="row">Person-hours to renew one tonne of structure</th><td class="val">230</td><td>person-hours</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-7"><th scope="row">Hours in one working shift</th><td class="val">8</td><td>hours</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-8"><th scope="row">Share of a station&#x27;s people who work its yard</th><td class="val">0.1</td><td>fraction</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-9"><th scope="row">Hands that fit around one tonne of structure</th><td class="val">1</td><td>hands per tonne</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-10"><th scope="row">Crew pace with no training</th><td class="val">0.5</td><td>fraction of standard pace</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-11"><th scope="row">Crew pace added per competence point</th><td class="val">0.01</td><td>fraction of standard pace</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-12"><th scope="row">Pace added per rating point of a machine shop</th><td class="val">0.25</td><td>fraction of pace</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-13"><th scope="row">Rating of the largest machine shop (MS-6)</th><td class="val">6</td><td>rating points</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-14"><th scope="row">Share of structure that one whole drive part equals</th><td class="val">0.05</td><td>fraction</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-15"><th scope="row">Yard price of one hull point, as a share of hull price over its points</th><td class="val">0.1</td><td>fraction</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-16"><th scope="row">Lowest yard price of a hull point</th><td class="val">5</td><td>Cr</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-17"><th scope="row">Job length above which the yard offers a day&#x27;s work</th><td class="val">1</td><td>days</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-18"><th scope="row">Morale each hand loses on a repair day under way</th><td class="val">1</td><td>morale</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-19"><th scope="row">Share of hull price the dealer pays for a hull traded in</th><td class="val">0.45</td><td>fraction</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-20"><th scope="row">Share of module price the dealer pays on a trade-in</th><td class="val">0.5</td><td>fraction</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-21"><th scope="row">Share of module price paid for a module taken out</th><td class="val">0.75</td><td>fraction</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-22"><th scope="row">Share of hull price a salvage-titled hull fetches</th><td class="val">0.3</td><td>fraction</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-23"><th scope="row">Condition range of a hulk on a salvage lot</th><td class="val">0.05, 0.25</td><td>fraction of full health</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-24"><th scope="row">Hulks on a salvage lot</th><td class="val">2, 4</td><td>hulks</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-25"><th scope="row">Days between salvage lot refreshes</th><td class="val">14</td><td>days</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-26"><th scope="row">Condition at which a hulk can fly</th><td class="val">0.5</td><td>fraction of full health</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+</tbody></table></div>
+<h2 id="why">Why: the real physics or procedure</h2>
+<ul>
+<li>A ship's drive and moving parts wear as they work, so a ship that stays at dock wears little.</li>
+<li>A working ship costs about a third of its price each year to keep, by one estimate.</li>
+<li>The largest part of a hull is structure, and renewing structure takes people, time and steel.</li>
+<li>A bigger gang finishes sooner, but only so many people fit around one hull at once.</li>
+<li>Major overhaul needs a dock or a yard, and doing it away from one takes longer and overworks the gang.</li>
+<li>A wreck is only worth the labor and steel that bring it back to sound.</li>
+</ul>
+<h2 id="departs">Where the game departs from reality</h2>
+<ul>
+<li>The mirror treats maintenance as a yearly job. The game wears a hull with use and not with time, so an idle hull pays berthing and nothing is charged twice (comment in gameplay/gameplay.py).</li>
+<li>The yard bill does not follow repair labor. docs/notes/repair.md ('The price did not move, on purpose') says pricing yard labor at the dock wage was measured and refused, so time, steel and gang are physical and the bill stays the old tariff.</li>
+<li>Combat records damage as hull points, not as tonnes. getdamagetonnes converts points to tonnes until the damage record lands (docs/notes/repair.md, 'getdamagetonnes is the bridge').</li>
+<li>A yard offers a day's work when a job runs over a day, because a holed hull still flies (SHIPS &amp; OUTFITTING, CONDITION). This is a pacing choice, with no source.</li>
+<li>Crew under way renew hull with steel from the hold at the same hours per tonne as the yard, but a short gang is slow. The machine shop adds pace and mends nothing alone (vehicles/ship/modules/machineshop.py).</li>
+<li>A guns-knocked-offline repair and armor re-plate stay instant at the counter (docs/notes/repair.md, 'Drive parts keep their patch rule').</li>
+</ul>
+<h2 id="silent">Where the sources are silent</h2>
+<ul>
+<li>The mirror is silent on repair labor. It gives no person-hours per tonne of hull, so the 230 comes from the Butler guide as cited in docs/notes/repair.md and is UNVERIFIED here.</li>
+<li>The mirror and the Navy manual are silent on wear that grows with use and costs thrust, so the steps (15 percent, floor 55 percent) are authored.</li>
+<li>No source gives the size of a yard gang. Yard share, hands per tonne and crew pace are authored, with no source (docs/notes/repair.md).</li>
+<li>No source gives a price or a drop in value for a wreck that carries a salvage title. The 30 percent factor is Austen's choice in locations/shipyard.py, dated 2026-09-28.</li>
+<li>The mirror has no figure for how long a drive part takes to renew. docs/notes/repair.md says the drive part share is an open measure.</li>
+</ul>
+<h2 id="sources">Sources</h2>
+<ul>
+<li><a href="https://www.projectrho.com/public_html/rocket/starshipowner.php">Atomic Rockets, starshipowner</a>, cost of running a cargo starship: The page assumes a cargo starship costs $300,000 per tonne of capacity per year to run, against a purchase price of $1 million per tonne. That is a share of about 30 percent of the price each year. (<a href="sources.html#doc-rocket-starshipowner-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/starshipowner.php">Atomic Rockets, starshipowner</a>, maintenance remarks: The page says annual maintenance comes sooner than owners expect and needs a dock or yard. It carries about one maintenance technician per $100 million of ship, because maintenance cannot all wait for a layover. (<a href="sources.html#doc-rocket-starshipowner-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/appworkedexample.php">Atomic Rockets, appworkedexample</a>, Structure: In the worked example a ship of 126 tonnes dry mass has 50 tonnes of structure, which is about 40 percent. The share changes with the thrust the ship needs. (<a href="sources.html#doc-rocket-appworkedexample-php-html">all uses</a>)</li>
+<li>Notes: vehicles/ship/repair.py, HOURS_PER_TONNE, 230 (Butler, A Guide to Ship Repair Estimates in Man-Hours, Table 3.1): The repo records that renewing steel plate takes 250 person-hours a tonne up to 6 mm and 230 at 12.5 mm. UNVERIFIED here: this note did not open the Butler PDF, and the repo note says an earlier session read it on 2026-09-28. (<a href="sources.html#doc-docs-notes-repair-md">all uses</a>)</li>
+<li>US Navy training manual, &quot;Damage Control&quot; (chapter 12), What it says (repair lockers) and Where the source is silent: The manual describes repair lockers and parties for a ship under attack. It states plainly that it gives no price, wage or time for any party. (<a href="sources.html#doc-docs-sources-navy-damage-control-manual-md">all uses</a>)</li>
+<li>International Convention on Salvage, 1989, What the game does with it: The Convention covers a reward for helping property in danger. The repo notes that hulk work on abandoned property fits, but the Convention does not cover a yard that sells a wreck. (<a href="sources.html#doc-docs-sources-salvage-convention-1989-md">all uses</a>)</li>
+</ul>
+<h2 id="code">Code files</h2>
+<ul>
+<li><code>vehicles/ship/repair.py</code></li>
+<li><code>vehicles/ship/ship.py</code></li>
+<li><code>vehicles/ship/drive.py</code></li>
+<li><code>gameplay/gameplay.py</code></li>
+<li><code>locations/shipyard.py</code></li>
+<li><code>locations/station.py</code></li>
+<li><code>locations/salvagework.py</code></li>
+<li><code>vehicles/ship/modules/machineshop.py</code></li>
+</ul>
+</main>
+<footer class="stamp">
+<p>Read from game commit 702fad0f (committed 2026-10-16). Pages written 2026-10-16.
+The explanations are stand-in text and may change.</p>
+</footer>
+</div>
+</body>
+</html>

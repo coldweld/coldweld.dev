@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ship&#x27;s organization and the Second</title>
+<meta name="description" content="What the game does for ship&#x27;s organization and the second, its numbers, and where each comes from.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+:root {
+  color-scheme: light dark;
+  --bg: #fbf8f1; --panel: #f0eadb; --rule: #b9ae94; --text: #231c0f; --muted: #51493a; --accent: #7a4300;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #0e0903; --panel: #16110a; --rule: #4a4130; --text: #d6cbb6; --muted: #a89f88; --accent: #ffb040; }
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 1rem/1.65 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; padding: 0 1rem 4rem; }
+.skip { position: absolute; left: 1rem; top: -4rem; background: var(--accent); color: var(--bg); padding: .5rem 1rem; z-index: 10; }
+.skip:focus { top: .5rem; }
+.wrap { max-width: 64rem; margin: 0 auto; }
+.mono, h1, h2, h3, caption, th, nav, .brand, .stamp, .grade, .val { font-family: "DM Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+a { color: var(--accent); text-underline-offset: .2em; }
+a:focus-visible, .region:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.top { padding: 2rem 0 1rem; border-bottom: 1px solid var(--rule); }
+.brand { margin: 0 0 .75rem; font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .25rem 1.5rem; }
+nav a { display: inline-block; padding: .35rem 0; }
+h1 { font-size: clamp(1.4rem, 5vw, 2rem); line-height: 1.25; margin: 2rem 0 1rem; font-weight: 500; }
+h2 { font-size: 1.25rem; margin: 2.5rem 0 .75rem; padding-top: 1.25rem; border-top: 1px solid var(--rule); font-weight: 500; }
+h3 { font-size: 1.05rem; margin: 1.5rem 0 .5rem; font-weight: 500; }
+p, li { max-width: 46rem; }
+li + li { margin-top: .35rem; }
+code { font-family: "DM Mono", ui-monospace, Consolas, monospace; font-size: .92em; overflow-wrap: anywhere; }
+.lead { font-size: 1.1rem; }
+.note { background: var(--panel); border-left: 4px solid var(--accent); padding: .75rem 1rem; max-width: 46rem; }
+.region { overflow-x: auto; margin: 1rem 0; border: 1px solid var(--rule); }
+table { border-collapse: collapse; width: 100%; min-width: 46rem; font-size: .92rem; line-height: 1.5; }
+caption { text-align: left; padding: .75rem; font-size: .95rem; color: var(--muted); }
+th, td { text-align: left; vertical-align: top; padding: .55rem .75rem; border-top: 1px solid var(--rule); }
+thead th { background: var(--panel); font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; white-space: nowrap; }
+tbody th { font-weight: 400; font-family: inherit; min-width: 14rem; }
+td.val { overflow-wrap: anywhere; min-width: 7rem; }
+.numbers td:nth-child(5), .numbers td:nth-child(6) { min-width: 13rem; }
+td.count { text-align: right; font-variant-numeric: tabular-nums; }
+.grade { display: inline-block; border: 2px solid currentColor; border-radius: 4px; min-width: 1.6rem; text-align: center; padding: 0 .3rem; font-weight: 600; margin-right: .4rem; }
+.gradeitem { white-space: nowrap; }
+.stamp { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--rule); font-size: .8rem; color: var(--muted); }
+.toc { padding-left: 1.2rem; }
+dl.keys dt { font-weight: 600; margin-top: 1rem; }
+dl.keys dd { margin: .25rem 0 0; max-width: 46rem; }
+@media (max-width: 40rem) { body { padding: 0 1rem 3rem; } th, td { padding: .5rem; } }
+@media print { .skip { display: none; } }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to the content</a>
+<div class="wrap">
+<header class="top">
+<p class="brand"><a href="https://coldweld.dev/">Coldweld</a> / The Infinite Diaspora / Reference shelf</p>
+<nav aria-label="Reference shelf"><ul>
+<li><a href="index.html">Mechanics</a></li>
+<li><a href="grades.html">Grades</a></li>
+<li><a href="sources.html">Sources</a></li>
+</ul></nav>
+</header>
+<main id="main">
+<h1>Ship&#x27;s organization and the Second</h1>
+<ul class="toc">
+<li><a href="#brief">In brief</a></li>
+<li><a href="#does">What the game does</a></li>
+<li><a href="#numbers">The numbers</a></li>
+<li><a href="#why">Why: the real physics or procedure</a></li>
+<li><a href="#departs">Where the game departs from reality</a></li>
+<li><a href="#silent">Where the sources are silent</a></li>
+<li><a href="#sources">Sources</a></li>
+<li><a href="#code">Code files</a></li>
+</ul>
+<h2 id="brief">In brief</h2>
+<p class="lead">A ship's organization is the chain of people who answer for the ship, from the captain through the Second and the department heads to the hands, and the Second is the officer who stands next to the captain and asks for a decision when two officers disagree.</p>
+<h2 id="does">What the game does</h2>
+<h3>Departments</h3>
+<ul>
+<li>There are nine departments: Engineering, Damage Control, Medical, Supply, Gunnery, Deck, Communications, Navigation and Operations.</li>
+<li>Put a specialist in one and you get a real bonus, such as a faster reactor recharge or better hail odds.</li>
+<li>The DEPARTMENTS screen in the Captain's Quarters shows them all.</li>
+<li>An empty department runs on automation, so leaving one empty is never a penalty.</li>
+</ul>
+<h3>The Bridge</h3>
+<ul>
+<li>[1] to [4] | the helm, weapons, sensors and engineering stations, each with its own orders.</li>
+<li>[7] | the drone station, on a hull with a drone bay.</li>
+<li>[0] | the observer, who watches each contact.</li>
+<li>[5] | the standing orders. [6] | the wing.</li>
+<li>[8] [9] | step through the hostiles and the wing.</li>
+<li>[V] | the camera. [I] | every instrument.</li>
+<li>[M] | the ways out of the fight.</li>
+<li>ENTER | pauses the clock or runs it.</li>
+<li>[T] | its speed: real time, faster or fastest.</li>
+<li>[N] | skips to the next call from the crew.</li>
+</ul>
+<h3>The Second Asks</h3>
+<ul>
+<li>Each station is manned by its department, at that department's skill.</li>
+<li>When two officers want things that cannot both happen, the clock stops and the Second asks you.</li>
+<li>Each officer states an order and its cost, and the Second recommends one.</li>
+<li>[O] | sets each kind of question to act and report, or to ask you first.</li>
+<li>A hull with a complement under 10 hands has no Second, so the bridge asks.</li>
+<li>The Second flies by your nerve, from the STANDING ORDERS screen.</li>
+<li>Once a fight, the Second hands the ship back if the crew breaks off or the ship cannot answer.</li>
+<li>Then you surrender, try to run, or give it back.</li>
+</ul>
+<h3>Standing Orders</h3>
+<ul>
+<li>The standing orders on [5] are what the crew does without asking you.</li>
+<li>FIRE RULE | at will in reach, in the kill zone only, or held.</li>
+<li>DODGE | weave, sidestep, every called round, or hold course.</li>
+<li>SPARE SINKS | when the crew swaps a cold sink into a hot gun.</li>
+<li>TARGET | the contact the crew works now.</li>
+<li>NEXT TARGET | the weakest, the nearest, the heaviest guns, or the one shooting at us.</li>
+<li>KEEL GUN | the glossary explains its three orders.</li>
+<li>PROCEDURES | eight kinds of question, each acted on or asked first.</li>
+</ul>
+<h2 id="numbers">The numbers</h2>
+<p>22 numbers, read from the game code. None has a grade yet.</p>
+<div class="region" role="region" tabindex="0" aria-label="Numbers the game runs for ship&#x27;s organization and the second">
+<table class="numbers">
+<caption>Numbers the game runs for ship&#x27;s organization and the second</caption>
+<thead><tr>
+<th scope="col">Quantity</th>
+<th scope="col">Value</th>
+<th scope="col">Unit</th>
+<th scope="col">Grade</th>
+<th scope="col">Source</th>
+<th scope="col">Basis</th>
+</tr></thead>
+<tbody>
+<tr id="n-1"><th scope="row">The nine departments</th><td class="val">Engineering, Damage Control, Medical, Supply, Gunnery, Deck, Communications, Navigation, Operations</td><td>names</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-2"><th scope="row">Competence a leased navy hull&#x27;s crew reads as in every department</th><td class="val">70</td><td>competence</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-3"><th scope="row">Hands a hull needs before it has a Second</th><td class="val">10</td><td>hands</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-4"><th scope="row">How often each skill tier of Second sums up, how many reports fit in a line, and whether it warns early</th><td class="val">rookie period 12, items 2, carries False, early False, seasoned period 8, items 3, carries True, early True, veteran period 5, items 4, carries True, early True</td><td>seconds, items, flags</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-5"><th scope="row">Seconds the Second must be quiet before a line opens with Captain</th><td class="val">30</td><td>s</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-6"><th scope="row">Seconds before the Second repeats the same words about the same thing</th><td class="val">90</td><td>s</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-7"><th scope="row">The four bridge stations</th><td class="val">sensors, weapons, helm, engineering</td><td>names</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-8"><th scope="row">The department that mans each bridge post</th><td class="val">sensors Operations, weapons Gunnery, helm Navigation, engineering Engineering, observer Operations, xo Communications</td><td>department</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-9"><th scope="row">Competence floors for veteran and seasoned officers</th><td class="val">80, veteran, 60, seasoned</td><td>competence, tier</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-10"><th scope="row">The captain&#x27;s nerve and the Second&#x27;s temperament it sets</th><td class="val">Cold cautious, Steady cunning, Reckless reckless</td><td>temperament</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-11"><th scope="row">Standing order choices: fire rule</th><td class="val">in reach, kill zone, hold</td><td>rules</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-12"><th scope="row">Standing order choices: dodge rule</th><td class="val">weave, sidestep, called, hold</td><td>rules</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-13"><th scope="row">Standing order choices: next target</th><td class="val">weakest, nearest, heaviest guns, shooting at us</td><td>rules</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-14"><th scope="row">Standing order choices: keel gun</th><td class="val">cold, stand, never</td><td>rules</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-15"><th scope="row">Command grade of the ship&#x27;s own berth, by hands aboard (up to this many hands)</th><td class="val">merchant 3, L-1, 8, L-2, 30, L-3, None, L-4, naval 3, O-1, 8, O-2, 20, O-3, 60, O-4, 200, O-5, None, O-6</td><td>hands, grade</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-16"><th scope="row">Merchant grade of each hire tier</th><td class="val">Rookie R-2, Veteran R-4, Ace L-1</td><td>grade</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-17"><th scope="row">Merchant grade of each Commander tier</th><td class="val">Rookie L-2, Veteran L-3, Ace L-4</td><td>grade</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-18"><th scope="row">Navy head and rating of each department, with their grades</th><td class="val">Operations Lieutenant, O-3, Ensign, O-1, Gunnery Gunnery Chief, E-7, Petty Officer, E-5, Engineering Chief Engineer, O-3, Machinist&#x27;s Mate, E-4, Deck Boatswain, E-7, Spacer, E-3, Damage Control Damage Control Assistant, O-1, Damage Controlman, E-4, Medical Medical Officer, O-4, Corpsman, E-4, Supply Supply Officer, O-2, Storekeeper, E-4, Communications Communications Officer, O-2, Signalman, E-4, Navigation Navigator, O-3, Quartermaster&#x27;s Mate, E-5</td><td>title, grade</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-19"><th scope="row">Pay raise for a promotion</th><td class="val">1.2</td><td>times</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-20"><th scope="row">Morale cost of a promotion</th><td class="val">10</td><td>morale points</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-21"><th scope="row">Loyalty needed for the first and the second promotion rung</th><td class="val">55, 85</td><td>loyalty</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-22"><th scope="row">Communications bonus to every hail roll, per point of competence</th><td class="val">0.15</td><td>percent points</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+</tbody></table></div>
+<h2 id="why">Why: the real physics or procedure</h2>
+<ul>
+<li>On a navy ship the commanding officer is in charge, and the executive officer is the direct representative of the commanding officer.</li>
+<li>The executive officer's orders carry the force of the commanding officer's, and the executive officer takes command if the need arises.</li>
+<li>A department head represents the commanding officer in matters of the department and may confer with the commanding officer directly.</li>
+<li>Under way, the officer of the deck, named by the commanding officer, orders the helm and the main engines and reports back.</li>
+<li>The heads have fixed titles: engineer officer, communications officer, medical officer, navigator and supply officer.</li>
+<li>The damage control assistant is a billet under the engineer officer, and the communications officer answers for outside communications.</li>
+<li>A merchant crew divides by license, and the deck officers run master, chief officer, second officer and third officer.</li>
+<li>The Atomic Rockets crew page says a first officer appears only if the crew is large enough, so a small ship has the captain alone.</li>
+</ul>
+<h2 id="departs">Where the game departs from reality</h2>
+<ul>
+<li>Nine departments: SORM puts the damage control assistant under the engineer officer, while the game makes Damage Control its own department. The repo cites the damage control manual (12-3), where the assistant is the division officer (docs/notes/rankdata.md, Damage Control head).</li>
+<li>The Second takes its skill from Communications: a SORM executive officer is the commanding officer's representative and not the communications officer. Austen chose this on 2026-10-07, and reading the named Second crewmate's own competence is a later stage (docs/notes/departments.md, DEPARTMENT_DESCRIPTIONS and the bridge posts).</li>
+<li>The threshold of 10 hands is authored: four stations and a Second are five people, and the bridge becomes its own net when the decks hold as many again (comment in combat/newtonian/bridge.py, XO_MIN_HANDS).</li>
+<li>The Second hands the ship back and never surrenders: this is Austen's rule of 2026-10-05, and SORM is silent on surrender (docs/notes/newtonian.md, Door.handback).</li>
+<li>Aye, Captain, I have the ship is a delegation and not a watch relief: SORM 4.12 words a relief as I relieve you, and the captain stays in command under 3.1.2. The line stays by Austen's decision on 2026-10-08 (docs/notes/newtonian.md).</li>
+<li>An empty department runs on automation and is never a penalty, which is the game's own rule with no source (comment in crew/departments.py).</li>
+<li>The merchant ladder says First Mate where the STCW volume says chief officer, and the game's First Mate also names the Crew Liaison office, so one name has two jobs (docs/sources/stcw-conference-volume.md, What the game does with it).</li>
+</ul>
+<h2 id="silent">Where the sources are silent</h2>
+<ul>
+<li>A paygrade for any billet: SORM gives the billet and who reports to whom but no grade, so every grade in the navy posting table is authored.</li>
+<li>The conn: the word does not appear in SORM, and the hand-over of command in a fight is not in it. Only the relief of a watch (4.12) is.</li>
+<li>Surrender: SORM never says who may strike colors.</li>
+<li>Who speaks on a radio call: SORM gives outside communications to the communications officer and does not say who talks.</li>
+<li>The unlicensed ladder of hands: no source names Undesignated, Third, Second, First or Chief Hand.</li>
+<li>Boatswain and bosun: the STCW volume never uses either word, though SORM 3.15 has a ship's boatswain billet.</li>
+<li>A number of hands that needs a Second: neither SORM nor the mirror gives a threshold, and the mirror says only a large enough crew.</li>
+<li>The ICS Bridge Procedures Guide and the STCW Code text itself are not read.</li>
+</ul>
+<h2 id="sources">Sources</h2>
+<ul>
+<li>Standard Organization and Regulations of the U.S. Navy (SORM), Sections 3.1.2, 3.5, 3.11, 3.14.1, 3.15, 3.16, 3.17, 3.22 and 4.15.3: The executive officer is the commanding officer's direct representative and takes command should the need arise (3.1.2). A department head represents and confers with the commanding officer (3.5). The officer of the deck orders the helm and engine control (4.15.3). The head titles are communications officer, engineer officer, medical officer, navigator and supply officer. (<a href="sources.html#doc-docs-sources-sorm-md">all uses</a>)</li>
+<li>Marine Navigation and Safety of Sea Transportation: STCW, MET, Human Resources and Crew Manning, PDF pages 57, 75, 137, 145 and 146: STCW has three levels: management, operational and support. A deck line is master, chief officer, second officer and third officer, with ratings below. This is a conference volume about STCW and not the convention, so each claim is secondary. (<a href="sources.html#doc-docs-sources-stcw-conference-volume-md">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/crew.php">Atomic Rockets, crew</a>, Command: The captain is at the top of the chain of command. A larger crew has a chief mate or first officer who handles things inside the ship. The second mate is third in the chain. (<a href="sources.html#doc-rocket-crew-php-html">all uses</a>)</li>
+<li>Notes: combat/newtonian/, The XO chain (XO_MIN_HANDS), Door.handback and Door.captainanswer: The repo's own record: the threshold of 10 hands is authored by Austen on 2026-09-27, and the Second hands command back and never surrenders (2026-10-05). (<a href="sources.html#doc-docs-notes-newtonian-md">all uses</a>)</li>
+</ul>
+<h2 id="code">Code files</h2>
+<ul>
+<li><code>crew/departments.py</code></li>
+<li><code>crew/rankdata.py</code></li>
+<li><code>combat/newtonian/bridge.py</code></li>
+<li><code>combat/newtonian/door.py</code></li>
+</ul>
+</main>
+<footer class="stamp">
+<p>Read from game commit 702fad0f (committed 2026-10-16). Pages written 2026-10-16.
+The explanations are stand-in text and may change.</p>
+</footer>
+</div>
+</body>
+</html>

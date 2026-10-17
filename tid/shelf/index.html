@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The reference shelf</title>
+<meta name="description" content="The real-world numbers behind The Infinite Diaspora, with a source and a strength grade for each.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+:root {
+  color-scheme: light dark;
+  --bg: #fbf8f1; --panel: #f0eadb; --rule: #b9ae94; --text: #231c0f; --muted: #51493a; --accent: #7a4300;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #0e0903; --panel: #16110a; --rule: #4a4130; --text: #d6cbb6; --muted: #a89f88; --accent: #ffb040; }
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 1rem/1.65 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; padding: 0 1rem 4rem; }
+.skip { position: absolute; left: 1rem; top: -4rem; background: var(--accent); color: var(--bg); padding: .5rem 1rem; z-index: 10; }
+.skip:focus { top: .5rem; }
+.wrap { max-width: 64rem; margin: 0 auto; }
+.mono, h1, h2, h3, caption, th, nav, .brand, .stamp, .grade, .val { font-family: "DM Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+a { color: var(--accent); text-underline-offset: .2em; }
+a:focus-visible, .region:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.top { padding: 2rem 0 1rem; border-bottom: 1px solid var(--rule); }
+.brand { margin: 0 0 .75rem; font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .25rem 1.5rem; }
+nav a { display: inline-block; padding: .35rem 0; }
+h1 { font-size: clamp(1.4rem, 5vw, 2rem); line-height: 1.25; margin: 2rem 0 1rem; font-weight: 500; }
+h2 { font-size: 1.25rem; margin: 2.5rem 0 .75rem; padding-top: 1.25rem; border-top: 1px solid var(--rule); font-weight: 500; }
+h3 { font-size: 1.05rem; margin: 1.5rem 0 .5rem; font-weight: 500; }
+p, li { max-width: 46rem; }
+li + li { margin-top: .35rem; }
+code { font-family: "DM Mono", ui-monospace, Consolas, monospace; font-size: .92em; overflow-wrap: anywhere; }
+.lead { font-size: 1.1rem; }
+.note { background: var(--panel); border-left: 4px solid var(--accent); padding: .75rem 1rem; max-width: 46rem; }
+.region { overflow-x: auto; margin: 1rem 0; border: 1px solid var(--rule); }
+table { border-collapse: collapse; width: 100%; min-width: 46rem; font-size: .92rem; line-height: 1.5; }
+caption { text-align: left; padding: .75rem; font-size: .95rem; color: var(--muted); }
+th, td { text-align: left; vertical-align: top; padding: .55rem .75rem; border-top: 1px solid var(--rule); }
+thead th { background: var(--panel); font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; white-space: nowrap; }
+tbody th { font-weight: 400; font-family: inherit; min-width: 14rem; }
+td.val { overflow-wrap: anywhere; min-width: 7rem; }
+.numbers td:nth-child(5), .numbers td:nth-child(6) { min-width: 13rem; }
+td.count { text-align: right; font-variant-numeric: tabular-nums; }
+.grade { display: inline-block; border: 2px solid currentColor; border-radius: 4px; min-width: 1.6rem; text-align: center; padding: 0 .3rem; font-weight: 600; margin-right: .4rem; }
+.gradeitem { white-space: nowrap; }
+.stamp { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--rule); font-size: .8rem; color: var(--muted); }
+.toc { padding-left: 1.2rem; }
+dl.keys dt { font-weight: 600; margin-top: 1rem; }
+dl.keys dd { margin: .25rem 0 0; max-width: 46rem; }
+@media (max-width: 40rem) { body { padding: 0 1rem 3rem; } th, td { padding: .5rem; } }
+@media print { .skip { display: none; } }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to the content</a>
+<div class="wrap">
+<header class="top">
+<p class="brand"><a href="https://coldweld.dev/">Coldweld</a> / The Infinite Diaspora / Reference shelf</p>
+<nav aria-label="Reference shelf"><ul>
+<li><a href="index.html" aria-current="page">Mechanics</a></li>
+<li><a href="grades.html">Grades</a></li>
+<li><a href="sources.html">Sources</a></li>
+</ul></nav>
+</header>
+<main id="main">
+<h1>The reference shelf</h1>
+<p class="lead">The Infinite Diaspora is a hard science fiction game. This shelf lists the real-world numbers behind its physics, its ships and its procedures. It says where each number came from and how strong that source is.</p>
+<ul class="toc">
+<li><a href="#how">How to read the shelf</a></li>
+<li><a href="#key">The grade key</a></li>
+<li><a href="#mechanics">Every mechanic</a></li>
+</ul>
+<h2 id="how">How to read the shelf</h2>
+<p>Each mechanic has one page. A page says what the game does, then lists the numbers the game runs. Each number has a grade, a source and a short reason. The pages also say where the game leaves reality on purpose, and where no source says anything.</p>
+<p>The values come from the game code itself on the day the pages were written, so a page cannot show a number the game does not use. A grade tells you how strong the source is. It does not tell you that the game is right.</p>
+<p class="note">375 of 375 numbers have no grade yet. They show as ungraded until the registry grades them.</p>
+<h2 id="key">The grade key</h2>
+<p>A grade is always printed as a letter. See <a href="grades.html">the grades page</a> for examples.</p>
+<dl class="keys">
+<dt><span class="grade">A</span> Primary</dt><dd>A primary source states the figure.</dd>
+<dt><span class="grade">B</span> Secondary</dt><dd>A secondary source quotes the figure, such as Atomic Rockets quoting NASA.</dd>
+<dt><span class="grade">C</span> Derived</dt><dd>Arithmetic from an A or B figure, with the working shown.</dd>
+<dt><span class="grade">D</span> Analogy</dt><dd>A real figure scaled into the setting.</dd>
+<dt><span class="grade">E</span> Authored</dt><dd>Chosen for play. Where the sources are silent, the page says so.</dd>
+</dl>
+<h2 id="mechanics">Every mechanic</h2>
+<div class="region" role="region" tabindex="0" aria-label="Mechanics and their numbers by grade">
+<table class="counts">
+<caption>Mechanics and their numbers, counted by grade</caption>
+<thead><tr>
+<th scope="col">Mechanic</th>
+<th scope="col">Numbers</th>
+<th scope="col">Grade A</th>
+<th scope="col">Grade B</th>
+<th scope="col">Grade C</th>
+<th scope="col">Grade D</th>
+<th scope="col">Grade E</th>
+<th scope="col">Ungraded</th>
+</tr></thead>
+<tbody>
+<tr><th scope="row"><a href="fire-and-damage-control.html">Fire and damage control</a></th><td class="count">28</td><td class="count">0</td><td class="count">0</td><td class="count">0</td><td class="count">0</td><td class="count">0</td><td class="count">28</td></tr>
+<tr><th scope="row"><a href="armor-and-the-six-faces.html">Armor and the six faces</a></th><td class="count">29</td><td class="count">0</td><td class="count">0</td><td class="count">0</td><td class="count">0</td><td class="count">0</td><td class="count">29</td></tr>
+<tr><th scope="row"><a href="heat-and-radiators.html">Heat and radiators</a></th><td class="count">23</td><td class="count">0</td><td class="count">0</td><td class="count">0</td><td class="count">0</td><td class="count">0</td><td class="count">23</td></tr>
+<tr><th scope="row"><a href="the-power-model.html">The power model</a></th><td class="count">13</td><td class="count">0</td><td class="count">0</td><td class="count">0</td><td class="count">0</td><td class="count">0</td><td class="count">13</td></tr>
+<tr><th scope="row"><a href="fuel-and-the-torch-drive.html">Fuel and the torch drive</a></th><td class="count">17</td><td class="count">0</td><td class="count">0</td><td class="count">0</td><td class="count">0</td><td class="count">0</td><td class="count">17</td></tr>
+<tr><th scope="row"><a href="radiation-dose.html">Radiation dose</a></th><td class="count">25</td><td class="count">0</td><td class="count">0</td><td class="count">0</td><td class="count">0</td><td class="count">0</td><td class="count">25</td></tr>
+<tr><th scope="row"><a href="running-dark.html">Running dark</a></th><td class="count">20</td><td class="count">0</td><td class="count">0</td><td class="count">0</td><td class="count">0</td><td class="count">0</td><td class="count">20</td></tr>
+<tr><th scope="row"><a href="the-newtonian-fight.html">The Newtonian fight</a></th><td class="count">15</td><td class="count">0</td><td class="count">0</td><td class="count">0</td><td class="count">0</td><td class="count">0</td><td class="count">15</td></tr>
+<tr><th scope="row"><a href="kinetic-guns-and-point-defense.html">Kinetic guns and point defense</a></th><td class="count">24</td><td class="count">0</td><td class="count">0</td><td class="count">0</td><td class="count">0</td><td class="count">0</td><td class="count">24</td></tr>
+<tr><th scope="row"><a href="hold-balance-and-the-gimbal.html">Hold balance and the gimbal</a></th><td class="count">0</td><td class="count">0</td><td class="count">0</td><td class="count">0</td><td class="count">0</td><td class="count">0</td><td class="count">0</td></tr>
+<tr><th scope="row"><a href="life-support-food-and-water.html">Life support, food and water</a></th><td class="count">23</td><td class="count">0</td><td class="count">0</td><td class="count">0</td><td class="count">0</td><td class="count">0</td><td class="count">23</td></tr>
+<tr><th scope="row"><a href="mining-the-belt.html">Mining the belt</a></th><td class="count">35</td><td class="count">0</td><td class="count">0</td><td class="count">0</td><td class="count">0</td><td class="count">0</td><td class="count">35</td></tr>
+<tr><th scope="row"><a href="hull-wear-and-repair.html">Hull wear and repair</a></th><td class="count">26</td><td class="count">0</td><td class="count">0</td><td class="count">0</td><td class="count">0</td><td class="count">0</td><td class="count">26</td></tr>
+<tr><th scope="row"><a href="hailing-boarding-and-prize-law.html">Hailing, boarding and prize law</a></th><td class="count">40</td><td class="count">0</td><td class="count">0</td><td class="count">0</td><td class="count">0</td><td class="count">0</td><td class="count">40</td></tr>
+<tr><th scope="row"><a href="salvage-and-distress.html">Salvage and distress</a></th><td class="count">22</td><td class="count">0</td><td class="count">0</td><td class="count">0</td><td class="count">0</td><td class="count">0</td><td class="count">22</td></tr>
+<tr><th scope="row"><a href="ship-s-organization-and-the-second.html">Ship&#x27;s organization and the Second</a></th><td class="count">22</td><td class="count">0</td><td class="count">0</td><td class="count">0</td><td class="count">0</td><td class="count">0</td><td class="count">22</td></tr>
+<tr><th scope="row"><a href="radio-voice.html">Radio voice</a></th><td class="count">13</td><td class="count">0</td><td class="count">0</td><td class="count">0</td><td class="count">0</td><td class="count">0</td><td class="count">13</td></tr>
+<tr><th scope="row">All mechanics</th><td class="count">375</td><td class="count">0</td><td class="count">0</td><td class="count">0</td><td class="count">0</td><td class="count">0</td><td class="count">375</td></tr>
+</tbody></table></div>
+<p>The <a href="sources.html">sources page</a> lists every cited document and each number that cites it.</p>
+</main>
+<footer class="stamp">
+<p>Read from game commit 702fad0f (committed 2026-10-16). Pages written 2026-10-16.
+The explanations are stand-in text and may change.</p>
+</footer>
+</div>
+</body>
+</html>

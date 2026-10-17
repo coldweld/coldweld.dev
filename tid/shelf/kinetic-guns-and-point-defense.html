@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kinetic guns and point defense</title>
+<meta name="description" content="What the game does for kinetic guns and point defense, its numbers, and where each comes from.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+:root {
+  color-scheme: light dark;
+  --bg: #fbf8f1; --panel: #f0eadb; --rule: #b9ae94; --text: #231c0f; --muted: #51493a; --accent: #7a4300;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #0e0903; --panel: #16110a; --rule: #4a4130; --text: #d6cbb6; --muted: #a89f88; --accent: #ffb040; }
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 1rem/1.65 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; padding: 0 1rem 4rem; }
+.skip { position: absolute; left: 1rem; top: -4rem; background: var(--accent); color: var(--bg); padding: .5rem 1rem; z-index: 10; }
+.skip:focus { top: .5rem; }
+.wrap { max-width: 64rem; margin: 0 auto; }
+.mono, h1, h2, h3, caption, th, nav, .brand, .stamp, .grade, .val { font-family: "DM Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+a { color: var(--accent); text-underline-offset: .2em; }
+a:focus-visible, .region:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.top { padding: 2rem 0 1rem; border-bottom: 1px solid var(--rule); }
+.brand { margin: 0 0 .75rem; font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .25rem 1.5rem; }
+nav a { display: inline-block; padding: .35rem 0; }
+h1 { font-size: clamp(1.4rem, 5vw, 2rem); line-height: 1.25; margin: 2rem 0 1rem; font-weight: 500; }
+h2 { font-size: 1.25rem; margin: 2.5rem 0 .75rem; padding-top: 1.25rem; border-top: 1px solid var(--rule); font-weight: 500; }
+h3 { font-size: 1.05rem; margin: 1.5rem 0 .5rem; font-weight: 500; }
+p, li { max-width: 46rem; }
+li + li { margin-top: .35rem; }
+code { font-family: "DM Mono", ui-monospace, Consolas, monospace; font-size: .92em; overflow-wrap: anywhere; }
+.lead { font-size: 1.1rem; }
+.note { background: var(--panel); border-left: 4px solid var(--accent); padding: .75rem 1rem; max-width: 46rem; }
+.region { overflow-x: auto; margin: 1rem 0; border: 1px solid var(--rule); }
+table { border-collapse: collapse; width: 100%; min-width: 46rem; font-size: .92rem; line-height: 1.5; }
+caption { text-align: left; padding: .75rem; font-size: .95rem; color: var(--muted); }
+th, td { text-align: left; vertical-align: top; padding: .55rem .75rem; border-top: 1px solid var(--rule); }
+thead th { background: var(--panel); font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; white-space: nowrap; }
+tbody th { font-weight: 400; font-family: inherit; min-width: 14rem; }
+td.val { overflow-wrap: anywhere; min-width: 7rem; }
+.numbers td:nth-child(5), .numbers td:nth-child(6) { min-width: 13rem; }
+td.count { text-align: right; font-variant-numeric: tabular-nums; }
+.grade { display: inline-block; border: 2px solid currentColor; border-radius: 4px; min-width: 1.6rem; text-align: center; padding: 0 .3rem; font-weight: 600; margin-right: .4rem; }
+.gradeitem { white-space: nowrap; }
+.stamp { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--rule); font-size: .8rem; color: var(--muted); }
+.toc { padding-left: 1.2rem; }
+dl.keys dt { font-weight: 600; margin-top: 1rem; }
+dl.keys dd { margin: .25rem 0 0; max-width: 46rem; }
+@media (max-width: 40rem) { body { padding: 0 1rem 3rem; } th, td { padding: .5rem; } }
+@media print { .skip { display: none; } }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to the content</a>
+<div class="wrap">
+<header class="top">
+<p class="brand"><a href="https://coldweld.dev/">Coldweld</a> / The Infinite Diaspora / Reference shelf</p>
+<nav aria-label="Reference shelf"><ul>
+<li><a href="index.html">Mechanics</a></li>
+<li><a href="grades.html">Grades</a></li>
+<li><a href="sources.html">Sources</a></li>
+</ul></nav>
+</header>
+<main id="main">
+<h1>Kinetic guns and point defense</h1>
+<ul class="toc">
+<li><a href="#brief">In brief</a></li>
+<li><a href="#does">What the game does</a></li>
+<li><a href="#numbers">The numbers</a></li>
+<li><a href="#why">Why: the real physics or procedure</a></li>
+<li><a href="#departs">Where the game departs from reality</a></li>
+<li><a href="#silent">Where the sources are silent</a></li>
+<li><a href="#sources">Sources</a></li>
+<li><a href="#code">Code files</a></li>
+</ul>
+<h2 id="brief">In brief</h2>
+<p class="lead">A kinetic gun throws a solid round at a target, and point defense is a set of fast guns that shoot incoming rounds and drones out of the sky.</p>
+<h2 id="does">What the game does</h2>
+<h3>The Guns</h3>
+<ul>
+<li>Every gun in known space is kinetic, which means it fires a solid round.</li>
+<li>A postwar treaty outlawed guided missiles and warheads.</li>
+<li>A COILGUN aims true. An AUTOCANNON hits hard up close. A RAILGUN punches through armor.</li>
+<li>A CANISTER fires a shell that opens into a cloud of pellets.</li>
+<li>A round hits harder when it closes faster, because its energy grows with the square of its speed.</li>
+<li>Past 3 km/s a round melts on impact, so plate weight stops it more than hardness does.</li>
+<li>Steel stops a RAILGUN best, and ceramic an AUTOCANNON.</li>
+</ul>
+<h3>Turrets And The Keel Gun</h3>
+<ul>
+<li>A HARDPOINT is a mount a gun bolts into, and it decides what the gun can shoot at.</li>
+<li>A TURRET traverses, so it fires in almost any direction.</li>
+<li>A KEEL GUN is bolted along the hull's axis, so it fires only near where the bow points.</li>
+<li>It is the biggest gun aboard, and no hull carries two.</li>
+<li>The helm lays the bow for it by the KEEL GUN standing order.</li>
+<li>The drive pushes along the bow, so a bow laid on a hostile cannot burn away or weave.</li>
+</ul>
+<h3>Canister</h3>
+<ul>
+<li>A canister shell opens on a fuze into a cloud as wide as the target could dodge.</li>
+<li>A slug at a dodging hull usually misses, but lands whole when it hits.</li>
+<li>A cloud nearly always lands some pellets, so its damage is steady but smaller.</li>
+<li>Too far out, no pellet meets the hull.</li>
+<li>Each point defense mount engages 2 rounds a second, so a cloud swamps it.</li>
+<li>Armor stops most pellets.</li>
+</ul>
+<h3>Drones</h3>
+<ul>
+<li>A strike drone hits one system past the armor, and never the hull.</li>
+<li>[7] | launch one, or a salvo from every ready rack.</li>
+<li>Send it at the heaviest gun, the point defense, or the nearest system.</li>
+<li>Each launch spends a drone. It reaches 300 km at most.</li>
+<li>An operator steers 1 drone at a time as a rookie, 2 seasoned, 4 as a veteran.</li>
+<li>An unsteered drone flies its launch line, so a dodge can beat it.</li>
+<li>Point defense can stop any drone inside 40 km.</li>
+<li>DRONE RULE | what the operator launches without asking.</li>
+</ul>
+<h2 id="numbers">The numbers</h2>
+<p>24 numbers, read from the game code. None has a grade yet.</p>
+<div class="region" role="region" tabindex="0" aria-label="Numbers the game runs for kinetic guns and point defense">
+<table class="numbers">
+<caption>Numbers the game runs for kinetic guns and point defense</caption>
+<thead><tr>
+<th scope="col">Quantity</th>
+<th scope="col">Value</th>
+<th scope="col">Unit</th>
+<th scope="col">Grade</th>
+<th scope="col">Source</th>
+<th scope="col">Basis</th>
+</tr></thead>
+<tbody>
+<tr id="n-1"><th scope="row">Muzzle speed by mechanism</th><td class="val">Coilgun 4, Autocannon 1.5, Railgun 6, Canister 4</td><td>km/s</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-2"><th scope="row">Launcher energy that caps an electric gun&#x27;s muzzle speed, by mount size</th><td class="val">Micro 2, Light 20, Compact 60, Standard 120, Heavy 250, Superheavy 500</td><td>MJ</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-3"><th scope="row">Mass of one round, by mount size</th><td class="val">Micro 0.0001, Light 0.001, Compact 0.006, Standard 0.015, Heavy 0.045, Superheavy 0.118</td><td>t</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-4"><th scope="row">Pellets in one canister shell, by mount size</th><td class="val">Micro 20, Light 40, Compact 80, Standard 150, Heavy 250, Superheavy 400</td><td>pellets</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-5"><th scope="row">Power of closing speed that scales a round&#x27;s damage</th><td class="val">2</td><td>exponent</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-6"><th scope="row">Power of closing speed that scales a round&#x27;s penetration</th><td class="val">0.6667</td><td>exponent</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-7"><th scope="row">Impact speed above which plate hardness fades</th><td class="val">3</td><td>km/s</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-8"><th scope="row">Multiplier on the radiator clip chance for a canister cloud</th><td class="val">3</td><td>times</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-9"><th scope="row">Half-angle a keel gun can lay off the bow, by mount size</th><td class="val">Micro 10, Light 8, Compact 6, Standard 4, Heavy 3, Superheavy 2</td><td>deg</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-10"><th scope="row">Speed a turret traverses, by mount size</th><td class="val">Micro 90, Light 60, Compact 30, Standard 15, Heavy 8, Superheavy 4</td><td>deg/s</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-11"><th scope="row">Firings before the rails are spent, by mount size</th><td class="val">Micro 150, Light 100, Compact 60, Standard 40, Heavy 25, Superheavy 15</td><td>firings</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-12"><th scope="row">Rounds one point defense mount can engage in a second</th><td class="val">2</td><td>rounds</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-13"><th scope="row">A round is engaged by point defense once it is this close to arriving</th><td class="val">5</td><td>s</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-14"><th scope="row">Reach of point defense against a drone</th><td class="val">40</td><td>km</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-15"><th scope="row">Time between a mount&#x27;s tries on one drone</th><td class="val">5</td><td>s</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-16"><th scope="row">Tries one mount gets on a drone at cruise speed</th><td class="val">4</td><td>tries</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-17"><th scope="row">Highest chance one mount stops a drone on one try</th><td class="val">0.9</td><td>share</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-18"><th scope="row">Drones one operator can steer at once, by skill</th><td class="val">rookie 1, seasoned 2, veteran 4</td><td>drones</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-19"><th scope="row">Furthest an operator will send a drone</th><td class="val">300</td><td>km</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-20"><th scope="row">Closing speed a drone burns up to, then coasts</th><td class="val">2</td><td>km/s</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-21"><th scope="row">Time a rack takes to cycle between launches</th><td class="val">3</td><td>s</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-22"><th scope="row">A drone&#x27;s whole fuel</th><td class="val">4</td><td>km/s</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-23"><th scope="row">A drone&#x27;s life before it is lost</th><td class="val">900</td><td>s</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-24"><th scope="row">Drone acceleration, by bay size</th><td class="val">Micro 400, Light 300, Compact 250, Standard 200, Heavy 150, Superheavy 100</td><td>m/s^2</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+</tbody></table></div>
+<h2 id="why">Why: the real physics or procedure</h2>
+<ul>
+<li>A round that hits at 3 km/s carries energy equal to its own mass in TNT.</li>
+<li>Energy grows with the square of speed, so a round at 6 km/s carries four times as much.</li>
+<li>A railgun tops out near 6 km/s, and the rails wear with every shot. A coilgun does not rub the bore, so it avoids that wear.</li>
+<li>A cartridge gun throws its case away, and the case carries the waste heat of the shot.</li>
+<li>A kinetic shotgun hits more often than a single slug but does less to what it hits, and the mirror says buckshot could puncture radiator tubes.</li>
+<li>A bullet defense must hit a fast target, so its hit chance depends on the target's apparent speed.</li>
+<li>A wave of targets can use up the time a defense has, so point defense can be saturated.</li>
+<li>A seeker is a computer in a round, and its range depends on the power the target ship radiates.</li>
+</ul>
+<h2 id="departs">Where the game departs from reality</h2>
+<ul>
+<li>The railgun muzzle speed of 6 km/s is the mirror's figure (vehicles/ship/modules/weapon.py comment). The coilgun's 4 km/s and the autocannon's 1.5 km/s are authored to keep the order of ranges between mechanisms. The mirror says a chemical gun can reach about 3 km/s, so the autocannon is slower than the mirror's best case.</li>
+<li>The launcher energy budgets are authored so that a Light mount keeps the full rail speed (comment in combat/newtonian/encounter.py). They cap speed by the rule v = sqrt(2E / m).</li>
+<li>Damage scales with the square of closing speed, as the First Law says. Penetration scales with the two-thirds power, which the world.py comment calls the repo's own reading of the page and not a figure the page states.</li>
+<li>A canister fires one shell that carries many pellets, and a fuze opens the cloud as wide as the target could dodge. The game does this so one shell is one round for the locker, the price and the sound (docs/notes/weapon.md).</li>
+<li>Point defense in the game is a cartridge gun, because every gun in this world is kinetic. The mirror's point defense discussion is mostly about lasers and missiles.</li>
+<li>Drones carry no seeker, because the Safeguards compact bans guidance that steers itself (docs/setting-canon.md section 2). The mirror treats seekers as normal and only limits their range.</li>
+<li>Recoil, rail wear and radio lag are simplified. Recoil is not modeled because a railgun shot moves a 6,000 t hull about 0.02 m/s (docs/newtonian-combat-direction.md). Rail wear is modeled by mount size with authored numbers. Radio lag to a drone at 300 km is about a millisecond (my arithmetic, distance over the speed of light) and is ignored.</li>
+<li>The keel gun's lay cone is bracketed by the mirror: a NERVA engine pivots up to 3 degrees and thrust vectoring stops at about 10 degrees (rocket/controldeck.php.html). The steps between sizes are authored.</li>
+</ul>
+<h2 id="silent">Where the sources are silent</h2>
+<ul>
+<li>The mirror has no canister figure. The pellet counts, the fuze rule and the cloud width are authored (docs/notes/weapon.md, The Canister).</li>
+<li>The mirror gives no rate, window or odds for kinetic point defense in a ship fight. The 2 rounds a second and the 5 second window are authored (docs/newtonian-combat-direction.md, Point defense).</li>
+<li>The mirror has no kill-vehicle figures. Every drone number in combat/newtonian/world.py is marked authored for that reason.</li>
+<li>The mirror gives no turn rate for a heavy or railgun mount. The traverse speeds are authored, and the encounter.py comment says real mounts turn 30 to 115 deg/s.</li>
+</ul>
+<h2 id="sources">Sources</h2>
+<ul>
+<li><a href="https://www.projectrho.com/public_html/rocket/spacegunconvent.php">Atomic Rockets, spacegunconvent</a>, Equations (Robinson&#x27;s First Law of Space Combat): Robinson's First Law: a round hitting at 3 km/s delivers energy equal to its mass in TNT. The figure scales with the square of speed, so a round at 6 km/s has 4 times as much. "kinetic energy equal to its own mass in TNT" (<a href="sources.html#doc-rocket-spacegunconvent-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/spacegunconvent.php">Atomic Rockets, spacegunconvent</a>, Equations (hypervelocity impact): At or above 3 km/s kinetic energy dominates over momentum, and impacts resemble explosions. The shape of the projectile still changes the result. (<a href="sources.html#doc-rocket-spacegunconvent-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/spacegunconvent.php">Atomic Rockets, spacegunconvent</a>, Railguns: The maximum speed of a railgun projectile is about six kilometers a second. (<a href="sources.html#doc-rocket-spacegunconvent-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/spacegunconvent.php">Atomic Rockets, spacegunconvent</a>, Coilgun (Ferromagnetic projectiles): A coilgun pulls its projectile along the middle of the coils, so no bore friction occurs and it avoids the wear and speed limit that touching rails cause. Railguns suffer severe rail erosion. (<a href="sources.html#doc-rocket-spacegunconvent-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/spacegunconvent.php">Atomic Rockets, spacegunconvent</a>, Kinetic Kill Weapons: Cannons, coilguns and railguns all recoil because of Newton's third law. A mass driver is a coilgun tuned as a propulsion system. (<a href="sources.html#doc-rocket-spacegunconvent-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/spacegunconvent.php">Atomic Rockets, spacegunconvent</a>, Equations (Combustion Light Gas Gun and ETC guns): A light gas gun reached 2.5 km/s in a Navy model, and about 3 km/s is the practical limit. Adding electric heat might push a chemical gun to between 3 and 4 km/s. (<a href="sources.html#doc-rocket-spacegunconvent-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/spacegunconvent.php">Atomic Rockets, spacegunconvent</a>, Equations (seekers): The author finds that seeker ranges may be shorter than the ranges assumed for kinetic projectiles. A small rocket fired when a projectile is a few seconds out adds only minor problems for the defense, because anything passing close to a ship is treated as a threat. (<a href="sources.html#doc-rocket-spacegunconvent-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/spacegunintro.php">Atomic Rockets, spacegunintro</a>, Introduction: Ken Burnside compares a kinetic weapon to a shotgun. Holger Bjerre replies that a kinetic round is less likely to hit because it can be dodged. "more likely to hit, but with reduced lethality" (<a href="sources.html#doc-rocket-spacegunintro-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/sidearmintro.php">Atomic Rockets, sidearmintro</a>, Which Gun Is Better?: A slug thrower ejects its case and so gets rid of the waste heat of firing. It also recoils, and it needs ammunition boxes to reload. (<a href="sources.html#doc-rocket-sidearmintro-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/spacegunconvent2.php">Atomic Rockets, spacegunconvent2</a>, Equations (kinetic particle attacks, in the laser cannon section): Heavier particles like ball bearings or buckshot could puncture radiator tubes and let the coolant leak. The author says their effect is unknown, and that a particle big enough to track alone can be burned out by a laser. (<a href="sources.html#doc-rocket-spacegunconvent2-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/spacewardefense.php">Atomic Rockets, spacewardefense</a>, Kinetic PD: Eric Rozier's model of a Phalanx-style gun simulates every bullet. The hit chance depends on the target's apparent speed (muzzle speed plus target speed) and its ability to accelerate. Linking several guns does not simply multiply the odds. (<a href="sources.html#doc-rocket-spacewardefense-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/spacewardefense.php">Atomic Rockets, spacewardefense</a>, Laser vs. Missile: The missile side holds that point defense can always be saturated: fire enough missiles, fast enough, and there are more targets than the defense can hit before impact. The laser side disagrees. (<a href="sources.html#doc-rocket-spacewardefense-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/spacewardefense.php">Atomic Rockets, spacewardefense</a>, Armor: A Whipple shield (a spaced bumper) is very effective against hypervelocity weapons. Above 10 km/s closing speed armor matters less than blow-through. (<a href="sources.html#doc-rocket-spacewardefense-php-html">all uses</a>)</li>
+<li>The setting — canon, 2. Safeguards: Safeguards bans the seeker: a guidance package that steers itself is computing with a weapons path. A drone steered by radio has a person in the loop, so it is legal, which is why a drone rack needs an operator aboard. (<a href="sources.html#doc-docs-setting-canon-md">all uses</a>)</li>
+</ul>
+<h2 id="code">Code files</h2>
+<ul>
+<li><code>vehicles/ship/modules/weapondata.py</code></li>
+<li><code>vehicles/ship/modules/weapon.py</code></li>
+<li><code>vehicles/ship/modules/armor.py</code></li>
+<li><code>combat/newtonian/aimedfire.py</code></li>
+<li><code>combat/newtonian/encounter.py</code></li>
+<li><code>combat/newtonian/world.py</code></li>
+<li><code>combat/drones.py</code></li>
+</ul>
+</main>
+<footer class="stamp">
+<p>Read from game commit 702fad0f (committed 2026-10-16). Pages written 2026-10-16.
+The explanations are stand-in text and may change.</p>
+</footer>
+</div>
+</body>
+</html>

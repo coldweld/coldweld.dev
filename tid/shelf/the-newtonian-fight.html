@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Newtonian fight</title>
+<meta name="description" content="What the game does for the newtonian fight, its numbers, and where each comes from.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+:root {
+  color-scheme: light dark;
+  --bg: #fbf8f1; --panel: #f0eadb; --rule: #b9ae94; --text: #231c0f; --muted: #51493a; --accent: #7a4300;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #0e0903; --panel: #16110a; --rule: #4a4130; --text: #d6cbb6; --muted: #a89f88; --accent: #ffb040; }
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 1rem/1.65 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; padding: 0 1rem 4rem; }
+.skip { position: absolute; left: 1rem; top: -4rem; background: var(--accent); color: var(--bg); padding: .5rem 1rem; z-index: 10; }
+.skip:focus { top: .5rem; }
+.wrap { max-width: 64rem; margin: 0 auto; }
+.mono, h1, h2, h3, caption, th, nav, .brand, .stamp, .grade, .val { font-family: "DM Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+a { color: var(--accent); text-underline-offset: .2em; }
+a:focus-visible, .region:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.top { padding: 2rem 0 1rem; border-bottom: 1px solid var(--rule); }
+.brand { margin: 0 0 .75rem; font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .25rem 1.5rem; }
+nav a { display: inline-block; padding: .35rem 0; }
+h1 { font-size: clamp(1.4rem, 5vw, 2rem); line-height: 1.25; margin: 2rem 0 1rem; font-weight: 500; }
+h2 { font-size: 1.25rem; margin: 2.5rem 0 .75rem; padding-top: 1.25rem; border-top: 1px solid var(--rule); font-weight: 500; }
+h3 { font-size: 1.05rem; margin: 1.5rem 0 .5rem; font-weight: 500; }
+p, li { max-width: 46rem; }
+li + li { margin-top: .35rem; }
+code { font-family: "DM Mono", ui-monospace, Consolas, monospace; font-size: .92em; overflow-wrap: anywhere; }
+.lead { font-size: 1.1rem; }
+.note { background: var(--panel); border-left: 4px solid var(--accent); padding: .75rem 1rem; max-width: 46rem; }
+.region { overflow-x: auto; margin: 1rem 0; border: 1px solid var(--rule); }
+table { border-collapse: collapse; width: 100%; min-width: 46rem; font-size: .92rem; line-height: 1.5; }
+caption { text-align: left; padding: .75rem; font-size: .95rem; color: var(--muted); }
+th, td { text-align: left; vertical-align: top; padding: .55rem .75rem; border-top: 1px solid var(--rule); }
+thead th { background: var(--panel); font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; white-space: nowrap; }
+tbody th { font-weight: 400; font-family: inherit; min-width: 14rem; }
+td.val { overflow-wrap: anywhere; min-width: 7rem; }
+.numbers td:nth-child(5), .numbers td:nth-child(6) { min-width: 13rem; }
+td.count { text-align: right; font-variant-numeric: tabular-nums; }
+.grade { display: inline-block; border: 2px solid currentColor; border-radius: 4px; min-width: 1.6rem; text-align: center; padding: 0 .3rem; font-weight: 600; margin-right: .4rem; }
+.gradeitem { white-space: nowrap; }
+.stamp { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--rule); font-size: .8rem; color: var(--muted); }
+.toc { padding-left: 1.2rem; }
+dl.keys dt { font-weight: 600; margin-top: 1rem; }
+dl.keys dd { margin: .25rem 0 0; max-width: 46rem; }
+@media (max-width: 40rem) { body { padding: 0 1rem 3rem; } th, td { padding: .5rem; } }
+@media print { .skip { display: none; } }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to the content</a>
+<div class="wrap">
+<header class="top">
+<p class="brand"><a href="https://coldweld.dev/">Coldweld</a> / The Infinite Diaspora / Reference shelf</p>
+<nav aria-label="Reference shelf"><ul>
+<li><a href="index.html">Mechanics</a></li>
+<li><a href="grades.html">Grades</a></li>
+<li><a href="sources.html">Sources</a></li>
+</ul></nav>
+</header>
+<main id="main">
+<h1>The Newtonian fight</h1>
+<ul class="toc">
+<li><a href="#brief">In brief</a></li>
+<li><a href="#does">What the game does</a></li>
+<li><a href="#numbers">The numbers</a></li>
+<li><a href="#why">Why: the real physics or procedure</a></li>
+<li><a href="#departs">Where the game departs from reality</a></li>
+<li><a href="#silent">Where the sources are silent</a></li>
+<li><a href="#sources">Sources</a></li>
+<li><a href="#code">Code files</a></li>
+</ul>
+<h2 id="brief">In brief</h2>
+<p class="lead">A Newtonian fight is a battle in which every ship keeps its own position and speed, and every round flies on a running clock until it hits or misses.</p>
+<h2 id="does">What the game does</h2>
+<h3>In Brief</h3>
+<ul>
+<li>Combat is a fight between ships on a running clock, flown from your bridge.</li>
+<li>Ships move by real physics, and every round flies until it hits or misses.</li>
+<li>TAKE THE BRIDGE | you give the orders.</li>
+<li>HAND IT TO THE SECOND | the Second fights by your standing orders.</li>
+<li>Raiders also offer YIELD before a shot, at the terms on the row.</li>
+<li>A hostile that surrenders can be taken prisoner.</li>
+<li>After the fight a disabled hostile can be boarded, and the best cargo come from boarding.</li>
+</ul>
+<h3>Range And The Kill Zone</h3>
+<ul>
+<li>Every ship has its own position and speed, and the range is real km.</li>
+<li>A round takes time to fly, and a crew dodges a round it sees coming.</li>
+<li>KILL ZONE | where your fastest round arrives before the target can turn clear.</li>
+<li>Inside it every gun fires for effect, and the ZONE column says who is in it.</li>
+<li>Outside it one round flies at a time, and each one seen to pass corrects the aim.</li>
+<li>No gun fires a round that needs more than 40 s to reach its target.</li>
+<li>CLOSE IN | on the helm, the autopilot closes and holds the range you name.</li>
+</ul>
+<h3>The Dodge</h3>
+<ul>
+<li>A round takes time to fly, so a hull that moves off its line makes it miss.</li>
+<li>WEAVE | the drive burns off the line, changing side every 8 s, until the heat fills the loop.</li>
+<li>SIDESTEP | the side jets push the hull clear. It spends tank water instead of heat.</li>
+<li>CALLED | the helm jinks off each round the sensors call.</li>
+<li>Up close a round arrives too soon to dodge, so the helm turns a face to the shooter.</li>
+<li>It picks the face whose plate costs least against that shooter's heaviest gun.</li>
+<li>A steered drone follows you in, so a dodge does not shake it.</li>
+</ul>
+<h3>Boarding</h3>
+<ul>
+<li>A raider boards by matching your speed inside 5 km for 20 s.</li>
+<li>The helm breaks a boarding match unless that procedure asks you first.</li>
+<li>THE DECK FIGHT | your armed crew and boarding party meet the boarders.</li>
+<li>You command it, even when the Second flies the ship.</li>
+<li>GENERAL QUARTERS has the crew suited before they arrive.</li>
+<li>Win, and that raider has nobody left to board with.</li>
+<li>Lose, and the raiders fill their hold from yours, the most valuable goods first.</li>
+<li>They take the ship only if you fought on after the Second's warning.</li>
+</ul>
+<h3>Ways Out</h3>
+<ul>
+<li>[M] | every way out, and why a blocked one is blocked.</li>
+<li>HAND IT TO THE SECOND | the Second fights on by your standing orders.</li>
+<li>YIELD | only when the hostiles offer terms.</li>
+<li>DEMAND SURRENDER | orders every breaking hostile to stand down.</li>
+<li>CRACK THEIR CHANNEL | names the ship each hostile is on. The last of 3 tries works.</li>
+<li>A demand or a crack holds your fire for 20 s.</li>
+<li>BREAK OFF AND RUN | on the helm, a full burn away.</li>
+<li>You are clear when every hostile is past 3,000 km.</li>
+</ul>
+<h2 id="numbers">The numbers</h2>
+<p>15 numbers, read from the game code. None has a grade yet.</p>
+<div class="region" role="region" tabindex="0" aria-label="Numbers the game runs for the newtonian fight">
+<table class="numbers">
+<caption>Numbers the game runs for the newtonian fight</caption>
+<thead><tr>
+<th scope="col">Quantity</th>
+<th scope="col">Value</th>
+<th scope="col">Unit</th>
+<th scope="col">Grade</th>
+<th scope="col">Source</th>
+<th scope="col">Basis</th>
+</tr></thead>
+<tbody>
+<tr id="n-1"><th scope="row">Game seconds in one combat round, for heat, air, fire and power</th><td class="val">20</td><td>s</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-2"><th scope="row">Length of one physics step</th><td class="val">1</td><td>s</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-3"><th scope="row">Longest flight time for which a gun fires for effect</th><td class="val">40</td><td>s</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-4"><th scope="row">Share of the kill zone&#x27;s reach that a wing slot sits inside</th><td class="val">0.8</td><td>of the fastest round&#x27;s reach</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-5"><th scope="row">Time a crew needs to see a round before it can start a dodge</th><td class="val">2</td><td>s</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-6"><th scope="row">Time between side changes in a weave</th><td class="val">8</td><td>s</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-7"><th scope="row">Length of a hostile&#x27;s dodge when it sees rounds coming</th><td class="val">15</td><td>s</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-8"><th scope="row">Share of the main drive that each end&#x27;s lateral jets push</th><td class="val">0.415</td><td>of drive thrust</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-9"><th scope="row">Longest life of a round in flight</th><td class="val">3,000</td><td>s</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-10"><th scope="row">A round this far from every ship, and still opening, is dropped</th><td class="val">500</td><td>km</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-11"><th scope="row">Opening speed at which that round is dropped</th><td class="val">1</td><td>km/s</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-12"><th scope="row">Range inside which a pirate can put its crew across</th><td class="val">5</td><td>km</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-13"><th scope="row">Relative speed a boarding needs</th><td class="val">0.05</td><td>km/s</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-14"><th scope="row">Time the match must hold before the boarders are across</th><td class="val">20</td><td>s</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-15"><th scope="row">Range past which a hostile has run and is out of the fight</th><td class="val">3,000</td><td>km</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+</tbody></table></div>
+<h2 id="why">Why: the real physics or procedure</h2>
+<ul>
+<li>A ship in space keeps its speed until a burn changes it, so every ship has its own position and its own velocity.</li>
+<li>A ship turns by pointing its nose and firing its engine, so it cannot turn on a dime, and a fast ship turns in wide arcs.</li>
+<li>One game designer says a ship above about 300 km per 64 seconds is easier to hit, because it can barely change its path.</li>
+<li>A round keeps the speed it had at the muzzle, so it needs time to arrive.</li>
+<li>In that time a target can move sideways, and the set of places it might be grows the longer the round flies.</li>
+<li>Two fleets that burn toward each other pass at about twice one fleet's speed, so most fire misses and the next volley is out of range.</li>
+<li>A boarder must match the path of its target, which means it speeds toward it and then slows until the relative speed is zero.</li>
+<li>So a pirate needs more than twice the delta-V of its target, and the target can see it coming.</li>
+</ul>
+<h2 id="departs">Where the game departs from reality</h2>
+<ul>
+<li>Light lag is not modeled. The mirror says it matters at ranges of a light-second and more, but docs/newtonian-combat-direction.md lists it as negligible at fight ranges (milliseconds) and not built.</li>
+<li>Orbital drift, recoil and the propellant mass a fight spends are not modeled. The same document gives the arithmetic: a 6 km/s round over 40 s drifts about 26 m at the Earth-Moon L5 point, which fire control corrects for both sides alike.</li>
+<li>The mirror's tabletop games move in turns of about a minute. The game runs a 1 second step on a running clock, because a fight with no clock gave the same gap whatever the thrust (docs/newtonian-combat-direction.md, the prototype lessons of 2026-09-26).</li>
+<li>A dodge costs heat and, for a sidestep, tank water. The mirror says a dodge costs delta-V, but docs/newtonian-combat-direction.md measured propellant and g and found neither is a price at this scale: a 15 s jink costs 0.0008% of a median tank, and no hull exceeds 1.4 g.</li>
+<li>The mirror doubts that space pirates are likely, because a boarding is easy to see and the rendezvous orbit warns the target (rocket/pirate.php.html, Approach). The repo's stated reason for the pirates is that pirates want the cargo, so they must come alongside (docs/newtonian-combat-direction.md, prototype lessons).</li>
+<li>The game does not charge a boarder the extra delta-V that the mirror says a match costs. I found no propellant bill for the match in the boarding code in combat/newtonian/world.py. UNVERIFIED beyond that read.</li>
+<li>The lateral jet strength comes from one worked example, not a standard. docs/newtonian-combat-direction.md (Austen's answers, 2026-10-04) says so.</li>
+</ul>
+<h2 id="silent">Where the sources are silent</h2>
+<ul>
+<li>The mirror gives no time that a crew needs to see a round and react, so the 2 second reaction is the game's own number.</li>
+<li>The mirror gives no distance at which a chase ends, so the 3,000 km run line has no outside source. The repo states it in docs/newtonian-combat-direction.md (the helm's Break off and run order) and gives no reason for the number.</li>
+<li>The mirror gives no hold time, range or speed limit for a boarding, so BOARDING_KM, BOARDING_MATCH_KMS and BOARDING_HOLD_S are authored. combat/newtonian/world.py says every number in it is authored unless a comment names a source.</li>
+<li>The 40 second flight cap is the game's own measurement. The bridge.py comment says none of 180 of the captain's rounds landed past that time of flight.</li>
+<li>docs/sources/ holds navy and treaty rules for a warship that stops, boards and searches a ship on suspicion (docs/sources/sorm.md, docs/sources/unclos.md). They do not describe a pirate boarding or a fight between boarders and a crew.</li>
+</ul>
+<h2 id="sources">Sources</h2>
+<ul>
+<li><a href="https://www.projectrho.com/public_html/rocket/misconceptions.php">Atomic Rockets, misconceptions</a>, There Is No Friction In Space: A ship that shuts off its engines keeps its current velocity indefinitely. (<a href="sources.html#doc-rocket-misconceptions-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/misconceptions.php">Atomic Rockets, misconceptions</a>, Rockets Are Not Fighter Planes: A spacecraft turns by pointing and then firing its engine. It is like a heavy truck on ice, and the faster it moves the wider its turns. "You also cannot turn on a dime." (<a href="sources.html#doc-rocket-misconceptions-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/misconceptions.php">Atomic Rockets, misconceptions</a>, Rockets Are Not Arrows: A spacecraft need not travel the way its nose points. Between burns it can turn to any heading, so it can fly sideways and still bring a weapon to bear. (<a href="sources.html#doc-rocket-misconceptions-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/spacewartactic.php">Atomic Rockets, spacewartactic</a>, No &quot;stop-onna-dime&quot;: Ken Burnside (Attack Vector: Tactical): above about 30 hexes a turn, which he gives as 300 km in 64 seconds, a ship is easier to hit with ballistic weapons because it can barely change its vector. (<a href="sources.html#doc-rocket-spacewartactic-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/spacewartactic.php">Atomic Rockets, spacewartactic</a>, Hard to hit distant moving object: A shooter sees the target where it was a light-travel time ago, and the bullet needs more time to arrive. Relative speeds of several km/s make a moving target harder to hit. (<a href="sources.html#doc-rocket-spacewartactic-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/spacewartactic.php">Atomic Rockets, spacewartactic</a>, The Trumpet Bell Effect: The places a target can reach grow with time in the shape of a trumpet bell. A shot that closes faster than the target's sideways speed is hard to dodge by jinking, and a fuzzy shot that is refined as it nears is easier to dodge at low closing speed. (<a href="sources.html#doc-rocket-spacewartactic-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/spacewartactic.php">Atomic Rockets, spacewartactic</a>, Tactical Effects: Fleets that accelerate toward each other flash by at about twice one fleet's speed. Most fire misses, and after the first volley the fleets are out of weapon range, so they need a long time to brake and return. (<a href="sources.html#doc-rocket-spacewartactic-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/spacewarintro.php">Atomic Rockets, spacewarintro</a>, 4. Everything Happens Super Fast: At relative speeds of kilometers a second a gunner has little time. A laser arrives at once, so a ship under laser fire has no time to dodge, and a solid round that takes time to arrive can be dodged. (<a href="sources.html#doc-rocket-spacewarintro-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/spacewarintro.php">Atomic Rockets, spacewarintro</a>, 1. Space Is Really Big: Enemy ships would look like blips on a display, and travel time is a serious factor. (<a href="sources.html#doc-rocket-spacewarintro-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/pirate.php">Atomic Rockets, pirate</a>, Intercepting the target: To match a trajectory a pursuer accelerates toward the target and then slows until the relative velocity is zero. It needs well over twice the delta-V of its target. The target also sees it coming, often from millions of kilometers away. "more than twice the deltaV of any target" (<a href="sources.html#doc-rocket-pirate-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/pirate.php">Atomic Rockets, pirate</a>, Approach: A pirate pursuer must time its burns to meet the target, and it must keep delta-V in reserve to deal with wherever the target is going. The rendezvous orbit alerts the target before the pirate arrives. (<a href="sources.html#doc-rocket-pirate-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/controldeck.php">Atomic Rockets, controldeck</a>, Moment of Inertia: Roger M. Wilcox's example: a 100 m craft with a 2 g main engine needs 0.83 g from the nose jets and 0.83 g from the tail jets to turn. Pointed the same way, the two sets push the craft sideways at 1.66 g, so a long craft can jink faster by pushing sideways than by turning. (<a href="sources.html#doc-rocket-controldeck-php-html">all uses</a>)</li>
+</ul>
+<h2 id="code">Code files</h2>
+<ul>
+<li><code>combat/newtonian/world.py</code></li>
+<li><code>combat/newtonian/bridge.py</code></li>
+<li><code>combat/newtonian/aimedfire.py</code></li>
+<li><code>combat/newtonian/hullphysics.py</code></li>
+<li><code>combat/newtonian/door.py</code></li>
+</ul>
+</main>
+<footer class="stamp">
+<p>Read from game commit 702fad0f (committed 2026-10-16). Pages written 2026-10-16.
+The explanations are stand-in text and may change.</p>
+</footer>
+</div>
+</body>
+</html>

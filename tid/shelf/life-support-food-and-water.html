@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Life support, food and water</title>
+<meta name="description" content="What the game does for life support, food and water, its numbers, and where each comes from.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+:root {
+  color-scheme: light dark;
+  --bg: #fbf8f1; --panel: #f0eadb; --rule: #b9ae94; --text: #231c0f; --muted: #51493a; --accent: #7a4300;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #0e0903; --panel: #16110a; --rule: #4a4130; --text: #d6cbb6; --muted: #a89f88; --accent: #ffb040; }
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 1rem/1.65 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; padding: 0 1rem 4rem; }
+.skip { position: absolute; left: 1rem; top: -4rem; background: var(--accent); color: var(--bg); padding: .5rem 1rem; z-index: 10; }
+.skip:focus { top: .5rem; }
+.wrap { max-width: 64rem; margin: 0 auto; }
+.mono, h1, h2, h3, caption, th, nav, .brand, .stamp, .grade, .val { font-family: "DM Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+a { color: var(--accent); text-underline-offset: .2em; }
+a:focus-visible, .region:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.top { padding: 2rem 0 1rem; border-bottom: 1px solid var(--rule); }
+.brand { margin: 0 0 .75rem; font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .25rem 1.5rem; }
+nav a { display: inline-block; padding: .35rem 0; }
+h1 { font-size: clamp(1.4rem, 5vw, 2rem); line-height: 1.25; margin: 2rem 0 1rem; font-weight: 500; }
+h2 { font-size: 1.25rem; margin: 2.5rem 0 .75rem; padding-top: 1.25rem; border-top: 1px solid var(--rule); font-weight: 500; }
+h3 { font-size: 1.05rem; margin: 1.5rem 0 .5rem; font-weight: 500; }
+p, li { max-width: 46rem; }
+li + li { margin-top: .35rem; }
+code { font-family: "DM Mono", ui-monospace, Consolas, monospace; font-size: .92em; overflow-wrap: anywhere; }
+.lead { font-size: 1.1rem; }
+.note { background: var(--panel); border-left: 4px solid var(--accent); padding: .75rem 1rem; max-width: 46rem; }
+.region { overflow-x: auto; margin: 1rem 0; border: 1px solid var(--rule); }
+table { border-collapse: collapse; width: 100%; min-width: 46rem; font-size: .92rem; line-height: 1.5; }
+caption { text-align: left; padding: .75rem; font-size: .95rem; color: var(--muted); }
+th, td { text-align: left; vertical-align: top; padding: .55rem .75rem; border-top: 1px solid var(--rule); }
+thead th { background: var(--panel); font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; white-space: nowrap; }
+tbody th { font-weight: 400; font-family: inherit; min-width: 14rem; }
+td.val { overflow-wrap: anywhere; min-width: 7rem; }
+.numbers td:nth-child(5), .numbers td:nth-child(6) { min-width: 13rem; }
+td.count { text-align: right; font-variant-numeric: tabular-nums; }
+.grade { display: inline-block; border: 2px solid currentColor; border-radius: 4px; min-width: 1.6rem; text-align: center; padding: 0 .3rem; font-weight: 600; margin-right: .4rem; }
+.gradeitem { white-space: nowrap; }
+.stamp { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--rule); font-size: .8rem; color: var(--muted); }
+.toc { padding-left: 1.2rem; }
+dl.keys dt { font-weight: 600; margin-top: 1rem; }
+dl.keys dd { margin: .25rem 0 0; max-width: 46rem; }
+@media (max-width: 40rem) { body { padding: 0 1rem 3rem; } th, td { padding: .5rem; } }
+@media print { .skip { display: none; } }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to the content</a>
+<div class="wrap">
+<header class="top">
+<p class="brand"><a href="https://coldweld.dev/">Coldweld</a> / The Infinite Diaspora / Reference shelf</p>
+<nav aria-label="Reference shelf"><ul>
+<li><a href="index.html">Mechanics</a></li>
+<li><a href="grades.html">Grades</a></li>
+<li><a href="sources.html">Sources</a></li>
+</ul></nav>
+</header>
+<main id="main">
+<h1>Life support, food and water</h1>
+<ul class="toc">
+<li><a href="#brief">In brief</a></li>
+<li><a href="#does">What the game does</a></li>
+<li><a href="#numbers">The numbers</a></li>
+<li><a href="#why">Why: the real physics or procedure</a></li>
+<li><a href="#departs">Where the game departs from reality</a></li>
+<li><a href="#silent">Where the sources are silent</a></li>
+<li><a href="#sources">Sources</a></li>
+<li><a href="#code">Code files</a></li>
+</ul>
+<h2 id="brief">In brief</h2>
+<p class="lead">Life support is the set of supplies and machines that keep a crew alive, which means air to breathe, water to drink and food to eat.</p>
+<h2 id="does">What the game does</h2>
+<h3>Food And Water</h3>
+<ul>
+<li>Each person aboard uses 2 kg of food and 4 kg of water a day.</li>
+<li>The Supply department and Life Support modules cut that, by up to 60% together.</li>
+<li>SHIPYARD &gt; RESUPPLY fills both for a fee, the same way REFUEL does.</li>
+<li>Run either dry in transit and each hand loses 6 morale a day without food, or 10 without water.</li>
+<li>Health suffers after 3 dry days of water, or 21 of food.</li>
+<li>Low morale feeds the same desertion risk that unpaid wages do.</li>
+<li>Under the Gentle setting both last twice as long, and going without wounds people but never kills them.</li>
+</ul>
+<h3>Life Support</h3>
+<ul>
+<li>Neither side aims at LIFE SUPPORT. A round that gets through the plate gets inside instead.</li>
+<li>There it can wreck cargo, kill a crewmate, hole the reactor plant or vent a compartment.</li>
+<li>Otherwise it takes 8 off life support.</li>
+<li>At 40 or less life support fails.</li>
+<li>Every 20 s it stays down, bad air can kill a hand at 15%, unless GENERAL QUARTERS has the crew suited.</li>
+<li>While it is down or its air plant is cut, your guns lay wider and every hand loses morale every 20 s.</li>
+<li>Life support is mended before every fight.</li>
+</ul>
+<h3>Morale And Readiness</h3>
+<ul>
+<li>Each crew member has morale, and the crew as a whole has readiness. Both change how well they work.</li>
+<li>Set STANDING ORDERS in the Captain's Quarters to manage them.</li>
+<li>GENERAL QUARTERS | the crew stands at battle stations in suits, so nobody suffocates if a round holes life support.</li>
+<li>It costs each hand 3 morale and adds 3 fatigue on every travel day it stands.</li>
+<li>A burn of 1 g or less clears 5 fatigue a day, so GENERAL QUARTERS alone never exhausts a hand.</li>
+<li>Add a hard burn and a hand is EXHAUSTED at 60 fatigue. Suits still cannot save a hand a round actually reaches.</li>
+</ul>
+<h2 id="numbers">The numbers</h2>
+<p>23 numbers, read from the game code. None has a grade yet.</p>
+<div class="region" role="region" tabindex="0" aria-label="Numbers the game runs for life support, food and water">
+<table class="numbers">
+<caption>Numbers the game runs for life support, food and water</caption>
+<thead><tr>
+<th scope="col">Quantity</th>
+<th scope="col">Value</th>
+<th scope="col">Unit</th>
+<th scope="col">Grade</th>
+<th scope="col">Source</th>
+<th scope="col">Basis</th>
+</tr></thead>
+<tbody>
+<tr id="n-1"><th scope="row">Food one person eats in a day</th><td class="val">0.002</td><td>tonnes</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-2"><th scope="row">Water one person uses in a day</th><td class="val">0.004</td><td>tonnes</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-3"><th scope="row">Supply department cut to the daily burn, per competence point</th><td class="val">0.005</td><td>fraction of the burn</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-4"><th scope="row">Most the Supply department can cut alone</th><td class="val">0.4</td><td>fraction of the burn</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-5"><th scope="row">Life Support module cut to the burn, per rating point</th><td class="val">0.02</td><td>fraction of the burn</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-6"><th scope="row">Most the crew and the modules can cut together</th><td class="val">0.6</td><td>fraction of the burn</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-7"><th scope="row">Rating of the largest Life Support module (LS-6)</th><td class="val">10</td><td>rating points</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-8"><th scope="row">Burn multiplier under the Gentle setting</th><td class="val">0.5</td><td>times the burn</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-9"><th scope="row">Morale each hand loses per day with no food</th><td class="val">6</td><td>morale</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-10"><th scope="row">Morale each hand loses per day with no water</th><td class="val">10</td><td>morale</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-11"><th scope="row">Dry days of water before harm starts</th><td class="val">3</td><td>days</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-12"><th scope="row">Dry days of food before harm starts</th><td class="val">21</td><td>days</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-13"><th scope="row">Health the captain loses per day past the water limit</th><td class="val">12</td><td>health points</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-14"><th scope="row">Health the captain loses per day past the food limit</th><td class="val">4</td><td>health points</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-15"><th scope="row">Fatigue each hand gains per travel day at GENERAL QUARTERS</th><td class="val">3</td><td>fatigue</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-16"><th scope="row">Life support integrity at which the air fails</th><td class="val">40</td><td>integrity points</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-17"><th scope="row">Life support integrity at which the warning shows</th><td class="val">60</td><td>integrity points</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-18"><th scope="row">Integrity a round that gets inside takes off life support</th><td class="val">8</td><td>integrity points</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-19"><th scope="row">Aim penalty from bad air, crew not suited</th><td class="val">15</td><td>accuracy points</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-20"><th scope="row">Aim penalty from bad air, crew suited</th><td class="val">7</td><td>accuracy points</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-21"><th scope="row">Morale each hand loses per round while the air is out</th><td class="val">4</td><td>morale</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-22"><th scope="row">Chance per round that bad air catches a hand, crew not suited</th><td class="val">0.15</td><td>probability</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-23"><th scope="row">Length of one combat round</th><td class="val">20</td><td>seconds</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+</tbody></table></div>
+<h2 id="why">Why: the real physics or procedure</h2>
+<ul>
+<li>A crew uses supplies by the person and by the day, so a store is counted in person-days.</li>
+<li>A person needs food, water and oxygen every day, and the water is the largest share by mass.</li>
+<li>A ship that recycles part of its water and air carries less for the same trip.</li>
+<li>No ship recycles all of it, so a small top-up of water is still needed.</li>
+<li>Air is the fast killer: too much carbon dioxide or too little oxygen disables a person in minutes.</li>
+<li>A pressure suit and a sealed compartment give a crew time when the air plant fails.</li>
+</ul>
+<h2 id="departs">Where the game departs from reality</h2>
+<ul>
+<li>The game keeps one number for water, 4 kg a hand a day against 2 kg of food. The source figures differ: about 2.72 to 3.09 kg of drinking water, and 26 kg more for hygiene. docs/notes/travel.md ('water and food') keeps that ratio so raw kilograms do not enter the economy.</li>
+<li>Hygiene water is not built. CLAUDE.md lists it as a mirror finding the game does not yet use.</li>
+<li>Air is not a store. combat/hazards.py treats it as per-fight equipment because air fails in minutes, so the game tracks an integrity score and not oxygen mass.</li>
+<li>Bad air is rolled once per 20 second round as a chance to lose a hand, and GENERAL QUARTERS shuts that roll off whole (combat/aftermath.py). The real harm depends on the leak and the volume, which the game does not model.</li>
+<li>Life support is mended before every fight (index line). This is a choice for pacing, and the repo gives no source for it.</li>
+<li>The Gentle setting halves the burn and removes death from thirst and hunger. This is a difficulty option (player/gentle.py) and has no source.</li>
+</ul>
+<h2 id="silent">Where the sources are silent</h2>
+<ul>
+<li>The mirror gives no rule for how many days a person lives without water or food. The rule of threes (3 days, 3 weeks) is Austen's choice, recorded in docs/notes/gameplay.md under 'Stores and the rule of threes'.</li>
+<li>The mirror gives no morale cost for a short ration or a dry tank. The 6 and 10 morale a day are authored.</li>
+<li>No source gives how fast a hole in a ship's air plant harms a crew, so the 40 and 60 integrity thresholds and the 15 percent catch chance are authored.</li>
+<li>The Navy manual gives no time or price for repair and no figure for a suited crew's air, beyond the hood and apparatus times.</li>
+<li>The mirror is silent on the effect of suits on morale and fatigue, so the 3 fatigue a day at GENERAL QUARTERS is authored.</li>
+</ul>
+<h2 id="sources">Sources</h2>
+<ul>
+<li><a href="https://www.projectrho.com/public_html/rocket/lifesupport.php">Atomic Rockets, lifesupport</a>, Introduction (person-day accounting): Consumables are counted in person-days, so a store of 30 person-days feeds 30 people for one day or one person for 30 days. "A useful accounting device for consumables is the &quot;man-day&quot; or &quot;person-day&quot;." (<a href="sources.html#doc-rocket-lifesupport-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/lifesupport.php">Atomic Rockets, lifesupport</a>, Eeking Out: A bare-minimum cruise needs about 0.98 kg of water, 2.3 kg of food and 0.0576 kg of air per person per day. The food holds another 1.72 kg of water, so a person needs about 2.72 kg of water in all. (<a href="sources.html#doc-rocket-lifesupport-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/lifesupport.php">Atomic Rockets, lifesupport</a>, Food (USS Wyoming figures): A navy crew of 150 on a 90 day cruise carries food at about 2.3 kg per person per day. The page says NASA recommends 3.09 liters of water per person per day. (<a href="sources.html#doc-rocket-lifesupport-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/lifesupport.php">Atomic Rockets, lifesupport</a>, alternate figures from the NC State document: Daily need per person: 0.83 kg oxygen, 0.62 kg freeze-dried food (2.48 kg with water added), 3.56 kg of water for drinking and food, and 26.0 kg of water for hygiene. (<a href="sources.html#doc-rocket-lifesupport-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/lifesupport.php">Atomic Rockets, lifesupport</a>, Breathing Mix: NASA gives about 0.835 kg of oxygen used and 0.998 kg of carbon dioxide breathed out per astronaut per day. A person in vacuum is unconscious in about 10 seconds, and lung damage is fatal in about 90. (<a href="sources.html#doc-rocket-lifesupport-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/lifesupport.php">Atomic Rockets, lifesupport</a>, carbon dioxide in the air (percent list): Carbon dioxide at 1 percent causes drowsiness and at 8 percent causes unconsciousness. Above 8 percent it kills. (<a href="sources.html#doc-rocket-lifesupport-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/celss.php">Atomic Rockets, celss</a>, Controlled Ecological Life Support System (opening and Biosphere II note): A closed system recycles air, water and food. A system under 100 percent is still useful, and the page calls over 75 percent a huge help. It adds 0.25 liters of water per person per day to cover reclamation losses. (<a href="sources.html#doc-rocket-celss-php-html">all uses</a>)</li>
+<li>US Navy training manual, &quot;Damage Control&quot; (chapter 12), What it says (General quarters, 12-8) and Life support and fire (12-14 to 12-24): General quarters is the highest state of readiness and an all-hands duty. The chapter lists an escape hood with 15 minutes of air and breathing apparatus rated for about 30 to 45 minutes. (<a href="sources.html#doc-docs-sources-navy-damage-control-manual-md">all uses</a>)</li>
+</ul>
+<h2 id="code">Code files</h2>
+<ul>
+<li><code>travel/travel.py</code></li>
+<li><code>crew/hullcrew.py</code></li>
+<li><code>gameplay/gameplay.py</code></li>
+<li><code>player/gentle.py</code></li>
+<li><code>vehicles/ship/modules/lifesupportdata.py</code></li>
+<li><code>combat/hazards.py</code></li>
+<li><code>combat/aftermath.py</code></li>
+<li><code>combat/aftermathdata.py</code></li>
+<li><code>combat/newtonian/door.py</code></li>
+</ul>
+</main>
+<footer class="stamp">
+<p>Read from game commit 702fad0f (committed 2026-10-16). Pages written 2026-10-16.
+The explanations are stand-in text and may change.</p>
+</footer>
+</div>
+</body>
+</html>
