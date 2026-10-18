@@ -31,29 +31,44 @@ a:focus-visible, .region:focus-visible { outline: 3px solid var(--accent); outli
 nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .25rem 1.5rem; }
 nav a { display: inline-block; padding: .35rem 0; }
 h1 { font-size: clamp(1.4rem, 5vw, 2rem); line-height: 1.25; margin: 2rem 0 1rem; font-weight: 500; }
-h2 { font-size: 1.25rem; margin: 2.5rem 0 .75rem; padding-top: 1.25rem; border-top: 1px solid var(--rule); font-weight: 500; }
-h3 { font-size: 1.05rem; margin: 1.5rem 0 .5rem; font-weight: 500; }
+h2 { font-size: 1.5rem; margin: 2.5rem 0 .75rem; padding-top: 1.25rem; border-top: 1px solid var(--rule); font-weight: 500; }
+h3 { font-size: 1.15rem; margin: 1.5rem 0 .5rem; font-weight: 500; }
 p, li { max-width: 46rem; }
 li + li { margin-top: .35rem; }
 code { font-family: "DM Mono", ui-monospace, Consolas, monospace; font-size: .92em; overflow-wrap: anywhere; }
 .lead { font-size: 1.1rem; }
-.note { background: var(--panel); border-left: 4px solid var(--accent); padding: .75rem 1rem; max-width: 46rem; }
+.note { background: var(--panel); border: 1px solid var(--rule); padding: .75rem 1rem; max-width: 46rem; }
 .region { overflow-x: auto; margin: 1rem 0; border: 1px solid var(--rule); }
-table { border-collapse: collapse; width: 100%; min-width: 46rem; font-size: .92rem; line-height: 1.5; }
+table { border-collapse: collapse; width: 100%; min-width: 40rem; font-size: .92rem; line-height: 1.55; }
 caption { text-align: left; padding: .75rem; font-size: .95rem; color: var(--muted); }
-th, td { text-align: left; vertical-align: top; padding: .55rem .75rem; border-top: 1px solid var(--rule); }
+caption.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; padding: 0; }
+th, td { text-align: left; vertical-align: top; padding: .7rem .85rem; border-top: 1px solid var(--rule); }
 thead th { background: var(--panel); font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; white-space: nowrap; }
-tbody th { font-weight: 400; font-family: inherit; min-width: 14rem; }
-td.val { overflow-wrap: anywhere; min-width: 7rem; }
-.numbers td:nth-child(5), .numbers td:nth-child(6) { min-width: 13rem; }
+tbody th { font-weight: 500; font-family: inherit; min-width: 11rem; }
+tbody tr:nth-child(even) th, tbody tr:nth-child(even) td { background: var(--panel); }
+td.val { overflow-wrap: anywhere; min-width: 7rem; font-size: .95rem; }
+.unit { display: block; font-size: .8rem; color: var(--muted); overflow-wrap: normal; }
+.numbers { min-width: 58rem; }
+.numbers tbody th { min-width: 13rem; width: 20%; }
+.numbers td:nth-child(4) { min-width: 11rem; width: 18%; color: var(--muted); }
+.numbers td:nth-child(5) { min-width: 22rem; width: 42%; }
 td.count { text-align: right; font-variant-numeric: tabular-nums; }
+.uses { min-width: 34rem; }
+details { margin: .5rem 0 1rem; }
+summary { cursor: pointer; padding: .45rem 0; font-family: "DM Mono", ui-monospace, Consolas, monospace; font-size: .85rem; color: var(--accent); }
+summary:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.docs { font-size: .9rem; gap: .1rem 1rem; }
+.cited { margin: .25rem 0 .5rem; color: var(--muted); }
 .grade { display: inline-block; border: 2px solid currentColor; border-radius: 4px; min-width: 1.6rem; text-align: center; padding: 0 .3rem; font-weight: 600; margin-right: .4rem; }
 .gradeitem { white-space: nowrap; }
 .stamp { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--rule); font-size: .8rem; color: var(--muted); }
-.toc { padding-left: 1.2rem; }
+.toc { list-style: none; margin: 0 0 1rem; padding: 0; display: flex; flex-wrap: wrap; gap: .25rem 1.25rem; }
+.toc li { margin: 0; }
+.toc a { display: inline-block; padding: .3rem 0; }
 dl.keys dt { font-weight: 600; margin-top: 1rem; }
 dl.keys dd { margin: .25rem 0 0; max-width: 46rem; }
-@media (max-width: 40rem) { body { padding: 0 1rem 3rem; } th, td { padding: .5rem; } }
+@media (max-width: 40rem) { body { padding: 0 1rem 3rem; } th, td { padding: .6rem; } .numbers { min-width: 46rem; } .numbers tbody th { min-width: 8rem; width: auto; } .numbers td.val { min-width: 6.5rem; } .numbers td:nth-child(3) { min-width: 5.5rem; } .gradeitem { white-space: normal; } .numbers .grade { display: block; width: max-content; margin: 0 0 .2rem; } }
+@media (min-width: 40rem) { .numbers tbody th { position: sticky; left: 0; z-index: 1; background: var(--bg); } .numbers tbody tr:nth-child(even) th { background: var(--panel); } }
 @media print { .skip { display: none; } }
 </style>
 </head>
@@ -77,9 +92,7 @@ dl.keys dd { margin: .25rem 0 0; max-width: 46rem; }
 <li><a href="#why">Why: the real physics or procedure</a></li>
 <li><a href="#departs">Where the game departs from reality</a></li>
 <li><a href="#silent">Where the sources are silent</a></li>
-<li><a href="#inspiration">Inspiration</a></li>
 <li><a href="#sources">Sources</a></li>
-<li><a href="#code">Code files</a></li>
 </ul>
 <h2 id="brief">In brief</h2>
 <p class="lead">Life support is the set of supplies and machines that keep a crew alive, which means air to breathe, water to drink and food to eat.</p>
@@ -121,38 +134,37 @@ dl.keys dd { margin: .25rem 0 0; max-width: 46rem; }
 <thead><tr>
 <th scope="col">Quantity</th>
 <th scope="col">Value</th>
-<th scope="col">Unit</th>
 <th scope="col">Grade</th>
 <th scope="col">Source</th>
 <th scope="col">Basis</th>
 </tr></thead>
 <tbody>
-<tr id="n-1"><th scope="row">Food one person eats in a day</th><td class="val">0.002</td><td>tonnes</td><td><span class="gradeitem"><span class="grade">D</span>Analogy</span></td><td><a href="https://www.projectrho.com/public_html/rocket/lifesupport.php">Atomic Rockets, lifesupport</a>, Food (USS Wyoming figures)</td><td>The mirror gives about 2.3 kg of food per person per day from the USS Wyoming, and 0.62 kg of dry food from NASA. The game rounds the Wyoming figure.</td></tr>
-<tr id="n-2"><th scope="row">Water one person uses in a day</th><td class="val">0.004</td><td>tonnes</td><td><span class="gradeitem"><span class="grade">D</span>Analogy</span></td><td><a href="https://www.projectrho.com/public_html/rocket/lifesupport.php">Atomic Rockets, lifesupport</a>, Eeking Out</td><td>The mirror gives 2.72 kg of water a person a day as a bare minimum and 3.56 kg for drinking and food. The game keeps water at twice the food mass, with no hygiene water.</td></tr>
-<tr id="n-3"><th scope="row">Supply department cut to the daily burn, per competence point</th><td class="val">0.005</td><td>fraction of the burn</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose this cut for the Supply department, modeled on the Medical department's reductions. No source sets a rate for crew thrift.</td></tr>
-<tr id="n-4"><th scope="row">Most the Supply department can cut alone</th><td class="val">0.4</td><td>fraction of the burn</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose a cap so crew skill alone never brings consumption near zero, and so modules stay worth fitting.</td></tr>
-<tr id="n-5"><th scope="row">Life Support module cut to the burn, per rating point</th><td class="val">0.02</td><td>fraction of the burn</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose how much each rating point of a Life Support module saves. The mirror gives no module ratings.</td></tr>
-<tr id="n-6"><th scope="row">Most the crew and the modules can cut together</th><td class="val">0.6</td><td>fraction of the burn</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/celss.php">Atomic Rockets, celss</a>, Controlled Ecological Life Support System (opening)</td><td>The mirror says a recycling system under 100 percent is still useful and over 75 percent is a huge help. The game chose a lower ceiling for play.</td></tr>
-<tr id="n-7"><th scope="row">Rating of the largest Life Support module (LS-6)</th><td class="val">10</td><td>rating points</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose a ladder of ratings for the six Life Support modules, priced a little above radiation shielding. No source rates a recycler.</td></tr>
-<tr id="n-8"><th scope="row">Burn multiplier under the Gentle setting</th><td class="val">0.5</td><td>times the burn</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Austen chose this difficulty option on 2026-09-24 so food and water run out slower. It has no source.</td></tr>
-<tr id="n-9"><th scope="row">Morale each hand loses per day with no food</th><td class="val">6</td><td>morale</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose a morale loss for a hungry crew. The mirror and shelf give no morale cost for a short ration. The sources are silent on this figure.</td></tr>
-<tr id="n-10"><th scope="row">Morale each hand loses per day with no water</th><td class="val">10</td><td>morale</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/lifesupport.php">Atomic Rockets, lifesupport</a>, Eeking Out</td><td>The game chose a morale loss steeper than hunger's, because the mirror ranks thirst as dangerous faster than hunger. The size is authored. The sources are silent on this figure.</td></tr>
-<tr id="n-11"><th scope="row">Dry days of water before harm starts</th><td class="val">3</td><td>days</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Austen chose the rule of threes: three days without water. The mirror and shelf give no survival time. The sources are silent on this figure.</td></tr>
-<tr id="n-12"><th scope="row">Dry days of food before harm starts</th><td class="val">21</td><td>days</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Austen chose the rule of threes: three weeks without food. The mirror and shelf give no survival time. The sources are silent on this figure.</td></tr>
-<tr id="n-13"><th scope="row">Health the captain loses per day past the water limit</th><td class="val">12</td><td>health points</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose a daily health loss for the captain, who has no crew roster, so thirst turns dangerous in about a week. No source gives a rate. The sources are silent on this figure.</td></tr>
-<tr id="n-14"><th scope="row">Health the captain loses per day past the food limit</th><td class="val">4</td><td>health points</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose a daily health loss for the captain, smaller than thirst's. No source gives a rate. The sources are silent on this figure.</td></tr>
-<tr id="n-15"><th scope="row">Fatigue each hand gains per travel day at GENERAL QUARTERS</th><td class="val">3</td><td>fatigue</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td><a href="https://media.defense.gov/2014/Feb/21/2002655450/-1/-1/1/140221-N-ZZ182-5359.pdf">US Navy training manual, &quot;Damage Control&quot; (chapter 12)</a>, What it says (General quarters, 12-8)</td><td>The game chose a daily strain so a long run at general quarters exhausts a hand in weeks. The mirror and the Navy manual give no suit fatigue rate. The sources are silent on this figure.</td></tr>
-<tr id="n-16"><th scope="row">Life support integrity at which the air fails</th><td class="val">40</td><td>integrity points</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/lifesupport.php">Atomic Rockets, lifesupport</a>, carbon dioxide in the air (percent list)</td><td>The game tracks air as an integrity score, so no source gives a threshold. The mirror gives only carbon dioxide effects: drowsiness at 1 percent, unconsciousness at 8 percent. The sources are silent on this figure.</td></tr>
-<tr id="n-17"><th scope="row">Life support integrity at which the warning shows</th><td class="val">60</td><td>integrity points</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose where the warning shows, so the captain sees the air failing before it fails. No source gives a threshold. The sources are silent on this figure.</td></tr>
-<tr id="n-18"><th scope="row">Integrity a round that gets inside takes off life support</th><td class="val">8</td><td>integrity points</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose the same hit size as the radiators, so both tracks wear at one rate.</td></tr>
-<tr id="n-19"><th scope="row">Aim penalty from bad air, crew not suited</th><td class="val">15</td><td>accuracy points</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose an aim penalty lighter than the overheat penalty, because bad air panics a crew and does not cook its guns. No source gives a figure. The sources are silent on this figure.</td></tr>
-<tr id="n-20"><th scope="row">Aim penalty from bad air, crew suited</th><td class="val">7</td><td>accuracy points</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose a smaller penalty for a suited crew, because a sealed suit keeps breathing while the hull air fails. No source gives a figure. The sources are silent on this figure.</td></tr>
-<tr id="n-21"><th scope="row">Morale each hand loses per round while the air is out</th><td class="val">4</td><td>morale</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose a morale drain for each combat step with the air out. No source gives a figure. The sources are silent on this figure.</td></tr>
-<tr id="n-22"><th scope="row">Chance per round that bad air catches a hand, crew not suited</th><td class="val">0.15</td><td>probability</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose the chance that bad air catches a hand in one combat step. The mirror gives no casualty rate for a failing air plant. The sources are silent on this figure.</td></tr>
-<tr id="n-23"><th scope="row">Length of one combat round</th><td class="val">20</td><td>seconds</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose one combat step length, shared by both fights. No source sets a step.</td></tr>
-<tr id="n-24"><th scope="row">Food one hull hand eats in a day (the hull sizing)</th><td class="val">0.002</td><td>tonnes</td><td><span class="gradeitem"><span class="grade">D</span>Analogy</span></td><td><a href="https://www.projectrho.com/public_html/rocket/lifesupport.php">Atomic Rockets, lifesupport</a>, Food (USS Wyoming figures)</td><td>The mirror gives about 2.3 kg of food per person per day from the USS Wyoming, and 0.62 kg of dry food from NASA. The game rounds the Wyoming figure and sizes the tanks with it.</td></tr>
-<tr id="n-25"><th scope="row">Water one hull hand uses in a day (the hull sizing)</th><td class="val">0.004</td><td>tonnes</td><td><span class="gradeitem"><span class="grade">D</span>Analogy</span></td><td><a href="https://www.projectrho.com/public_html/rocket/lifesupport.php">Atomic Rockets, lifesupport</a>, Eeking Out</td><td>The mirror gives 2.72 kg of water a person a day as a bare minimum and 3.56 kg for drinking and food. The game keeps water at twice the food mass, with no hygiene water.</td></tr>
-<tr id="n-26"><th scope="row">Fatigue at which a crew is crippled</th><td class="val">60</td><td>fatigue points</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen as one threshold shared by travel, where fatigue accrues, and combat, where a gassed crew starts a fight. No source gives a fatigue scale.</td></tr>
+<tr id="n-1"><th scope="row">Food one person eats in a day</th><td class="val">0.002 <span class="unit">tonnes</span></td><td><span class="gradeitem"><span class="grade">D</span>Analogy</span></td><td><a href="https://www.projectrho.com/public_html/rocket/lifesupport.php">Atomic Rockets, lifesupport</a>, Food (USS Wyoming figures)</td><td>The mirror gives about 2.3 kg of food per person per day from the USS Wyoming, and 0.62 kg of dry food from NASA. The game rounds the Wyoming figure.</td></tr>
+<tr id="n-2"><th scope="row">Water one person uses in a day</th><td class="val">0.004 <span class="unit">tonnes</span></td><td><span class="gradeitem"><span class="grade">D</span>Analogy</span></td><td><a href="https://www.projectrho.com/public_html/rocket/lifesupport.php">Atomic Rockets, lifesupport</a>, Eeking Out</td><td>The mirror gives 2.72 kg of water a person a day as a bare minimum and 3.56 kg for drinking and food. The game keeps water at twice the food mass, with no hygiene water.</td></tr>
+<tr id="n-3"><th scope="row">Supply department cut to the daily burn, per competence point</th><td class="val">0.005 <span class="unit">fraction of the burn</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose this cut for the Supply department, modeled on the Medical department's reductions. No source sets a rate for crew thrift.</td></tr>
+<tr id="n-4"><th scope="row">Most the Supply department can cut alone</th><td class="val">0.4 <span class="unit">fraction of the burn</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose a cap so crew skill alone never brings consumption near zero, and so modules stay worth fitting.</td></tr>
+<tr id="n-5"><th scope="row">Life Support module cut to the burn, per rating point</th><td class="val">0.02 <span class="unit">fraction of the burn</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose how much each rating point of a Life Support module saves. The mirror gives no module ratings.</td></tr>
+<tr id="n-6"><th scope="row">Most the crew and the modules can cut together</th><td class="val">0.6 <span class="unit">fraction of the burn</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/celss.php">Atomic Rockets, celss</a>, Controlled Ecological Life Support System (opening)</td><td>The mirror says a recycling system under 100 percent is still useful and over 75 percent is a huge help. The game chose a lower ceiling for play.</td></tr>
+<tr id="n-7"><th scope="row">Rating of the largest Life Support module (LS-6)</th><td class="val">10 <span class="unit">rating points</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose a ladder of ratings for the six Life Support modules, priced a little above radiation shielding. No source rates a recycler.</td></tr>
+<tr id="n-8"><th scope="row">Burn multiplier under the Gentle setting</th><td class="val">0.5 <span class="unit">times the burn</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>coldweld chose this difficulty option on 2026-09-24 so food and water run out slower. It has no source.</td></tr>
+<tr id="n-9"><th scope="row">Morale each hand loses per day with no food</th><td class="val">6 <span class="unit">morale</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose a morale loss for a hungry crew. The mirror and shelf give no morale cost for a short ration. The sources are silent on this figure.</td></tr>
+<tr id="n-10"><th scope="row">Morale each hand loses per day with no water</th><td class="val">10 <span class="unit">morale</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/lifesupport.php">Atomic Rockets, lifesupport</a>, Eeking Out</td><td>The game chose a morale loss steeper than hunger's, because the mirror ranks thirst as dangerous faster than hunger. The size is authored. The sources are silent on this figure.</td></tr>
+<tr id="n-11"><th scope="row">Dry days of water before harm starts</th><td class="val">3 <span class="unit">days</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>coldweld chose the rule of threes: three days without water. The mirror and shelf give no survival time. The sources are silent on this figure.</td></tr>
+<tr id="n-12"><th scope="row">Dry days of food before harm starts</th><td class="val">21 <span class="unit">days</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>coldweld chose the rule of threes: three weeks without food. The mirror and shelf give no survival time. The sources are silent on this figure.</td></tr>
+<tr id="n-13"><th scope="row">Health the captain loses per day past the water limit</th><td class="val">12 <span class="unit">health points</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose a daily health loss for the captain, who has no crew roster, so thirst turns dangerous in about a week. No source gives a rate. The sources are silent on this figure.</td></tr>
+<tr id="n-14"><th scope="row">Health the captain loses per day past the food limit</th><td class="val">4 <span class="unit">health points</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose a daily health loss for the captain, smaller than thirst's. No source gives a rate. The sources are silent on this figure.</td></tr>
+<tr id="n-15"><th scope="row">Fatigue each hand gains per travel day at GENERAL QUARTERS</th><td class="val">3 <span class="unit">fatigue</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td><a href="https://media.defense.gov/2014/Feb/21/2002655450/-1/-1/1/140221-N-ZZ182-5359.pdf">US Navy training manual, &quot;Damage Control&quot; (chapter 12)</a>, What it says (General quarters, 12-8)</td><td>The game chose a daily strain so a long run at general quarters exhausts a hand in weeks. The mirror and the Navy manual give no suit fatigue rate. The sources are silent on this figure.</td></tr>
+<tr id="n-16"><th scope="row">Life support integrity at which the air fails</th><td class="val">40 <span class="unit">integrity points</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/lifesupport.php">Atomic Rockets, lifesupport</a>, carbon dioxide in the air (percent list)</td><td>The game tracks air as an integrity score, so no source gives a threshold. The mirror gives only carbon dioxide effects: drowsiness at 1 percent, unconsciousness at 8 percent. The sources are silent on this figure.</td></tr>
+<tr id="n-17"><th scope="row">Life support integrity at which the warning shows</th><td class="val">60 <span class="unit">integrity points</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose where the warning shows, so the captain sees the air failing before it fails. No source gives a threshold. The sources are silent on this figure.</td></tr>
+<tr id="n-18"><th scope="row">Integrity a round that gets inside takes off life support</th><td class="val">8 <span class="unit">integrity points</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose the same hit size as the radiators, so both tracks wear at one rate.</td></tr>
+<tr id="n-19"><th scope="row">Aim penalty from bad air, crew not suited</th><td class="val">15 <span class="unit">accuracy points</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose an aim penalty lighter than the overheat penalty, because bad air panics a crew and does not cook its guns. No source gives a figure. The sources are silent on this figure.</td></tr>
+<tr id="n-20"><th scope="row">Aim penalty from bad air, crew suited</th><td class="val">7 <span class="unit">accuracy points</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose a smaller penalty for a suited crew, because a sealed suit keeps breathing while the hull air fails. No source gives a figure. The sources are silent on this figure.</td></tr>
+<tr id="n-21"><th scope="row">Morale each hand loses per round while the air is out</th><td class="val">4 <span class="unit">morale</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose a morale drain for each combat step with the air out. No source gives a figure. The sources are silent on this figure.</td></tr>
+<tr id="n-22"><th scope="row">Chance per round that bad air catches a hand, crew not suited</th><td class="val">0.15 <span class="unit">probability</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose the chance that bad air catches a hand in one combat step. The mirror gives no casualty rate for a failing air plant. The sources are silent on this figure.</td></tr>
+<tr id="n-23"><th scope="row">Length of one combat round</th><td class="val">20 <span class="unit">seconds</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose one combat step length, shared by both fights. No source sets a step.</td></tr>
+<tr id="n-24"><th scope="row">Food one hull hand eats in a day (the hull sizing)</th><td class="val">0.002 <span class="unit">tonnes</span></td><td><span class="gradeitem"><span class="grade">D</span>Analogy</span></td><td><a href="https://www.projectrho.com/public_html/rocket/lifesupport.php">Atomic Rockets, lifesupport</a>, Food (USS Wyoming figures)</td><td>The mirror gives about 2.3 kg of food per person per day from the USS Wyoming, and 0.62 kg of dry food from NASA. The game rounds the Wyoming figure and sizes the tanks with it.</td></tr>
+<tr id="n-25"><th scope="row">Water one hull hand uses in a day (the hull sizing)</th><td class="val">0.004 <span class="unit">tonnes</span></td><td><span class="gradeitem"><span class="grade">D</span>Analogy</span></td><td><a href="https://www.projectrho.com/public_html/rocket/lifesupport.php">Atomic Rockets, lifesupport</a>, Eeking Out</td><td>The mirror gives 2.72 kg of water a person a day as a bare minimum and 3.56 kg for drinking and food. The game keeps water at twice the food mass, with no hygiene water.</td></tr>
+<tr id="n-26"><th scope="row">Fatigue at which a crew is crippled</th><td class="val">60 <span class="unit">fatigue points</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen as one threshold shared by travel, where fatigue accrues, and combat, where a gassed crew starts a fight. No source gives a fatigue scale.</td></tr>
 </tbody></table></div>
 <h2 id="why">Why: the real physics or procedure</h2>
 <ul>
@@ -165,24 +177,20 @@ dl.keys dd { margin: .25rem 0 0; max-width: 46rem; }
 </ul>
 <h2 id="departs">Where the game departs from reality</h2>
 <ul>
-<li>The game keeps one number for water, 4 kg a hand a day against 2 kg of food. The source figures differ: about 2.72 to 3.09 kg of drinking water, and 26 kg more for hygiene. docs/notes/travel.md ('water and food') keeps that ratio so raw kilograms do not enter the economy.</li>
-<li>Hygiene water is not built. CLAUDE.md lists it as a mirror finding the game does not yet use.</li>
-<li>Air is not a store. combat/hazards.py treats it as per-fight equipment because air fails in minutes, so the game tracks an integrity score and not oxygen mass.</li>
-<li>Bad air is rolled once per 20 second round as a chance to lose a hand, and GENERAL QUARTERS shuts that roll off whole (combat/aftermath.py). The real harm depends on the leak and the volume, which the game does not model.</li>
-<li>Life support is mended before every fight (index line). This is a choice for pacing, and the repo gives no source for it.</li>
-<li>The Gentle setting halves the burn and removes death from thirst and hunger. This is a difficulty option (player/gentle.py) and has no source.</li>
+<li>The game keeps one number for water, 4 kg a hand a day against 2 kg of food. The source figures differ: about 2.72 to 3.09 kg of drinking water, and 26 kg more for hygiene. The game's travel notes ('water and food') keep that ratio so raw kilograms do not enter the economy.</li>
+<li>Hygiene water is not built. The game's design notes list it as a mirror finding the game does not yet use.</li>
+<li>Air is not a store. The game treats it as per-fight equipment because air fails in minutes, so the game tracks an integrity score and not oxygen mass.</li>
+<li>Bad air is rolled once per 20 second round as a chance to lose a hand, and GENERAL QUARTERS shuts that roll off whole. The real harm depends on the leak and the volume, which the game does not model.</li>
+<li>Life support is mended before every fight (index line). This is a choice for pacing, and the game gives no source for it.</li>
+<li>The Gentle setting halves the burn and removes death from thirst and hunger. This is a difficulty option and has no source.</li>
 </ul>
 <h2 id="silent">Where the sources are silent</h2>
 <ul>
-<li>The mirror gives no rule for how many days a person lives without water or food. The rule of threes (3 days, 3 weeks) is Austen's choice, recorded in docs/notes/gameplay.md under 'Stores and the rule of threes'.</li>
+<li>The mirror gives no rule for how many days a person lives without water or food. The rule of threes (3 days, 3 weeks) is coldweld's choice, recorded in the game's design notes under 'Stores and the rule of threes'.</li>
 <li>The mirror gives no morale cost for a short ration or a dry tank. The 6 and 10 morale a day are authored.</li>
 <li>No source gives how fast a hole in a ship's air plant harms a crew, so the 40 and 60 integrity thresholds and the 15 percent catch chance are authored.</li>
 <li>The Navy manual gives no time or price for repair and no figure for a suited crew's air, beyond the hood and apparatus times.</li>
 <li>The mirror is silent on the effect of suits on morale and fatigue, so the 3 fatigue a day at GENERAL QUARTERS is authored.</li>
-</ul>
-<h2 id="inspiration">Inspiration</h2>
-<ul>
-<li><strong>TODO(austen)</strong> (person): TODO(austen)</li>
 </ul>
 <h2 id="sources">Sources</h2>
 <ul>
@@ -196,21 +204,9 @@ dl.keys dd { margin: .25rem 0 0; max-width: 46rem; }
 <li><a href="https://www.projectrho.com/public_html/rocket/lifesupport.php">Atomic Rockets, lifesupport</a>, Water: Two authors figured each person needs 0.1 to 0.25 liters of water a day to make up for reclamation losses. NASA assumes 3.909 kg of potable water and 26 kg of hygiene water a person a day. (<a href="sources.html#doc-rocket-lifesupport-php-html">all uses</a>)</li>
 <li><a href="https://media.defense.gov/2014/Feb/21/2002655450/-1/-1/1/140221-N-ZZ182-5359.pdf">US Navy training manual, &quot;Damage Control&quot; (chapter 12)</a>, What it says (General quarters, 12-8) and Life support and fire (12-14 to 12-24): General quarters is the highest state of readiness and an all-hands duty. The chapter lists an escape hood with 15 minutes of air and breathing apparatus rated for about 30 to 45 minutes. (<a href="sources.html#doc-docs-sources-navy-damage-control-manual-md">all uses</a>)</li>
 </ul>
-<h2 id="code">Code files</h2>
-<ul>
-<li><code>travel/travel.py</code></li>
-<li><code>crew/hullcrew.py</code></li>
-<li><code>gameplay/gameplay.py</code></li>
-<li><code>player/gentle.py</code></li>
-<li><code>vehicles/ship/modules/lifesupportdata.py</code></li>
-<li><code>combat/hazards.py</code></li>
-<li><code>combat/aftermath.py</code></li>
-<li><code>combat/aftermathdata.py</code></li>
-<li><code>combat/newtonian/door.py</code></li>
-</ul>
 </main>
 <footer class="stamp">
-<p>Read from game commit 1cab5b32 (committed 2026-10-18). Pages written 2026-10-18.
+<p>Read from game commit f6b8d18d (committed 2026-10-18). Pages written 2026-10-18.
 The explanations are stand-in text and may change.</p>
 </footer>
 </div>

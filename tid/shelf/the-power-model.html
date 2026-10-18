@@ -31,29 +31,44 @@ a:focus-visible, .region:focus-visible { outline: 3px solid var(--accent); outli
 nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .25rem 1.5rem; }
 nav a { display: inline-block; padding: .35rem 0; }
 h1 { font-size: clamp(1.4rem, 5vw, 2rem); line-height: 1.25; margin: 2rem 0 1rem; font-weight: 500; }
-h2 { font-size: 1.25rem; margin: 2.5rem 0 .75rem; padding-top: 1.25rem; border-top: 1px solid var(--rule); font-weight: 500; }
-h3 { font-size: 1.05rem; margin: 1.5rem 0 .5rem; font-weight: 500; }
+h2 { font-size: 1.5rem; margin: 2.5rem 0 .75rem; padding-top: 1.25rem; border-top: 1px solid var(--rule); font-weight: 500; }
+h3 { font-size: 1.15rem; margin: 1.5rem 0 .5rem; font-weight: 500; }
 p, li { max-width: 46rem; }
 li + li { margin-top: .35rem; }
 code { font-family: "DM Mono", ui-monospace, Consolas, monospace; font-size: .92em; overflow-wrap: anywhere; }
 .lead { font-size: 1.1rem; }
-.note { background: var(--panel); border-left: 4px solid var(--accent); padding: .75rem 1rem; max-width: 46rem; }
+.note { background: var(--panel); border: 1px solid var(--rule); padding: .75rem 1rem; max-width: 46rem; }
 .region { overflow-x: auto; margin: 1rem 0; border: 1px solid var(--rule); }
-table { border-collapse: collapse; width: 100%; min-width: 46rem; font-size: .92rem; line-height: 1.5; }
+table { border-collapse: collapse; width: 100%; min-width: 40rem; font-size: .92rem; line-height: 1.55; }
 caption { text-align: left; padding: .75rem; font-size: .95rem; color: var(--muted); }
-th, td { text-align: left; vertical-align: top; padding: .55rem .75rem; border-top: 1px solid var(--rule); }
+caption.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; padding: 0; }
+th, td { text-align: left; vertical-align: top; padding: .7rem .85rem; border-top: 1px solid var(--rule); }
 thead th { background: var(--panel); font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; white-space: nowrap; }
-tbody th { font-weight: 400; font-family: inherit; min-width: 14rem; }
-td.val { overflow-wrap: anywhere; min-width: 7rem; }
-.numbers td:nth-child(5), .numbers td:nth-child(6) { min-width: 13rem; }
+tbody th { font-weight: 500; font-family: inherit; min-width: 11rem; }
+tbody tr:nth-child(even) th, tbody tr:nth-child(even) td { background: var(--panel); }
+td.val { overflow-wrap: anywhere; min-width: 7rem; font-size: .95rem; }
+.unit { display: block; font-size: .8rem; color: var(--muted); overflow-wrap: normal; }
+.numbers { min-width: 58rem; }
+.numbers tbody th { min-width: 13rem; width: 20%; }
+.numbers td:nth-child(4) { min-width: 11rem; width: 18%; color: var(--muted); }
+.numbers td:nth-child(5) { min-width: 22rem; width: 42%; }
 td.count { text-align: right; font-variant-numeric: tabular-nums; }
+.uses { min-width: 34rem; }
+details { margin: .5rem 0 1rem; }
+summary { cursor: pointer; padding: .45rem 0; font-family: "DM Mono", ui-monospace, Consolas, monospace; font-size: .85rem; color: var(--accent); }
+summary:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.docs { font-size: .9rem; gap: .1rem 1rem; }
+.cited { margin: .25rem 0 .5rem; color: var(--muted); }
 .grade { display: inline-block; border: 2px solid currentColor; border-radius: 4px; min-width: 1.6rem; text-align: center; padding: 0 .3rem; font-weight: 600; margin-right: .4rem; }
 .gradeitem { white-space: nowrap; }
 .stamp { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--rule); font-size: .8rem; color: var(--muted); }
-.toc { padding-left: 1.2rem; }
+.toc { list-style: none; margin: 0 0 1rem; padding: 0; display: flex; flex-wrap: wrap; gap: .25rem 1.25rem; }
+.toc li { margin: 0; }
+.toc a { display: inline-block; padding: .3rem 0; }
 dl.keys dt { font-weight: 600; margin-top: 1rem; }
 dl.keys dd { margin: .25rem 0 0; max-width: 46rem; }
-@media (max-width: 40rem) { body { padding: 0 1rem 3rem; } th, td { padding: .5rem; } }
+@media (max-width: 40rem) { body { padding: 0 1rem 3rem; } th, td { padding: .6rem; } .numbers { min-width: 46rem; } .numbers tbody th { min-width: 8rem; width: auto; } .numbers td.val { min-width: 6.5rem; } .numbers td:nth-child(3) { min-width: 5.5rem; } .gradeitem { white-space: normal; } .numbers .grade { display: block; width: max-content; margin: 0 0 .2rem; } }
+@media (min-width: 40rem) { .numbers tbody th { position: sticky; left: 0; z-index: 1; background: var(--bg); } .numbers tbody tr:nth-child(even) th { background: var(--panel); } }
 @media print { .skip { display: none; } }
 </style>
 </head>
@@ -77,9 +92,7 @@ dl.keys dd { margin: .25rem 0 0; max-width: 46rem; }
 <li><a href="#why">Why: the real physics or procedure</a></li>
 <li><a href="#departs">Where the game departs from reality</a></li>
 <li><a href="#silent">Where the sources are silent</a></li>
-<li><a href="#inspiration">Inspiration</a></li>
 <li><a href="#sources">Sources</a></li>
-<li><a href="#code">Code files</a></li>
 </ul>
 <h2 id="brief">In brief</h2>
 <p class="lead">The power model is the set of rules for the ship's electricity: a reactor plant that fills a battery bank, and a table of loads that draw from it.</p>
@@ -104,35 +117,34 @@ dl.keys dd { margin: .25rem 0 0; max-width: 46rem; }
 <thead><tr>
 <th scope="col">Quantity</th>
 <th scope="col">Value</th>
-<th scope="col">Unit</th>
 <th scope="col">Grade</th>
 <th scope="col">Source</th>
 <th scope="col">Basis</th>
 </tr></thead>
 <tbody>
-<tr id="n-1"><th scope="row">Seconds in one round, over which a plant&#x27;s output is counted</th><td class="val">20</td><td>seconds</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The round keeps the length of the old menu fight round, so one rule serves both fights. No source gives a round length.</td></tr>
-<tr id="n-2"><th scope="row">Bank size in rounds of the hull&#x27;s own rated reactor output</th><td class="val">2.8</td><td>rounds</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/power.php">Atomic Rockets, power</a>, batteries table (Lithium-Ion rechargeables)</td><td>Atomic Rockets gives lithium-ion cells at 100 Wh per kg for a bank's mass and no rule for its size. The bank size keeps the ratio of the old size-class ladder. The sources are silent on this figure.</td></tr>
-<tr id="n-3"><th scope="row">Energy of one power point</th><td class="val">9,330,000</td><td>J</td><td><span class="gradeitem"><span class="grade">D</span>Analogy</span></td><td><a href="https://www.projectrho.com/public_html/rocket/spacegunconvent.php">Atomic Rockets, spacegunconvent</a>, Navy railgun comment: full scale weapon designed to use 64 megajoules</td><td>A Navy handout quoted in Atomic Rockets says the full-scale railgun is designed to use 64 megajoules. The game scales one power point so a standard gun draws that energy at a chosen efficiency.</td></tr>
-<tr id="n-4"><th scope="row">Share of the plant&#x27;s thermal power that becomes electricity</th><td class="val">0.25</td><td>share</td><td><span class="gradeitem"><span class="grade">B</span>Secondary</span></td><td><a href="https://www.projectrho.com/public_html/rocket/power.php">Atomic Rockets, power</a>, Space Nuclear Power Program (SAFE-400 and Prometheus)</td><td>Atomic Rockets lists the SAFE-400 space reactor at 400 kW thermal and 100 kW electric, which is 25 percent, and the Prometheus reactor at 1 MW thermal and 200 kW electric, which is 20 percent.</td></tr>
-<tr id="n-5"><th scope="row">Decay heat after a scram, as a share of full thermal power</th><td class="val">0.035</td><td>share</td><td><span class="gradeitem"><span class="grade">D</span>Analogy</span></td><td>No source recorded</td><td>The Way-Wigner fit, read on Wikipedia, gives about 4 percent of full power ten seconds after shutdown for a long-run reactor. The game uses a recalled round figure near it. The sources are silent on this figure.</td></tr>
-<tr id="n-6"><th scope="row">Power a rail firing draws, by gun size (a coil draws a share of it)</th><td class="val">Micro 3, Light 5, Compact 8, Standard 11, Heavy 16, Superheavy 22</td><td>power points</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/spacegunconvent.php">Atomic Rockets, spacegunconvent</a>, Navy railgun comment: full scale weapon designed to use 64 megajoules</td><td>Sizes are chosen so that reactor output covers about two standard guns a round. The 64 megajoule Navy railgun in Atomic Rockets fixes only the scale of one power point.</td></tr>
-<tr id="n-7"><th scope="row">Coil firing&#x27;s draw as a share of a rail&#x27;s</th><td class="val">0.2</td><td>share</td><td><span class="gradeitem"><span class="grade">D</span>Analogy</span></td><td><a href="https://www.projectrho.com/public_html/rocket/spacegunconvent.php">Atomic Rockets, spacegunconvent</a>, Railgun and coilgun efficiency</td><td>Atomic Rockets puts the Navy railgun at no better than 42 percent efficient and a large coilgun at 90 to 95 percent. The share is the energy ratio of two game muzzle speeds times the ratio of those efficiencies.</td></tr>
-<tr id="n-8"><th scope="row">Guns that draw no power</th><td class="val">Autocannon, Canister</td><td>mechanisms</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The propellant in the case throws a cartridge round, so the feed motor draws little beside a rail shot. Atomic Rockets gives no feed motor power. The sources are silent on this figure.</td></tr>
-<tr id="n-9"><th scope="row">Pump power as a share of the heat moved</th><td class="val">0.01</td><td>share</td><td><span class="gradeitem"><span class="grade">D</span>Analogy</span></td><td>No source recorded</td><td>Water-reactor coolant pump motors run several megawatts each, about 1 percent of the heat they move. This is recalled from NRC data, not opened. No source gives a figure for a space plant. The sources are silent on this figure.</td></tr>
-<tr id="n-10"><th scope="row">Order the rule sheds fight loads in, first shed first</th><td class="val">sweep, guns, pumps</td><td>bill</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td><a href="https://assets.publishing.service.gov.uk/media/5a7c6454ed915d696ccfc775/con1_2a_pt7_1-2.pdf">UK MCA, MSIS003 Part 7: Electrical Equipment and Installations</a>, 7.6, Load shedding</td><td>UK surveyor guidance says load shedding must not cut services essential for propulsion and safety, and lets the owner choose the order of the rest. The order here is chosen.</td></tr>
-<tr id="n-11"><th scope="row">Order the rule sheds voyage loads in, first shed first</th><td class="val">services, shop, recycling, cold</td><td>bill</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td><a href="https://assets.publishing.service.gov.uk/media/5a7c6454ed915d696ccfc775/con1_2a_pt7_1-2.pdf">UK MCA, MSIS003 Part 7: Electrical Equipment and Installations</a>, 7.6, Load shedding</td><td>UK surveyor guidance says load shedding must not cut services essential for propulsion and safety, and lets the owner choose the order of the rest. The order here is chosen.</td></tr>
-<tr id="n-12"><th scope="row">Chance a destroyed reaction chamber scrams the reactor in a round</th><td class="val">0.5</td><td>chance</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/emergency.php">Atomic Rockets, emergency</a>, Nuclear Reactor Emergency SCRAM</td><td>Atomic Rockets describes a SCRAM button and gives no chance that damage trips a reactor. The value is chosen for play. The sources are silent on this figure.</td></tr>
-<tr id="n-13"><th scope="row">Full reactor containment, the scale for reactor integrity</th><td class="val">100</td><td>points</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game counts reactor containment in points on a scale it chose. No source gives such a scale.</td></tr>
-<tr id="n-14"><th scope="row">Reactor containment at or below which the reactor counts as crippled</th><td class="val">40</td><td>percent</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen by the game as the same 40 every vital system uses; unlike the fins and the air, containment at zero is a kill, so the line warns of the end.</td></tr>
-<tr id="n-15"><th scope="row">Containment lost per point of damage a round does inside</th><td class="val">9.1892</td><td>percent per damage point</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Anchored to a measurement: the median breaching round carried 3.7 damage (909 rounds, 150 joust fights, 2026-09-28), which keeps the old fixed loss of 34 for that round. The anchor is a game measurement, not a source.</td></tr>
-<tr id="n-16"><th scope="row">Chance a round that got inside is near the reactor</th><td class="val">0.22</td><td>share</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen by the game and rolled only after a round beats the plate; the notes record 13 percent of kills as reactor kills at the first build and 47 percent once a holed face let rounds in. No source gives a chance.</td></tr>
-<tr id="n-17"><th scope="row">Capacitor charge by hull class (the old ladder)</th><td class="val">LIGHT CRAFT 60, MEDIUM CRAFT 84, HEAVY CRAFT 120</td><td>power points</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The old ladder of 60, 84 and 120, kept for callers that still read it; the bank now holds the rounds set by BANK_ROUNDS of the hull's own output, and the old steps all worked out to 2.7 to 2.9 rounds.</td></tr>
-<tr id="n-18"><th scope="row">Output a point of engineering skill adds to the reactor, as a share of the plant</th><td class="val">0.0036</td><td>share per point</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen by the game as the strength it had on the old heavy plant: a veteran engineer at 70 added 10 to 11 of 42 points a round.</td></tr>
-<tr id="n-19"><th scope="row">Share of the plant&#x27;s rated output an active sweep draws</th><td class="val">0.25</td><td>share</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The notes take the mirror's one radar at 100 megawatts as a quarter of the largest plant (401 megawatts), so every hull pays that share; the radar figure was not reopened here (UNVERIFIED).</td></tr>
-<tr id="n-20"><th scope="row">The three fight bills: order the rule sheds loads in</th><td class="val">pumps first sweep, guns, pumps, guns first sweep, pumps, guns, sweep before guns guns, sweep, pumps</td><td>orders</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td><a href="https://assets.publishing.service.gov.uk/media/5a7c6454ed915d696ccfc775/con1_2a_pt7_1-2.pdf">UK MCA, MSIS003 Part 7: Electrical Equipment and Installations</a>, 7.6 essential loads</td><td>Three orders chosen by the game; the standard lets the order of shedding suit the owner's convenience (7.6) and keeps propulsion auxiliaries off the list, which supports a bill the captain picks.</td></tr>
-<tr id="n-21"><th scope="row">Bill a hull follows when its captain has not chosen</th><td class="val">pumps first</td><td>order</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td><a href="https://assets.publishing.service.gov.uk/media/5a7c6454ed915d696ccfc775/con1_2a_pt7_1-2.pdf">UK MCA, MSIS003 Part 7: Electrical Equipment and Installations</a>, 7.6 essential loads</td><td>Pumps first, chosen by Austen (power stage 2, question 5.1); the electrical standard names propulsion auxiliaries essential.</td></tr>
-<tr id="n-22"><th scope="row">Bill each kind of hostile hull follows</th><td class="val">WARSHIP pumps first, RAIDER guns first, MERCHANT sweep before guns</td><td>orders</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen by the game: a warship pumps first, a raider keeps its guns, a merchant would rather see and run; no source covers a raider's power rule.</td></tr>
-<tr id="n-23"><th scope="row">Hours a reactor that went down in a fight stays down</th><td class="val">4</td><td>hours</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen by the game for every hull; the mirror and the sources shelf are silent for a fast reactor (docs/notes/loaddata.md, Stage 5). The sources are silent on this figure.</td></tr>
+<tr id="n-1"><th scope="row">Seconds in one round, over which a plant&#x27;s output is counted</th><td class="val">20 <span class="unit">seconds</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The round keeps the length of the old menu fight round, so one rule serves both fights. No source gives a round length.</td></tr>
+<tr id="n-2"><th scope="row">Bank size in rounds of the hull&#x27;s own rated reactor output</th><td class="val">2.8 <span class="unit">rounds</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/power.php">Atomic Rockets, power</a>, batteries table (Lithium-Ion rechargeables)</td><td>Atomic Rockets gives lithium-ion cells at 100 Wh per kg for a bank's mass and no rule for its size. The bank size keeps the ratio of the old size-class ladder. The sources are silent on this figure.</td></tr>
+<tr id="n-3"><th scope="row">Energy of one power point</th><td class="val">9,330,000 <span class="unit">J</span></td><td><span class="gradeitem"><span class="grade">D</span>Analogy</span></td><td><a href="https://www.projectrho.com/public_html/rocket/spacegunconvent.php">Atomic Rockets, spacegunconvent</a>, Navy railgun comment: full scale weapon designed to use 64 megajoules</td><td>A Navy handout quoted in Atomic Rockets says the full-scale railgun is designed to use 64 megajoules. The game scales one power point so a standard gun draws that energy at a chosen efficiency.</td></tr>
+<tr id="n-4"><th scope="row">Share of the plant&#x27;s thermal power that becomes electricity</th><td class="val">0.25 <span class="unit">share</span></td><td><span class="gradeitem"><span class="grade">B</span>Secondary</span></td><td><a href="https://www.projectrho.com/public_html/rocket/power.php">Atomic Rockets, power</a>, Space Nuclear Power Program (SAFE-400 and Prometheus)</td><td>Atomic Rockets lists the SAFE-400 space reactor at 400 kW thermal and 100 kW electric, which is 25 percent, and the Prometheus reactor at 1 MW thermal and 200 kW electric, which is 20 percent.</td></tr>
+<tr id="n-5"><th scope="row">Decay heat after a scram, as a share of full thermal power</th><td class="val">0.035 <span class="unit">share</span></td><td><span class="gradeitem"><span class="grade">D</span>Analogy</span></td><td>No source recorded</td><td>The Way-Wigner fit, read on Wikipedia, gives about 4 percent of full power ten seconds after shutdown for a long-run reactor. The game uses a recalled round figure near it. The sources are silent on this figure.</td></tr>
+<tr id="n-6"><th scope="row">Power a rail firing draws, by gun size (a coil draws a share of it)</th><td class="val">Micro 3, Light 5, Compact 8, Standard 11, Heavy 16, Superheavy 22 <span class="unit">power points</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/spacegunconvent.php">Atomic Rockets, spacegunconvent</a>, Navy railgun comment: full scale weapon designed to use 64 megajoules</td><td>Sizes are chosen so that reactor output covers about two standard guns a round. The 64 megajoule Navy railgun in Atomic Rockets fixes only the scale of one power point.</td></tr>
+<tr id="n-7"><th scope="row">Coil firing&#x27;s draw as a share of a rail&#x27;s</th><td class="val">0.2 <span class="unit">share</span></td><td><span class="gradeitem"><span class="grade">D</span>Analogy</span></td><td><a href="https://www.projectrho.com/public_html/rocket/spacegunconvent.php">Atomic Rockets, spacegunconvent</a>, Railgun and coilgun efficiency</td><td>Atomic Rockets puts the Navy railgun at no better than 42 percent efficient and a large coilgun at 90 to 95 percent. The share is the energy ratio of two game muzzle speeds times the ratio of those efficiencies.</td></tr>
+<tr id="n-8"><th scope="row">Guns that draw no power</th><td class="val">Autocannon, Canister <span class="unit">mechanisms</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The propellant in the case throws a cartridge round, so the feed motor draws little beside a rail shot. Atomic Rockets gives no feed motor power. The sources are silent on this figure.</td></tr>
+<tr id="n-9"><th scope="row">Pump power as a share of the heat moved</th><td class="val">0.01 <span class="unit">share</span></td><td><span class="gradeitem"><span class="grade">D</span>Analogy</span></td><td>No source recorded</td><td>Water-reactor coolant pump motors run several megawatts each, about 1 percent of the heat they move. This is recalled from NRC data, not opened. No source gives a figure for a space plant. The sources are silent on this figure.</td></tr>
+<tr id="n-10"><th scope="row">Order the rule sheds fight loads in, first shed first</th><td class="val">sweep, guns, pumps <span class="unit">bill</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td><a href="https://assets.publishing.service.gov.uk/media/5a7c6454ed915d696ccfc775/con1_2a_pt7_1-2.pdf">UK MCA, MSIS003 Part 7: Electrical Equipment and Installations</a>, 7.6, Load shedding</td><td>UK surveyor guidance says load shedding must not cut services essential for propulsion and safety, and lets the owner choose the order of the rest. The order here is chosen.</td></tr>
+<tr id="n-11"><th scope="row">Order the rule sheds voyage loads in, first shed first</th><td class="val">services, shop, recycling, cold <span class="unit">bill</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td><a href="https://assets.publishing.service.gov.uk/media/5a7c6454ed915d696ccfc775/con1_2a_pt7_1-2.pdf">UK MCA, MSIS003 Part 7: Electrical Equipment and Installations</a>, 7.6, Load shedding</td><td>UK surveyor guidance says load shedding must not cut services essential for propulsion and safety, and lets the owner choose the order of the rest. The order here is chosen.</td></tr>
+<tr id="n-12"><th scope="row">Chance a destroyed reaction chamber scrams the reactor in a round</th><td class="val">0.5 <span class="unit">chance</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/emergency.php">Atomic Rockets, emergency</a>, Nuclear Reactor Emergency SCRAM</td><td>Atomic Rockets describes a SCRAM button and gives no chance that damage trips a reactor. The value is chosen for play. The sources are silent on this figure.</td></tr>
+<tr id="n-13"><th scope="row">Full reactor containment, the scale for reactor integrity</th><td class="val">100 <span class="unit">points</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game counts reactor containment in points on a scale it chose. No source gives such a scale.</td></tr>
+<tr id="n-14"><th scope="row">Reactor containment at or below which the reactor counts as crippled</th><td class="val">40 <span class="unit">percent</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen by the game as the same 40 every vital system uses; unlike the fins and the air, containment at zero is a kill, so the line warns of the end.</td></tr>
+<tr id="n-15"><th scope="row">Containment lost per point of damage a round does inside</th><td class="val">9.1892 <span class="unit">percent per damage point</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Anchored to a measurement: the median breaching round carried 3.7 damage (909 rounds, 150 joust fights, 2026-09-28), which keeps the old fixed loss of 34 for that round. The anchor is a game measurement, not a source.</td></tr>
+<tr id="n-16"><th scope="row">Chance a round that got inside is near the reactor</th><td class="val">0.22 <span class="unit">share</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen by the game and rolled only after a round beats the plate; the notes record 13 percent of kills as reactor kills at the first build and 47 percent once a holed face let rounds in. No source gives a chance.</td></tr>
+<tr id="n-17"><th scope="row">Capacitor charge by hull class (the old ladder)</th><td class="val">LIGHT CRAFT 60, MEDIUM CRAFT 84, HEAVY CRAFT 120 <span class="unit">power points</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The old ladder of 60, 84 and 120, kept for callers that still read it; the bank now holds the rounds set by BANK_ROUNDS of the hull's own output, and the old steps all worked out to 2.7 to 2.9 rounds.</td></tr>
+<tr id="n-18"><th scope="row">Output a point of engineering skill adds to the reactor, as a share of the plant</th><td class="val">0.0036 <span class="unit">share per point</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen by the game as the strength it had on the old heavy plant: a veteran engineer at 70 added 10 to 11 of 42 points a round.</td></tr>
+<tr id="n-19"><th scope="row">Share of the plant&#x27;s rated output an active sweep draws</th><td class="val">0.25 <span class="unit">share</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The notes take the mirror's one radar at 100 megawatts as a quarter of the largest plant (401 megawatts), so every hull pays that share; the radar figure was not reopened here (UNVERIFIED).</td></tr>
+<tr id="n-20"><th scope="row">The three fight bills: order the rule sheds loads in</th><td class="val">pumps first sweep, guns, pumps, guns first sweep, pumps, guns, sweep before guns guns, sweep, pumps <span class="unit">orders</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td><a href="https://assets.publishing.service.gov.uk/media/5a7c6454ed915d696ccfc775/con1_2a_pt7_1-2.pdf">UK MCA, MSIS003 Part 7: Electrical Equipment and Installations</a>, 7.6 essential loads</td><td>Three orders chosen by the game; the standard lets the order of shedding suit the owner's convenience (7.6) and keeps propulsion auxiliaries off the list, which supports a bill the captain picks.</td></tr>
+<tr id="n-21"><th scope="row">Bill a hull follows when its captain has not chosen</th><td class="val">pumps first <span class="unit">order</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td><a href="https://assets.publishing.service.gov.uk/media/5a7c6454ed915d696ccfc775/con1_2a_pt7_1-2.pdf">UK MCA, MSIS003 Part 7: Electrical Equipment and Installations</a>, 7.6 essential loads</td><td>Pumps first, chosen by coldweld; the electrical standard names propulsion auxiliaries essential.</td></tr>
+<tr id="n-22"><th scope="row">Bill each kind of hostile hull follows</th><td class="val">WARSHIP pumps first, RAIDER guns first, MERCHANT sweep before guns <span class="unit">orders</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen by the game: a warship pumps first, a raider keeps its guns, a merchant would rather see and run; no source covers a raider's power rule.</td></tr>
+<tr id="n-23"><th scope="row">Hours a reactor that went down in a fight stays down</th><td class="val">4 <span class="unit">hours</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen by the game for every hull; the mirror and the sources shelf are silent for a fast reactor. The sources are silent on this figure.</td></tr>
 </tbody></table></div>
 <h2 id="why">Why: the real physics or procedure</h2>
 <ul>
@@ -146,50 +158,35 @@ dl.keys dd { margin: .25rem 0 0; max-width: 46rem; }
 </ul>
 <h2 id="departs">Where the game departs from reality</h2>
 <ul>
-<li>The sizes in WEAPON_POWER_BY_SIZE are authored so reactor output covers about two Standard guns a round (combat/loaddata.py comment, docs/notes/power.md).</li>
-<li>The reactor plant is sized from each hull's weapon slots plus pumps for a full drive's heat for one round, not from a real plant design (docs/notes/power.md).</li>
-<li>The bank starts every fight full, refills each second by the plant's output, and is never carried between fights. The reason is the fight reset in combat/newtonian/world.py (docs/power-direction.md, 'The finding that shapes the arc').</li>
-<li>What is built and what is not changes stage by stage: docs/power-direction.md, 'Stages', is the current list.</li>
+<li>The sizes in WEAPON_POWER_BY_SIZE are authored so reactor output covers about two Standard guns a round.</li>
+<li>The reactor plant is sized from each hull's weapon slots plus pumps for a full drive's heat for one round, not from a real plant design.</li>
+<li>The bank starts every fight full, refills each second by the plant's output, and is never carried between fights. The reason is the fight reset.</li>
+<li>What is built and what is not changes stage by stage.</li>
 </ul>
 <h2 id="silent">Where the sources are silent</h2>
 <ul>
-<li>No source gives a restart time for a scrammed reactor of this type. The repo marks the restart time as authored and unbuilt (docs/power-direction.md, 'Questions' and 'Austen's answers').</li>
-<li>The decay heat share of 0.035 is recalled from the Way-Wigner formula and marked unverified in combat/plant.py. The mirror gives no figure for it.</li>
-<li>No source gives a reefer container's draw or a hotel load per hand beyond the mirror's life support figure of about 30 kW for six crew (rocket/realdesigns3.php.html, cited by docs/power-direction.md, UNVERIFIED here).</li>
-<li>The mirror gives no figure for a pump's share of the heat it moves. The 1% in PUMP_POWER_SHARE comes from NRC water-reactor pump ratings and is marked unverified for a space plant (docs/notes/plant.md).</li>
-<li>No source gives a vital-load list for a warship. docs/power-direction.md names NSTM chapter 320 as the likely source, and it was not opened (UNVERIFIED).</li>
-<li>The Navy damage control manual says only that each repair party restores casualty power, and nothing on load shedding (docs/power-direction.md, 'The sources').</li>
-<li>The draw of a cartridge gun's feed motor is recalled as about 115 kW for a GAU-8, UNVERIFIED (docs/notes/plant.md).</li>
-</ul>
-<h2 id="inspiration">Inspiration</h2>
-<ul>
-<li><strong>TODO(austen)</strong> (person): TODO(austen)</li>
+<li>No source gives a restart time for a scrammed reactor of this type. The game marks the restart time as authored and unbuilt.</li>
+<li>The decay heat share of 0.035 is recalled from the Way-Wigner formula and marked unverified in the game. The mirror gives no figure for it.</li>
+<li>No source gives a reefer container's draw or a hotel load per hand beyond the mirror's life support figure of about 30 kW for six crew.</li>
+<li>The mirror gives no figure for a pump's share of the heat it moves. The 1% in PUMP_POWER_SHARE comes from NRC water-reactor pump ratings and is marked unverified for a space plant.</li>
+<li>No source gives a vital-load list for a warship. The game's power notes name NSTM chapter 320 as the likely source, and it was not opened (UNVERIFIED).</li>
+<li>The Navy damage control manual says only that each repair party restores casualty power, and nothing on load shedding.</li>
+<li>The draw of a cartridge gun's feed motor is recalled as about 115 kW for a GAU-8, UNVERIFIED.</li>
 </ul>
 <h2 id="sources">Sources</h2>
 <ul>
 <li><a href="https://www.projectrho.com/public_html/rocket/power.php">Atomic Rockets, power</a>, Fission power (SAFE-400 heatpipe reactor): The page lists the SAFE-400 as a 400 kW thermal, 100 kW electric heatpipe reactor, which is a 25% conversion. The game uses that ratio. (<a href="sources.html#doc-rocket-power-php-html">all uses</a>)</li>
-<li><a href="https://www.projectrho.com/public_html/rocket/power.php">Atomic Rockets, power</a>, batteries table (Lithium-Ion rechargeables): Lithium-ion cells hold about 100 Wh per kg, or 0.36 MJ per kg, with a life of about 400 recharge cycles. combat/power.py cites it for the bank's mass. (<a href="sources.html#doc-rocket-power-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/power.php">Atomic Rockets, power</a>, batteries table (Lithium-Ion rechargeables): Lithium-ion cells hold about 100 Wh per kg, or 0.36 MJ per kg, with a life of about 400 recharge cycles. The game cites it for the bank's mass. (<a href="sources.html#doc-rocket-power-php-html">all uses</a>)</li>
 <li><a href="https://www.projectrho.com/public_html/rocket/spacewarship.php">Atomic Rockets, spacewarship</a>, Space Warships: Power Generation, Waste Heat, and Firepower: A warship's power storage can be ultracapacitors, and the page gives 60 Wh per kg and 0.1 TW of discharge for a 5% share of a very large hull. (<a href="sources.html#doc-rocket-spacewarship-php-html">all uses</a>)</li>
 <li><a href="https://www.projectrho.com/public_html/rocket/spacewarshipart.php">Atomic Rockets, spacewarshipart</a>, multi-mode reactor for burst power: A reactor in closed-cycle mode runs at only 3 to 4% of burst power, and its decay heat goes to radiators. Open-cycle cooling is used for bursts. (<a href="sources.html#doc-rocket-spacewarshipart-php-html">all uses</a>)</li>
-<li><a href="https://www.projectrho.com/public_html/rocket/spacegunconvent.php">Atomic Rockets, spacegunconvent</a>, railgun efficiency: The Navy railgun is no better than 42% efficient, so most of a rail shot's energy becomes waste heat. The repo derives the coil share of 0.2 from it and a large coil's 90 to 95%. (<a href="sources.html#doc-rocket-spacegunconvent-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/spacegunconvent.php">Atomic Rockets, spacegunconvent</a>, railgun efficiency: The Navy railgun is no better than 42% efficient, so most of a rail shot's energy becomes waste heat. The game derives the coil share of 0.2 from it and a large coil's 90 to 95%. (<a href="sources.html#doc-rocket-spacegunconvent-php-html">all uses</a>)</li>
 <li><a href="https://www.projectrho.com/public_html/rocket/atomicfuel.php">Atomic Rockets, atomicfuel</a>, Power reactors (decay heat): Short-lived fission products keep heating the fuel after shutdown, and this decay heat sets the cooling needed after a reactor stops. (<a href="sources.html#doc-rocket-atomicfuel-php-html">all uses</a>)</li>
 <li><a href="https://assets.publishing.service.gov.uk/media/5a7c6454ed915d696ccfc775/con1_2a_pt7_1-2.pdf">UK MCA, MSIS003 Part 7: Electrical Equipment and Installations</a>, 7.6, Load shedding: Shedding must not cut the services essential for propulsion and safety, and the order for non-essential services may suit the owner's convenience. The page is a UK merchant ship surveyor guide, a secondary source here. (<a href="sources.html#doc-docs-sources-msis003-electrical-md">all uses</a>)</li>
 <li><a href="https://www.secnav.navy.mil/doni/Directives/03000%20Naval%20Operations%20and%20Readiness/03-100%20Naval%20Operations%20Support/3120.32D%20W%20CH-1.pdf">Standard Organization and Regulations of the U.S. Navy (SORM)</a>, 6.4.1 e, engineer officer, item 7: The engineer officer controls electrical circuit usage to prevent further damage. SORM writes no order from the commanding officer for it. (<a href="sources.html#doc-docs-sources-sorm-md">all uses</a>)</li>
 </ul>
-<h2 id="code">Code files</h2>
-<ul>
-<li><code>combat/power.py</code></li>
-<li><code>combat/plant.py</code></li>
-<li><code>combat/loaddata.py</code></li>
-<li><code>combat/damagecontrol.py</code></li>
-<li><code>combat/newtonian/world.py</code></li>
-<li><code>combat/newtonian/bridge.py</code></li>
-<li><code>vehicles/ship/drive.py</code></li>
-<li><code>combat/hazards.py</code></li>
-</ul>
 </main>
 <footer class="stamp">
-<p>Read from game commit 1cab5b32 (committed 2026-10-18). Pages written 2026-10-18.
+<p>Read from game commit f6b8d18d (committed 2026-10-18). Pages written 2026-10-18.
 The explanations are stand-in text and may change.</p>
 </footer>
 </div>

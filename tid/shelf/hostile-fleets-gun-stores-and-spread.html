@@ -31,29 +31,44 @@ a:focus-visible, .region:focus-visible { outline: 3px solid var(--accent); outli
 nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .25rem 1.5rem; }
 nav a { display: inline-block; padding: .35rem 0; }
 h1 { font-size: clamp(1.4rem, 5vw, 2rem); line-height: 1.25; margin: 2rem 0 1rem; font-weight: 500; }
-h2 { font-size: 1.25rem; margin: 2.5rem 0 .75rem; padding-top: 1.25rem; border-top: 1px solid var(--rule); font-weight: 500; }
-h3 { font-size: 1.05rem; margin: 1.5rem 0 .5rem; font-weight: 500; }
+h2 { font-size: 1.5rem; margin: 2.5rem 0 .75rem; padding-top: 1.25rem; border-top: 1px solid var(--rule); font-weight: 500; }
+h3 { font-size: 1.15rem; margin: 1.5rem 0 .5rem; font-weight: 500; }
 p, li { max-width: 46rem; }
 li + li { margin-top: .35rem; }
 code { font-family: "DM Mono", ui-monospace, Consolas, monospace; font-size: .92em; overflow-wrap: anywhere; }
 .lead { font-size: 1.1rem; }
-.note { background: var(--panel); border-left: 4px solid var(--accent); padding: .75rem 1rem; max-width: 46rem; }
+.note { background: var(--panel); border: 1px solid var(--rule); padding: .75rem 1rem; max-width: 46rem; }
 .region { overflow-x: auto; margin: 1rem 0; border: 1px solid var(--rule); }
-table { border-collapse: collapse; width: 100%; min-width: 46rem; font-size: .92rem; line-height: 1.5; }
+table { border-collapse: collapse; width: 100%; min-width: 40rem; font-size: .92rem; line-height: 1.55; }
 caption { text-align: left; padding: .75rem; font-size: .95rem; color: var(--muted); }
-th, td { text-align: left; vertical-align: top; padding: .55rem .75rem; border-top: 1px solid var(--rule); }
+caption.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; padding: 0; }
+th, td { text-align: left; vertical-align: top; padding: .7rem .85rem; border-top: 1px solid var(--rule); }
 thead th { background: var(--panel); font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; white-space: nowrap; }
-tbody th { font-weight: 400; font-family: inherit; min-width: 14rem; }
-td.val { overflow-wrap: anywhere; min-width: 7rem; }
-.numbers td:nth-child(5), .numbers td:nth-child(6) { min-width: 13rem; }
+tbody th { font-weight: 500; font-family: inherit; min-width: 11rem; }
+tbody tr:nth-child(even) th, tbody tr:nth-child(even) td { background: var(--panel); }
+td.val { overflow-wrap: anywhere; min-width: 7rem; font-size: .95rem; }
+.unit { display: block; font-size: .8rem; color: var(--muted); overflow-wrap: normal; }
+.numbers { min-width: 58rem; }
+.numbers tbody th { min-width: 13rem; width: 20%; }
+.numbers td:nth-child(4) { min-width: 11rem; width: 18%; color: var(--muted); }
+.numbers td:nth-child(5) { min-width: 22rem; width: 42%; }
 td.count { text-align: right; font-variant-numeric: tabular-nums; }
+.uses { min-width: 34rem; }
+details { margin: .5rem 0 1rem; }
+summary { cursor: pointer; padding: .45rem 0; font-family: "DM Mono", ui-monospace, Consolas, monospace; font-size: .85rem; color: var(--accent); }
+summary:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.docs { font-size: .9rem; gap: .1rem 1rem; }
+.cited { margin: .25rem 0 .5rem; color: var(--muted); }
 .grade { display: inline-block; border: 2px solid currentColor; border-radius: 4px; min-width: 1.6rem; text-align: center; padding: 0 .3rem; font-weight: 600; margin-right: .4rem; }
 .gradeitem { white-space: nowrap; }
 .stamp { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--rule); font-size: .8rem; color: var(--muted); }
-.toc { padding-left: 1.2rem; }
+.toc { list-style: none; margin: 0 0 1rem; padding: 0; display: flex; flex-wrap: wrap; gap: .25rem 1.25rem; }
+.toc li { margin: 0; }
+.toc a { display: inline-block; padding: .3rem 0; }
 dl.keys dt { font-weight: 600; margin-top: 1rem; }
 dl.keys dd { margin: .25rem 0 0; max-width: 46rem; }
-@media (max-width: 40rem) { body { padding: 0 1rem 3rem; } th, td { padding: .5rem; } }
+@media (max-width: 40rem) { body { padding: 0 1rem 3rem; } th, td { padding: .6rem; } .numbers { min-width: 46rem; } .numbers tbody th { min-width: 8rem; width: auto; } .numbers td.val { min-width: 6.5rem; } .numbers td:nth-child(3) { min-width: 5.5rem; } .gradeitem { white-space: normal; } .numbers .grade { display: block; width: max-content; margin: 0 0 .2rem; } }
+@media (min-width: 40rem) { .numbers tbody th { position: sticky; left: 0; z-index: 1; background: var(--bg); } .numbers tbody tr:nth-child(even) th { background: var(--panel); } }
 @media print { .skip { display: none; } }
 </style>
 </head>
@@ -77,12 +92,10 @@ dl.keys dd { margin: .25rem 0 0; max-width: 46rem; }
 <li><a href="#why">Why: the real physics or procedure</a></li>
 <li><a href="#departs">Where the game departs from reality</a></li>
 <li><a href="#silent">Where the sources are silent</a></li>
-<li><a href="#inspiration">Inspiration</a></li>
 <li><a href="#sources">Sources</a></li>
-<li><a href="#code">Code files</a></li>
 </ul>
 <h2 id="brief">In brief</h2>
-<p class="lead">A hostile fleet is the set of ships the world sends against the captain, and each ship carries guns with a limited store of rounds and a spread that grows as the rails wear.</p>
+<p class="lead">A hostile fleet is the set of ships the world sends against the captain. Each ship carries guns with a limited store of rounds and a spread that grows as the rails wear.</p>
 <h2 id="does">What the game does</h2>
 <h3>Enemy Doctrine</h3>
 <ul>
@@ -113,33 +126,32 @@ dl.keys dd { margin: .25rem 0 0; max-width: 46rem; }
 <thead><tr>
 <th scope="col">Quantity</th>
 <th scope="col">Value</th>
-<th scope="col">Unit</th>
 <th scope="col">Grade</th>
 <th scope="col">Source</th>
 <th scope="col">Basis</th>
 </tr></thead>
 <tbody>
-<tr id="n-1"><th scope="row">Spread added by a rail at the end of its life, as a multiple of its spread when new</th><td class="val">2</td><td>x</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/spacegunconvent.php">Atomic Rockets, spacegunconvent</a>, US Navy Railguns</td><td>The mirror quotes a railgun builder that ablation of the rail and armature is the critical weakness, and gives no figure for how far accuracy falls, so the game chose a doubling. The sources are silent on this figure.</td></tr>
-<tr id="n-2"><th scope="row">Rounds in a rail magazine, by size</th><td class="val">Micro 60, Light 60, Compact 40, Standard 40, Heavy 25, Superheavy 25</td><td>rounds</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>A slug is real mass, about 1 kg at 40 mm and 45 kg at 160 mm, so a heavier rail carries fewer. The counts are the game's own. The sources are silent on this figure.</td></tr>
-<tr id="n-3"><th scope="row">Rounds in an autocannon&#x27;s store</th><td class="val">1,000</td><td>rounds</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose a store that empties in about as many fights as the coil, canister and rail stores.</td></tr>
-<tr id="n-4"><th scope="row">Firings in a rail ready locker</th><td class="val">10</td><td>firings</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose a locker of ten firings, so a gun runs dry in a fight and must be fed from the magazine.</td></tr>
-<tr id="n-5"><th scope="row">Smallest group a gun can fire, before accuracy</th><td class="val">0.05</td><td>mrad</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose a floor so even a perfect gun has some spread. No source gives a figure for naval gun dispersion. The sources are silent on this figure.</td></tr>
-<tr id="n-6"><th scope="row">Spread added for each accuracy point a gun lacks</th><td class="val">0.02</td><td>mrad per point</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose a straight slope so a 92 accuracy gun groups well and a 52 gun groups poorly.</td></tr>
-<tr id="n-7"><th scope="row">Pellets in one canister</th><td class="val">12</td><td>pellets</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose a small count that a fuze opens around the shell. No source gives a canister load. The sources are silent on this figure.</td></tr>
-<tr id="n-8"><th scope="row">Rounds a second an autocannon streams (the base rate)</th><td class="val">5</td><td>rounds/s</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/sidearmintro.php">Atomic Rockets, sidearmintro</a>, Which Gun Is Better?</td><td>The game took about 300 rounds a minute, a medium cartridge gun. The mirror lists the GAU-8 at 1,800 rpm and no figure for a naval cannon, so the base rate is recalled and not read. The sources are silent on this figure.</td></tr>
-<tr id="n-9"><th scope="row">Rounds a second a streamed autocannon fires, by size</th><td class="val">Micro 8, Light 5, Compact 2, Standard 1</td><td>rounds/s</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/sidearmintro.php">Atomic Rockets, sidearmintro</a>, Which Gun Is Better?</td><td>A heavier gun fires slower. The game chose the steps, and real heavy guns fire 20 to 120 rounds a minute (recalled, the mirror is silent). The sources are silent on this figure.</td></tr>
-<tr id="n-10"><th scope="row">Seconds between rounds for the two heaviest autocannon sizes</th><td class="val">Heavy 2, Superheavy 3</td><td>s</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The two heaviest sizes fire slowly enough that the game counts the seconds between rounds. The game chose the figures. The sources are silent on this figure.</td></tr>
-<tr id="n-11"><th scope="row">Who comes at the captain, what each wants and how likely each is</th><td class="val">The Unclaimed goal board, hulls &lt;function &lt;lambda&gt; at 0x0000020C04ECD220&gt;, weight 5, hail pirates by their transponders, after the cargo: they will want to board, Bounty Hunters goal board, hulls &lt;function &lt;lambda&gt; at 0x0000020C04ECD170&gt;, weight 2, hail bounty hunters, openly registered: they want us taken alive, Earth goal destroy, hulls &lt;function &lt;lambda&gt; at 0x0000020C04ECD0C0&gt;, weight 1, hail an Earth navy patrol: they will not board, they will kill us, Mars goal destroy, hulls &lt;function &lt;lambda&gt; at 0x0000020C04ECD010&gt;, weight 1, hail a Martian navy patrol: they will not board, they will kill us, The Outer Guild goal destroy, hulls &lt;function &lt;lambda&gt; at 0x0000020C04ECD430&gt;, weight 1, hail Guild warships: they will not board, they will kill us</td><td>table</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Pirates and bounty hunters want a boarding, and navies want a kill. The weights are the game's own.</td></tr>
-<tr id="n-12"><th scope="row">Hostile captain temperament: standoff, longest shot, heat spent, breakoff and wait rule</th><td class="val">reckless board 3, officer hot-blooded, maxflight 90, heat 1, breakoff 0, waits None, read coming straight in: a reckless captain, cautious board 3, officer cautious, maxflight 40, heat 0.6, breakoff 0.35, waits weak, read hanging back: a cautious captain, waiting for us to weaken, cunning board 3, officer calm, maxflight 60, heat 0.75, breakoff 0.25, waits hot, read holding off and watching our heat: a cunning captain</td><td>table</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose three captains, one who rushes, one who hangs back and one who watches. Every figure is for play.</td></tr>
-<tr id="n-13"><th scope="row">Weights for how many hostiles come at once</th><td class="val">1 1, 2 3, 3 3, 4 2, 5 1</td><td>weight</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose small groups as most likely, and a large one as rare.</td></tr>
-<tr id="n-14"><th scope="row">Guns a hull carries, by size class</th><td class="val">LIGHT 3, MEDIUM 5, HEAVY 7</td><td>guns</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game topped each hull up to about five guns on average with a secondary battery two size steps below its biggest gun.</td></tr>
-<tr id="n-15"><th scope="row">Point defense mounts, by size class</th><td class="val">LIGHT 1, MEDIUM 2, HEAVY 3</td><td>mounts</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose more point defense on a bigger hull with more guns.</td></tr>
-<tr id="n-16"><th scope="row">Point defense model, by size class</th><td class="val">LIGHT 15mm PD Autocannon, MEDIUM 20mm PD Autocannon, HEAVY 30mm PD Autocannon</td><td>catalog name</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose a heavier point defense autocannon for a bigger hull.</td></tr>
-<tr id="n-17"><th scope="row">Largest navy squadron</th><td class="val">6</td><td>ships</td><td><span class="gradeitem"><span class="grade">B</span>Secondary</span></td><td><a href="https://www.projectrho.com/public_html/rocket/astromilitary.php">Atomic Rockets, astromilitary</a>, Fleet Design</td><td>The mirror builds a navy around a six-ship squadron.</td></tr>
-<tr id="n-18"><th scope="row">Largest band of pirates or privateers</th><td class="val">3</td><td>ships</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/astromilitary.php">Atomic Rockets, astromilitary</a>, Fleet Design</td><td>The mirror says pirates are many small corsairs and gives no band size, so the game chose a group smaller than a navy squadron. The sources are silent on this figure.</td></tr>
-<tr id="n-19"><th scope="row">Distance of a squad member from its lead at the start</th><td class="val">10, 40</td><td>km</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose a loose group that arrives as one.</td></tr>
-<tr id="n-20"><th scope="row">Most a member&#x27;s drift may differ from its lead, per axis</th><td class="val">0.02</td><td>km/s</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose a small difference so a squad stays together without sitting on one point.</td></tr>
-<tr id="n-21"><th scope="row">Range at which a squad lead opens, off the captain</th><td class="val">300, 2,500</td><td>km</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose it so ships begin outside gun range and the approach is part of the fight.</td></tr>
+<tr id="n-1"><th scope="row">Spread added by a rail at the end of its life, as a multiple of its spread when new</th><td class="val">2 <span class="unit">x</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/spacegunconvent.php">Atomic Rockets, spacegunconvent</a>, US Navy Railguns</td><td>The mirror quotes a railgun builder that ablation of the rail and armature is the critical weakness, and gives no figure for how far accuracy falls, so the game chose a doubling. The sources are silent on this figure.</td></tr>
+<tr id="n-2"><th scope="row">Rounds in a rail magazine, by size</th><td class="val">Micro 60, Light 60, Compact 40, Standard 40, Heavy 25, Superheavy 25 <span class="unit">rounds</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>A slug is real mass, about 1 kg at 40 mm and 45 kg at 160 mm, so a heavier rail carries fewer. The counts are the game's own. The sources are silent on this figure.</td></tr>
+<tr id="n-3"><th scope="row">Rounds in an autocannon&#x27;s store</th><td class="val">1,000 <span class="unit">rounds</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose a store that empties in about as many fights as the coil, canister and rail stores.</td></tr>
+<tr id="n-4"><th scope="row">Firings in a rail ready locker</th><td class="val">10 <span class="unit">firings</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose a locker of ten firings, so a gun runs dry in a fight and must be fed from the magazine.</td></tr>
+<tr id="n-5"><th scope="row">Smallest group a gun can fire, before accuracy</th><td class="val">0.05 <span class="unit">mrad</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose a floor so even a perfect gun has some spread. No source gives a figure for naval gun dispersion. The sources are silent on this figure.</td></tr>
+<tr id="n-6"><th scope="row">Spread added for each accuracy point a gun lacks</th><td class="val">0.02 <span class="unit">mrad per point</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose a straight slope so a 92 accuracy gun groups well and a 52 gun groups poorly.</td></tr>
+<tr id="n-7"><th scope="row">Pellets in one canister</th><td class="val">12 <span class="unit">pellets</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose a small count that a fuze opens around the shell. No source gives a canister load. The sources are silent on this figure.</td></tr>
+<tr id="n-8"><th scope="row">Rounds a second an autocannon streams (the base rate)</th><td class="val">5 <span class="unit">rounds/s</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/sidearmintro.php">Atomic Rockets, sidearmintro</a>, Which Gun Is Better?</td><td>The game took about 300 rounds a minute, a medium cartridge gun. The mirror lists the GAU-8 at 1,800 rpm and no figure for a naval cannon, so the base rate is recalled and not read. The sources are silent on this figure.</td></tr>
+<tr id="n-9"><th scope="row">Rounds a second a streamed autocannon fires, by size</th><td class="val">Micro 8, Light 5, Compact 2, Standard 1 <span class="unit">rounds/s</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/sidearmintro.php">Atomic Rockets, sidearmintro</a>, Which Gun Is Better?</td><td>A heavier gun fires slower. The game chose the steps, and real heavy guns fire 20 to 120 rounds a minute (recalled, the mirror is silent). The sources are silent on this figure.</td></tr>
+<tr id="n-10"><th scope="row">Seconds between rounds for the two heaviest autocannon sizes</th><td class="val">Heavy 2, Superheavy 3 <span class="unit">s</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The two heaviest sizes fire slowly enough that the game counts the seconds between rounds. The game chose the figures. The sources are silent on this figure.</td></tr>
+<tr id="n-11"><th scope="row">Who comes at the captain, what each wants and how likely each is</th><td class="val">The Unclaimed goal board, hulls &lt;function &lt;lambda&gt; at 0x000002789E3254E0&gt;, weight 5, hail pirates by their transponders, after the cargo: they will want to board, Bounty Hunters goal board, hulls &lt;function &lt;lambda&gt; at 0x000002789E325430&gt;, weight 2, hail bounty hunters, openly registered: they want us taken alive, Earth goal destroy, hulls &lt;function &lt;lambda&gt; at 0x000002789E325380&gt;, weight 1, hail an Earth navy patrol: they will not board, they will kill us, Mars goal destroy, hulls &lt;function &lt;lambda&gt; at 0x000002789E3252D0&gt;, weight 1, hail a Martian navy patrol: they will not board, they will kill us, The Outer Guild goal destroy, hulls &lt;function &lt;lambda&gt; at 0x000002789E3256F0&gt;, weight 1, hail Guild warships: they will not board, they will kill us <span class="unit">table</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Pirates and bounty hunters want a boarding, and navies want a kill. The weights are the game's own.</td></tr>
+<tr id="n-12"><th scope="row">Hostile captain temperament: standoff, longest shot, heat spent, breakoff and wait rule</th><td class="val">reckless board 3, officer hot-blooded, maxflight 90, heat 1, breakoff 0, waits None, read coming straight in: a reckless captain, cautious board 3, officer cautious, maxflight 40, heat 0.6, breakoff 0.35, waits weak, read hanging back: a cautious captain, waiting for us to weaken, cunning board 3, officer calm, maxflight 60, heat 0.75, breakoff 0.25, waits hot, read holding off and watching our heat: a cunning captain <span class="unit">table</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose three captains, one who rushes, one who hangs back and one who watches. Every figure is for play.</td></tr>
+<tr id="n-13"><th scope="row">Weights for how many hostiles come at once</th><td class="val">1 1, 2 3, 3 3, 4 2, 5 1 <span class="unit">weight</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose small groups as most likely, and a large one as rare.</td></tr>
+<tr id="n-14"><th scope="row">Guns a hull carries, by size class</th><td class="val">LIGHT 3, MEDIUM 5, HEAVY 7 <span class="unit">guns</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game topped each hull up to about five guns on average with a secondary battery two size steps below its biggest gun.</td></tr>
+<tr id="n-15"><th scope="row">Point defense mounts, by size class</th><td class="val">LIGHT 1, MEDIUM 2, HEAVY 3 <span class="unit">mounts</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose more point defense on a bigger hull with more guns.</td></tr>
+<tr id="n-16"><th scope="row">Point defense model, by size class</th><td class="val">LIGHT 15mm PD Autocannon, MEDIUM 20mm PD Autocannon, HEAVY 30mm PD Autocannon <span class="unit">catalog name</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose a heavier point defense autocannon for a bigger hull.</td></tr>
+<tr id="n-17"><th scope="row">Largest navy squadron</th><td class="val">6 <span class="unit">ships</span></td><td><span class="gradeitem"><span class="grade">B</span>Secondary</span></td><td><a href="https://www.projectrho.com/public_html/rocket/astromilitary.php">Atomic Rockets, astromilitary</a>, Fleet Design</td><td>The mirror builds a navy around a six-ship squadron.</td></tr>
+<tr id="n-18"><th scope="row">Largest band of pirates or privateers</th><td class="val">3 <span class="unit">ships</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/astromilitary.php">Atomic Rockets, astromilitary</a>, Fleet Design</td><td>The mirror says pirates are many small corsairs and gives no band size, so the game chose a group smaller than a navy squadron. The sources are silent on this figure.</td></tr>
+<tr id="n-19"><th scope="row">Distance of a squad member from its lead at the start</th><td class="val">10, 40 <span class="unit">km</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose a loose group that arrives as one.</td></tr>
+<tr id="n-20"><th scope="row">Most a member&#x27;s drift may differ from its lead, per axis</th><td class="val">0.02 <span class="unit">km/s</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose a small difference so a squad stays together without sitting on one point.</td></tr>
+<tr id="n-21"><th scope="row">Range at which a squad lead opens, off the captain</th><td class="val">300, 2,500 <span class="unit">km</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose it so ships begin outside gun range and the approach is part of the fight.</td></tr>
 </tbody></table></div>
 <h2 id="why">Why: the real physics or procedure</h2>
 <ul>
@@ -155,25 +167,17 @@ dl.keys dd { margin: .25rem 0 0; max-width: 46rem; }
 </ul>
 <h2 id="silent">Where the sources are silent</h2>
 <ul>
-<li>The mirror gives no rate of fire for a heavy naval gun, and no round counts for a railgun locker. The repo notes record the real Bofors and heavy gun rates as recalled, not read.</li>
+<li>The mirror gives no rate of fire for a heavy naval gun, and no round counts for a railgun locker. The game notes record the real Bofors and heavy gun rates as recalled, not read.</li>
 <li>The mirror describes pirates as a diverse group of small corsairs and gives no size for a band, so the band limit is authored.</li>
-</ul>
-<h2 id="inspiration">Inspiration</h2>
-<ul>
-<li><strong>TODO(austen)</strong> (person): TODO(austen)</li>
 </ul>
 <h2 id="sources">Sources</h2>
 <ul>
 <li><a href="https://www.projectrho.com/public_html/rocket/astromilitary.php">Atomic Rockets, astromilitary</a>, Fleet Design: A space navy builds its standard formations around a six-ship squadron. (<a href="sources.html#doc-rocket-astromilitary-php-html">all uses</a>)</li>
 <li><a href="https://www.projectrho.com/public_html/rocket/sidearmintro.php">Atomic Rockets, sidearmintro</a>, Which Gun Is Better?: The page lists the GAU-8 at 1,800 rpm, and says a cartridge gun ejects its case and so sheds the waste heat of firing. (<a href="sources.html#doc-rocket-sidearmintro-php-html">all uses</a>)</li>
 </ul>
-<h2 id="code">Code files</h2>
-<ul>
-<li><code>combat/newtonian/encounter.py</code></li>
-</ul>
 </main>
 <footer class="stamp">
-<p>Read from game commit 1cab5b32 (committed 2026-10-18). Pages written 2026-10-18.
+<p>Read from game commit f6b8d18d (committed 2026-10-18). Pages written 2026-10-18.
 The explanations are stand-in text and may change.</p>
 </footer>
 </div>

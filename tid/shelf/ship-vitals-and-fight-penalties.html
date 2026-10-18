@@ -31,29 +31,44 @@ a:focus-visible, .region:focus-visible { outline: 3px solid var(--accent); outli
 nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .25rem 1.5rem; }
 nav a { display: inline-block; padding: .35rem 0; }
 h1 { font-size: clamp(1.4rem, 5vw, 2rem); line-height: 1.25; margin: 2rem 0 1rem; font-weight: 500; }
-h2 { font-size: 1.25rem; margin: 2.5rem 0 .75rem; padding-top: 1.25rem; border-top: 1px solid var(--rule); font-weight: 500; }
-h3 { font-size: 1.05rem; margin: 1.5rem 0 .5rem; font-weight: 500; }
+h2 { font-size: 1.5rem; margin: 2.5rem 0 .75rem; padding-top: 1.25rem; border-top: 1px solid var(--rule); font-weight: 500; }
+h3 { font-size: 1.15rem; margin: 1.5rem 0 .5rem; font-weight: 500; }
 p, li { max-width: 46rem; }
 li + li { margin-top: .35rem; }
 code { font-family: "DM Mono", ui-monospace, Consolas, monospace; font-size: .92em; overflow-wrap: anywhere; }
 .lead { font-size: 1.1rem; }
-.note { background: var(--panel); border-left: 4px solid var(--accent); padding: .75rem 1rem; max-width: 46rem; }
+.note { background: var(--panel); border: 1px solid var(--rule); padding: .75rem 1rem; max-width: 46rem; }
 .region { overflow-x: auto; margin: 1rem 0; border: 1px solid var(--rule); }
-table { border-collapse: collapse; width: 100%; min-width: 46rem; font-size: .92rem; line-height: 1.5; }
+table { border-collapse: collapse; width: 100%; min-width: 40rem; font-size: .92rem; line-height: 1.55; }
 caption { text-align: left; padding: .75rem; font-size: .95rem; color: var(--muted); }
-th, td { text-align: left; vertical-align: top; padding: .55rem .75rem; border-top: 1px solid var(--rule); }
+caption.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; padding: 0; }
+th, td { text-align: left; vertical-align: top; padding: .7rem .85rem; border-top: 1px solid var(--rule); }
 thead th { background: var(--panel); font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; white-space: nowrap; }
-tbody th { font-weight: 400; font-family: inherit; min-width: 14rem; }
-td.val { overflow-wrap: anywhere; min-width: 7rem; }
-.numbers td:nth-child(5), .numbers td:nth-child(6) { min-width: 13rem; }
+tbody th { font-weight: 500; font-family: inherit; min-width: 11rem; }
+tbody tr:nth-child(even) th, tbody tr:nth-child(even) td { background: var(--panel); }
+td.val { overflow-wrap: anywhere; min-width: 7rem; font-size: .95rem; }
+.unit { display: block; font-size: .8rem; color: var(--muted); overflow-wrap: normal; }
+.numbers { min-width: 58rem; }
+.numbers tbody th { min-width: 13rem; width: 20%; }
+.numbers td:nth-child(4) { min-width: 11rem; width: 18%; color: var(--muted); }
+.numbers td:nth-child(5) { min-width: 22rem; width: 42%; }
 td.count { text-align: right; font-variant-numeric: tabular-nums; }
+.uses { min-width: 34rem; }
+details { margin: .5rem 0 1rem; }
+summary { cursor: pointer; padding: .45rem 0; font-family: "DM Mono", ui-monospace, Consolas, monospace; font-size: .85rem; color: var(--accent); }
+summary:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.docs { font-size: .9rem; gap: .1rem 1rem; }
+.cited { margin: .25rem 0 .5rem; color: var(--muted); }
 .grade { display: inline-block; border: 2px solid currentColor; border-radius: 4px; min-width: 1.6rem; text-align: center; padding: 0 .3rem; font-weight: 600; margin-right: .4rem; }
 .gradeitem { white-space: nowrap; }
 .stamp { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--rule); font-size: .8rem; color: var(--muted); }
-.toc { padding-left: 1.2rem; }
+.toc { list-style: none; margin: 0 0 1rem; padding: 0; display: flex; flex-wrap: wrap; gap: .25rem 1.25rem; }
+.toc li { margin: 0; }
+.toc a { display: inline-block; padding: .3rem 0; }
 dl.keys dt { font-weight: 600; margin-top: 1rem; }
 dl.keys dd { margin: .25rem 0 0; max-width: 46rem; }
-@media (max-width: 40rem) { body { padding: 0 1rem 3rem; } th, td { padding: .5rem; } }
+@media (max-width: 40rem) { body { padding: 0 1rem 3rem; } th, td { padding: .6rem; } .numbers { min-width: 46rem; } .numbers tbody th { min-width: 8rem; width: auto; } .numbers td.val { min-width: 6.5rem; } .numbers td:nth-child(3) { min-width: 5.5rem; } .gradeitem { white-space: normal; } .numbers .grade { display: block; width: max-content; margin: 0 0 .2rem; } }
+@media (min-width: 40rem) { .numbers tbody th { position: sticky; left: 0; z-index: 1; background: var(--bg); } .numbers tbody tr:nth-child(even) th { background: var(--panel); } }
 @media print { .skip { display: none; } }
 </style>
 </head>
@@ -77,9 +92,7 @@ dl.keys dd { margin: .25rem 0 0; max-width: 46rem; }
 <li><a href="#why">Why: the real physics or procedure</a></li>
 <li><a href="#departs">Where the game departs from reality</a></li>
 <li><a href="#silent">Where the sources are silent</a></li>
-<li><a href="#inspiration">Inspiration</a></li>
 <li><a href="#sources">Sources</a></li>
-<li><a href="#code">Code files</a></li>
 </ul>
 <h2 id="brief">In brief</h2>
 <p class="lead">A vital is a system a ship cannot fight without, such as the reactor, the cooling fins, the air plant, the drive and the guns, and a ship loses a fight when one of them fails and not when its hull is used up.</p>
@@ -102,21 +115,20 @@ dl.keys dd { margin: .25rem 0 0; max-width: 46rem; }
 <thead><tr>
 <th scope="col">Quantity</th>
 <th scope="col">Value</th>
-<th scope="col">Unit</th>
 <th scope="col">Grade</th>
 <th scope="col">Source</th>
 <th scope="col">Basis</th>
 </tr></thead>
 <tbody>
-<tr id="n-1"><th scope="row">Share of a system&#x27;s full condition at or below which it counts as crippled</th><td class="val">0.4</td><td>share</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen by the game as the 40 percent line every vital already uses for its own crippled state, so the five vitals read on one scale.</td></tr>
-<tr id="n-2"><th scope="row">Share of full condition left when one fin panel is gone (7 of 8)</th><td class="val">0.875</td><td>share</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>One minus one panel of the eight fin panels: arithmetic on a choice of the game, so no source applies.</td></tr>
-<tr id="n-3"><th scope="row">Air plant condition when whole, a percentage</th><td class="val">100</td><td>percent</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The scale the game uses for the air plant, 100 whole and 0 gone; it is a unit of the game and not a measurement.</td></tr>
-<tr id="n-4"><th scope="row">Air plant condition when the air has run out, a percentage</th><td class="val">0</td><td>percent</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The floor of the same scale: the crew goes to suits and fights on with the crippled penalties, so a ship is not out of the fight at zero air.</td></tr>
-<tr id="n-5"><th scope="row">Share of shrapnel wounds that get through a suit</th><td class="val">0.5</td><td>share</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen by the game: a suit stops vacuum and spall and does not stop a penetrating round. Measured, a suit saved about one wound in 14 fights (docs/notes/hazards.md).</td></tr>
-<tr id="n-6"><th scope="row">Aim a crew gains for the first volley by keeping the guns hot instead of suiting up</th><td class="val">10</td><td>points of hit chance</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Authored, not measured: a fight lasts a mean 2.8 rounds, so the first round is about a third of the fire, and the 10 sits between the readiness bonus of about 5 and the life support penalty of 15.</td></tr>
-<tr id="n-7"><th scope="row">Aim lost by a crew worn down by hard burns</th><td class="val">10</td><td>points of hit chance</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen by the game as the lightest penalty, below overheat 20, life support 15 and radiation 12: a tired crew is the risk a hard-driving hull chose.</td></tr>
-<tr id="n-8"><th scope="row">Aim lost by a crew with radiation sickness</th><td class="val">12</td><td>points of hit chance</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen by the game between life support and fatigue: worse than tiredness and less than a depressurizing hull. It reads the crew's acute dose, which the radiation page grades separately.</td></tr>
-<tr id="n-9"><th scope="row">Aim lost by a crew caught mid-boarding by an interception</th><td class="val">12</td><td>points of hit chance</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen by the game at the same size as the radiation penalty; a crew still stowing salvage is not at its stations. No source covers it.</td></tr>
+<tr id="n-1"><th scope="row">Share of a system&#x27;s full condition at or below which it counts as crippled</th><td class="val">0.4 <span class="unit">share</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen by the game as the 40 percent line every vital already uses for its own crippled state, so the five vitals read on one scale.</td></tr>
+<tr id="n-2"><th scope="row">Share of full condition left when one fin panel is gone (7 of 8)</th><td class="val">0.875 <span class="unit">share</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>One minus one panel of the eight fin panels: arithmetic on a choice of the game, so no source applies.</td></tr>
+<tr id="n-3"><th scope="row">Air plant condition when whole, a percentage</th><td class="val">100 <span class="unit">percent</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The scale the game uses for the air plant, 100 whole and 0 gone; it is a unit of the game and not a measurement.</td></tr>
+<tr id="n-4"><th scope="row">Air plant condition when the air has run out, a percentage</th><td class="val">0 <span class="unit">percent</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The floor of the same scale: the crew goes to suits and fights on with the crippled penalties, so a ship is not out of the fight at zero air.</td></tr>
+<tr id="n-5"><th scope="row">Share of shrapnel wounds that get through a suit</th><td class="val">0.5 <span class="unit">share</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen by the game: a suit stops vacuum and spall and does not stop a penetrating round. Measured, a suit saved about one wound in 14 fights.</td></tr>
+<tr id="n-6"><th scope="row">Aim a crew gains for the first volley by keeping the guns hot instead of suiting up</th><td class="val">10 <span class="unit">points of hit chance</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Authored, not measured: a fight lasts a mean 2.8 rounds, so the first round is about a third of the fire, and the 10 sits between the readiness bonus of about 5 and the life support penalty of 15.</td></tr>
+<tr id="n-7"><th scope="row">Aim lost by a crew worn down by hard burns</th><td class="val">10 <span class="unit">points of hit chance</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen by the game as the lightest penalty, below overheat 20, life support 15 and radiation 12: a tired crew is the risk a hard-driving hull chose.</td></tr>
+<tr id="n-8"><th scope="row">Aim lost by a crew with radiation sickness</th><td class="val">12 <span class="unit">points of hit chance</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen by the game between life support and fatigue: worse than tiredness and less than a depressurizing hull. It reads the crew's acute dose, which the radiation page grades separately.</td></tr>
+<tr id="n-9"><th scope="row">Aim lost by a crew caught mid-boarding by an interception</th><td class="val">12 <span class="unit">points of hit chance</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen by the game at the same size as the radiation penalty; a crew still stowing salvage is not at its stations. No source covers it.</td></tr>
 </tbody></table></div>
 <h2 id="why">Why: the real physics or procedure</h2>
 <ul>
@@ -129,32 +141,22 @@ dl.keys dd { margin: .25rem 0 0; max-width: 46rem; }
 </ul>
 <h2 id="departs">Where the game departs from reality</h2>
 <ul>
-<li>Each vital is a single track from whole to gone. A real ship has many parts of each system, and only the fins are split into panels (docs/notes/hazards.md).</li>
-<li>The reactor has no floor above a kill: containment at zero ends the fight, while the fins and the air can reach zero and the ship fights on (docs/notes/hazards.md, the reactor).</li>
+<li>Each vital is a single track from whole to gone. A real ship has many parts of each system, and only the fins are split into panels.</li>
+<li>The reactor has no floor above a kill: containment at zero ends the fight, while the fins and the air can reach zero and the ship fights on.</li>
 </ul>
 <h2 id="silent">Where the sources are silent</h2>
 <ul>
 <li>No source gives how much aim a tired, sick or distracted gun crew loses. Every accuracy penalty on this page is the game's own, set against the others in size.</li>
 <li>No source gives a crippled line for a ship system. The 40 percent line is the game's one shared choice.</li>
 </ul>
-<h2 id="inspiration">Inspiration</h2>
-<ul>
-<li><strong>TODO(austen)</strong> (person): TODO(austen)</li>
-</ul>
 <h2 id="sources">Sources</h2>
 <ul>
 <li><a href="https://www.projectrho.com/public_html/rocket/astromilitary.php">Atomic Rockets, astromilitary</a>, the armored cruiser passage: An armored cruiser trades endurance for enough armor to maybe survive a hit from a capital ship's gun without being mission killed. The term names a ship that cannot fight on and does not need to be destroyed. "without being mission killed" (<a href="sources.html#doc-rocket-astromilitary-php-html">all uses</a>)</li>
 <li><a href="https://www.projectrho.com/public_html/rocket/heatrad.php">Atomic Rockets, heatrad</a>, Combat Radiators (the Achilles Heel passage): Drives, power plants and most weapons make huge waste heat, and radiators are hard or impossible to armor, so they are likely the first thing an enemy shoots. (<a href="sources.html#doc-rocket-heatrad-php-html">all uses</a>)</li>
 </ul>
-<h2 id="code">Code files</h2>
-<ul>
-<li><code>combat/hazards.py</code></li>
-<li><code>combat/resolution.py</code></li>
-<li><code>combat/combat.py</code></li>
-</ul>
 </main>
 <footer class="stamp">
-<p>Read from game commit 1cab5b32 (committed 2026-10-18). Pages written 2026-10-18.
+<p>Read from game commit f6b8d18d (committed 2026-10-18). Pages written 2026-10-18.
 The explanations are stand-in text and may change.</p>
 </footer>
 </div>

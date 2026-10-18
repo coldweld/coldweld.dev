@@ -31,29 +31,44 @@ a:focus-visible, .region:focus-visible { outline: 3px solid var(--accent); outli
 nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .25rem 1.5rem; }
 nav a { display: inline-block; padding: .35rem 0; }
 h1 { font-size: clamp(1.4rem, 5vw, 2rem); line-height: 1.25; margin: 2rem 0 1rem; font-weight: 500; }
-h2 { font-size: 1.25rem; margin: 2.5rem 0 .75rem; padding-top: 1.25rem; border-top: 1px solid var(--rule); font-weight: 500; }
-h3 { font-size: 1.05rem; margin: 1.5rem 0 .5rem; font-weight: 500; }
+h2 { font-size: 1.5rem; margin: 2.5rem 0 .75rem; padding-top: 1.25rem; border-top: 1px solid var(--rule); font-weight: 500; }
+h3 { font-size: 1.15rem; margin: 1.5rem 0 .5rem; font-weight: 500; }
 p, li { max-width: 46rem; }
 li + li { margin-top: .35rem; }
 code { font-family: "DM Mono", ui-monospace, Consolas, monospace; font-size: .92em; overflow-wrap: anywhere; }
 .lead { font-size: 1.1rem; }
-.note { background: var(--panel); border-left: 4px solid var(--accent); padding: .75rem 1rem; max-width: 46rem; }
+.note { background: var(--panel); border: 1px solid var(--rule); padding: .75rem 1rem; max-width: 46rem; }
 .region { overflow-x: auto; margin: 1rem 0; border: 1px solid var(--rule); }
-table { border-collapse: collapse; width: 100%; min-width: 46rem; font-size: .92rem; line-height: 1.5; }
+table { border-collapse: collapse; width: 100%; min-width: 40rem; font-size: .92rem; line-height: 1.55; }
 caption { text-align: left; padding: .75rem; font-size: .95rem; color: var(--muted); }
-th, td { text-align: left; vertical-align: top; padding: .55rem .75rem; border-top: 1px solid var(--rule); }
+caption.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; padding: 0; }
+th, td { text-align: left; vertical-align: top; padding: .7rem .85rem; border-top: 1px solid var(--rule); }
 thead th { background: var(--panel); font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; white-space: nowrap; }
-tbody th { font-weight: 400; font-family: inherit; min-width: 14rem; }
-td.val { overflow-wrap: anywhere; min-width: 7rem; }
-.numbers td:nth-child(5), .numbers td:nth-child(6) { min-width: 13rem; }
+tbody th { font-weight: 500; font-family: inherit; min-width: 11rem; }
+tbody tr:nth-child(even) th, tbody tr:nth-child(even) td { background: var(--panel); }
+td.val { overflow-wrap: anywhere; min-width: 7rem; font-size: .95rem; }
+.unit { display: block; font-size: .8rem; color: var(--muted); overflow-wrap: normal; }
+.numbers { min-width: 58rem; }
+.numbers tbody th { min-width: 13rem; width: 20%; }
+.numbers td:nth-child(4) { min-width: 11rem; width: 18%; color: var(--muted); }
+.numbers td:nth-child(5) { min-width: 22rem; width: 42%; }
 td.count { text-align: right; font-variant-numeric: tabular-nums; }
+.uses { min-width: 34rem; }
+details { margin: .5rem 0 1rem; }
+summary { cursor: pointer; padding: .45rem 0; font-family: "DM Mono", ui-monospace, Consolas, monospace; font-size: .85rem; color: var(--accent); }
+summary:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.docs { font-size: .9rem; gap: .1rem 1rem; }
+.cited { margin: .25rem 0 .5rem; color: var(--muted); }
 .grade { display: inline-block; border: 2px solid currentColor; border-radius: 4px; min-width: 1.6rem; text-align: center; padding: 0 .3rem; font-weight: 600; margin-right: .4rem; }
 .gradeitem { white-space: nowrap; }
 .stamp { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--rule); font-size: .8rem; color: var(--muted); }
-.toc { padding-left: 1.2rem; }
+.toc { list-style: none; margin: 0 0 1rem; padding: 0; display: flex; flex-wrap: wrap; gap: .25rem 1.25rem; }
+.toc li { margin: 0; }
+.toc a { display: inline-block; padding: .3rem 0; }
 dl.keys dt { font-weight: 600; margin-top: 1rem; }
 dl.keys dd { margin: .25rem 0 0; max-width: 46rem; }
-@media (max-width: 40rem) { body { padding: 0 1rem 3rem; } th, td { padding: .5rem; } }
+@media (max-width: 40rem) { body { padding: 0 1rem 3rem; } th, td { padding: .6rem; } .numbers { min-width: 46rem; } .numbers tbody th { min-width: 8rem; width: auto; } .numbers td.val { min-width: 6.5rem; } .numbers td:nth-child(3) { min-width: 5.5rem; } .gradeitem { white-space: normal; } .numbers .grade { display: block; width: max-content; margin: 0 0 .2rem; } }
+@media (min-width: 40rem) { .numbers tbody th { position: sticky; left: 0; z-index: 1; background: var(--bg); } .numbers tbody tr:nth-child(even) th { background: var(--panel); } }
 @media print { .skip { display: none; } }
 </style>
 </head>
@@ -77,9 +92,7 @@ dl.keys dd { margin: .25rem 0 0; max-width: 46rem; }
 <li><a href="#why">Why: the real physics or procedure</a></li>
 <li><a href="#departs">Where the game departs from reality</a></li>
 <li><a href="#silent">Where the sources are silent</a></li>
-<li><a href="#inspiration">Inspiration</a></li>
 <li><a href="#sources">Sources</a></li>
-<li><a href="#code">Code files</a></li>
 </ul>
 <h2 id="brief">In brief</h2>
 <p class="lead">Atmospheric entry is the descent from orbit to a surface through air, where a ship either burns its engines to land or rides the air with a heat shield to shed its speed.</p>
@@ -92,29 +105,28 @@ dl.keys dd { margin: .25rem 0 0; max-width: 46rem; }
 <thead><tr>
 <th scope="col">Quantity</th>
 <th scope="col">Value</th>
-<th scope="col">Unit</th>
 <th scope="col">Grade</th>
 <th scope="col">Source</th>
 <th scope="col">Basis</th>
 </tr></thead>
 <tbody>
-<tr id="n-1"><th scope="row">Rounds in the Blueshifter dive</th><td class="val">3</td><td>rounds</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The dive is a set-piece and not a real entry. The count is chosen for play.</td></tr>
-<tr id="n-2"><th scope="row">Base chance that a round of the dive goes clean</th><td class="val">70</td><td>percent</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/landing.php">Atomic Rockets, landing</a>, Aerobraking Landing</td><td>Chosen with the shape of the game's boarding chance: a base, a scaled stat, then a clamp. The mirror gives no chance that an entry goes wrong. The sources are silent on this figure.</td></tr>
-<tr id="n-3"><th scope="row">Chance added per m/s^2 of the ship&#x27;s acceleration</th><td class="val">2</td><td>percent per m/s^2</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen so that a harder-pushing drive recovers a bad entry, the same stat that evasion uses.</td></tr>
-<tr id="n-4"><th scope="row">Chance removed per point of danger</th><td class="val">1</td><td>percent per danger point</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen as the unit scale of danger against the chance.</td></tr>
-<tr id="n-5"><th scope="row">Highest chance a round of the dive can reach</th><td class="val">95</td><td>percent</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The ceiling of the clamp, so that no dive is certain.</td></tr>
-<tr id="n-6"><th scope="row">Lowest chance a round of the dive can fall to</th><td class="val">10</td><td>percent</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The floor of the clamp, so that no dive is hopeless.</td></tr>
-<tr id="n-7"><th scope="row">Share of the danger rating a failed round takes from the hull</th><td class="val">1</td><td>fraction of danger</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen so that damage on a failed round scales with the danger. The damage formula follows the game's attack roll.</td></tr>
-<tr id="n-8"><th scope="row">Least hull damage a failed round does</th><td class="val">5</td><td>hull points</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen so that a failed round always costs something.</td></tr>
-<tr id="n-9"><th scope="row">Hull share at which a failed round aborts the dive</th><td class="val">0.2</td><td>fraction of maximum health</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen so that the set-piece is a risk and not a kill: health floors at 1.</td></tr>
-<tr id="n-10"><th scope="row">Chance bonus per point of Navigation competence on the descent corridor</th><td class="val">0.15</td><td>percent per competence point</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The standard department shape: competence times a small rate, capped. A navigation crew flies a better corridor.</td></tr>
-<tr id="n-11"><th scope="row">Most chance Navigation can add to a descent</th><td class="val">12</td><td>percent</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The cap of the department shape, the same as the Gunnery cap in combat.</td></tr>
-<tr id="n-12"><th scope="row">Chance bonus of a powered descent</th><td class="val">15</td><td>percent points</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/landing.php">Atomic Rockets, landing</a>, Aerobraking Landing</td><td>Chosen because a powered descent flies a wide corridor and the tank pays for it. The mirror says aerobraking lands a ship without a powerful engine and saves reaction mass. The sources are silent on this figure.</td></tr>
-<tr id="n-13"><th scope="row">Chance penalty of an aerobraked descent</th><td class="val">5</td><td>percent points</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/landing.php">Atomic Rockets, landing</a>, Aerobraking Landing</td><td>Chosen because an aerobrake rides a narrow corridor. The mirror says the risk is to run out of heat shield or of altitude, and gives no chance. The sources are silent on this figure.</td></tr>
-<tr id="n-14"><th scope="row">Share of a missed powered descent that lands long</th><td class="val">0.75</td><td>fraction of misses</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen so that a powered descent cannot fail to arrive: its remainder never reaches SKIPPED OUT.</td></tr>
-<tr id="n-15"><th scope="row">Share of a missed aerobrake that lands long</th><td class="val">0.45</td><td>fraction of misses</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/landing.php">Atomic Rockets, landing</a>, Aerobraking Landing</td><td>Chosen with the hard share, and the remainder is the skip out. The mirror describes re-entry skips (Zond 6 and 7) and gives no odds. The sources are silent on this figure.</td></tr>
-<tr id="n-16"><th scope="row">Share of a missed aerobrake that lands hard</th><td class="val">0.25</td><td>fraction of misses</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen so that the harder misses are rarer than the softer ones.</td></tr>
-<tr id="n-17"><th scope="row">Travel days of hull maintenance that a hard arrival bills</th><td class="val">6</td><td>days of maintenance</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>Design notes for locations/atmosphericentry.py, The set-piece and the corridor</td><td>Sized against the days of neglect that make a hull overdue for maintenance, so that one bad landing is not a crisis and three are. A hard arrival bills maintenance and never health.</td></tr>
+<tr id="n-1"><th scope="row">Rounds in the Blueshifter dive</th><td class="val">3 <span class="unit">rounds</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The dive is a set-piece and not a real entry. The count is chosen for play.</td></tr>
+<tr id="n-2"><th scope="row">Base chance that a round of the dive goes clean</th><td class="val">70 <span class="unit">percent</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/landing.php">Atomic Rockets, landing</a>, Aerobraking Landing</td><td>Chosen with the shape of the game's boarding chance: a base, a scaled stat, then a clamp. The mirror gives no chance that an entry goes wrong. The sources are silent on this figure.</td></tr>
+<tr id="n-3"><th scope="row">Chance added per m/s^2 of the ship&#x27;s acceleration</th><td class="val">2 <span class="unit">percent per m/s^2</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen so that a harder-pushing drive recovers a bad entry, the same stat that evasion uses.</td></tr>
+<tr id="n-4"><th scope="row">Chance removed per point of danger</th><td class="val">1 <span class="unit">percent per danger point</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen as the unit scale of danger against the chance.</td></tr>
+<tr id="n-5"><th scope="row">Highest chance a round of the dive can reach</th><td class="val">95 <span class="unit">percent</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The ceiling of the clamp, so that no dive is certain.</td></tr>
+<tr id="n-6"><th scope="row">Lowest chance a round of the dive can fall to</th><td class="val">10 <span class="unit">percent</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The floor of the clamp, so that no dive is hopeless.</td></tr>
+<tr id="n-7"><th scope="row">Share of the danger rating a failed round takes from the hull</th><td class="val">1 <span class="unit">fraction of danger</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen so that damage on a failed round scales with the danger. The damage formula follows the game's attack roll.</td></tr>
+<tr id="n-8"><th scope="row">Least hull damage a failed round does</th><td class="val">5 <span class="unit">hull points</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen so that a failed round always costs something.</td></tr>
+<tr id="n-9"><th scope="row">Hull share at which a failed round aborts the dive</th><td class="val">0.2 <span class="unit">fraction of maximum health</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen so that the set-piece is a risk and not a kill: health floors at 1.</td></tr>
+<tr id="n-10"><th scope="row">Chance bonus per point of Navigation competence on the descent corridor</th><td class="val">0.15 <span class="unit">percent per competence point</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The standard department shape: competence times a small rate, capped. A navigation crew flies a better corridor.</td></tr>
+<tr id="n-11"><th scope="row">Most chance Navigation can add to a descent</th><td class="val">12 <span class="unit">percent</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The cap of the department shape, the same as the Gunnery cap in combat.</td></tr>
+<tr id="n-12"><th scope="row">Chance bonus of a powered descent</th><td class="val">15 <span class="unit">percent points</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/landing.php">Atomic Rockets, landing</a>, Aerobraking Landing</td><td>Chosen because a powered descent flies a wide corridor and the tank pays for it. The mirror says aerobraking lands a ship without a powerful engine and saves reaction mass. The sources are silent on this figure.</td></tr>
+<tr id="n-13"><th scope="row">Chance penalty of an aerobraked descent</th><td class="val">5 <span class="unit">percent points</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/landing.php">Atomic Rockets, landing</a>, Aerobraking Landing</td><td>Chosen because an aerobrake rides a narrow corridor. The mirror says the risk is to run out of heat shield or of altitude, and gives no chance. The sources are silent on this figure.</td></tr>
+<tr id="n-14"><th scope="row">Share of a missed powered descent that lands long</th><td class="val">0.75 <span class="unit">fraction of misses</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen so that a powered descent cannot fail to arrive: its remainder never reaches SKIPPED OUT.</td></tr>
+<tr id="n-15"><th scope="row">Share of a missed aerobrake that lands long</th><td class="val">0.45 <span class="unit">fraction of misses</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/landing.php">Atomic Rockets, landing</a>, Aerobraking Landing</td><td>Chosen with the hard share, and the remainder is the skip out. The mirror describes re-entry skips (Zond 6 and 7) and gives no odds. The sources are silent on this figure.</td></tr>
+<tr id="n-16"><th scope="row">Share of a missed aerobrake that lands hard</th><td class="val">0.25 <span class="unit">fraction of misses</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen so that the harder misses are rarer than the softer ones.</td></tr>
+<tr id="n-17"><th scope="row">Travel days of hull maintenance that a hard arrival bills</th><td class="val">6 <span class="unit">days of maintenance</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>Design notes: atmosphericentry, The set-piece and the corridor</td><td>Sized against the days of neglect that make a hull overdue for maintenance, so that one bad landing is not a crisis and three are. A hard arrival bills maintenance and never health.</td></tr>
 </tbody></table></div>
 <h2 id="why">Why: the real physics or procedure</h2>
 <ul>
@@ -125,31 +137,23 @@ dl.keys dd { margin: .25rem 0 0; max-width: 46rem; }
 </ul>
 <h2 id="departs">Where the game departs from reality</h2>
 <ul>
-<li>The routine landing is damage-free by canon, because a 2500-era hull shrugs off re-entry (docs/notes/atmosphericentry.md). A hard arrival bills maintenance and never current health.</li>
+<li>The routine landing is damage-free by canon, because a 2500-era hull shrugs off re-entry. A hard arrival bills maintenance and never current health.</li>
 <li>The Blueshifter dive is an alien-megastructure set-piece and is not a real entry. Its health floors at 1.</li>
 </ul>
 <h2 id="silent">Where the sources are silent</h2>
 <ul>
-<li>The passages of the landing page read for this note give no chance that an entry goes wrong, so every chance in the table is authored.</li>
+<li>The passages of the landing page read for this page give no chance that an entry goes wrong, so every chance in the table is authored.</li>
 <li>The same passages give no price for a hard landing, so the days of maintenance are authored.</li>
 <li>The page gives no cost in fuel of a powered landing against an aerobraked one.</li>
-</ul>
-<h2 id="inspiration">Inspiration</h2>
-<ul>
-<li><strong>TODO(austen)</strong> (person): TODO(austen)</li>
 </ul>
 <h2 id="sources">Sources</h2>
 <ul>
 <li><a href="https://www.projectrho.com/public_html/rocket/landing.php">Atomic Rockets, landing</a>, Aerobraking Landing: Aerobraking and aerocapture use an aeroshell and air friction to remove delta-v. The ship must finish before it runs out of heat shield or altitude. The page also records the Zond 6 and Zond 7 re-entry skips. "use air friction to eliminate your deltaV" (<a href="sources.html#doc-rocket-landing-php-html">all uses</a>)</li>
-<li>Design notes for locations/atmosphericentry.py, The set-piece and the corridor: The repo's own record: the routine landing is damage-free by canon, and the chance formula follows the shape of the boarding chance. (<a href="sources.html#doc-docs-notes-atmosphericentry-md">all uses</a>)</li>
-</ul>
-<h2 id="code">Code files</h2>
-<ul>
-<li><code>locations/atmosphericentry.py</code></li>
+<li>Design notes: atmosphericentry, The set-piece and the corridor: The game's own record: the routine landing is damage-free by canon, and the chance formula follows the shape of the boarding chance. (<a href="sources.html#doc-docs-notes-atmosphericentry-md">all uses</a>)</li>
 </ul>
 </main>
 <footer class="stamp">
-<p>Read from game commit 1cab5b32 (committed 2026-10-18). Pages written 2026-10-18.
+<p>Read from game commit f6b8d18d (committed 2026-10-18). Pages written 2026-10-18.
 The explanations are stand-in text and may change.</p>
 </footer>
 </div>

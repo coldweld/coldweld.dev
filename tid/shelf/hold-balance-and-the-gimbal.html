@@ -31,29 +31,44 @@ a:focus-visible, .region:focus-visible { outline: 3px solid var(--accent); outli
 nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .25rem 1.5rem; }
 nav a { display: inline-block; padding: .35rem 0; }
 h1 { font-size: clamp(1.4rem, 5vw, 2rem); line-height: 1.25; margin: 2rem 0 1rem; font-weight: 500; }
-h2 { font-size: 1.25rem; margin: 2.5rem 0 .75rem; padding-top: 1.25rem; border-top: 1px solid var(--rule); font-weight: 500; }
-h3 { font-size: 1.05rem; margin: 1.5rem 0 .5rem; font-weight: 500; }
+h2 { font-size: 1.5rem; margin: 2.5rem 0 .75rem; padding-top: 1.25rem; border-top: 1px solid var(--rule); font-weight: 500; }
+h3 { font-size: 1.15rem; margin: 1.5rem 0 .5rem; font-weight: 500; }
 p, li { max-width: 46rem; }
 li + li { margin-top: .35rem; }
 code { font-family: "DM Mono", ui-monospace, Consolas, monospace; font-size: .92em; overflow-wrap: anywhere; }
 .lead { font-size: 1.1rem; }
-.note { background: var(--panel); border-left: 4px solid var(--accent); padding: .75rem 1rem; max-width: 46rem; }
+.note { background: var(--panel); border: 1px solid var(--rule); padding: .75rem 1rem; max-width: 46rem; }
 .region { overflow-x: auto; margin: 1rem 0; border: 1px solid var(--rule); }
-table { border-collapse: collapse; width: 100%; min-width: 46rem; font-size: .92rem; line-height: 1.5; }
+table { border-collapse: collapse; width: 100%; min-width: 40rem; font-size: .92rem; line-height: 1.55; }
 caption { text-align: left; padding: .75rem; font-size: .95rem; color: var(--muted); }
-th, td { text-align: left; vertical-align: top; padding: .55rem .75rem; border-top: 1px solid var(--rule); }
+caption.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; padding: 0; }
+th, td { text-align: left; vertical-align: top; padding: .7rem .85rem; border-top: 1px solid var(--rule); }
 thead th { background: var(--panel); font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; white-space: nowrap; }
-tbody th { font-weight: 400; font-family: inherit; min-width: 14rem; }
-td.val { overflow-wrap: anywhere; min-width: 7rem; }
-.numbers td:nth-child(5), .numbers td:nth-child(6) { min-width: 13rem; }
+tbody th { font-weight: 500; font-family: inherit; min-width: 11rem; }
+tbody tr:nth-child(even) th, tbody tr:nth-child(even) td { background: var(--panel); }
+td.val { overflow-wrap: anywhere; min-width: 7rem; font-size: .95rem; }
+.unit { display: block; font-size: .8rem; color: var(--muted); overflow-wrap: normal; }
+.numbers { min-width: 58rem; }
+.numbers tbody th { min-width: 13rem; width: 20%; }
+.numbers td:nth-child(4) { min-width: 11rem; width: 18%; color: var(--muted); }
+.numbers td:nth-child(5) { min-width: 22rem; width: 42%; }
 td.count { text-align: right; font-variant-numeric: tabular-nums; }
+.uses { min-width: 34rem; }
+details { margin: .5rem 0 1rem; }
+summary { cursor: pointer; padding: .45rem 0; font-family: "DM Mono", ui-monospace, Consolas, monospace; font-size: .85rem; color: var(--accent); }
+summary:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.docs { font-size: .9rem; gap: .1rem 1rem; }
+.cited { margin: .25rem 0 .5rem; color: var(--muted); }
 .grade { display: inline-block; border: 2px solid currentColor; border-radius: 4px; min-width: 1.6rem; text-align: center; padding: 0 .3rem; font-weight: 600; margin-right: .4rem; }
 .gradeitem { white-space: nowrap; }
 .stamp { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--rule); font-size: .8rem; color: var(--muted); }
-.toc { padding-left: 1.2rem; }
+.toc { list-style: none; margin: 0 0 1rem; padding: 0; display: flex; flex-wrap: wrap; gap: .25rem 1.25rem; }
+.toc li { margin: 0; }
+.toc a { display: inline-block; padding: .3rem 0; }
 dl.keys dt { font-weight: 600; margin-top: 1rem; }
 dl.keys dd { margin: .25rem 0 0; max-width: 46rem; }
-@media (max-width: 40rem) { body { padding: 0 1rem 3rem; } th, td { padding: .5rem; } }
+@media (max-width: 40rem) { body { padding: 0 1rem 3rem; } th, td { padding: .6rem; } .numbers { min-width: 46rem; } .numbers tbody th { min-width: 8rem; width: auto; } .numbers td.val { min-width: 6.5rem; } .numbers td:nth-child(3) { min-width: 5.5rem; } .gradeitem { white-space: normal; } .numbers .grade { display: block; width: max-content; margin: 0 0 .2rem; } }
+@media (min-width: 40rem) { .numbers tbody th { position: sticky; left: 0; z-index: 1; background: var(--bg); } .numbers tbody tr:nth-child(even) th { background: var(--panel); } }
 @media print { .skip { display: none; } }
 </style>
 </head>
@@ -77,9 +92,7 @@ dl.keys dd { margin: .25rem 0 0; max-width: 46rem; }
 <li><a href="#why">Why: the real physics or procedure</a></li>
 <li><a href="#departs">Where the game departs from reality</a></li>
 <li><a href="#silent">Where the sources are silent</a></li>
-<li><a href="#inspiration">Inspiration</a></li>
 <li><a href="#sources">Sources</a></li>
-<li><a href="#code">Code files</a></li>
 </ul>
 <h2 id="brief">In brief</h2>
 <p class="lead">Hold balance is the rule that a ship's center of mass must sit on the line of its thrust, which means its cargo has to be spread evenly around the axis.</p>
@@ -100,23 +113,19 @@ dl.keys dd { margin: .25rem 0 0; max-width: 46rem; }
 </ul>
 <h2 id="departs">Where the game departs from reality</h2>
 <ul>
-<li>The game does not model this yet. A grep of the code finds no model of cargo center of mass, drive gimbal or trim tanks.</li>
-<li>A hold is one stack of lots in loading order (combat/damagecontrol.py getstack), with no position off the axis. A jettison removes a whole lot with no effect on balance (Ship.jettisonlot in vehicles/ship/ship.py).</li>
-<li>Hold mass changes acceleration and turning only as a total (combat/newtonian/hullphysics.py angularaccel reads the laden to dry mass ratio), never as a position.</li>
-<li>The only gimbal in code is the keel gun's lay cone (SPINAL_CONE_DEG in combat/newtonian/encounter.py), which is a gun mount and not the drive.</li>
-<li>The plan is docs/power-direction.md, The gimbal and hold balance (item 14), and dev/handoffs/main-2026-10-08/decisions.md, decision 14. The hold is a ring of paired sections around the spine. Balance costs something on loading and on jettison. The gimbal is the first fix, and its price is steering margin. Past the gimbal limit the order is trim water, then a paired jettison. A damaged drive loses its gimbal.</li>
-<li>The plan says to measure first: if every loading fits inside the gimbal, balance is a tax with no decision, and the design must say so (decisions.md, item 14).</li>
-<li>The gimbal actuators and trim pumps are to register as essential loads that the power rule never sheds, when item 14 builds them (docs/power-direction.md).</li>
+<li>The game does not model this yet. The code has no model of cargo center of mass, drive gimbal or trim tanks.</li>
+<li>A hold is one stack of lots in loading order, with no position off the axis. A jettison removes a whole lot with no effect on balance.</li>
+<li>Hold mass changes acceleration and turning only as a total, never as a position.</li>
+<li>The only gimbal in code is the keel gun's lay cone, which is a gun mount and not the drive.</li>
+<li>The plan is as follows. The hold is a ring of paired sections around the spine. Balance costs something on loading and on jettison. The gimbal is the first fix, and its price is steering margin. Past the gimbal limit the order is trim water, then a paired jettison. A damaged drive loses its gimbal.</li>
+<li>The plan says to measure first: if every loading fits inside the gimbal, balance is a tax with no decision, and the design must say so.</li>
+<li>The gimbal actuators and trim pumps are to register as essential loads that the power rule never sheds, when the game builds them.</li>
 </ul>
 <h2 id="silent">Where the sources are silent</h2>
 <ul>
 <li>The mirror gives no number for how far a hold can be unbalanced before a gimbal runs out, because that depends on the hull. The game needs its own hull and hold figures.</li>
-<li>The mirror gives no rule for who loads a ship or how a crew balances it. Austen's call is that the crew or the yard's loaders do it, never a captain prompt (dev/handoffs/main-2026-10-08/decisions.md, item 14).</li>
+<li>The mirror gives no rule for who loads a ship or how a crew balances it. coldweld's call is that the crew or the yard's loaders do it, never a captain prompt.</li>
 <li>The mirror does not say how much power a gimbal actuator or a trim pump draws.</li>
-</ul>
-<h2 id="inspiration">Inspiration</h2>
-<ul>
-<li><strong>TODO(austen)</strong> (person): TODO(austen)</li>
 </ul>
 <h2 id="sources">Sources</h2>
 <ul>
@@ -126,11 +135,9 @@ dl.keys dd { margin: .25rem 0 0; max-width: 46rem; }
 <li><a href="https://www.projectrho.com/public_html/rocket/controldeck.php">Atomic Rockets, controldeck</a>, Atomic Rocket Pilot Console: An engine is limited to vectoring its thrust to about ten degrees off the axis. (<a href="sources.html#doc-rocket-controldeck-php-html">all uses</a>)</li>
 <li><a href="https://assets.publishing.service.gov.uk/media/5a7c6454ed915d696ccfc775/con1_2a_pt7_1-2.pdf">UK MCA, MSIS003 Part 7: Electrical Equipment and Installations</a>, 7.6 (essential services): Load shedding must not cut services essential for propulsion and safety. The list includes steering gear, which is the nearest real-world rule for a gimbal actuator. (<a href="sources.html#doc-docs-sources-msis003-electrical-md">all uses</a>)</li>
 </ul>
-<h2 id="code">Code files</h2>
-<p>No code file is listed.</p>
 </main>
 <footer class="stamp">
-<p>Read from game commit 1cab5b32 (committed 2026-10-18). Pages written 2026-10-18.
+<p>Read from game commit f6b8d18d (committed 2026-10-18). Pages written 2026-10-18.
 The explanations are stand-in text and may change.</p>
 </footer>
 </div>
