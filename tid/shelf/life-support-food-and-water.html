@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Life support, food and water</title>
-<meta name="description" content="What the game does for life support, food and water, its numbers, and where each comes from.">
+<meta name="description" content="Functionality, values and sources for life support, food and water.">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -39,6 +39,9 @@ h2 { font-size: 1.5rem; line-height: 1.3; margin: 2.5rem 0 .75rem; font-weight: 
 h3 { font-size: 1.2rem; line-height: 1.35; margin: 1.75rem 0 .5rem; font-weight: 500; }
 p, li, dd { max-width: 40rem; }
 li + li { margin-top: .4rem; }
+ol.facts { padding-left: 1.6rem; }
+ol.facts > li + li { margin-top: 1rem; }
+ol.facts ol { margin: .4rem 0 0; padding-left: 1.6rem; }
 code { font-family: "DM Mono", ui-monospace, Consolas, monospace; font-size: .9em; overflow-wrap: anywhere; }
 .lead { font-size: 1.15rem; line-height: 1.6; }
 .note { background: var(--panel); border: 1px solid var(--rule); padding: .75rem 1rem; max-width: 40rem; }
@@ -178,9 +181,9 @@ dl.keys dd { margin: .25rem 0 0; }
 <div class="glance"><p><strong>26 numbers</strong>, 6 with an outside source</p><ul aria-label="Numbers by grade"><li><span class="grade g-a">A</span>0 <span class="sr">numbers at grade A</span></li><li><span class="grade g-b">B</span>1 <span class="sr">numbers at grade B</span></li><li><span class="grade g-c">C</span>0 <span class="sr">numbers at grade C</span></li><li><span class="grade g-d">D</span>5 <span class="sr">numbers at grade D</span></li><li><span class="grade g-e">E</span>20 <span class="sr">numbers at grade E</span></li></ul></div>
 <div class="toolbar" data-openall></div>
 <details class="section" id="does">
-<summary><h2>What the game does</h2><span class="hint">3 topics</span></summary>
+<summary><h2>Functionality</h2><span class="hint">3 topics</span></summary>
 <div class="sectionbody">
-<h3>Food And Water</h3>
+<h3>Food and water</h3>
 <ul>
 <li>Each person aboard uses 2 kg of food and 4 kg of water a day.</li>
 <li>The Supply department and Life Support modules cut that, by up to 60% together.</li>
@@ -190,7 +193,7 @@ dl.keys dd { margin: .25rem 0 0; }
 <li>Low morale feeds the same desertion risk that unpaid wages do.</li>
 <li>Under the Gentle setting both last twice as long, and going without wounds people but never kills them.</li>
 </ul>
-<h3>Life Support</h3>
+<h3>Life support</h3>
 <ul>
 <li>Neither side aims at LIFE SUPPORT. A round that gets through the plate gets inside instead.</li>
 <li>There it can wreck cargo, kill a crewmate, hole the reactor plant or vent a compartment.</li>
@@ -200,7 +203,7 @@ dl.keys dd { margin: .25rem 0 0; }
 <li>While it is down or its air plant is cut, your guns lay wider and every hand loses morale every 20 s.</li>
 <li>Life support is mended before every fight.</li>
 </ul>
-<h3>Morale And Readiness</h3>
+<h3>Morale and readiness</h3>
 <ul>
 <li>Each crew member has morale, and the crew as a whole has readiness. Both change how well they work.</li>
 <li>Set STANDING ORDERS in the Captain's Quarters to manage them.</li>
@@ -212,7 +215,7 @@ dl.keys dd { margin: .25rem 0 0; }
 </div>
 </details>
 <details class="section" id="numbers">
-<summary><h2>The numbers</h2><span class="hint">26 numbers: 1 B, 5 D, 20 E</span></summary>
+<summary><h2>Values</h2><span class="hint">26 numbers: 1 B, 5 D, 20 E</span></summary>
 <div class="sectionbody">
 <p>Each value is read from the game code. Sort by any column heading, or filter by grade or by a word.</p>
 <div class="region" role="region" tabindex="0" aria-label="Numbers the game runs for life support, food and water">
@@ -256,7 +259,7 @@ dl.keys dd { margin: .25rem 0 0; }
 </div>
 </details>
 <details class="section" id="why">
-<summary><h2>Why: the real physics or procedure</h2><span class="hint">6 points</span></summary>
+<summary><h2>Real-world basis</h2><span class="hint">6 points</span></summary>
 <div class="sectionbody">
 <ul>
 <li>A crew uses supplies by the person and by the day, so a store is counted in person-days.</li>
@@ -269,7 +272,7 @@ dl.keys dd { margin: .25rem 0 0; }
 </div>
 </details>
 <details class="section" id="departs">
-<summary><h2>Where the game departs from reality</h2><span class="hint">6 points</span></summary>
+<summary><h2>Game and reality differences</h2><span class="hint">6 points</span></summary>
 <div class="sectionbody">
 <ul>
 <li>The game keeps one number for water, 4 kg a hand a day against 2 kg of food. The source figures differ: about 2.72 to 3.09 kg of drinking water, and 26 kg more for hygiene. The game's travel notes ('water and food') keep that ratio so raw kilograms do not enter the economy.</li>
@@ -282,15 +285,28 @@ dl.keys dd { margin: .25rem 0 0; }
 </div>
 </details>
 <details class="section" id="silent">
-<summary><h2>Where the sources are silent</h2><span class="hint">5 points</span></summary>
+<summary><h2>Source absences</h2><span class="hint">9 points</span></summary>
 <div class="sectionbody">
-<ul>
-<li>The mirror gives no rule for how many days a person lives without water or food. The rule of threes (3 days, 3 weeks) is coldweld's choice, recorded in the game's design notes under 'Stores and the rule of threes'.</li>
-<li>The mirror gives no morale cost for a short ration or a dry tank. The 6 and 10 morale a day are authored.</li>
-<li>No source gives how fast a hole in a ship's air plant harms a crew, so the 40 and 60 integrity thresholds and the 15 percent catch chance are authored.</li>
-<li>The Navy manual gives no time or price for repair and no figure for a suited crew's air, beyond the hood and apparatus times.</li>
-<li>The mirror is silent on the effect of suits on morale and fatigue, so the 3 fatigue a day at GENERAL QUARTERS is authored.</li>
-</ul>
+<ol class="facts">
+<li>Atomic Rockets does not provide values for the following:
+<ol>
+<li>Days a person lives without water or food. Other sources supply both values.</li>
+<li>Morale cost of a short ration. 6 morale a day is authored.</li>
+<li>Morale cost of a dry tank. 10 morale a day is authored.</li>
+<li>Effect of suits on morale and fatigue. 3 fatigue a day at general quarters is authored.</li>
+</ol></li>
+<li>No source on the shelf provides values for the following:
+<ol>
+<li>Life support integrity at which the air fails. 40 is authored.</li>
+<li>Life support integrity at which the warning shows. 60 is authored.</li>
+<li>Chance that bad air harms a hand. 15% a round is authored.</li>
+</ol></li>
+<li>The Navy damage control manual does not provide values for the following:
+<ol>
+<li>Time or price of a repair.</li>
+<li>Air supply of a suited crew, beyond the hood and apparatus times.</li>
+</ol></li>
+</ol>
 </div>
 </details>
 <details class="section" id="sources">
@@ -312,7 +328,7 @@ dl.keys dd { margin: .25rem 0 0; }
 <nav aria-label="Other mechanics"><ul class="pager"><li><a href="hold-balance-and-the-gimbal.html" rel="prev"><span class="dir">Previous</span>Hold balance and the gimbal</a></li><li class="next"><a href="mining-the-belt.html" rel="next"><span class="dir">Next</span>Mining the belt</a></li></ul></nav>
 </main>
 <footer class="stamp">
-<p>Read from game commit 41a6e662 (committed 2026-10-18). Pages written 2026-10-18.
+<p>Read from game commit b25a8dd0 (committed 2026-10-18). Pages written 2026-10-18.
 The explanations are stand-in text and may change.</p>
 </footer>
 </div>

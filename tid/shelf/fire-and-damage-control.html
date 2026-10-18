@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Fire and damage control</title>
-<meta name="description" content="What the game does for fire and damage control, its numbers, and where each comes from.">
+<meta name="description" content="Functionality, values and sources for fire and damage control.">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -39,6 +39,9 @@ h2 { font-size: 1.5rem; line-height: 1.3; margin: 2.5rem 0 .75rem; font-weight: 
 h3 { font-size: 1.2rem; line-height: 1.35; margin: 1.75rem 0 .5rem; font-weight: 500; }
 p, li, dd { max-width: 40rem; }
 li + li { margin-top: .4rem; }
+ol.facts { padding-left: 1.6rem; }
+ol.facts > li + li { margin-top: 1rem; }
+ol.facts ol { margin: .4rem 0 0; padding-left: 1.6rem; }
 code { font-family: "DM Mono", ui-monospace, Consolas, monospace; font-size: .9em; overflow-wrap: anywhere; }
 .lead { font-size: 1.15rem; line-height: 1.6; }
 .note { background: var(--panel); border: 1px solid var(--rule); padding: .75rem 1rem; max-width: 40rem; }
@@ -178,9 +181,9 @@ dl.keys dd { margin: .25rem 0 0; }
 <div class="glance"><p><strong>45 numbers</strong>, 9 with an outside source</p><ul aria-label="Numbers by grade"><li><span class="grade g-a">A</span>0 <span class="sr">numbers at grade A</span></li><li><span class="grade g-b">B</span>3 <span class="sr">numbers at grade B</span></li><li><span class="grade g-c">C</span>0 <span class="sr">numbers at grade C</span></li><li><span class="grade g-d">D</span>6 <span class="sr">numbers at grade D</span></li><li><span class="grade g-e">E</span>36 <span class="sr">numbers at grade E</span></li></ul></div>
 <div class="toolbar" data-openall></div>
 <details class="section" id="does">
-<summary><h2>What the game does</h2><span class="hint">4 topics</span></summary>
+<summary><h2>Functionality</h2><span class="hint">4 topics</span></summary>
 <div class="sectionbody">
-<h3>Damage Control</h3>
+<h3>Damage control</h3>
 <ul>
 <li>A round inside the hull can start a FIRE, and it burns 3% of your hull every 20 s.</li>
 <li>A fire nobody fights grows a level every 40 s.</li>
@@ -192,7 +195,7 @@ dl.keys dd { margin: .25rem 0 0; }
 <li>A hurt or killed Damage Control head stops the parties lending hands for 40 s.</li>
 <li>A fire still going after the fight burns 60 s more. Hostiles fight theirs the same way.</li>
 </ul>
-<h3>Fire Classes</h3>
+<h3>Fire classes</h3>
 <ul>
 <li>A fire's class is what burns: A is ordinary stuff, B a liquid or gas, C live electrics, D metal.</li>
 <li>The crew names the class of the worst fire in each space.</li>
@@ -203,7 +206,7 @@ dl.keys dd { margin: .25rem 0 0; }
 <li>Every hand fights a live C fire at half pace.</li>
 <li>A suited crew lets the team fight a bigger fire. Only the locker parties fight a D fire.</li>
 </ul>
-<h3>Freight Fire</h3>
+<h3>Freight fire</h3>
 <ul>
 <li>A fire in the hold burns the lot it started in: 2% of the hold's room every 20 s for each level.</li>
 <li>When that lot is gone the fire takes the next lot that burns. With none left, it goes out.</li>
@@ -212,7 +215,7 @@ dl.keys dd { margin: .25rem 0 0; }
 <li>OXIDIZER | oxygen does not burn, but a cargo fire beside it starts a level higher.</li>
 <li>The market and the CARGO HOLD say what each good does in a fire before you load it.</li>
 </ul>
-<h3>Fire Orders</h3>
+<h3>Fire orders</h3>
 <ul>
 <li>A fire order is your own, and it quotes its price before you give it.</li>
 <li>VENT | the fire burns 20 s more while the crew gets out, then dies. The space bleeds 6 life support every 20 s until sealed.</li>
@@ -226,7 +229,7 @@ dl.keys dd { margin: .25rem 0 0; }
 </div>
 </details>
 <details class="section" id="numbers">
-<summary><h2>The numbers</h2><span class="hint">45 numbers: 3 B, 6 D, 36 E</span></summary>
+<summary><h2>Values</h2><span class="hint">45 numbers: 3 B, 6 D, 36 E</span></summary>
 <div class="sectionbody">
 <p>Each value is read from the game code. Sort by any column heading, or filter by grade or by a word.</p>
 <div class="region" role="region" tabindex="0" aria-label="Numbers the game runs for fire and damage control">
@@ -289,7 +292,7 @@ dl.keys dd { margin: .25rem 0 0; }
 </div>
 </details>
 <details class="section" id="why">
-<summary><h2>Why: the real physics or procedure</h2><span class="hint">8 points</span></summary>
+<summary><h2>Real-world basis</h2><span class="hint">8 points</span></summary>
 <div class="sectionbody">
 <ul>
 <li>A real ship treats fire as the work of the whole crew, so every hand has a damage control duty.</li>
@@ -304,7 +307,7 @@ dl.keys dd { margin: .25rem 0 0; }
 </div>
 </details>
 <details class="section" id="departs">
-<summary><h2>Where the game departs from reality</h2><span class="hint">10 points</span></summary>
+<summary><h2>Game and reality differences</h2><span class="hint">10 points</span></summary>
 <div class="sectionbody">
 <ul>
 <li>The captain splits the hands into NONE, LIGHT, STANDARD and HEAVY lockers, where the Navy manual has fixed lockers fully manned at general quarters. coldweld chose the split on 2026-09-26 so that hands in the lockers are hands off the guns.</li>
@@ -321,17 +324,33 @@ dl.keys dd { margin: .25rem 0 0; }
 </div>
 </details>
 <details class="section" id="silent">
-<summary><h2>Where the sources are silent</h2><span class="hint">7 points</span></summary>
+<summary><h2>Source absences</h2><span class="hint">11 points</span></summary>
 <div class="sectionbody">
-<ul>
-<li>No source gives a burn rate, a smoke rate or a time to put out a fire. The Navy chapter defines flash point and fire point and gives no figure.</li>
-<li>The Navy chapter says nothing on merchant crews, vacuum, venting or reactors. The Atomic Rockets mirror gives no damage control rates.</li>
-<li>Who orders a compartment vented or a fixed agent released is silent in the Navy chapter, the 46 CFR parts and MGN 71. Jettison is silent in all of them, and the word does not appear in the four 46 CFR parts.</li>
-<li>Who leads a merchant fire party on the scene is silent. MGN 71 says only that a party must not be left without a leader.</li>
-<li>No source covers lithium metal as a coolant, or a class K fire in a ship's galley beyond the Navy's inspection list.</li>
-<li>The 49 CFR table classes a cargo and does not say how fast a lot burns. The mirror is silent too.</li>
-<li>NSTM chapter 555 is only a 6-page extract, and it names no fire order or officer.</li>
-</ul>
+<ol class="facts">
+<li>The Navy damage control manual does not provide values for the following:
+<ol>
+<li>Burn rate, smoke rate, or time to put out a fire. The manual defines flash point and fire point only.</li>
+<li>Merchant crews, vacuum, venting, or reactors.</li>
+</ol></li>
+<li>The Navy manual, the four 46 CFR parts, and MGN 71 do not cover the following:
+<ol>
+<li>Who orders a compartment vented.</li>
+<li>Who orders a fixed agent released.</li>
+<li>Jettison. The word does not appear in the four 46 CFR parts.</li>
+<li>Who leads a merchant fire party on the scene. MGN 71 says only that a party must have a leader.</li>
+</ol></li>
+<li>Atomic Rockets does not provide values for the following:
+<ol>
+<li>Damage control rates.</li>
+</ol></li>
+<li>No source on the shelf provides values for the following:
+<ol>
+<li>Lithium metal as a coolant.</li>
+<li>Class K fire in a ship's galley, beyond the Navy inspection list.</li>
+<li>Burn rate of a cargo lot. The 49 CFR table gives the hazard class only, and Atomic Rockets gives none.</li>
+<li>Fire order or fire officer in NSTM chapter 555. The shelf holds a 6-page extract only.</li>
+</ol></li>
+</ol>
 </div>
 </details>
 <details class="section" id="sources">
@@ -358,7 +377,7 @@ dl.keys dd { margin: .25rem 0 0; }
 <nav aria-label="Other mechanics"><ul class="pager"><li class="next"><a href="armor-and-the-six-faces.html" rel="next"><span class="dir">Next</span>Armor and the six faces</a></li></ul></nav>
 </main>
 <footer class="stamp">
-<p>Read from game commit 41a6e662 (committed 2026-10-18). Pages written 2026-10-18.
+<p>Read from game commit b25a8dd0 (committed 2026-10-18). Pages written 2026-10-18.
 The explanations are stand-in text and may change.</p>
 </footer>
 </div>

@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Range bands and the joust</title>
-<meta name="description" content="What the game does for range bands and the joust, its numbers, and where each comes from.">
+<meta name="description" content="Functionality, values and sources for range bands and the joust.">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -39,6 +39,9 @@ h2 { font-size: 1.5rem; line-height: 1.3; margin: 2.5rem 0 .75rem; font-weight: 
 h3 { font-size: 1.2rem; line-height: 1.35; margin: 1.75rem 0 .5rem; font-weight: 500; }
 p, li, dd { max-width: 40rem; }
 li + li { margin-top: .4rem; }
+ol.facts { padding-left: 1.6rem; }
+ol.facts > li + li { margin-top: 1rem; }
+ol.facts ol { margin: .4rem 0 0; padding-left: 1.6rem; }
 code { font-family: "DM Mono", ui-monospace, Consolas, monospace; font-size: .9em; overflow-wrap: anywhere; }
 .lead { font-size: 1.15rem; line-height: 1.6; }
 .note { background: var(--panel); border: 1px solid var(--rule); padding: .75rem 1rem; max-width: 40rem; }
@@ -178,9 +181,9 @@ dl.keys dd { margin: .25rem 0 0; }
 <div class="glance"><p><strong>13 numbers</strong>, 2 with an outside source</p><ul aria-label="Numbers by grade"><li><span class="grade g-a">A</span>0 <span class="sr">numbers at grade A</span></li><li><span class="grade g-b">B</span>1 <span class="sr">numbers at grade B</span></li><li><span class="grade g-c">C</span>1 <span class="sr">numbers at grade C</span></li><li><span class="grade g-d">D</span>0 <span class="sr">numbers at grade D</span></li><li><span class="grade g-e">E</span>11 <span class="sr">numbers at grade E</span></li></ul></div>
 <div class="toolbar" data-openall></div>
 <details class="section" id="does">
-<summary><h2>What the game does</h2><span class="hint">2 topics</span></summary>
+<summary><h2>Functionality</h2><span class="hint">2 topics</span></summary>
 <div class="sectionbody">
-<h3>Range And The Kill Zone</h3>
+<h3>Range and the kill zone</h3>
 <ul>
 <li>Every ship has its own position and speed, and the range is real km.</li>
 <li>A round takes time to fly, and a crew dodges a round it sees coming.</li>
@@ -190,7 +193,7 @@ dl.keys dd { margin: .25rem 0 0; }
 <li>No gun fires a round that needs more than 40 s to reach its target.</li>
 <li>CLOSE IN | on the helm, the autopilot closes and holds the range you name.</li>
 </ul>
-<h3>The Dodge</h3>
+<h3>The dodge</h3>
 <ul>
 <li>A round takes time to fly, so a hull that moves off its line makes it miss.</li>
 <li>WEAVE | the drive burns off the line, changing side every 8 s, until the heat fills the loop.</li>
@@ -203,7 +206,7 @@ dl.keys dd { margin: .25rem 0 0; }
 </div>
 </details>
 <details class="section" id="numbers">
-<summary><h2>The numbers</h2><span class="hint">13 numbers: 1 B, 1 C, 11 E</span></summary>
+<summary><h2>Values</h2><span class="hint">13 numbers: 1 B, 1 C, 11 E</span></summary>
 <div class="sectionbody">
 <p>Each value is read from the game code. Sort by any column heading, or filter by grade or by a word.</p>
 <div class="region" role="region" tabindex="0" aria-label="Numbers the game runs for range bands and the joust">
@@ -234,7 +237,7 @@ dl.keys dd { margin: .25rem 0 0; }
 </div>
 </details>
 <details class="section" id="why">
-<summary><h2>Why: the real physics or procedure</h2><span class="hint">6 points</span></summary>
+<summary><h2>Real-world basis</h2><span class="hint">6 points</span></summary>
 <div class="sectionbody">
 <ul>
 <li>In space the distance between two ships decides almost everything, and the side-to-side offset matters little.</li>
@@ -247,7 +250,7 @@ dl.keys dd { margin: .25rem 0 0; }
 </div>
 </details>
 <details class="section" id="departs">
-<summary><h2>Where the game departs from reality</h2><span class="hint">3 points</span></summary>
+<summary><h2>Game and reality differences</h2><span class="hint">3 points</span></summary>
 <div class="sectionbody">
 <ul>
 <li>The range line is one dimension, with no bearing and no flanking, on purpose: a map in two dimensions would make combat a movement game.</li>
@@ -257,12 +260,18 @@ dl.keys dd { margin: .25rem 0 0; }
 </div>
 </details>
 <details class="section" id="silent">
-<summary><h2>Where the sources are silent</h2><span class="hint">2 points</span></summary>
+<summary><h2>Source absences</h2><span class="hint">2 points</span></summary>
 <div class="sectionbody">
-<ul>
-<li>No source gives the game's range bands, opening gaps or the hit chance by band. The mirror gives the muzzle speed and the energy law, and the bands are the game's own arithmetic on the muzzle speed.</li>
-<li>The mirror gives no initiative rule. The die, the acceleration step and the navigation step are the game's own.</li>
-</ul>
+<ol class="facts">
+<li>No source on the shelf provides values for the following:
+<ol>
+<li>Range bands, opening gaps, or hit chance by band. The bands are arithmetic on the Atomic Rockets muzzle speed.</li>
+</ol></li>
+<li>Atomic Rockets does not provide values for the following:
+<ol>
+<li>Initiative rule. A 20 sided die, the acceleration step, and the navigation step are authored.</li>
+</ol></li>
+</ol>
 </div>
 </details>
 <details class="section" id="sources">
@@ -277,7 +286,7 @@ dl.keys dd { margin: .25rem 0 0; }
 <nav aria-label="Other mechanics"><ul class="pager"><li><a href="ship-vitals-and-fight-penalties.html" rel="prev"><span class="dir">Previous</span>Ship vitals and fight penalties</a></li><li class="next"><a href="fleet-action-breaking-off-and-surrender.html" rel="next"><span class="dir">Next</span>Fleet action, breaking off and surrender</a></li></ul></nav>
 </main>
 <footer class="stamp">
-<p>Read from game commit 41a6e662 (committed 2026-10-18). Pages written 2026-10-18.
+<p>Read from game commit b25a8dd0 (committed 2026-10-18). Pages written 2026-10-18.
 The explanations are stand-in text and may change.</p>
 </footer>
 </div>

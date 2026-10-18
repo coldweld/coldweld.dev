@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Running dark</title>
-<meta name="description" content="What the game does for running dark, its numbers, and where each comes from.">
+<meta name="description" content="Functionality, values and sources for running dark.">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -39,6 +39,9 @@ h2 { font-size: 1.5rem; line-height: 1.3; margin: 2.5rem 0 .75rem; font-weight: 
 h3 { font-size: 1.2rem; line-height: 1.35; margin: 1.75rem 0 .5rem; font-weight: 500; }
 p, li, dd { max-width: 40rem; }
 li + li { margin-top: .4rem; }
+ol.facts { padding-left: 1.6rem; }
+ol.facts > li + li { margin-top: 1rem; }
+ol.facts ol { margin: .4rem 0 0; padding-left: 1.6rem; }
 code { font-family: "DM Mono", ui-monospace, Consolas, monospace; font-size: .9em; overflow-wrap: anywhere; }
 .lead { font-size: 1.15rem; line-height: 1.6; }
 .note { background: var(--panel); border: 1px solid var(--rule); padding: .75rem 1rem; max-width: 40rem; }
@@ -178,15 +181,15 @@ dl.keys dd { margin: .25rem 0 0; }
 <div class="glance"><p><strong>22 numbers</strong>, 7 with an outside source</p><ul aria-label="Numbers by grade"><li><span class="grade g-a">A</span>0 <span class="sr">numbers at grade A</span></li><li><span class="grade g-b">B</span>2 <span class="sr">numbers at grade B</span></li><li><span class="grade g-c">C</span>3 <span class="sr">numbers at grade C</span></li><li><span class="grade g-d">D</span>2 <span class="sr">numbers at grade D</span></li><li><span class="grade g-e">E</span>15 <span class="sr">numbers at grade E</span></li></ul></div>
 <div class="toolbar" data-openall></div>
 <details class="section" id="does">
-<summary><h2>What the game does</h2><span class="hint">2 topics</span></summary>
+<summary><h2>Functionality</h2><span class="hint">2 topics</span></summary>
 <div class="sectionbody">
-<h3>Thermal Signature</h3>
+<h3>Thermal signature</h3>
 <ul>
 <li>There is no hiding in space, because a crewed hull always glows against the cold.</li>
 <li>The harder your drive burns, the further off pirates spot you, so big fast ships get jumped more.</li>
 <li>A richer fuel grade burns brighter too, because its faster exhaust carries more power at the same thrust.</li>
 </ul>
-<h3>Silent Running</h3>
+<h3>Silent running</h3>
 <ul>
 <li>On any transit day you can stow the radiators and run dark, which drops you off pirate sensors.</li>
 <li>Silent running cuts the day's odds of a contact to 35% of normal.</li>
@@ -200,7 +203,7 @@ dl.keys dd { margin: .25rem 0 0; }
 </div>
 </details>
 <details class="section" id="numbers">
-<summary><h2>The numbers</h2><span class="hint">22 numbers: 2 B, 3 C, 2 D, 15 E</span></summary>
+<summary><h2>Values</h2><span class="hint">22 numbers: 2 B, 3 C, 2 D, 15 E</span></summary>
 <div class="sectionbody">
 <p>Each value is read from the game code. Sort by any column heading, or filter by grade or by a word.</p>
 <div class="region" role="region" tabindex="0" aria-label="Numbers the game runs for running dark">
@@ -240,7 +243,7 @@ dl.keys dd { margin: .25rem 0 0; }
 </div>
 </details>
 <details class="section" id="why">
-<summary><h2>Why: the real physics or procedure</h2><span class="hint">7 points</span></summary>
+<summary><h2>Real-world basis</h2><span class="hint">7 points</span></summary>
 <div class="sectionbody">
 <ul>
 <li>A warm object shows against the 3 K background of space, so a crewed ship glows.</li>
@@ -254,7 +257,7 @@ dl.keys dd { margin: .25rem 0 0; }
 </div>
 </details>
 <details class="section" id="departs">
-<summary><h2>Where the game departs from reality</h2><span class="hint">6 points</span></summary>
+<summary><h2>Game and reality differences</h2><span class="hint">6 points</span></summary>
 <div class="sectionbody">
 <ul>
 <li>The game lets a dark ship cut the day's contact odds. The mirror says no real stealth exists. The code comment says a dark hull is cold enough to slip past hostiles without a real surveillance net.</li>
@@ -267,17 +270,21 @@ dl.keys dd { margin: .25rem 0 0; }
 </div>
 </details>
 <details class="section" id="silent">
-<summary><h2>Where the sources are silent</h2><span class="hint">3 points</span></summary>
+<summary><h2>Source absences</h2><span class="hint">4 points</span></summary>
 <div class="sectionbody">
-<ul>
-<li>The pages read give no contact chance for a dark ship and no odds of being found by a given hunter.</li>
-<li>The pages read do not set how many days a hull can stay dark, because a real ship has no abstract heat capacity.</li>
-<li>The pages read give no sensor net or area-wide search rule, so the game's contact roll stands in for that.</li>
-</ul>
+<ol class="facts">
+<li>Atomic Rockets does not provide values for the following:
+<ol>
+<li>Contact chance for a dark ship.</li>
+<li>Odds that a given hunter finds a dark ship.</li>
+<li>Days a hull can stay dark. A real ship has no abstract heat capacity.</li>
+<li>Sensor net or area search rule. The contact roll stands in for one.</li>
+</ol></li>
+</ol>
 </div>
 </details>
 <details class="section" id="inspiration">
-<summary><h2>Inspiration</h2><span class="hint">1 work</span></summary>
+<summary><h2>Influences</h2><span class="hint">1 work</span></summary>
 <div class="sectionbody">
 <ul>
 <li><strong>Elite Dangerous</strong> (game): silent running mode: cut power and run dark to avoid detection</li>
@@ -299,7 +306,7 @@ dl.keys dd { margin: .25rem 0 0; }
 <nav aria-label="Other mechanics"><ul class="pager"><li><a href="radiation-dose.html" rel="prev"><span class="dir">Previous</span>Radiation dose</a></li><li class="next"><a href="the-newtonian-fight.html" rel="next"><span class="dir">Next</span>The Newtonian fight</a></li></ul></nav>
 </main>
 <footer class="stamp">
-<p>Read from game commit 41a6e662 (committed 2026-10-18). Pages written 2026-10-18.
+<p>Read from game commit b25a8dd0 (committed 2026-10-18). Pages written 2026-10-18.
 The explanations are stand-in text and may change.</p>
 </footer>
 </div>

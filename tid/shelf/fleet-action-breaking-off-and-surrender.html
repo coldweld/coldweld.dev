@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Fleet action, breaking off and surrender</title>
-<meta name="description" content="What the game does for fleet action, breaking off and surrender, its numbers, and where each comes from.">
+<meta name="description" content="Functionality, values and sources for fleet action, breaking off and surrender.">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -39,6 +39,9 @@ h2 { font-size: 1.5rem; line-height: 1.3; margin: 2.5rem 0 .75rem; font-weight: 
 h3 { font-size: 1.2rem; line-height: 1.35; margin: 1.75rem 0 .5rem; font-weight: 500; }
 p, li, dd { max-width: 40rem; }
 li + li { margin-top: .4rem; }
+ol.facts { padding-left: 1.6rem; }
+ol.facts > li + li { margin-top: 1rem; }
+ol.facts ol { margin: .4rem 0 0; padding-left: 1.6rem; }
 code { font-family: "DM Mono", ui-monospace, Consolas, monospace; font-size: .9em; overflow-wrap: anywhere; }
 .lead { font-size: 1.15rem; line-height: 1.6; }
 .note { background: var(--panel); border: 1px solid var(--rule); padding: .75rem 1rem; max-width: 40rem; }
@@ -178,9 +181,9 @@ dl.keys dd { margin: .25rem 0 0; }
 <div class="glance"><p><strong>32 numbers</strong>, 0 with an outside source</p><ul aria-label="Numbers by grade"><li><span class="grade g-a">A</span>0 <span class="sr">numbers at grade A</span></li><li><span class="grade g-b">B</span>0 <span class="sr">numbers at grade B</span></li><li><span class="grade g-c">C</span>0 <span class="sr">numbers at grade C</span></li><li><span class="grade g-d">D</span>0 <span class="sr">numbers at grade D</span></li><li><span class="grade g-e">E</span>32 <span class="sr">numbers at grade E</span></li></ul></div>
 <div class="toolbar" data-openall></div>
 <details class="section" id="does">
-<summary><h2>What the game does</h2><span class="hint">3 topics</span></summary>
+<summary><h2>Functionality</h2><span class="hint">3 topics</span></summary>
 <div class="sectionbody">
-<h3>Enemy Doctrine</h3>
+<h3>Enemy doctrine</h3>
 <ul>
 <li>Every faction fights to a DOCTRINE. Each hostile picks its target by it every 20 s.</li>
 <li>It matters once escorts or allies fly with you.</li>
@@ -191,7 +194,7 @@ dl.keys dd { margin: .25rem 0 0; }
 <li>Bounty Hunters | COMING FOR YOU, because they were paid for you.</li>
 <li>The contact report names the doctrine before the shooting starts.</li>
 </ul>
-<h3>Wing Orders</h3>
+<h3>Wing orders</h3>
 <ul>
 <li>[6] | orders for one ship, or Enter for the whole wing.</li>
 <li>A ship that forms on you flies beside you, and the row says what share of the fire lands on you.</li>
@@ -201,7 +204,7 @@ dl.keys dd { margin: .25rem 0 0; }
 <li>FORMATION | crossfire, line abreast, loose or trail.</li>
 <li>Between your orders each escort leader flies by their own temperament.</li>
 </ul>
-<h3>Ways Out</h3>
+<h3>Ways out</h3>
 <ul>
 <li>[M] | every way out, and why a blocked one is blocked.</li>
 <li>HAND IT TO THE SECOND | the Second fights on by your standing orders.</li>
@@ -215,7 +218,7 @@ dl.keys dd { margin: .25rem 0 0; }
 </div>
 </details>
 <details class="section" id="numbers">
-<summary><h2>The numbers</h2><span class="hint">32 numbers: 32 E</span></summary>
+<summary><h2>Values</h2><span class="hint">32 numbers: 32 E</span></summary>
 <div class="sectionbody">
 <p>Each value is read from the game code. Sort by any column heading, or filter by grade or by a word.</p>
 <div class="region" role="region" tabindex="0" aria-label="Numbers the game runs for fleet action, breaking off and surrender">
@@ -265,7 +268,7 @@ dl.keys dd { margin: .25rem 0 0; }
 </div>
 </details>
 <details class="section" id="why">
-<summary><h2>Why: the real physics or procedure</h2><span class="hint">6 points</span></summary>
+<summary><h2>Real-world basis</h2><span class="hint">6 points</span></summary>
 <div class="sectionbody">
 <ul>
 <li>A fleet action is decided by who shoots whom, so each navy trains its ships to pick targets by one rule.</li>
@@ -278,7 +281,7 @@ dl.keys dd { margin: .25rem 0 0; }
 </div>
 </details>
 <details class="section" id="departs">
-<summary><h2>Where the game departs from reality</h2><span class="hint">2 points</span></summary>
+<summary><h2>Game and reality differences</h2><span class="hint">2 points</span></summary>
 <div class="sectionbody">
 <ul>
 <li>The game charges a captain's record for a feint as a perfidy that a lawful flag remembers once per flag. The handbook treats it as an offense for a court and names no price.</li>
@@ -287,12 +290,20 @@ dl.keys dd { margin: .25rem 0 0; }
 </div>
 </details>
 <details class="section" id="silent">
-<summary><h2>Where the sources are silent</h2><span class="hint">2 points</span></summary>
+<summary><h2>Source absences</h2><span class="hint">4 points</span></summary>
 <div class="sectionbody">
-<ul>
-<li>No source gives any chance, threshold or hit bonus on this page. The handbook gives the rule that a feigned surrender is treacherous, and the odds and the penalty are the game's own.</li>
-<li>The sources shelf says SORM never says who may strike colors and gives no procedure for yielding a ship.</li>
-</ul>
+<ol class="facts">
+<li>No source on the shelf provides values for the following:
+<ol>
+<li>Chances, thresholds, or hit bonuses. All are authored.</li>
+<li>Odds and penalty of a feigned surrender. The Handbook calls a feigned surrender treacherous.</li>
+</ol></li>
+<li>SORM does not cover the following:
+<ol>
+<li>Who may strike colors.</li>
+<li>Procedure to yield a ship.</li>
+</ol></li>
+</ol>
 </div>
 </details>
 <details class="section" id="sources">
@@ -307,7 +318,7 @@ dl.keys dd { margin: .25rem 0 0; }
 <nav aria-label="Other mechanics"><ul class="pager"><li><a href="range-bands-and-the-joust.html" rel="prev"><span class="dir">Previous</span>Range bands and the joust</a></li><li class="next"><a href="wounds-medicine-and-salvage-after-a-fight.html" rel="next"><span class="dir">Next</span>Wounds, medicine and salvage after a fight</a></li></ul></nav>
 </main>
 <footer class="stamp">
-<p>Read from game commit 41a6e662 (committed 2026-10-18). Pages written 2026-10-18.
+<p>Read from game commit b25a8dd0 (committed 2026-10-18). Pages written 2026-10-18.
 The explanations are stand-in text and may change.</p>
 </footer>
 </div>

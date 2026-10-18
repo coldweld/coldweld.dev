@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>The Newtonian fight</title>
-<meta name="description" content="What the game does for the newtonian fight, its numbers, and where each comes from.">
+<meta name="description" content="Functionality, values and sources for the newtonian fight.">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -39,6 +39,9 @@ h2 { font-size: 1.5rem; line-height: 1.3; margin: 2.5rem 0 .75rem; font-weight: 
 h3 { font-size: 1.2rem; line-height: 1.35; margin: 1.75rem 0 .5rem; font-weight: 500; }
 p, li, dd { max-width: 40rem; }
 li + li { margin-top: .4rem; }
+ol.facts { padding-left: 1.6rem; }
+ol.facts > li + li { margin-top: 1rem; }
+ol.facts ol { margin: .4rem 0 0; padding-left: 1.6rem; }
 code { font-family: "DM Mono", ui-monospace, Consolas, monospace; font-size: .9em; overflow-wrap: anywhere; }
 .lead { font-size: 1.15rem; line-height: 1.6; }
 .note { background: var(--panel); border: 1px solid var(--rule); padding: .75rem 1rem; max-width: 40rem; }
@@ -178,9 +181,9 @@ dl.keys dd { margin: .25rem 0 0; }
 <div class="glance"><p><strong>60 numbers</strong>, 3 with an outside source</p><ul aria-label="Numbers by grade"><li><span class="grade g-a">A</span>0 <span class="sr">numbers at grade A</span></li><li><span class="grade g-b">B</span>0 <span class="sr">numbers at grade B</span></li><li><span class="grade g-c">C</span>2 <span class="sr">numbers at grade C</span></li><li><span class="grade g-d">D</span>1 <span class="sr">numbers at grade D</span></li><li><span class="grade g-e">E</span>57 <span class="sr">numbers at grade E</span></li></ul></div>
 <div class="toolbar" data-openall></div>
 <details class="section" id="does">
-<summary><h2>What the game does</h2><span class="hint">5 topics</span></summary>
+<summary><h2>Functionality</h2><span class="hint">5 topics</span></summary>
 <div class="sectionbody">
-<h3>In Brief</h3>
+<h3>In brief</h3>
 <ul>
 <li>Combat is a fight between ships on a running clock, flown from your bridge.</li>
 <li>Ships move by real physics, and every round flies until it hits or misses.</li>
@@ -190,7 +193,7 @@ dl.keys dd { margin: .25rem 0 0; }
 <li>A hostile that surrenders can be taken prisoner.</li>
 <li>After the fight a disabled hostile can be boarded, and the best cargo come from boarding.</li>
 </ul>
-<h3>Range And The Kill Zone</h3>
+<h3>Range and the kill zone</h3>
 <ul>
 <li>Every ship has its own position and speed, and the range is real km.</li>
 <li>A round takes time to fly, and a crew dodges a round it sees coming.</li>
@@ -200,7 +203,7 @@ dl.keys dd { margin: .25rem 0 0; }
 <li>No gun fires a round that needs more than 40 s to reach its target.</li>
 <li>CLOSE IN | on the helm, the autopilot closes and holds the range you name.</li>
 </ul>
-<h3>The Dodge</h3>
+<h3>The dodge</h3>
 <ul>
 <li>A round takes time to fly, so a hull that moves off its line makes it miss.</li>
 <li>WEAVE | the drive burns off the line, changing side every 8 s, until the heat fills the loop.</li>
@@ -221,7 +224,7 @@ dl.keys dd { margin: .25rem 0 0; }
 <li>Lose, and the raiders fill their hold from yours, the most valuable goods first.</li>
 <li>They take the ship only if you fought on after the Second's warning.</li>
 </ul>
-<h3>Ways Out</h3>
+<h3>Ways out</h3>
 <ul>
 <li>[M] | every way out, and why a blocked one is blocked.</li>
 <li>HAND IT TO THE SECOND | the Second fights on by your standing orders.</li>
@@ -235,7 +238,7 @@ dl.keys dd { margin: .25rem 0 0; }
 </div>
 </details>
 <details class="section" id="numbers">
-<summary><h2>The numbers</h2><span class="hint">60 numbers: 2 C, 1 D, 57 E</span></summary>
+<summary><h2>Values</h2><span class="hint">60 numbers: 2 C, 1 D, 57 E</span></summary>
 <div class="sectionbody">
 <p>Each value is read from the game code. Sort by any column heading, or filter by grade or by a word.</p>
 <div class="region" role="region" tabindex="0" aria-label="Numbers the game runs for the newtonian fight">
@@ -313,7 +316,7 @@ dl.keys dd { margin: .25rem 0 0; }
 </div>
 </details>
 <details class="section" id="why">
-<summary><h2>Why: the real physics or procedure</h2><span class="hint">8 points</span></summary>
+<summary><h2>Real-world basis</h2><span class="hint">8 points</span></summary>
 <div class="sectionbody">
 <ul>
 <li>A ship in space keeps its speed until a burn changes it, so every ship has its own position and its own velocity.</li>
@@ -328,7 +331,7 @@ dl.keys dd { margin: .25rem 0 0; }
 </div>
 </details>
 <details class="section" id="departs">
-<summary><h2>Where the game departs from reality</h2><span class="hint">7 points</span></summary>
+<summary><h2>Game and reality differences</h2><span class="hint">7 points</span></summary>
 <div class="sectionbody">
 <ul>
 <li>Light lag is not modeled. The mirror says it matters at ranges of a light-second and more, but the game's combat design notes list it as negligible at fight ranges (milliseconds) and not built.</li>
@@ -342,19 +345,28 @@ dl.keys dd { margin: .25rem 0 0; }
 </div>
 </details>
 <details class="section" id="silent">
-<summary><h2>Where the sources are silent</h2><span class="hint">5 points</span></summary>
+<summary><h2>Source absences</h2><span class="hint">8 points</span></summary>
 <div class="sectionbody">
-<ul>
-<li>The mirror gives no time that a crew needs to see a round and react, so the 2 second reaction is the game's own number.</li>
-<li>The mirror gives no distance at which a chase ends, so the 3,000 km run line has no outside source. The game's combat design notes state it (the helm's Break off and run order) and give no reason for the number.</li>
-<li>The mirror gives no hold time, range or speed limit for a boarding, so BOARDING_KM, BOARDING_MATCH_KMS and BOARDING_HOLD_S are authored. The game's code says every number in the fight is authored unless a comment names a source.</li>
-<li>The 40 second flight cap is the game's own measurement. A comment in the game says none of 180 of the captain's rounds landed past that time of flight.</li>
-<li>The game's source shelf holds navy and treaty rules for a warship that stops, boards and searches a ship on suspicion. They do not describe a pirate boarding or a fight between boarders and a crew.</li>
-</ul>
+<ol class="facts">
+<li>Atomic Rockets does not provide values for the following:
+<ol>
+<li>Time a crew needs to see and react to incoming fire. 2 seconds is authored.</li>
+<li>Distance at which a chase ends. 3,000 km is authored.</li>
+<li>Range for a boarding. 5 km is authored.</li>
+<li>Speed match for a boarding. 0.05 km/s is authored.</li>
+<li>Hold time for a boarding. 20 seconds is authored.</li>
+<li>Flight cap for a long range round. 40 seconds is measured: 0 of 180 rounds landed past it.</li>
+</ol></li>
+<li>SORM and UNCLOS do not cover the following:
+<ol>
+<li>Pirate boarding. Both cover a warship that stops, boards, and searches a ship on suspicion.</li>
+<li>Action between boarders and crew.</li>
+</ol></li>
+</ol>
 </div>
 </details>
 <details class="section" id="inspiration">
-<summary><h2>Inspiration</h2><span class="hint">2 works</span></summary>
+<summary><h2>Influences</h2><span class="hint">2 works</span></summary>
 <div class="sectionbody">
 <ul>
 <li><strong>SUPERHOT</strong> (game): every ship acts at once and time moves when the captain acts</li>
@@ -384,7 +396,7 @@ dl.keys dd { margin: .25rem 0 0; }
 <nav aria-label="Other mechanics"><ul class="pager"><li><a href="running-dark.html" rel="prev"><span class="dir">Previous</span>Running dark</a></li><li class="next"><a href="kinetic-guns-and-point-defense.html" rel="next"><span class="dir">Next</span>Kinetic guns and point defense</a></li></ul></nav>
 </main>
 <footer class="stamp">
-<p>Read from game commit 41a6e662 (committed 2026-10-18). Pages written 2026-10-18.
+<p>Read from game commit b25a8dd0 (committed 2026-10-18). Pages written 2026-10-18.
 The explanations are stand-in text and may change.</p>
 </footer>
 </div>

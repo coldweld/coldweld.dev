@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>The power model</title>
-<meta name="description" content="What the game does for the power model, its numbers, and where each comes from.">
+<meta name="description" content="Functionality, values and sources for the power model.">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -39,6 +39,9 @@ h2 { font-size: 1.5rem; line-height: 1.3; margin: 2.5rem 0 .75rem; font-weight: 
 h3 { font-size: 1.2rem; line-height: 1.35; margin: 1.75rem 0 .5rem; font-weight: 500; }
 p, li, dd { max-width: 40rem; }
 li + li { margin-top: .4rem; }
+ol.facts { padding-left: 1.6rem; }
+ol.facts > li + li { margin-top: 1rem; }
+ol.facts ol { margin: .4rem 0 0; padding-left: 1.6rem; }
 code { font-family: "DM Mono", ui-monospace, Consolas, monospace; font-size: .9em; overflow-wrap: anywhere; }
 .lead { font-size: 1.15rem; line-height: 1.6; }
 .note { background: var(--panel); border: 1px solid var(--rule); padding: .75rem 1rem; max-width: 40rem; }
@@ -178,9 +181,9 @@ dl.keys dd { margin: .25rem 0 0; }
 <div class="glance"><p><strong>23 numbers</strong>, 5 with an outside source</p><ul aria-label="Numbers by grade"><li><span class="grade g-a">A</span>0 <span class="sr">numbers at grade A</span></li><li><span class="grade g-b">B</span>1 <span class="sr">numbers at grade B</span></li><li><span class="grade g-c">C</span>0 <span class="sr">numbers at grade C</span></li><li><span class="grade g-d">D</span>4 <span class="sr">numbers at grade D</span></li><li><span class="grade g-e">E</span>18 <span class="sr">numbers at grade E</span></li></ul></div>
 <div class="toolbar" data-openall></div>
 <details class="section" id="does">
-<summary><h2>What the game does</h2><span class="hint">1 topic</span></summary>
+<summary><h2>Functionality</h2><span class="hint">1 topic</span></summary>
 <div class="sectionbody">
-<h3>Power And The Capacitor</h3>
+<h3>Power and the capacitor</h3>
 <ul>
 <li>Power is the electrical cost of fighting, as heat is the thermal one.</li>
 <li>The CAPACITOR is a bank that starts the fight full.</li>
@@ -195,7 +198,7 @@ dl.keys dd { margin: .25rem 0 0; }
 </div>
 </details>
 <details class="section" id="numbers">
-<summary><h2>The numbers</h2><span class="hint">23 numbers: 1 B, 4 D, 18 E</span></summary>
+<summary><h2>Values</h2><span class="hint">23 numbers: 1 B, 4 D, 18 E</span></summary>
 <div class="sectionbody">
 <p>Each value is read from the game code. Sort by any column heading, or filter by grade or by a word.</p>
 <div class="region" role="region" tabindex="0" aria-label="Numbers the game runs for the power model">
@@ -236,7 +239,7 @@ dl.keys dd { margin: .25rem 0 0; }
 </div>
 </details>
 <details class="section" id="why">
-<summary><h2>Why: the real physics or procedure</h2><span class="hint">7 points</span></summary>
+<summary><h2>Real-world basis</h2><span class="hint">7 points</span></summary>
 <div class="sectionbody">
 <ul>
 <li>A nuclear plant makes heat, and a generator turns only part of it into electricity.</li>
@@ -250,7 +253,7 @@ dl.keys dd { margin: .25rem 0 0; }
 </div>
 </details>
 <details class="section" id="departs">
-<summary><h2>Where the game departs from reality</h2><span class="hint">4 points</span></summary>
+<summary><h2>Game and reality differences</h2><span class="hint">4 points</span></summary>
 <div class="sectionbody">
 <ul>
 <li>The sizes in WEAPON_POWER_BY_SIZE are authored so reactor output covers about two Standard guns a round.</li>
@@ -261,17 +264,23 @@ dl.keys dd { margin: .25rem 0 0; }
 </div>
 </details>
 <details class="section" id="silent">
-<summary><h2>Where the sources are silent</h2><span class="hint">7 points</span></summary>
+<summary><h2>Source absences</h2><span class="hint">7 points</span></summary>
 <div class="sectionbody">
-<ul>
-<li>No source gives a restart time for a scrammed reactor of this type. The game marks the restart time as authored and unbuilt.</li>
-<li>The decay heat share of 0.035 is recalled from the Way-Wigner formula and marked unverified in the game. The mirror gives no figure for it.</li>
-<li>No source gives a reefer container's draw or a hotel load per hand beyond the mirror's life support figure of about 30 kW for six crew.</li>
-<li>The mirror gives no figure for a pump's share of the heat it moves. The 1% in PUMP_POWER_SHARE comes from NRC water-reactor pump ratings and is marked unverified for a space plant.</li>
-<li>No source gives a vital-load list for a warship. The game's power notes name NSTM chapter 320 as the likely source, and it was not opened (UNVERIFIED).</li>
-<li>The Navy damage control manual says only that each repair party restores casualty power, and nothing on load shedding.</li>
-<li>The draw of a cartridge gun's feed motor is recalled as about 115 kW for a GAU-8, UNVERIFIED.</li>
-</ul>
+<ol class="facts">
+<li>Atomic Rockets does not provide values for the following:
+<ol>
+<li>Restart time for a scrammed reactor. Not built.</li>
+<li>Decay heat share. 3.5% is recalled from the Way-Wigner formula, unverified.</li>
+<li>Hotel load per hand, beyond about 30 kW of life support for six crew, unverified.</li>
+<li>Pump share of the heat it moves. 1% comes from NRC water reactor pumps, unverified for a space reactor plant.</li>
+</ol></li>
+<li>No source on the shelf provides values for the following:
+<ol>
+<li>Vital load list for a warship. NSTM chapter 320 is the likely source and was not opened.</li>
+<li>Load shedding. The Navy damage control manual says only that each repair party restores casualty power.</li>
+<li>Feed motor draw of a cartridge gun. About 115 kW for a GAU-8 is recalled, unverified.</li>
+</ol></li>
+</ol>
 </div>
 </details>
 <details class="section" id="sources">
@@ -292,7 +301,7 @@ dl.keys dd { margin: .25rem 0 0; }
 <nav aria-label="Other mechanics"><ul class="pager"><li><a href="heat-and-radiators.html" rel="prev"><span class="dir">Previous</span>Heat and radiators</a></li><li class="next"><a href="fuel-and-the-torch-drive.html" rel="next"><span class="dir">Next</span>Fuel and the torch drive</a></li></ul></nav>
 </main>
 <footer class="stamp">
-<p>Read from game commit 41a6e662 (committed 2026-10-18). Pages written 2026-10-18.
+<p>Read from game commit b25a8dd0 (committed 2026-10-18). Pages written 2026-10-18.
 The explanations are stand-in text and may change.</p>
 </footer>
 </div>

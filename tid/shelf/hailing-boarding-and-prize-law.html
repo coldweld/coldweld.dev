@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Hailing, boarding and prize law</title>
-<meta name="description" content="What the game does for hailing, boarding and prize law, its numbers, and where each comes from.">
+<meta name="description" content="Functionality, values and sources for hailing, boarding and prize law.">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -39,6 +39,9 @@ h2 { font-size: 1.5rem; line-height: 1.3; margin: 2.5rem 0 .75rem; font-weight: 
 h3 { font-size: 1.2rem; line-height: 1.35; margin: 1.75rem 0 .5rem; font-weight: 500; }
 p, li, dd { max-width: 40rem; }
 li + li { margin-top: .4rem; }
+ol.facts { padding-left: 1.6rem; }
+ol.facts > li + li { margin-top: 1rem; }
+ol.facts ol { margin: .4rem 0 0; padding-left: 1.6rem; }
 code { font-family: "DM Mono", ui-monospace, Consolas, monospace; font-size: .9em; overflow-wrap: anywhere; }
 .lead { font-size: 1.15rem; line-height: 1.6; }
 .note { background: var(--panel); border: 1px solid var(--rule); padding: .75rem 1rem; max-width: 40rem; }
@@ -178,9 +181,9 @@ dl.keys dd { margin: .25rem 0 0; }
 <div class="glance"><p><strong>46 numbers</strong>, 1 with an outside source</p><ul aria-label="Numbers by grade"><li><span class="grade g-a">A</span>0 <span class="sr">numbers at grade A</span></li><li><span class="grade g-b">B</span>0 <span class="sr">numbers at grade B</span></li><li><span class="grade g-c">C</span>0 <span class="sr">numbers at grade C</span></li><li><span class="grade g-d">D</span>1 <span class="sr">numbers at grade D</span></li><li><span class="grade g-e">E</span>45 <span class="sr">numbers at grade E</span></li></ul></div>
 <div class="toolbar" data-openall></div>
 <details class="section" id="does">
-<summary><h2>What the game does</h2><span class="hint">2 topics</span></summary>
+<summary><h2>Functionality</h2><span class="hint">2 topics</span></summary>
 <div class="sectionbody">
-<h3>Ways Out</h3>
+<h3>Ways out</h3>
 <ul>
 <li>[M] | every way out, and why a blocked one is blocked.</li>
 <li>HAND IT TO THE SECOND | the Second fights on by your standing orders.</li>
@@ -205,7 +208,7 @@ dl.keys dd { margin: .25rem 0 0; }
 </div>
 </details>
 <details class="section" id="numbers">
-<summary><h2>The numbers</h2><span class="hint">46 numbers: 1 D, 45 E</span></summary>
+<summary><h2>Values</h2><span class="hint">46 numbers: 1 D, 45 E</span></summary>
 <div class="sectionbody">
 <p>Each value is read from the game code. Sort by any column heading, or filter by grade or by a word.</p>
 <div class="region" role="region" tabindex="0" aria-label="Numbers the game runs for hailing, boarding and prize law">
@@ -269,7 +272,7 @@ dl.keys dd { margin: .25rem 0 0; }
 </div>
 </details>
 <details class="section" id="why">
-<summary><h2>Why: the real physics or procedure</h2><span class="hint">8 points</span></summary>
+<summary><h2>Real-world basis</h2><span class="hint">8 points</span></summary>
 <div class="sectionbody">
 <ul>
 <li>A warship may approach any ship at sea to check its nationality, but it may stop and board only on a short list of grounds.</li>
@@ -284,7 +287,7 @@ dl.keys dd { margin: .25rem 0 0; }
 </div>
 </details>
 <details class="section" id="departs">
-<summary><h2>Where the game departs from reality</h2><span class="hint">7 points</span></summary>
+<summary><h2>Game and reality differences</h2><span class="hint">7 points</span></summary>
 <div class="sectionbody">
 <ul>
 <li>Who may stop you: choosehostilefleet lets any flag's patrol stop a captain in any flag's space, but the sources limit a stop at sea to five grounds or to the coastal state's own zone. The game marks this DEPARTURE, unexplained.</li>
@@ -298,22 +301,37 @@ dl.keys dd { margin: .25rem 0 0; }
 </div>
 </details>
 <details class="section" id="silent">
-<summary><h2>Where the sources are silent</h2><span class="hint">8 points</span></summary>
+<summary><h2>Source absences</h2><span class="hint">8 points</span></summary>
 <div class="sectionbody">
-<ul>
-<li>Payment to a captor: the Handbook names the prize court and gives no share, fee or bounty, and UNCLOS sets no fine, bounty or share.</li>
-<li>A surrender: SORM never says who may strike colors, because Navy Regulations is the document that would speak and it is not on the shelf.</li>
-<li>Rules of engagement: the Handbook only points to them, and the text is classified.</li>
-<li>Bounty hunters and bail: no source on the shelf covers them.</li>
-<li>A feigned surrender followed by a shot (the TRICK row): no page on the shelf covers it.</li>
-<li>Space: there is no sea, coastal state or zone in the setting, so the articles give a shape and not a map.</li>
-<li>The Atomic Rockets mirror gives only the jurisdiction point and says nothing on boarding steps.</li>
-<li>These sources were read through their shelf pages, and the original PDFs were not reopened for this page.</li>
-</ul>
+<ol class="facts">
+<li>The Commander's Handbook and UNCLOS do not cover the following:
+<ol>
+<li>Share, fee, fine, or bounty paid to a captor. The Handbook names the prize court only.</li>
+<li>Rules of engagement. The Handbook points to them, and the text is classified.</li>
+</ol></li>
+<li>SORM does not cover the following:
+<ol>
+<li>Who may strike colors. Navy Regulations covers it and is not on the shelf.</li>
+</ol></li>
+<li>No source on the shelf covers the following:
+<ol>
+<li>Bounty hunters and bail.</li>
+<li>A feigned surrender followed by a shot (the TRICK row).</li>
+<li>Sea zones or a coastal state in space. The treaty articles give a shape and not a map.</li>
+</ol></li>
+<li>Atomic Rockets does not cover the following:
+<ol>
+<li>Boarding steps. The page gives the jurisdiction point only.</li>
+</ol></li>
+<li>Not read for this page:
+<ol>
+<li>The original documents. Each was read through its shelf page.</li>
+</ol></li>
+</ol>
 </div>
 </details>
 <details class="section" id="inspiration">
-<summary><h2>Inspiration</h2><span class="hint">1 work</span></summary>
+<summary><h2>Influences</h2><span class="hint">1 work</span></summary>
 <div class="sectionbody">
 <ul>
 <li><strong>Atomic Rockets, Pirates page</strong> (book): A raider needs the prize intact and is seen days ahead, so a loss comes from a decision and the price is shown first.</li>
@@ -334,7 +352,7 @@ dl.keys dd { margin: .25rem 0 0; }
 <nav aria-label="Other mechanics"><ul class="pager"><li><a href="hull-wear-and-repair.html" rel="prev"><span class="dir">Previous</span>Hull wear and repair</a></li><li class="next"><a href="salvage-and-distress.html" rel="next"><span class="dir">Next</span>Salvage and distress</a></li></ul></nav>
 </main>
 <footer class="stamp">
-<p>Read from game commit 41a6e662 (committed 2026-10-18). Pages written 2026-10-18.
+<p>Read from game commit b25a8dd0 (committed 2026-10-18). Pages written 2026-10-18.
 The explanations are stand-in text and may change.</p>
 </footer>
 </div>

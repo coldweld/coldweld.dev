@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Radiation dose</title>
-<meta name="description" content="What the game does for radiation dose, its numbers, and where each comes from.">
+<meta name="description" content="Functionality, values and sources for radiation dose.">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -39,6 +39,9 @@ h2 { font-size: 1.5rem; line-height: 1.3; margin: 2.5rem 0 .75rem; font-weight: 
 h3 { font-size: 1.2rem; line-height: 1.35; margin: 1.75rem 0 .5rem; font-weight: 500; }
 p, li, dd { max-width: 40rem; }
 li + li { margin-top: .4rem; }
+ol.facts { padding-left: 1.6rem; }
+ol.facts > li + li { margin-top: 1rem; }
+ol.facts ol { margin: .4rem 0 0; padding-left: 1.6rem; }
 code { font-family: "DM Mono", ui-monospace, Consolas, monospace; font-size: .9em; overflow-wrap: anywhere; }
 .lead { font-size: 1.15rem; line-height: 1.6; }
 .note { background: var(--panel); border: 1px solid var(--rule); padding: .75rem 1rem; max-width: 40rem; }
@@ -178,7 +181,7 @@ dl.keys dd { margin: .25rem 0 0; }
 <div class="glance"><p><strong>30 numbers</strong>, 21 with an outside source</p><ul aria-label="Numbers by grade"><li><span class="grade g-a">A</span>0 <span class="sr">numbers at grade A</span></li><li><span class="grade g-b">B</span>15 <span class="sr">numbers at grade B</span></li><li><span class="grade g-c">C</span>3 <span class="sr">numbers at grade C</span></li><li><span class="grade g-d">D</span>3 <span class="sr">numbers at grade D</span></li><li><span class="grade g-e">E</span>9 <span class="sr">numbers at grade E</span></li></ul></div>
 <div class="toolbar" data-openall></div>
 <details class="section" id="does">
-<summary><h2>What the game does</h2><span class="hint">2 topics</span></summary>
+<summary><h2>Functionality</h2><span class="hint">2 topics</span></summary>
 <div class="sectionbody">
 <h3>Radiation</h3>
 <ul>
@@ -193,7 +196,7 @@ dl.keys dd { margin: .25rem 0 0; }
 <li>A storm is weaker far from the Sun.</li>
 <li>Every screen that quotes a dose also says what it means in years of permitted exposure.</li>
 </ul>
-<h3>Jupiter&#x27;S Moons</h3>
+<h3>Jupiter&#x27;s moons</h3>
 <ul>
 <li>Jupiter's moons are the exception, and they are not close.</li>
 <li>Io sits inside a trapped belt worth tens of thousands of mSv a day.</li>
@@ -203,7 +206,7 @@ dl.keys dd { margin: .25rem 0 0; }
 </div>
 </details>
 <details class="section" id="numbers">
-<summary><h2>The numbers</h2><span class="hint">30 numbers: 15 B, 3 C, 3 D, 9 E</span></summary>
+<summary><h2>Values</h2><span class="hint">30 numbers: 15 B, 3 C, 3 D, 9 E</span></summary>
 <div class="sectionbody">
 <p>Each value is read from the game code. Sort by any column heading, or filter by grade or by a word.</p>
 <div class="region" role="region" tabindex="0" aria-label="Numbers the game runs for radiation dose">
@@ -251,7 +254,7 @@ dl.keys dd { margin: .25rem 0 0; }
 </div>
 </details>
 <details class="section" id="why">
-<summary><h2>Why: the real physics or procedure</h2><span class="hint">8 points</span></summary>
+<summary><h2>Real-world basis</h2><span class="hint">8 points</span></summary>
 <div class="sectionbody">
 <ul>
 <li>A dose is the energy that radiation leaves in a body, and the sievert is the unit that weighs the damage by the kind of radiation.</li>
@@ -266,7 +269,7 @@ dl.keys dd { margin: .25rem 0 0; }
 </div>
 </details>
 <details class="section" id="departs">
-<summary><h2>Where the game departs from reality</h2><span class="hint">7 points</span></summary>
+<summary><h2>Game and reality differences</h2><span class="hint">7 points</span></summary>
 <div class="sectionbody">
 <ul>
 <li>Gray and sievert are treated as the same unit for this radiation.</li>
@@ -280,13 +283,16 @@ dl.keys dd { margin: .25rem 0 0; }
 </div>
 </details>
 <details class="section" id="silent">
-<summary><h2>Where the sources are silent</h2><span class="hint">3 points</span></summary>
+<summary><h2>Source absences</h2><span class="hint">3 points</span></summary>
 <div class="sectionbody">
-<ul>
-<li>The mirror gives no clearing rate in mSv a day. It gives recovery times in weeks and months for each acute band only.</li>
-<li>The mirror gives no storm size law past 1 AU. The distance scaling for the outer system is an extrapolation.</li>
-<li>The mirror does not say how long a ship spends in a belt on a visit.</li>
-</ul>
+<ol class="facts">
+<li>Atomic Rockets does not provide values for the following:
+<ol>
+<li>Clearing rate in mSv a day. The page gives recovery times in weeks and months for each acute band only.</li>
+<li>Storm size law past 1 AU. The outer system scaling is an extrapolation.</li>
+<li>Time a ship spends in a belt on a visit.</li>
+</ol></li>
+</ol>
 </div>
 </details>
 <details class="section" id="sources">
@@ -308,7 +314,7 @@ dl.keys dd { margin: .25rem 0 0; }
 <nav aria-label="Other mechanics"><ul class="pager"><li><a href="fuel-and-the-torch-drive.html" rel="prev"><span class="dir">Previous</span>Fuel and the torch drive</a></li><li class="next"><a href="running-dark.html" rel="next"><span class="dir">Next</span>Running dark</a></li></ul></nav>
 </main>
 <footer class="stamp">
-<p>Read from game commit 41a6e662 (committed 2026-10-18). Pages written 2026-10-18.
+<p>Read from game commit b25a8dd0 (committed 2026-10-18). Pages written 2026-10-18.
 The explanations are stand-in text and may change.</p>
 </footer>
 </div>

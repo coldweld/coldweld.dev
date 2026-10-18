@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Fuel and the torch drive</title>
-<meta name="description" content="What the game does for fuel and the torch drive, its numbers, and where each comes from.">
+<meta name="description" content="Functionality, values and sources for fuel and the torch drive.">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -39,6 +39,9 @@ h2 { font-size: 1.5rem; line-height: 1.3; margin: 2.5rem 0 .75rem; font-weight: 
 h3 { font-size: 1.2rem; line-height: 1.35; margin: 1.75rem 0 .5rem; font-weight: 500; }
 p, li, dd { max-width: 40rem; }
 li + li { margin-top: .4rem; }
+ol.facts { padding-left: 1.6rem; }
+ol.facts > li + li { margin-top: 1rem; }
+ol.facts ol { margin: .4rem 0 0; padding-left: 1.6rem; }
 code { font-family: "DM Mono", ui-monospace, Consolas, monospace; font-size: .9em; overflow-wrap: anywhere; }
 .lead { font-size: 1.15rem; line-height: 1.6; }
 .note { background: var(--panel); border: 1px solid var(--rule); padding: .75rem 1rem; max-width: 40rem; }
@@ -178,9 +181,9 @@ dl.keys dd { margin: .25rem 0 0; }
 <div class="glance"><p><strong>33 numbers</strong>, 6 with an outside source</p><ul aria-label="Numbers by grade"><li><span class="grade g-a">A</span>0 <span class="sr">numbers at grade A</span></li><li><span class="grade g-b">B</span>4 <span class="sr">numbers at grade B</span></li><li><span class="grade g-c">C</span>0 <span class="sr">numbers at grade C</span></li><li><span class="grade g-d">D</span>2 <span class="sr">numbers at grade D</span></li><li><span class="grade g-e">E</span>27 <span class="sr">numbers at grade E</span></li></ul></div>
 <div class="toolbar" data-openall></div>
 <details class="section" id="does">
-<summary><h2>What the game does</h2><span class="hint">3 topics</span></summary>
+<summary><h2>Functionality</h2><span class="hint">3 topics</span></summary>
 <div class="sectionbody">
-<h3>Range And The Destination Tags</h3>
+<h3>Range and the destination tags</h3>
 <ul>
 <li>A trip burns the whole way while the fuel its BURN PROFILE spends allows, and coasts on the rest when it does not.</li>
 <li>It always keeps enough fuel to land and to break off one fight.</li>
@@ -190,7 +193,7 @@ dl.keys dd { margin: .25rem 0 0; }
 <li>OUT OF RANGE: tank too small | even empty and full, the coast outlasts the stores, so a richer grade or a faster hull is the answer.</li>
 <li>OUT OF RANGE means no SINGLE crossing reaches it. It never means the place cannot be reached.</li>
 </ul>
-<h3>Burn Profile</h3>
+<h3>Burn profile</h3>
 <ul>
 <li>A burn profile is how much speed one trip buys, chosen before you leave.</li>
 <li>Every profile flies at the drive's rated thrust, so the fuel spent is what changes.</li>
@@ -201,7 +204,7 @@ dl.keys dd { margin: .25rem 0 0; }
 <li>A slower trip eats more food and water and rolls for more contacts, and it can outlast the stores.</li>
 <li>A hull rated above 1 g strains its crew, shown as CREW STRAIN in fatigue per day.</li>
 </ul>
-<h3>Fuel And Stores</h3>
+<h3>Fuel and stores</h3>
 <ul>
 <li>Fuel is water that the drive throws out the back, bought by the tonne at the station's water price.</li>
 <li>Food and water are scaled by the days and by how many people are aboard.</li>
@@ -211,7 +214,7 @@ dl.keys dd { margin: .25rem 0 0; }
 </div>
 </details>
 <details class="section" id="numbers">
-<summary><h2>The numbers</h2><span class="hint">33 numbers: 4 B, 2 D, 27 E</span></summary>
+<summary><h2>Values</h2><span class="hint">33 numbers: 4 B, 2 D, 27 E</span></summary>
 <div class="sectionbody">
 <p>Each value is read from the game code. Sort by any column heading, or filter by grade or by a word.</p>
 <div class="region" role="region" tabindex="0" aria-label="Numbers the game runs for fuel and the torch drive">
@@ -262,7 +265,7 @@ dl.keys dd { margin: .25rem 0 0; }
 </div>
 </details>
 <details class="section" id="why">
-<summary><h2>Why: the real physics or procedure</h2><span class="hint">8 points</span></summary>
+<summary><h2>Real-world basis</h2><span class="hint">8 points</span></summary>
 <div class="sectionbody">
 <ul>
 <li>A rocket gains speed by throwing mass backward, so a faster exhaust gains more speed from the same mass.</li>
@@ -277,7 +280,7 @@ dl.keys dd { margin: .25rem 0 0; }
 </div>
 </details>
 <details class="section" id="departs">
-<summary><h2>Where the game departs from reality</h2><span class="hint">8 points</span></summary>
+<summary><h2>Game and reality differences</h2><span class="hint">8 points</span></summary>
 <div class="sectionbody">
 <ul>
 <li>The ladder runs far past a published design. The real salt-water figures are 66 km/s and, in the speculative case, 4,725 km/s. coldweld chose to keep one-g trips, so the ladder is a labeled fiction.</li>
@@ -292,19 +295,26 @@ dl.keys dd { margin: .25rem 0 0; }
 </div>
 </details>
 <details class="section" id="silent">
-<summary><h2>Where the sources are silent</h2><span class="hint">5 points</span></summary>
+<summary><h2>Source absences</h2><span class="hint">6 points</span></summary>
 <div class="sectionbody">
-<ul>
-<li>No source prices salt, custody or a refill, so the Cr figures are the game's own.</li>
-<li>No source sets how much water a tank holds against the dry mass, so the tank share is the game's own.</li>
-<li>No source covers a reserve to land and to break off a fight.</li>
-<li>The mirror has no rule for who may hold enrichment grades, because that is fiction.</li>
-<li>The mirror does not rank a burn profile, a cost-to-arrive plan or an arrive-by day.</li>
-</ul>
+<ol class="facts">
+<li>No source on the shelf provides values for the following:
+<ol>
+<li>Price of salt, custody, or a refill. Every Cr value is authored.</li>
+<li>Tank water against dry mass. The tank share is authored.</li>
+<li>Reserve to land.</li>
+<li>Reserve to break off a fight. 0.25 days of full thrust is authored.</li>
+</ol></li>
+<li>Atomic Rockets does not cover the following:
+<ol>
+<li>Who may hold each enrichment grade. The rule is fiction.</li>
+<li>Rank of burn profiles, cost-to-arrive plans, or arrive-by days.</li>
+</ol></li>
+</ol>
 </div>
 </details>
 <details class="section" id="inspiration">
-<summary><h2>Inspiration</h2><span class="hint">3 works</span></summary>
+<summary><h2>Influences</h2><span class="hint">3 works</span></summary>
 <div class="sectionbody">
 <ul>
 <li><strong>Nuclear salt-water rocket (Robert Zubrin, 1991)</strong> (real system): the fuel itself: fissile salt dissolved in water, with the water as the propellant</li>
@@ -330,7 +340,7 @@ dl.keys dd { margin: .25rem 0 0; }
 <nav aria-label="Other mechanics"><ul class="pager"><li><a href="the-power-model.html" rel="prev"><span class="dir">Previous</span>The power model</a></li><li class="next"><a href="radiation-dose.html" rel="next"><span class="dir">Next</span>Radiation dose</a></li></ul></nav>
 </main>
 <footer class="stamp">
-<p>Read from game commit 41a6e662 (committed 2026-10-18). Pages written 2026-10-18.
+<p>Read from game commit b25a8dd0 (committed 2026-10-18). Pages written 2026-10-18.
 The explanations are stand-in text and may change.</p>
 </footer>
 </div>

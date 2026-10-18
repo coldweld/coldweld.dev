@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Heat and radiators</title>
-<meta name="description" content="What the game does for heat and radiators, its numbers, and where each comes from.">
+<meta name="description" content="Functionality, values and sources for heat and radiators.">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -39,6 +39,9 @@ h2 { font-size: 1.5rem; line-height: 1.3; margin: 2.5rem 0 .75rem; font-weight: 
 h3 { font-size: 1.2rem; line-height: 1.35; margin: 1.75rem 0 .5rem; font-weight: 500; }
 p, li, dd { max-width: 40rem; }
 li + li { margin-top: .4rem; }
+ol.facts { padding-left: 1.6rem; }
+ol.facts > li + li { margin-top: 1rem; }
+ol.facts ol { margin: .4rem 0 0; padding-left: 1.6rem; }
 code { font-family: "DM Mono", ui-monospace, Consolas, monospace; font-size: .9em; overflow-wrap: anywhere; }
 .lead { font-size: 1.15rem; line-height: 1.6; }
 .note { background: var(--panel); border: 1px solid var(--rule); padding: .75rem 1rem; max-width: 40rem; }
@@ -178,9 +181,9 @@ dl.keys dd { margin: .25rem 0 0; }
 <div class="glance"><p><strong>38 numbers</strong>, 6 with an outside source</p><ul aria-label="Numbers by grade"><li><span class="grade g-a">A</span>0 <span class="sr">numbers at grade A</span></li><li><span class="grade g-b">B</span>2 <span class="sr">numbers at grade B</span></li><li><span class="grade g-c">C</span>1 <span class="sr">numbers at grade C</span></li><li><span class="grade g-d">D</span>3 <span class="sr">numbers at grade D</span></li><li><span class="grade g-e">E</span>32 <span class="sr">numbers at grade E</span></li></ul></div>
 <div class="toolbar" data-openall></div>
 <details class="section" id="does">
-<summary><h2>What the game does</h2><span class="hint">1 topic</span></summary>
+<summary><h2>Functionality</h2><span class="hint">1 topic</span></summary>
 <div class="sectionbody">
-<h3>Waste Heat</h3>
+<h3>Waste heat</h3>
 <ul>
 <li>Waste heat comes from your drive and your reactor plant, and it fills your coolant loop.</li>
 <li>A drive at full burn makes 1 heat a second.</li>
@@ -194,7 +197,7 @@ dl.keys dd { margin: .25rem 0 0; }
 </div>
 </details>
 <details class="section" id="numbers">
-<summary><h2>The numbers</h2><span class="hint">38 numbers: 2 B, 1 C, 3 D, 32 E</span></summary>
+<summary><h2>Values</h2><span class="hint">38 numbers: 2 B, 1 C, 3 D, 32 E</span></summary>
 <div class="sectionbody">
 <p>Each value is read from the game code. Sort by any column heading, or filter by grade or by a word.</p>
 <div class="region" role="region" tabindex="0" aria-label="Numbers the game runs for heat and radiators">
@@ -250,7 +253,7 @@ dl.keys dd { margin: .25rem 0 0; }
 </div>
 </details>
 <details class="section" id="why">
-<summary><h2>Why: the real physics or procedure</h2><span class="hint">8 points</span></summary>
+<summary><h2>Real-world basis</h2><span class="hint">8 points</span></summary>
 <div class="sectionbody">
 <ul>
 <li>A ship in vacuum has no air or water around it to carry heat away.</li>
@@ -265,7 +268,7 @@ dl.keys dd { margin: .25rem 0 0; }
 </div>
 </details>
 <details class="section" id="departs">
-<summary><h2>Where the game departs from reality</h2><span class="hint">6 points</span></summary>
+<summary><h2>Game and reality differences</h2><span class="hint">6 points</span></summary>
 <div class="sectionbody">
 <ul>
 <li>The game keeps heat in one unit, a point equal to one second of the hull's full drive waste. Real radiators are rated in watts per square meter. The reason is one model for both fights.</li>
@@ -278,17 +281,23 @@ dl.keys dd { margin: .25rem 0 0; }
 </div>
 </details>
 <details class="section" id="silent">
-<summary><h2>Where the sources are silent</h2><span class="hint">7 points</span></summary>
+<summary><h2>Source absences</h2><span class="hint">7 points</span></summary>
 <div class="sectionbody">
-<ul>
-<li>No source gives the game's loop size of 32 heat or its ceiling of 64. The game marks LOOP_POINTS as authored.</li>
-<li>No source gives the share of drive power a ship keeps as heat. The game marks this share as authored, the setting's one impossible number.</li>
-<li>The mirror has no figure for the fin share of 0.6. The game cites Mo/Li heat-pipe panels at 10 to 34% of hull mass in a comment, and the mirror was not searched for that figure here (UNVERIFIED).</li>
-<li>The mirror states water's heat capacity (4.186 J per gram per kelvin) and the heat to vaporize it (2256 J per gram), both on heatrad.php.html under Combat Heat Sinks. The game adds the two.</li>
-<li>The mirror page heatrad.php.html says a megawatt source can boil a ton of water in under seven minutes. At the game's 2,594,400 J per kg (warming plus boiling), one megawatt takes about 43 minutes, so the page is about six times fast. No game number uses the page's figure.</li>
-<li>No source says how many firings a sink takes, except that the mirror's coilgun carries coolant for 10 shots. The sink's shed rates are authored.</li>
-<li>No source covers a spare sink swapped in by a crew. The swap time of 10 seconds and the count of 3 are authored.</li>
-</ul>
+<ol class="facts">
+<li>Atomic Rockets does not provide values for the following:
+<ol>
+<li>Heat loop size. 32 points is authored.</li>
+<li>Heat loop ceiling. 64 points is authored.</li>
+<li>Share of drive power a ship keeps as heat. The share is authored, and it is the setting's one impossible number.</li>
+<li>Fin share of the drive's heat. 60% is authored. A code comment cites heat-pipe panels at 10 to 34% of hull mass, unverified.</li>
+<li>Firings a heat sink takes. The page's coilgun carries coolant for 10 shots. Sink shed rates are authored.</li>
+<li>Spare sink swap by a crew. 10 seconds and 3 spare sinks are authored.</li>
+</ol></li>
+<li>Atomic Rockets figure not used:
+<ol>
+<li>A megawatt boils a ton of water in under seven minutes (Combat Heat Sinks). At 2,594,400 J per kg, one megawatt takes about 43 minutes.</li>
+</ol></li>
+</ol>
 </div>
 </details>
 <details class="section" id="sources">
@@ -307,7 +316,7 @@ dl.keys dd { margin: .25rem 0 0; }
 <nav aria-label="Other mechanics"><ul class="pager"><li><a href="armor-and-the-six-faces.html" rel="prev"><span class="dir">Previous</span>Armor and the six faces</a></li><li class="next"><a href="the-power-model.html" rel="next"><span class="dir">Next</span>The power model</a></li></ul></nav>
 </main>
 <footer class="stamp">
-<p>Read from game commit 41a6e662 (committed 2026-10-18). Pages written 2026-10-18.
+<p>Read from game commit b25a8dd0 (committed 2026-10-18). Pages written 2026-10-18.
 The explanations are stand-in text and may change.</p>
 </footer>
 </div>

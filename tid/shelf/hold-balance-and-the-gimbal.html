@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Hold balance and the gimbal</title>
-<meta name="description" content="What the game does for hold balance and the gimbal, its numbers, and where each comes from.">
+<meta name="description" content="Functionality, values and sources for hold balance and the gimbal.">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -39,6 +39,9 @@ h2 { font-size: 1.5rem; line-height: 1.3; margin: 2.5rem 0 .75rem; font-weight: 
 h3 { font-size: 1.2rem; line-height: 1.35; margin: 1.75rem 0 .5rem; font-weight: 500; }
 p, li, dd { max-width: 40rem; }
 li + li { margin-top: .4rem; }
+ol.facts { padding-left: 1.6rem; }
+ol.facts > li + li { margin-top: 1rem; }
+ol.facts ol { margin: .4rem 0 0; padding-left: 1.6rem; }
 code { font-family: "DM Mono", ui-monospace, Consolas, monospace; font-size: .9em; overflow-wrap: anywhere; }
 .lead { font-size: 1.15rem; line-height: 1.6; }
 .note { background: var(--panel); border: 1px solid var(--rule); padding: .75rem 1rem; max-width: 40rem; }
@@ -177,19 +180,19 @@ dl.keys dd { margin: .25rem 0 0; }
 <p class="lead">Hold balance is the rule that a ship's center of mass must sit on the line of its thrust, which means its cargo has to be spread evenly around the axis.</p>
 <div class="toolbar" data-openall></div>
 <details class="section" id="does">
-<summary><h2>What the game does</h2></summary>
+<summary><h2>Functionality</h2></summary>
 <div class="sectionbody">
 <p>The game does not model this yet.</p>
 </div>
 </details>
 <details class="section" id="numbers">
-<summary><h2>The numbers</h2><span class="hint">none</span></summary>
+<summary><h2>Values</h2><span class="hint">none</span></summary>
 <div class="sectionbody">
 <p>This mechanic has no numbers read from the code.</p>
 </div>
 </details>
 <details class="section" id="why">
-<summary><h2>Why: the real physics or procedure</h2><span class="hint">8 points</span></summary>
+<summary><h2>Real-world basis</h2><span class="hint">8 points</span></summary>
 <div class="sectionbody">
 <ul>
 <li>A rocket pushes along its thrust axis. If that axis passes through the center of gravity, the ship speeds up in a straight line.</li>
@@ -204,7 +207,7 @@ dl.keys dd { margin: .25rem 0 0; }
 </div>
 </details>
 <details class="section" id="departs">
-<summary><h2>Where the game departs from reality</h2><span class="hint">7 points</span></summary>
+<summary><h2>Game and reality differences</h2><span class="hint">7 points</span></summary>
 <div class="sectionbody">
 <ul>
 <li>The game does not model this yet. The code has no model of cargo center of mass, drive gimbal or trim tanks.</li>
@@ -218,13 +221,16 @@ dl.keys dd { margin: .25rem 0 0; }
 </div>
 </details>
 <details class="section" id="silent">
-<summary><h2>Where the sources are silent</h2><span class="hint">3 points</span></summary>
+<summary><h2>Source absences</h2><span class="hint">3 points</span></summary>
 <div class="sectionbody">
-<ul>
-<li>The mirror gives no number for how far a hold can be unbalanced before a gimbal runs out, because that depends on the hull. The game needs its own hull and hold figures.</li>
-<li>The mirror gives no rule for who loads a ship or how a crew balances it. coldweld's call is that the crew or the yard's loaders do it, never a captain prompt.</li>
-<li>The mirror does not say how much power a gimbal actuator or a trim pump draws.</li>
-</ul>
+<ol class="facts">
+<li>Atomic Rockets does not provide values for the following:
+<ol>
+<li>Hold imbalance a gimbal can take. The limit depends on the hull.</li>
+<li>Who loads and balances a ship. The crew or the yard loaders do it, never the captain. The rule is authored.</li>
+<li>Power draw of a gimbal actuator or a trim pump.</li>
+</ol></li>
+</ol>
 </div>
 </details>
 <details class="section" id="sources">
@@ -242,7 +248,7 @@ dl.keys dd { margin: .25rem 0 0; }
 <nav aria-label="Other mechanics"><ul class="pager"><li><a href="kinetic-guns-and-point-defense.html" rel="prev"><span class="dir">Previous</span>Kinetic guns and point defense</a></li><li class="next"><a href="life-support-food-and-water.html" rel="next"><span class="dir">Next</span>Life support, food and water</a></li></ul></nav>
 </main>
 <footer class="stamp">
-<p>Read from game commit 41a6e662 (committed 2026-10-18). Pages written 2026-10-18.
+<p>Read from game commit b25a8dd0 (committed 2026-10-18). Pages written 2026-10-18.
 The explanations are stand-in text and may change.</p>
 </footer>
 </div>
