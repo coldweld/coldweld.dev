@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Running dark</title>
-<meta name="description" content="Functionality, values and sources for running dark.">
+<title>Silent running</title>
+<meta name="description" content="Functionality, values and sources for silent running.">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -176,8 +176,8 @@ dl.keys dd { margin: .25rem 0 0; }
 </ul></nav>
 </header>
 <main id="main">
-<h1>Running dark</h1>
-<p class="lead">Running dark means cutting power and stowing the radiators so a ship is harder to spot, and the price is waste heat that has nowhere to go.</p>
+<h1>Silent running</h1>
+<p class="lead">Silent running means cutting power and stowing the radiators so a ship is harder to spot, and the price is waste heat that has nowhere to go.</p>
 <div class="glance"><p><strong>22 numbers</strong>, 7 with an outside source</p><ul aria-label="Numbers by grade"><li><span class="grade g-a">A</span>0 <span class="sr">numbers at grade A</span></li><li><span class="grade g-b">B</span>2 <span class="sr">numbers at grade B</span></li><li><span class="grade g-c">C</span>3 <span class="sr">numbers at grade C</span></li><li><span class="grade g-d">D</span>2 <span class="sr">numbers at grade D</span></li><li><span class="grade g-e">E</span>15 <span class="sr">numbers at grade E</span></li></ul></div>
 <div class="toolbar" data-openall></div>
 <details class="section" id="does">
@@ -185,20 +185,17 @@ dl.keys dd { margin: .25rem 0 0; }
 <div class="sectionbody">
 <h3>Thermal signature</h3>
 <ul>
-<li>There is no hiding in space, because a crewed hull always glows against the cold.</li>
-<li>The harder your drive burns, the further off pirates spot you, so big fast ships get jumped more.</li>
+<li>No ship hides completely in space, because a crewed hull always glows against the cold.</li>
+<li>The harder the drive burns, the further off pirates spot the ship, so big fast ships are jumped more often.</li>
 <li>A richer fuel grade burns brighter too, because its faster exhaust carries more power at the same thrust.</li>
 </ul>
 <h3>Silent running</h3>
 <ul>
-<li>On any transit day you can stow the radiators and run dark, which drops you off pirate sensors.</li>
-<li>Silent running cuts the day's odds of a contact to 35% of normal.</li>
-<li>The catch is heat. Every system aboard draws power, and all of that power ends up as heat inside the hull.</li>
-<li>With every system running, most hulls fill up in about a day, and past that the heat starts to cook the ship.</li>
-<li>The engineer sheds systems while you run dark, so the heat builds slower and you stay dark longer.</li>
-<li>STANDING ORDERS &gt; RUNNING DARK sets how many, and quotes what a dark day without each one costs.</li>
-<li>The air plant is never shed.</li>
-<li>One day of normal cruise vents it all, unless the radiators are shot away.</li>
+<li>During Silent Running, ship radiators are able to be stowed to reduce thermal signature. It cuts the day's odds of a contact to 35% of normal.</li>
+<li>Heat accumulates inside the ship, reaching critical limits after about 24 hours. ENGINEERING disables certain systems during silent running to mitigate heat output.</li>
+<li>STANDING ORDERS &gt; SILENT RUNNING dictates how many systems are disabled. It estimates how much one day without each system costs.</li>
+<li>The Life Support system is never disabled.</li>
+<li>One day of normal operation dissipates all heat unless radiators are diminished/destroyed.</li>
 </ul>
 </div>
 </details>
@@ -206,9 +203,9 @@ dl.keys dd { margin: .25rem 0 0; }
 <summary><h2>Values</h2><span class="hint">22 numbers: 2 B, 3 C, 2 D, 15 E</span></summary>
 <div class="sectionbody">
 <p>Each value is read from the game code. Sort by any column heading, or filter by grade or by a word.</p>
-<div class="region" role="region" tabindex="0" aria-label="Numbers the game runs for running dark">
+<div class="region" role="region" tabindex="0" aria-label="Numbers the game runs for silent running">
 <table class="numbers" data-sort="1" data-filter="text grade" data-noun="number numbers" data-placeholder="Quantity, source or word">
-<caption>Numbers the game runs for running dark</caption>
+<caption>Numbers the game runs for silent running</caption>
 <thead><tr>
 <th scope="col" data-type="text">Quantity</th>
 <th scope="col" data-type="num">Value</th>
@@ -306,7 +303,7 @@ dl.keys dd { margin: .25rem 0 0; }
 <nav aria-label="Other mechanics"><ul class="pager"><li><a href="radiation-dose.html" rel="prev"><span class="dir">Previous</span>Radiation dose</a></li><li class="next"><a href="the-newtonian-fight.html" rel="next"><span class="dir">Next</span>The Newtonian fight</a></li></ul></nav>
 </main>
 <footer class="stamp">
-<p>Read from game commit b25a8dd0 (committed 2026-10-18). Pages written 2026-10-18.
+<p>Read from game commit 00faae1d (committed 2026-10-18). Pages written 2026-10-18.
 The explanations are stand-in text and may change.</p>
 </footer>
 </div>
