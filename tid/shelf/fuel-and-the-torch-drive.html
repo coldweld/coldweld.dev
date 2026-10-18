@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fuel and the torch drive</title>
+<meta name="description" content="What the game does for fuel and the torch drive, its numbers, and where each comes from.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+:root {
+  color-scheme: light dark;
+  --bg: #fbf8f1; --panel: #f0eadb; --rule: #b9ae94; --text: #231c0f; --muted: #51493a; --accent: #7a4300;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #0e0903; --panel: #16110a; --rule: #4a4130; --text: #d6cbb6; --muted: #a89f88; --accent: #ffb040; }
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: 1rem; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 1.0625rem/1.65 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; padding: 0 1rem 4rem; }
+::selection { background: var(--accent); color: var(--bg); }
+.skip { position: absolute; left: 1rem; top: -4rem; background: var(--accent); color: var(--bg); padding: .5rem 1rem; z-index: 10; }
+.skip:focus { top: .5rem; }
+.wrap { max-width: 72rem; margin: 0 auto; }
+.mono, h1, h2, h3, caption, th, nav, .brand, .stamp, .grade, .val, .hint, .chip, .chipslabel, .find span, .openall, .pager .dir, summary { font-family: "DM Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+a { color: var(--accent); text-underline-offset: .2em; text-decoration-thickness: 1px; }
+a:hover { text-decoration-thickness: 2px; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.top { padding: 2rem 0 1rem; border-bottom: 1px solid var(--rule); }
+.brand { margin: 0 0 .75rem; font-size: .8rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .25rem 1.5rem; }
+nav a { display: inline-block; padding: .45rem 0; }
+nav a[aria-current] { color: var(--text); text-decoration: none; border-bottom: 2px solid var(--accent); }
+h1 { font-size: clamp(1.6rem, 4.5vw, 2.25rem); line-height: 1.2; margin: 2.25rem 0 1rem; font-weight: 500; letter-spacing: -.01em; text-wrap: balance; }
+h2 { font-size: 1.5rem; line-height: 1.3; margin: 2.5rem 0 .75rem; font-weight: 500; text-wrap: balance; }
+h3 { font-size: 1.2rem; line-height: 1.35; margin: 1.75rem 0 .5rem; font-weight: 500; }
+p, li, dd { max-width: 40rem; }
+li + li { margin-top: .4rem; }
+code { font-family: "DM Mono", ui-monospace, Consolas, monospace; font-size: .9em; overflow-wrap: anywhere; }
+.lead { font-size: 1.15rem; line-height: 1.6; }
+.note { background: var(--panel); border: 1px solid var(--rule); padding: .75rem 1rem; max-width: 40rem; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; padding: 0; margin: -1px; }
+.glance { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem 1.4rem; margin: 1.5rem 0; padding: .85rem 1rem; background: var(--panel); border: 1px solid var(--rule); font-size: .95rem; }
+.glance p { margin: 0; }
+.glance ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .5rem 1.1rem; }
+.glance li { margin: 0; white-space: nowrap; }
+.toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem 1.5rem; margin: 0 0 1.5rem; }
+.toc { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .25rem 1.25rem; }
+.toc li { margin: 0; }
+.toc a { display: inline-block; padding: .35rem 0; }
+.openall { font-size: .85rem; background: transparent; color: var(--accent); border: 1px solid var(--rule); border-radius: 4px; padding: .45rem .8rem; cursor: pointer; }
+.openall:hover { border-color: var(--accent); }
+details.section { border-top: 1px solid var(--rule); }
+details.section:last-of-type { border-bottom: 1px solid var(--rule); }
+details.section > summary { display: flex; align-items: baseline; flex-wrap: wrap; gap: .25rem .9rem; padding: 1.05rem .25rem; cursor: pointer; list-style: none; }
+details.section > summary::-webkit-details-marker { display: none; }
+details.section > summary::before { content: ""; flex: none; align-self: center; width: .5rem; height: .5rem; border-right: 2px solid var(--accent); border-bottom: 2px solid var(--accent); transform: rotate(-45deg); transition: transform .18s ease-out; }
+details.section[open] > summary::before { transform: translateY(-.15rem) rotate(45deg); }
+details.section > summary h2 { margin: 0; font-size: 1.5rem; }
+details.section > summary:hover h2 { color: var(--accent); }
+.hint { margin-left: auto; color: var(--muted); font-size: .82rem; }
+.sectionbody { padding: 0 0 2rem; }
+.region { overflow-x: auto; margin: .75rem 0 1rem; border: 1px solid var(--rule); scrollbar-color: var(--rule) transparent; }
+table { border-collapse: collapse; width: 100%; min-width: 40rem; font-size: .95rem; line-height: 1.55; font-variant-numeric: tabular-nums; }
+caption { text-align: left; padding: .75rem .85rem; font-size: .9rem; color: var(--muted); }
+caption.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; padding: 0; }
+th, td { text-align: left; vertical-align: top; padding: .7rem .85rem; border-top: 1px solid var(--rule); }
+thead th { background: var(--panel); font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; white-space: nowrap; vertical-align: bottom; }
+thead .sub { display: block; font-size: .78rem; letter-spacing: 0; text-transform: none; color: var(--muted); font-weight: 400; }
+tbody th { font-weight: 500; font-family: inherit; min-width: 11rem; }
+table:not(.live) tbody tr:nth-child(even) > *, table.live tbody tr.alt > * { background: var(--panel); }
+tbody tr:target > * { background: color-mix(in srgb, var(--accent) 18%, var(--bg)) !important; }
+td.val { overflow-wrap: break-word; min-width: 7rem; font-size: 1rem; }
+.unit { display: block; font-size: .82rem; color: var(--muted); overflow-wrap: normal; }
+.nosource { color: var(--muted); }
+.numbers { min-width: 58rem; }
+.numbers tbody th { min-width: 13rem; width: 20%; }
+.numbers td:nth-child(4) { min-width: 11rem; width: 18%; }
+.numbers td:nth-child(5) { min-width: 22rem; width: 42%; }
+.allnumbers { min-width: 52rem; }
+.allnumbers tbody th { min-width: 14rem; width: 28%; }
+.allnumbers td:nth-child(2) { min-width: 10rem; }
+td.count { text-align: right; }
+.counts thead th:not(:first-child) { text-align: right; }
+.counts tr[data-fixed] > * { border-top: 2px solid var(--rule); font-weight: 600; }
+.uses { min-width: 34rem; }
+button.sort { all: unset; cursor: pointer; display: inline-flex; align-items: center; gap: .45rem; text-align: left; }
+button.sort:hover { color: var(--accent); }
+button.sort:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+.arrow { flex: none; width: 0; height: 0; border-left: .3rem solid transparent; border-right: .3rem solid transparent; border-top: .38rem solid currentColor; opacity: .35; }
+th[aria-sort="ascending"] .arrow { opacity: 1; transform: rotate(180deg); color: var(--accent); }
+th[aria-sort="descending"] .arrow { opacity: 1; color: var(--accent); }
+.tools { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem 1.5rem; margin: 1rem 0 .5rem; font-size: .9rem; }
+.find { display: flex; align-items: center; gap: .6rem; }
+.find span, .chipslabel { font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.find input { font: inherit; font-size: 1rem; color: var(--text); background: var(--bg); border: 1px solid var(--rule); border-radius: 4px; padding: .45rem .65rem; width: 18rem; max-width: 100%; caret-color: var(--accent); }
+.find input::placeholder { color: var(--muted); opacity: 1; }
+.find input:focus-visible { border-color: var(--accent); }
+.chips { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem; }
+.chip { font-size: .85rem; background: transparent; color: var(--text); border: 1px solid var(--rule); border-radius: 999px; padding: .3rem .75rem; min-height: 2.25rem; cursor: pointer; }
+.chip:hover:not(:disabled) { border-color: var(--accent); }
+.chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+.chip:disabled { opacity: .45; cursor: default; }
+.reset { font: inherit; background: none; border: 0; padding: .3rem 0; color: var(--accent); text-decoration: underline; text-underline-offset: .2em; cursor: pointer; }
+.status { flex-basis: 100%; margin: 0; color: var(--muted); font-size: .88rem; }
+.empty { margin: 0 0 1rem; padding: 1rem; border: 1px dashed var(--rule); color: var(--muted); }
+details.uses { margin: .5rem 0 1rem; }
+details.uses > summary { cursor: pointer; padding: .45rem 0; font-size: .85rem; color: var(--accent); }
+.cited { margin: .25rem 0 .5rem; color: var(--muted); }
+.grade { display: inline-block; border: 2px solid currentColor; border-radius: 4px; min-width: 1.7rem; text-align: center; padding: 0 .3rem; font-weight: 600; line-height: 1.45; margin-right: .45rem; }
+.grade.g-a, .grade.g-b { background: var(--text); border-color: var(--text); color: var(--bg); }
+.grade.g-e { border-width: 1.5px; border-style: dashed; color: var(--muted); }
+.gradeitem { white-space: nowrap; }
+.stamp { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--rule); font-size: .8rem; color: var(--muted); }
+dl.keys dt { font-weight: 600; margin-top: 1rem; }
+dl.keys dd { margin: .25rem 0 0; }
+.pager { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; margin: 3rem 0 0; padding: 0; list-style: none; }
+.pager li { margin: 0; flex: 1 1 16rem; max-width: 28rem; }
+.pager li.next { margin-left: auto; text-align: right; }
+.pager a { display: block; padding: .8rem 1rem; border: 1px solid var(--rule); text-decoration: none; }
+.pager a:hover { border-color: var(--accent); }
+.pager .dir { display: block; font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+@media (max-width: 40rem) {
+  body { padding: 0 1rem 3rem; font-size: 1rem; }
+  th, td { padding: .6rem; }
+  .hint { margin-left: 1.4rem; flex-basis: 100%; }
+  .find { flex-basis: 100%; }
+  .find input { flex: 1; width: auto; }
+  .chip { min-height: 2.75rem; min-width: 2.75rem; }
+  .numbers { min-width: 46rem; } .numbers tbody th { min-width: 8rem; width: auto; } .numbers td.val { min-width: 6.5rem; } .numbers td:nth-child(3) { min-width: 5.5rem; }
+  .allnumbers { min-width: 40rem; } .allnumbers tbody th { min-width: 9rem; }
+  .numbers .gradeitem, .allnumbers .gradeitem { white-space: normal; } .numbers .grade, .allnumbers .grade { display: block; width: max-content; margin: 0 0 .2rem; }
+}
+@media (min-width: 40rem) {
+  .numbers tbody th, .allnumbers tbody th { position: sticky; left: 0; z-index: 1; background: var(--bg); }
+}
+@media (prefers-reduced-motion: reduce) { details.section > summary::before { transition: none; } }
+@media print { .skip, .tools, .openall, .empty { display: none; } details.section > summary::before { display: none; } }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to the content</a>
+<div class="wrap">
+<header class="top">
+<p class="brand"><a href="https://coldweld.dev/">Coldweld</a> / The Infinite Diaspora / Reference shelf</p>
+<nav aria-label="Reference shelf"><ul>
+<li><a href="index.html">Mechanics</a></li>
+<li><a href="numbers.html">All numbers</a></li>
+<li><a href="grades.html">Grades</a></li>
+<li><a href="sources.html">Sources</a></li>
+<li><a href="updates.html">Source updates</a></li>
+</ul></nav>
+</header>
+<main id="main">
+<h1>Fuel and the torch drive</h1>
+<p class="lead">A torch drive is a rocket that throws water out of its nozzle at a very high speed, so a ship can push at about one g for days instead of coasting on a slow orbit.</p>
+<div class="glance"><p><strong>33 numbers</strong>, 6 with an outside source</p><ul aria-label="Numbers by grade"><li><span class="grade g-a">A</span>0 <span class="sr">numbers at grade A</span></li><li><span class="grade g-b">B</span>4 <span class="sr">numbers at grade B</span></li><li><span class="grade g-c">C</span>0 <span class="sr">numbers at grade C</span></li><li><span class="grade g-d">D</span>2 <span class="sr">numbers at grade D</span></li><li><span class="grade g-e">E</span>27 <span class="sr">numbers at grade E</span></li></ul></div>
+<div class="toolbar" data-openall></div>
+<details class="section" id="does">
+<summary><h2>What the game does</h2><span class="hint">3 topics</span></summary>
+<div class="sectionbody">
+<h3>Range And The Destination Tags</h3>
+<ul>
+<li>A trip burns the whole way while the fuel its BURN PROFILE spends allows, and coasts on the rest when it does not.</li>
+<li>It always keeps enough fuel to land and to break off one fight.</li>
+<li>A richer THRUSTER GRADE throws the same water faster, so a trip burns longer and coasts less.</li>
+<li>NEEDS FUEL | too little fuel aboard, so the coast runs longer than the stores. Refuel.</li>
+<li>OUT OF RANGE: cargo too heavy | even on a full tank the load makes the coast outlast the stores, so vent cargo.</li>
+<li>OUT OF RANGE: tank too small | even empty and full, the coast outlasts the stores, so a richer grade or a faster hull is the answer.</li>
+<li>OUT OF RANGE means no SINGLE crossing reaches it. It never means the place cannot be reached.</li>
+</ul>
+<h3>Burn Profile</h3>
+<ul>
+<li>A burn profile is how much speed one trip buys, chosen before you leave.</li>
+<li>Every profile flies at the drive's rated thrust, so the fuel spent is what changes.</li>
+<li>ECONOMY | the cheapest trip: the fuel bill plus each day's wages, upkeep and stores.</li>
+<li>FASTEST | all the fuel above the reserve.</li>
+<li>ARRIVE BY | the cheapest trip in all, fuel and days, that makes the day you name.</li>
+<li>Fuel you do not spend stays in the tank for the next leg.</li>
+<li>A slower trip eats more food and water and rolls for more contacts, and it can outlast the stores.</li>
+<li>A hull rated above 1 g strains its crew, shown as CREW STRAIN in fatigue per day.</li>
+</ul>
+<h3>Fuel And Stores</h3>
+<ul>
+<li>Fuel is water that the drive throws out the back, bought by the tonne at the station's water price.</li>
+<li>Food and water are scaled by the days and by how many people are aboard.</li>
+<li>CHOOSE THE WORK lists every service with its bill and its wait, and you pick how much of each.</li>
+<li>REFUEL, REPAIR, RESUPPLY and SERVICE do them one at a time.</li>
+</ul>
+</div>
+</details>
+<details class="section" id="numbers">
+<summary><h2>The numbers</h2><span class="hint">33 numbers: 4 B, 2 D, 27 E</span></summary>
+<div class="sectionbody">
+<p>Each value is read from the game code. Sort by any column heading, or filter by grade or by a word.</p>
+<div class="region" role="region" tabindex="0" aria-label="Numbers the game runs for fuel and the torch drive">
+<table class="numbers" data-sort="1" data-filter="text grade" data-noun="number numbers" data-placeholder="Quantity, source or word">
+<caption>Numbers the game runs for fuel and the torch drive</caption>
+<thead><tr>
+<th scope="col" data-type="text">Quantity</th>
+<th scope="col" data-type="num">Value</th>
+<th scope="col" data-type="text">Grade</th>
+<th scope="col" data-type="text">Source</th>
+<th scope="col">Why this value</th>
+</tr></thead>
+<tbody>
+<tr id="n-1" data-grade="E"><th scope="row">Exhaust speed with no thruster grade fitted</th><td class="val" data-key="2500.0">2,500 <span class="unit">km/s</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/enginelist2.php">Atomic Rockets, enginelist2</a>, Nuclear Salt Water (NSWR)</td><td>Derived by the game from a goal, that a full tank flies the close Mars run at one g; the published salt-water figure is 66 kilometers per second at 20 percent enrichment.</td></tr>
+<tr id="n-2" data-grade="B"><th scope="row">Exhaust speed of the top rung (TH-6)</th><td class="val" data-key="11000.0">11,000 <span class="unit">km/s</span></td><td data-key="B"><span class="gradeitem"><span class="grade g-b">B</span>Secondary</span></td><td><a href="https://www.projectrho.com/public_html/rocket/enginelist3.php">Atomic Rockets, enginelist3</a>, Epstein Drive</td><td>The game takes the exhaust speed of the fictional Epstein drive from The Expanse. Atomic Rockets lists it as 11,000,000 meters per second (11,000 km/s), the game value, conjectured by its author from a mass ratio of 4 and a speed gain of 5 percent of light speed. The drive is fiction, so the claim is a fictional one.</td></tr>
+<tr id="n-3" data-grade="E"><th scope="row">Every rung of the exhaust ladder, no grade then TH-1 to TH-6</th><td class="val" data-key="2500.0">2,500, 3,200.2368, 4,096.6064, 5,244.0442, 6,712.8734, 8,593.114, 11,000 <span class="unit">km/s</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/enginelist2.php">Atomic Rockets, enginelist2</a>, Nuclear Salt Water (NSWR)</td><td>The ends are a derived base and the page's Epstein figure; the geometric spacing between them is the game's choice, and the ladder runs far past any published design on purpose.</td></tr>
+<tr id="n-4" data-grade="E"><th scope="row">Number of enrichment grades</th><td class="val" data-key="6.0">6 <span class="unit">grades</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>The game chose six grades, TH-1 to TH-6; the setting canon says the recipe was frozen there. No source sets a number of grades.</td></tr>
+<tr id="n-5" data-grade="E"><th scope="row">Water in a full tank, as a share of the hull&#x27;s dry mass</th><td class="val" data-key="1.0">1 <span class="unit">share</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/torchships.php">Atomic Rockets, torchships</a>, Torchship Performance (Rocketpunk Manifesto, On Torchships)</td><td>Authored by coldweld on 2026-09-28 as one fraction to measure later; the page's example torch designs use a mass ratio of 2 and its range runs up to 10.</td></tr>
+<tr id="n-6" data-grade="E"><th scope="row">Salt charge for one tonne of water at the base grade (the pad scales it with exhaust speed squared)</th><td class="val" data-key="10.0">10 <span class="unit">Cr per tonne</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>A custody bill chosen by the game as the largest tested charge that stopped no starter, on a sweep too small to order nearby values; a physical price is unusable because the upper rungs need more energy than fission gives.</td></tr>
+<tr id="n-7" data-grade="E"><th scope="row">Burn a trip must always keep in reserve to break off one fight</th><td class="val" data-key="0.25">0.25 <span class="unit">days of full thrust</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Chosen by coldweld on 2026-09-28 as the burn that breaks off one fight, and kept when the water law arrived; no source gives a time to break off a fight.</td></tr>
+<tr id="n-8" data-grade="D"><th scope="row">Change of speed for a hop between two berths at one body</th><td class="val" data-key="4040.0">4,040 <span class="unit">m/s</span></td><td data-key="D"><span class="gradeitem"><span class="grade g-d">D</span>Analogy</span></td><td><a href="https://www.projectrho.com/public_html/rocket/appmissiontable.php">Atomic Rockets, appmissiontable</a>, Terra-Luna space (the delta-v table, LEO to low lunar orbit)</td><td>The mirror's delta-v table gives 4.04 kilometers per second from low Earth orbit to low lunar orbit; the game uses that as the far end of what a hop between two berths at one body asks.</td></tr>
+<tr id="n-9" data-grade="D"><th scope="row">Change of speed to hold station at a body for a year</th><td class="val" data-key="100.0">100 <span class="unit">m/s per year</span></td><td data-key="D"><span class="gradeitem"><span class="grade g-d">D</span>Analogy</span></td><td><a href="https://www.projectrho.com/public_html/rocket/appmissiontable.php">Atomic Rockets, appmissiontable</a>, Stationkeeping</td><td>The table gives 30 to 100 meters per second a year for station-keeping at the L1 and L2 points and 50 to 55 for geostationary orbit; the game applies the top of that range to holding station by any body.</td></tr>
+<tr id="n-10" data-grade="B"><th scope="row">Acceleration a crew bears with no strain</th><td class="val" data-key="9.8">9.8 <span class="unit">m/s^2</span></td><td data-key="B"><span class="gradeitem"><span class="grade g-b">B</span>Secondary</span></td><td><a href="https://www.projectrho.com/public_html/rocket/humanfactor.php">Atomic Rockets, humanfactor</a>, Table 1, gross effects of acceleration forces</td><td>The page's table of the gross effects of acceleration lists 1 g as Earth normal and 2 g as hands and feet heavy, with walking and climbing difficult. The game sets the no-strain line at 1 g (9.8 m/s^2), so a crew bears no strain below the first row that the table marks as an effect.</td></tr>
+<tr id="n-11" data-grade="E"><th scope="row">The three burn profiles</th><td class="val">economy, fastest, arriveby <span class="unit">profiles</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Three burn profiles chosen by the game for play: the least running cost, all the spare water, or a named arrival day. The mirror ranks no burn profile.</td></tr>
+<tr id="n-12" data-grade="E"><th scope="row">Longest trip the game will quote</th><td class="val" data-key="36525.0">36,525 <span class="unit">days</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>A cap the game chose so a quote for an unreachable trip reads as no trip instead of dividing by zero; no source applies.</td></tr>
+<tr id="n-13" data-grade="E"><th scope="row">Highest grade a hull burns without custody rights taken (light craft)</th><td class="val" data-key="2.0">2 <span class="unit">grade</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Authored by the game and flagged for coldweld's review: the richest salt a hull outside the gram accounts may burn; the mirror has no rule for who may hold enrichment, because that is fiction.</td></tr>
+<tr id="n-14" data-grade="E"><th scope="row">Price of the TH-1 kit</th><td class="val" data-key="2500.0">2,500 <span class="unit">Cr</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>The game chose this price in credits; the price of every combat kit was multiplied by five together on 2026-09-21. No source prices a thruster kit.</td></tr>
+<tr id="n-15" data-grade="E"><th scope="row">Price of the TH-6 kit</th><td class="val" data-key="55000.0">55,000 <span class="unit">Cr</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>The game chose this price in credits; the price of every combat kit was multiplied by five together on 2026-09-21. No source prices a thruster kit.</td></tr>
+<tr id="n-16" data-grade="E"><th scope="row">Grade the TH-1 kit burns</th><td class="val" data-key="1.0">1 <span class="unit">grade</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Game structure: the first kit burns rung 1 of the exhaust ladder, and a grade sets the exhaust speed and adds no thrust.</td></tr>
+<tr id="n-17" data-grade="E"><th scope="row">Grade the TH-6 kit burns</th><td class="val" data-key="6.0">6 <span class="unit">grade</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Game structure: the top kit burns rung 6 of the exhaust ladder, and a grade sets the exhaust speed and adds no thrust.</td></tr>
+<tr id="n-18" data-grade="B"><th scope="row">Meters in one astronomical unit (beacon range and distance code)</th><td class="val" data-key="149597870700.0">149,597,870,700 <span class="unit">meters</span></td><td data-key="B"><span class="gradeitem"><span class="grade g-b">B</span>Secondary</span></td><td><a href="https://www.projectrho.com/public_html/rocket/enginelist.php">Atomic Rockets, enginelist</a>, the note that 1.0 astronomical units is defined as 149,597,870,700 meters</td><td>The mirror states that one astronomical unit is defined as 149,597,870,700 meters.</td></tr>
+<tr id="n-19" data-grade="B"><th scope="row">Meters in one astronomical unit (trip distance code)</th><td class="val" data-key="149597870700.0">149,597,870,700 <span class="unit">meters</span></td><td data-key="B"><span class="gradeitem"><span class="grade g-b">B</span>Secondary</span></td><td><a href="https://www.projectrho.com/public_html/rocket/enginelist.php">Atomic Rockets, enginelist</a>, the note that 1.0 astronomical units is defined as 149,597,870,700 meters</td><td>The mirror states that one astronomical unit is defined as 149,597,870,700 meters.</td></tr>
+<tr id="n-20" data-grade="E"><th scope="row">Fatigue a crew gains per day for each unit of acceleration above the no-strain line</th><td class="val" data-key="1.5">1.5 <span class="unit">fatigue per day per m/s^2</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/humanfactor.php">Atomic Rockets, humanfactor</a>, the acceleration passage (the human body only can take 2-3 gees)</td><td>Chosen so that only the fastest hull nears crippling a crew on a long haul. The mirror says the body can take 2 to 3 gees for any length of time and gives no fatigue rate. The sources are silent on this figure.</td></tr>
+<tr id="n-21" data-grade="E"><th scope="row">Fatigue a crew recovers per day at or under the no-strain line</th><td class="val" data-key="5.0">5 <span class="unit">fatigue per day</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Chosen as the rest that balances the accrual rate. No source gives a recovery rate.</td></tr>
+<tr id="n-22" data-grade="E"><th scope="row">Points in one whole main-drive part</th><td class="val" data-key="100.0">100 <span class="unit">points</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>The scale of a drive part at full repair. The points are the repair record, and a part performs by its state (see PART_STEPS).</td></tr>
+<tr id="n-23" data-grade="E"><th scope="row">Chance that a round through the stern reaches each main-drive part</th><td class="val">nozzle, 0.5, chamber, 0.3, feed, 0.2 <span class="unit">chance (nozzle, chamber, feed)</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Authored in the game: the nozzle shows the most, so it is hit most. No source gives odds for a part of a drive.</td></tr>
+<tr id="n-24" data-grade="E"><th scope="row">Share of the hull&#x27;s own health that a drive part takes before it is gone</th><td class="val" data-key="0.75">0.75 <span class="unit">fraction of hull health</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Authored so that a 44-damage round through a holed stern on a 180-point hull takes a third of a part.</td></tr>
+<tr id="n-25" data-grade="E"><th scope="row">Weight fleet doctrine gives a round that reaches the stern, for the main drive behind it</th><td class="val" data-key="0.5">0.5 <span class="unit">weight</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Authored: the stern holds the main drive, so doctrine counts a round there as costly (equipment.getpartexposure). A bow round counts 0. No source gives a weight.</td></tr>
+<tr id="n-26" data-grade="E"><th scope="row">Weight fleet doctrine gives a round that reaches a flank&#x27;s jets</th><td class="val" data-key="0.1">0.1 <span class="unit">weight</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Authored: one jet cluster lost costs nothing, so doctrine barely counts it.</td></tr>
+<tr id="n-27" data-grade="E"><th scope="row">Share of thrust a wrecked nozzle still gives</th><td class="val" data-key="0.3">0.3 <span class="unit">fraction</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Authored so that a hull always limps home. No source gives the thrust of a damaged nozzle.</td></tr>
+<tr id="n-28" data-grade="E"><th scope="row">Performance of a drive part by state: fit, degraded, crippled, gone</th><td class="val" data-key="88.0">88, fit, 100, 41, degraded, 64, 1, crippled, 20, 0, gone, 0 <span class="unit">percent by state</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>The states match the game's vital questions (fit over 87.5, degraded over 40, crippled over 0). A fit part works fully and the other states perform at their band's midpoint, so the average barely moves.</td></tr>
+<tr id="n-29" data-grade="E"><th scope="row">Most a crew with a welder can patch a drive part</th><td class="val" data-key="60.0">60 <span class="unit">points</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Authored: hands with a welder patch a part this far and no further, and a yard restores the rest.</td></tr>
+<tr id="n-30" data-grade="E"><th scope="row">Share of the fuel tank a wrecked feed line loses per travel day</th><td class="val" data-key="0.25">0.25 <span class="unit">fraction of tank per day</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/spacewardefense.php">Atomic Rockets, spacewardefense</a>, the passage on a projectile hitting a tank of fluid</td><td>Authored. The mirror says a hit tank pumps its fluid out through the holes and gives no rate for a line. The sources are silent on this figure.</td></tr>
+<tr id="n-31" data-grade="E"><th scope="row">Share of the fuel tank a wrecked feed line loses per combat round</th><td class="val" data-key="0.02">0.02 <span class="unit">fraction of tank per round</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/spacewardefense.php">Atomic Rockets, spacewardefense</a>, the passage on a projectile hitting a tank of fluid</td><td>Authored. The mirror gives no rate for a leaking line. The sources are silent on this figure.</td></tr>
+<tr id="n-32" data-grade="E"><th scope="row">Days a captain has to take up reactor custody rights from Safeguards</th><td class="val" data-key="90.0">90 <span class="unit">days</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>A rule of the setting: Safeguards, the treaty regime, gives a captain this long to take the rights up. The shelf holds no source for it, so the figure is authored.</td></tr>
+<tr id="n-33" data-grade="E"><th scope="row">Hull classes that Safeguards does not account for by the gram</th><td class="val">LIGHT CRAFT <span class="unit">hull classes</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>A rule of the setting: only a light craft burns without a grant. The shelf holds no source for it.</td></tr>
+</tbody></table></div>
+</div>
+</details>
+<details class="section" id="why">
+<summary><h2>Why: the real physics or procedure</h2><span class="hint">8 points</span></summary>
+<div class="sectionbody">
+<ul>
+<li>A rocket gains speed by throwing mass backward, so a faster exhaust gains more speed from the same mass.</li>
+<li>A torch drive has both high thrust and high exhaust speed, so it can push the whole way, flip at the midpoint and brake.</li>
+<li>A salt-water rocket dissolves a fissile salt in water, so the water is the propellant and the salt is the fuel.</li>
+<li>Zubrin's 20% enriched design gives an exhaust of 66 km/s, and a speculative 90% enriched design gives 4,725 km/s.</li>
+<li>Each U-235 fission releases a fixed 202.5 MeV, so a faster exhaust needs more fissions in every tonne.</li>
+<li>The energy in a tonne of exhaust grows with the square of its speed, which is why the salt charge scales that way.</li>
+<li>A ship that does not need to hurry can burn, drift for most of the distance and brake at the end.</li>
+<li>Thrust stays fixed while the tank empties, so acceleration rises as the ship gets lighter.</li>
+</ul>
+</div>
+</details>
+<details class="section" id="departs">
+<summary><h2>Where the game departs from reality</h2><span class="hint">8 points</span></summary>
+<div class="sectionbody">
+<ul>
+<li>The ladder runs far past a published design. The real salt-water figures are 66 km/s and, in the speculative case, 4,725 km/s. coldweld chose to keep one-g trips, so the ladder is a labeled fiction.</li>
+<li>The top rung is the Epstein figure, a fiction on the mirror's own page. Robinson calls an exhaust that fast wasteful for most solar system routes; the game keeps it so a torch can fly one-g trips.</li>
+<li>The base rung is derived so a full tank flies the close Mars run at one g. The spacing of the middle rungs is authored.</li>
+<li>A thruster grade changes only the exhaust speed and adds no thrust. The old design added acceleration and was removed.</li>
+<li>A grade above the base burns only while the hull's custody rights are taken. Safeguards holds every gram of fissile material, and nobody can grant it.</li>
+<li>The salt charge is a custody bill, scaled by exhaust speed squared. A physical price was unusable because the upper rungs need more energy than fission can give.</li>
+<li>Gravity and orbits are ignored in the trip time; a trip is a brachistochrone, or burn, coast and brake when the water is short.</li>
+<li>The tank holds water equal to an authored 100 percent of the dry mass, so with an empty hold the mass ratio is 1 plus that share. The mirror's torch designs run from 2 to 10, so the game takes the low end.</li>
+</ul>
+</div>
+</details>
+<details class="section" id="silent">
+<summary><h2>Where the sources are silent</h2><span class="hint">5 points</span></summary>
+<div class="sectionbody">
+<ul>
+<li>No source prices salt, custody or a refill, so the Cr figures are the game's own.</li>
+<li>No source sets how much water a tank holds against the dry mass, so the tank share is the game's own.</li>
+<li>No source covers a reserve to land and to break off a fight.</li>
+<li>The mirror has no rule for who may hold enrichment grades, because that is fiction.</li>
+<li>The mirror does not rank a burn profile, a cost-to-arrive plan or an arrive-by day.</li>
+</ul>
+</div>
+</details>
+<details class="section" id="inspiration">
+<summary><h2>Inspiration</h2><span class="hint">3 works</span></summary>
+<div class="sectionbody">
+<ul>
+<li><strong>Nuclear salt-water rocket (Robert Zubrin, 1991)</strong> (real system): the fuel itself: fissile salt dissolved in water, with the water as the propellant</li>
+<li><strong>The Expanse (Epstein drive)</strong> (book): the top exhaust speed of the thruster ladder, taken from the mirror listing of the fictional drive</li>
+<li><strong>Sergei Korolev</strong> (person): the title Chief Designer, given to the unnamed designer of the torch drive in the setting canon</li>
+</ul>
+</div>
+</details>
+<details class="section" id="sources">
+<summary><h2>Sources</h2><span class="hint">7 documents</span></summary>
+<div class="sectionbody">
+<ul>
+<li><a href="https://www.projectrho.com/public_html/rocket/enginelist2.php">Atomic Rockets, enginelist2</a>, Nuclear Salt Water (NSWR): A 2% solution of uranium tetrabromide in water. At 20% enrichment the exhaust speed is 66,000 m/s (6,728 s). The 90% enriched case lists 4,725,000 m/s. The page says the water is the remass. "considered far-fetched by many scientists" (<a href="sources.html#doc-rocket-enginelist2-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/torchships.php">Atomic Rockets, torchships</a>, Introduction: A torch drive has high thrust and high specific impulse, so it can fly a brachistochrone. Heinlein coined the word in 1953 for his story Sky Lift. (<a href="sources.html#doc-rocket-torchships-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/torchships.php">Atomic Rockets, torchships</a>, Torchship Performance (Rocketpunk Manifesto, On Torchships): A 1,000 ton example with a mass ratio of 2 and a 300 km/s exhaust gets about 200 km/s of speed change. It shows a tank equal to the dry mass is a plausible design. (<a href="sources.html#doc-rocket-torchships-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/torchships.php">Atomic Rockets, torchships</a>, Constant-acceleration Delta-V: At a fixed thrust the acceleration rises as the mass falls. The page says to cut thrust to hold the acceleration steady. (<a href="sources.html#doc-rocket-torchships-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/torchships.php">Atomic Rockets, torchships</a>, Low Gear / High Gear (Robinson and Campbell): A 1,000 ton ship with a 10,000 km/s exhaust crosses 1 AU in 10.5 days, flipping at the midpoint, and burns 66 tons. A variant accelerates for a tenth of the distance, drifts for eight tenths and brakes for a tenth. Robinson says a 10,000 km/s exhaust is wasteful for most routes in the solar system. (<a href="sources.html#doc-rocket-torchships-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/enginelist3.php">Atomic Rockets, enginelist3</a>, Epstein Drive: A fictional fusion drive from The Expanse, listed at 11,000,000 m/s exhaust speed and 1,100,000 s of specific impulse. The 11,000 km/s figure is the page's conjecture from a mass ratio of 4. (<a href="sources.html#doc-rocket-enginelist3-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/atomicfuel.php">Atomic Rockets, atomicfuel</a>, The Details: One U-235 fission gives 202.5 MeV, which is 3.244e-11 joules per atom. (<a href="sources.html#doc-rocket-atomicfuel-php-html">all uses</a>)</li>
+</ul>
+</div>
+</details>
+<nav aria-label="Other mechanics"><ul class="pager"><li><a href="the-power-model.html" rel="prev"><span class="dir">Previous</span>The power model</a></li><li class="next"><a href="radiation-dose.html" rel="next"><span class="dir">Next</span>Radiation dose</a></li></ul></nav>
+</main>
+<footer class="stamp">
+<p>Read from game commit efdee508 (committed 2026-10-18). Pages written 2026-10-18.
+The explanations are stand-in text and may change.</p>
+</footer>
+</div>
+<script>
+(function () {
+  "use strict";
+  var doc = document;
+  function each(list, fn) { Array.prototype.forEach.call(list, fn); }
+  function make(tag, cls, text) {
+    var el = doc.createElement(tag);
+    if (cls) el.className = cls;
+    if (text) el.textContent = text;
+    return el;
+  }
+  function reveal(el) {
+    for (var node = el; node; node = node.parentElement) {
+      if (node.tagName === "DETAILS") node.open = true;
+    }
+  }
+  function target(hash) {
+    try { return doc.getElementById(decodeURIComponent(hash.slice(1))); } catch (e) { return null; }
+  }
+  function followhash() {
+    var el = location.hash && target(location.hash);
+    if (el) { reveal(el); el.scrollIntoView(); }
+  }
+  doc.addEventListener("click", function (event) {
+    var link = event.target.closest && event.target.closest('a[href^="#"]');
+    var el = link && target(link.getAttribute("href"));
+    if (el) reveal(el);
+  });
+  window.addEventListener("hashchange", followhash);
+  window.addEventListener("beforeprint", function () { each(doc.querySelectorAll("details"), function (d) { d.open = true; }); });
+
+  var sections = doc.querySelectorAll("details.section");
+  var holder = doc.querySelector("[data-openall]");
+  if (holder && sections.length > 1) {
+    var toggle = make("button", "openall");
+    toggle.type = "button";
+    var allopen = function () { return Array.prototype.every.call(sections, function (d) { return d.open; }); };
+    var label = function () { toggle.textContent = allopen() ? "Close all sections" : "Open all sections"; };
+    toggle.addEventListener("click", function () {
+      var open = !allopen();
+      each(sections, function (d) { d.open = open; });
+      label();
+    });
+    each(sections, function (d) { d.addEventListener("toggle", label); });
+    label();
+    holder.appendChild(toggle);
+  }
+
+  var params = new URLSearchParams(location.search);
+  each(doc.querySelectorAll("table[data-sort]"), setup);
+  followhash();
+
+  function keyof(row, col) {
+    var cell = row.cells[col];
+    if (!cell) return "";
+    var key = cell.getAttribute("data-key");
+    return key !== null ? key : cell.textContent.trim();
+  }
+
+  function setup(table) {
+    var body = table.tBodies[0], region = table.parentElement;
+    var rows = [], fixed = [], heads = table.tHead.rows[0].cells, current = { col: -1, dir: 1 };
+    each(body.rows, function (row, i) {
+      row.setAttribute("data-order", i);
+      row.searchtext = row.textContent.toLowerCase();
+      (row.hasAttribute("data-fixed") ? fixed : rows).push(row);
+    });
+    table.classList.add("live");
+
+    function paint() {
+      var shown = 0;
+      rows.concat(fixed).forEach(function (row) {
+        if (!row.hidden) { row.classList.toggle("alt", shown % 2 === 1); shown += 1; }
+      });
+      return rows.filter(function (row) { return !row.hidden; }).length;
+    }
+    function order(col, dir, type) {
+      var sorted = rows.slice().sort(function (a, b) {
+        var x = col < 0 ? 0 : keyof(a, col), y = col < 0 ? 0 : keyof(b, col), result = 0;
+        if (col >= 0 && type === "num") {
+          var p = parseFloat(x), q = parseFloat(y);
+          if (isNaN(p) || isNaN(q)) return (isNaN(p) - isNaN(q)) || a.getAttribute("data-order") - b.getAttribute("data-order");
+          result = (p - q) * dir;
+        } else if (col >= 0) {
+          result = String(x).localeCompare(String(y), undefined, { numeric: true, sensitivity: "base" }) * dir;
+        }
+        return result || a.getAttribute("data-order") - b.getAttribute("data-order");
+      });
+      sorted.concat(fixed).forEach(function (row) { body.appendChild(row); });
+      rows = sorted;
+      current = { col: col, dir: dir };
+      each(heads, function (th, i) {
+        if (th.hasAttribute("aria-sort")) th.setAttribute("aria-sort", i === col ? (dir > 0 ? "ascending" : "descending") : "none");
+      });
+      paint();
+    }
+    each(heads, function (th, col) {
+      var type = th.getAttribute("data-type");
+      if (!type) return;
+      var button = make("button", "sort");
+      button.type = "button";
+      while (th.firstChild) button.appendChild(th.firstChild);
+      var arrow = make("span", "arrow");
+      arrow.setAttribute("aria-hidden", "true");
+      button.appendChild(arrow);
+      th.appendChild(button);
+      th.setAttribute("aria-sort", "none");
+      button.addEventListener("click", function () { order(col, current.col === col ? -current.dir : 1, type); });
+    });
+
+    var modes = (table.getAttribute("data-filter") || "").split(" ").filter(Boolean);
+    if (!modes.length) { paint(); return; }
+    var nouns = (table.getAttribute("data-noun") || "row rows").split(" ");
+    var noun = function (n) { return n === 1 ? nouns[0] : nouns[1]; };
+    var tools = make("div", "tools");
+    tools.setAttribute("role", "group");
+    tools.setAttribute("aria-label", "Sort and filter the table");
+    var find = make("label", "find");
+    var input = make("input");
+    input.type = "search";
+    input.autocomplete = "off";
+    input.spellcheck = false;
+    input.placeholder = table.getAttribute("data-placeholder") || "Type a word";
+    find.appendChild(make("span", "", "Find"));
+    find.appendChild(input);
+    tools.appendChild(find);
+    var picked = {}, chips = [];
+    if (modes.indexOf("grade") >= 0) {
+      var group = make("div", "chips");
+      group.setAttribute("role", "group");
+      group.setAttribute("aria-label", "Show only these grades");
+      group.appendChild(make("span", "chipslabel", "Grade"));
+      "ABCDE".split("").forEach(function (letter) {
+        var count = rows.filter(function (row) { return row.getAttribute("data-grade") === letter; }).length;
+        var chip = make("button", "chip", letter + " " + count);
+        chip.type = "button";
+        chip.setAttribute("aria-pressed", "false");
+        chip.setAttribute("aria-label", "Grade " + letter + ", " + count + " " + noun(count));
+        chip.disabled = !count;
+        chip.addEventListener("click", function () {
+          picked[letter] = !picked[letter];
+          chip.setAttribute("aria-pressed", String(picked[letter]));
+          apply();
+        });
+        chip.letter = letter;
+        group.appendChild(chip);
+        chips.push(chip);
+      });
+      tools.appendChild(group);
+    }
+    var reset = make("button", "reset", "Clear the filter and sort");
+    reset.type = "button";
+    var status = make("p", "status");
+    status.setAttribute("aria-live", "polite");
+    tools.appendChild(reset);
+    tools.appendChild(status);
+    region.parentNode.insertBefore(tools, region);
+    var empty = make("p", "empty");
+    region.parentNode.insertBefore(empty, region.nextSibling);
+
+    function apply() {
+      var words = input.value.toLowerCase().split(/\s+/).filter(Boolean);
+      var grades = Object.keys(picked).filter(function (g) { return picked[g]; });
+      rows.forEach(function (row) {
+        var ok = words.every(function (w) { return row.searchtext.indexOf(w) >= 0; });
+        row.hidden = !(ok && (!grades.length || grades.indexOf(row.getAttribute("data-grade")) >= 0));
+      });
+      var active = words.length > 0 || grades.length > 0;
+      fixed.forEach(function (row) { row.hidden = active; });
+      var shown = paint();
+      status.textContent = active ? "Showing " + shown + " of " + rows.length + " " + noun(rows.length) + "." : rows.length + " " + noun(rows.length) + ". Select a column heading to sort.";
+      reset.hidden = !active && current.col < 0;
+      empty.hidden = shown > 0;
+      empty.textContent = "No " + nouns[0] + " matches the filter. Clear the filter to see all " + rows.length + ".";
+    }
+    input.addEventListener("input", apply);
+    reset.addEventListener("click", function () {
+      input.value = "";
+      picked = {};
+      chips.forEach(function (chip) { chip.setAttribute("aria-pressed", "false"); });
+      order(-1, 1, "");
+      apply();
+      input.focus();
+    });
+    each(heads, function (th) {
+      var button = th.querySelector("button.sort");
+      if (button) button.addEventListener("click", function () { reset.hidden = false; });
+    });
+    var want = (params.get("grade") || "").toUpperCase();
+    chips.forEach(function (chip) {
+      if (want.indexOf(chip.letter) >= 0 && !chip.disabled) { picked[chip.letter] = true; chip.setAttribute("aria-pressed", "true"); }
+    });
+    if (params.get("q")) input.value = params.get("q");
+    apply();
+  }
+})();
+</script>
+</body>
+</html>

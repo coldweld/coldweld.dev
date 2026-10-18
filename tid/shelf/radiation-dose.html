@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Radiation dose</title>
+<meta name="description" content="What the game does for radiation dose, its numbers, and where each comes from.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+:root {
+  color-scheme: light dark;
+  --bg: #fbf8f1; --panel: #f0eadb; --rule: #b9ae94; --text: #231c0f; --muted: #51493a; --accent: #7a4300;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #0e0903; --panel: #16110a; --rule: #4a4130; --text: #d6cbb6; --muted: #a89f88; --accent: #ffb040; }
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: 1rem; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 1.0625rem/1.65 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; padding: 0 1rem 4rem; }
+::selection { background: var(--accent); color: var(--bg); }
+.skip { position: absolute; left: 1rem; top: -4rem; background: var(--accent); color: var(--bg); padding: .5rem 1rem; z-index: 10; }
+.skip:focus { top: .5rem; }
+.wrap { max-width: 72rem; margin: 0 auto; }
+.mono, h1, h2, h3, caption, th, nav, .brand, .stamp, .grade, .val, .hint, .chip, .chipslabel, .find span, .openall, .pager .dir, summary { font-family: "DM Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+a { color: var(--accent); text-underline-offset: .2em; text-decoration-thickness: 1px; }
+a:hover { text-decoration-thickness: 2px; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.top { padding: 2rem 0 1rem; border-bottom: 1px solid var(--rule); }
+.brand { margin: 0 0 .75rem; font-size: .8rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .25rem 1.5rem; }
+nav a { display: inline-block; padding: .45rem 0; }
+nav a[aria-current] { color: var(--text); text-decoration: none; border-bottom: 2px solid var(--accent); }
+h1 { font-size: clamp(1.6rem, 4.5vw, 2.25rem); line-height: 1.2; margin: 2.25rem 0 1rem; font-weight: 500; letter-spacing: -.01em; text-wrap: balance; }
+h2 { font-size: 1.5rem; line-height: 1.3; margin: 2.5rem 0 .75rem; font-weight: 500; text-wrap: balance; }
+h3 { font-size: 1.2rem; line-height: 1.35; margin: 1.75rem 0 .5rem; font-weight: 500; }
+p, li, dd { max-width: 40rem; }
+li + li { margin-top: .4rem; }
+code { font-family: "DM Mono", ui-monospace, Consolas, monospace; font-size: .9em; overflow-wrap: anywhere; }
+.lead { font-size: 1.15rem; line-height: 1.6; }
+.note { background: var(--panel); border: 1px solid var(--rule); padding: .75rem 1rem; max-width: 40rem; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; padding: 0; margin: -1px; }
+.glance { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem 1.4rem; margin: 1.5rem 0; padding: .85rem 1rem; background: var(--panel); border: 1px solid var(--rule); font-size: .95rem; }
+.glance p { margin: 0; }
+.glance ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .5rem 1.1rem; }
+.glance li { margin: 0; white-space: nowrap; }
+.toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem 1.5rem; margin: 0 0 1.5rem; }
+.toc { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .25rem 1.25rem; }
+.toc li { margin: 0; }
+.toc a { display: inline-block; padding: .35rem 0; }
+.openall { font-size: .85rem; background: transparent; color: var(--accent); border: 1px solid var(--rule); border-radius: 4px; padding: .45rem .8rem; cursor: pointer; }
+.openall:hover { border-color: var(--accent); }
+details.section { border-top: 1px solid var(--rule); }
+details.section:last-of-type { border-bottom: 1px solid var(--rule); }
+details.section > summary { display: flex; align-items: baseline; flex-wrap: wrap; gap: .25rem .9rem; padding: 1.05rem .25rem; cursor: pointer; list-style: none; }
+details.section > summary::-webkit-details-marker { display: none; }
+details.section > summary::before { content: ""; flex: none; align-self: center; width: .5rem; height: .5rem; border-right: 2px solid var(--accent); border-bottom: 2px solid var(--accent); transform: rotate(-45deg); transition: transform .18s ease-out; }
+details.section[open] > summary::before { transform: translateY(-.15rem) rotate(45deg); }
+details.section > summary h2 { margin: 0; font-size: 1.5rem; }
+details.section > summary:hover h2 { color: var(--accent); }
+.hint { margin-left: auto; color: var(--muted); font-size: .82rem; }
+.sectionbody { padding: 0 0 2rem; }
+.region { overflow-x: auto; margin: .75rem 0 1rem; border: 1px solid var(--rule); scrollbar-color: var(--rule) transparent; }
+table { border-collapse: collapse; width: 100%; min-width: 40rem; font-size: .95rem; line-height: 1.55; font-variant-numeric: tabular-nums; }
+caption { text-align: left; padding: .75rem .85rem; font-size: .9rem; color: var(--muted); }
+caption.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; padding: 0; }
+th, td { text-align: left; vertical-align: top; padding: .7rem .85rem; border-top: 1px solid var(--rule); }
+thead th { background: var(--panel); font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; white-space: nowrap; vertical-align: bottom; }
+thead .sub { display: block; font-size: .78rem; letter-spacing: 0; text-transform: none; color: var(--muted); font-weight: 400; }
+tbody th { font-weight: 500; font-family: inherit; min-width: 11rem; }
+table:not(.live) tbody tr:nth-child(even) > *, table.live tbody tr.alt > * { background: var(--panel); }
+tbody tr:target > * { background: color-mix(in srgb, var(--accent) 18%, var(--bg)) !important; }
+td.val { overflow-wrap: break-word; min-width: 7rem; font-size: 1rem; }
+.unit { display: block; font-size: .82rem; color: var(--muted); overflow-wrap: normal; }
+.nosource { color: var(--muted); }
+.numbers { min-width: 58rem; }
+.numbers tbody th { min-width: 13rem; width: 20%; }
+.numbers td:nth-child(4) { min-width: 11rem; width: 18%; }
+.numbers td:nth-child(5) { min-width: 22rem; width: 42%; }
+.allnumbers { min-width: 52rem; }
+.allnumbers tbody th { min-width: 14rem; width: 28%; }
+.allnumbers td:nth-child(2) { min-width: 10rem; }
+td.count { text-align: right; }
+.counts thead th:not(:first-child) { text-align: right; }
+.counts tr[data-fixed] > * { border-top: 2px solid var(--rule); font-weight: 600; }
+.uses { min-width: 34rem; }
+button.sort { all: unset; cursor: pointer; display: inline-flex; align-items: center; gap: .45rem; text-align: left; }
+button.sort:hover { color: var(--accent); }
+button.sort:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+.arrow { flex: none; width: 0; height: 0; border-left: .3rem solid transparent; border-right: .3rem solid transparent; border-top: .38rem solid currentColor; opacity: .35; }
+th[aria-sort="ascending"] .arrow { opacity: 1; transform: rotate(180deg); color: var(--accent); }
+th[aria-sort="descending"] .arrow { opacity: 1; color: var(--accent); }
+.tools { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem 1.5rem; margin: 1rem 0 .5rem; font-size: .9rem; }
+.find { display: flex; align-items: center; gap: .6rem; }
+.find span, .chipslabel { font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.find input { font: inherit; font-size: 1rem; color: var(--text); background: var(--bg); border: 1px solid var(--rule); border-radius: 4px; padding: .45rem .65rem; width: 18rem; max-width: 100%; caret-color: var(--accent); }
+.find input::placeholder { color: var(--muted); opacity: 1; }
+.find input:focus-visible { border-color: var(--accent); }
+.chips { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem; }
+.chip { font-size: .85rem; background: transparent; color: var(--text); border: 1px solid var(--rule); border-radius: 999px; padding: .3rem .75rem; min-height: 2.25rem; cursor: pointer; }
+.chip:hover:not(:disabled) { border-color: var(--accent); }
+.chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+.chip:disabled { opacity: .45; cursor: default; }
+.reset { font: inherit; background: none; border: 0; padding: .3rem 0; color: var(--accent); text-decoration: underline; text-underline-offset: .2em; cursor: pointer; }
+.status { flex-basis: 100%; margin: 0; color: var(--muted); font-size: .88rem; }
+.empty { margin: 0 0 1rem; padding: 1rem; border: 1px dashed var(--rule); color: var(--muted); }
+details.uses { margin: .5rem 0 1rem; }
+details.uses > summary { cursor: pointer; padding: .45rem 0; font-size: .85rem; color: var(--accent); }
+.cited { margin: .25rem 0 .5rem; color: var(--muted); }
+.grade { display: inline-block; border: 2px solid currentColor; border-radius: 4px; min-width: 1.7rem; text-align: center; padding: 0 .3rem; font-weight: 600; line-height: 1.45; margin-right: .45rem; }
+.grade.g-a, .grade.g-b { background: var(--text); border-color: var(--text); color: var(--bg); }
+.grade.g-e { border-width: 1.5px; border-style: dashed; color: var(--muted); }
+.gradeitem { white-space: nowrap; }
+.stamp { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--rule); font-size: .8rem; color: var(--muted); }
+dl.keys dt { font-weight: 600; margin-top: 1rem; }
+dl.keys dd { margin: .25rem 0 0; }
+.pager { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; margin: 3rem 0 0; padding: 0; list-style: none; }
+.pager li { margin: 0; flex: 1 1 16rem; max-width: 28rem; }
+.pager li.next { margin-left: auto; text-align: right; }
+.pager a { display: block; padding: .8rem 1rem; border: 1px solid var(--rule); text-decoration: none; }
+.pager a:hover { border-color: var(--accent); }
+.pager .dir { display: block; font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+@media (max-width: 40rem) {
+  body { padding: 0 1rem 3rem; font-size: 1rem; }
+  th, td { padding: .6rem; }
+  .hint { margin-left: 1.4rem; flex-basis: 100%; }
+  .find { flex-basis: 100%; }
+  .find input { flex: 1; width: auto; }
+  .chip { min-height: 2.75rem; min-width: 2.75rem; }
+  .numbers { min-width: 46rem; } .numbers tbody th { min-width: 8rem; width: auto; } .numbers td.val { min-width: 6.5rem; } .numbers td:nth-child(3) { min-width: 5.5rem; }
+  .allnumbers { min-width: 40rem; } .allnumbers tbody th { min-width: 9rem; }
+  .numbers .gradeitem, .allnumbers .gradeitem { white-space: normal; } .numbers .grade, .allnumbers .grade { display: block; width: max-content; margin: 0 0 .2rem; }
+}
+@media (min-width: 40rem) {
+  .numbers tbody th, .allnumbers tbody th { position: sticky; left: 0; z-index: 1; background: var(--bg); }
+}
+@media (prefers-reduced-motion: reduce) { details.section > summary::before { transition: none; } }
+@media print { .skip, .tools, .openall, .empty { display: none; } details.section > summary::before { display: none; } }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to the content</a>
+<div class="wrap">
+<header class="top">
+<p class="brand"><a href="https://coldweld.dev/">Coldweld</a> / The Infinite Diaspora / Reference shelf</p>
+<nav aria-label="Reference shelf"><ul>
+<li><a href="index.html">Mechanics</a></li>
+<li><a href="numbers.html">All numbers</a></li>
+<li><a href="grades.html">Grades</a></li>
+<li><a href="sources.html">Sources</a></li>
+<li><a href="updates.html">Source updates</a></li>
+</ul></nav>
+</header>
+<main id="main">
+<h1>Radiation dose</h1>
+<p class="lead">A radiation dose is the energy that radiation leaves in a body. The game counts it in millisieverts (mSv), once for a whole career and once for a sudden burst.</p>
+<div class="glance"><p><strong>30 numbers</strong>, 21 with an outside source</p><ul aria-label="Numbers by grade"><li><span class="grade g-a">A</span>0 <span class="sr">numbers at grade A</span></li><li><span class="grade g-b">B</span>15 <span class="sr">numbers at grade B</span></li><li><span class="grade g-c">C</span>3 <span class="sr">numbers at grade C</span></li><li><span class="grade g-d">D</span>3 <span class="sr">numbers at grade D</span></li><li><span class="grade g-e">E</span>9 <span class="sr">numbers at grade E</span></li></ul></div>
+<div class="toolbar" data-openall></div>
+<details class="section" id="does">
+<summary><h2>What the game does</h2><span class="hint">2 topics</span></summary>
+<div class="sectionbody">
+<h3>Radiation</h3>
+<ul>
+<li>Radiation is measured in mSv, and every hand carries two doses.</li>
+<li>The lifetime dose never goes down, and open space adds about two mSv a day to it.</li>
+<li>Past 1,000 mSv of lifetime dose, a hand asks to go ashore.</li>
+<li>A solar storm or a radiation belt gives an acute dose in a few hours.</li>
+<li>Past 1,000 mSv of acute dose a hand is radiation sick, so they fight worse.</li>
+<li>The body clears acute dose over weeks, and a sickbay or a hospital makes that faster.</li>
+<li>Each fixed layer of shielding halves a dose, so no shield removes it.</li>
+<li>A storm is halved by a thinner layer than the background.</li>
+<li>A storm is weaker far from the Sun.</li>
+<li>Every screen that quotes a dose also says what it means in years of permitted exposure.</li>
+</ul>
+<h3>Jupiter&#x27;S Moons</h3>
+<ul>
+<li>Jupiter's moons are the exception, and they are not close.</li>
+<li>Io sits inside a trapped belt worth tens of thousands of mSv a day.</li>
+<li>Europa is thousands and Ganymede is tens.</li>
+<li>Callisto sits outside the belt and is quieter than open space.</li>
+</ul>
+</div>
+</details>
+<details class="section" id="numbers">
+<summary><h2>The numbers</h2><span class="hint">30 numbers: 15 B, 3 C, 3 D, 9 E</span></summary>
+<div class="sectionbody">
+<p>Each value is read from the game code. Sort by any column heading, or filter by grade or by a word.</p>
+<div class="region" role="region" tabindex="0" aria-label="Numbers the game runs for radiation dose">
+<table class="numbers" data-sort="1" data-filter="text grade" data-noun="number numbers" data-placeholder="Quantity, source or word">
+<caption>Numbers the game runs for radiation dose</caption>
+<thead><tr>
+<th scope="col" data-type="text">Quantity</th>
+<th scope="col" data-type="num">Value</th>
+<th scope="col" data-type="text">Grade</th>
+<th scope="col" data-type="text">Source</th>
+<th scope="col">Why this value</th>
+</tr></thead>
+<tbody>
+<tr id="n-1" data-grade="B"><th scope="row">Open-space dose with no shielding</th><td class="val" data-key="1.84">1.84 <span class="unit">mSv per day</span></td><td data-key="B"><span class="gradeitem"><span class="grade g-b">B</span>Secondary</span></td><td><a href="https://www.projectrho.com/public_html/rocket/radiation.php">Atomic Rockets, radiation</a>, Galactic Cosmic Radiation (the Curiosity passage)</td><td>The page says Curiosity measured 1.84 millisieverts a day on the way to Mars, with no shielding, at the peak of the solar cycle.</td></tr>
+<tr id="n-2" data-grade="B"><th scope="row">Shielding that halves the cosmic-ray background</th><td class="val" data-key="18.0">18 <span class="unit">g/cm^2</span></td><td data-key="B"><span class="gradeitem"><span class="grade g-b">B</span>Secondary</span></td><td><a href="https://www.projectrho.com/public_html/rocket/radiation.php">Atomic Rockets, radiation</a>, Trapped Radiation (the Jupiter shielding table), and Effectiveness of Shielding Materials for the 15 to 20 grams of water</td><td>The page's Jupiter shielding table gives one halving layer as 18 centimeters of liquid water, which is 18 grams per square centimeter; it also says 15 to 20 grams of water halves cosmic rays.</td></tr>
+<tr id="n-3" data-grade="C"><th scope="row">Shielding that halves a solar storm dose</th><td class="val" data-key="4.3">4.3 <span class="unit">g/cm^2</span></td><td data-key="C"><span class="gradeitem"><span class="grade g-c">C</span>Derived</span></td><td><a href="https://www.projectrho.com/public_html/rocket/radiation.php">Atomic Rockets, radiation</a>, Effectiveness of Shielding Materials</td><td>The page says 20 grams per square centimeter of aluminum cuts the 1972 storm from 500 rem to 20 rem inside a command module, a cut of 25 times, which is one halving every 4.3 grams (20 divided by log base 2 of 25).</td></tr>
+<tr id="n-4" data-grade="B"><th scope="row">Solar events a year</th><td class="val" data-key="10.0">10 <span class="unit">events</span></td><td data-key="B"><span class="gradeitem"><span class="grade g-b">B</span>Secondary</span></td><td><a href="https://www.projectrho.com/public_html/rocket/radiation.php">Atomic Rockets, radiation</a>, Solar Energetic Particles (the gradual SPE passage)</td><td>The page, quoting NASA, says about 10 gradual solar particle events happen each year.</td></tr>
+<tr id="n-5" data-grade="B"><th scope="row">Years in one solar cycle</th><td class="val" data-key="11.0">11 <span class="unit">years</span></td><td data-key="B"><span class="gradeitem"><span class="grade g-b">B</span>Secondary</span></td><td><a href="https://www.projectrho.com/public_html/rocket/radiation.php">Atomic Rockets, radiation</a>, Galactic Cosmic Radiation (the Curiosity passage)</td><td>The page gives the solar activity cycle as 11 years, and its cosmic ray formula uses an 11 year sine.</td></tr>
+<tr id="n-6" data-grade="C"><th scope="row">Chance of an event on any one day</th><td class="val" data-key="0.02737850787132101">0.0274 <span class="unit">chance</span></td><td data-key="C"><span class="gradeitem"><span class="grade g-c">C</span>Derived</span></td><td><a href="https://www.projectrho.com/public_html/rocket/radiation.php">Atomic Rockets, radiation</a>, Solar Energetic Particles (the gradual SPE passage)</td><td>The yearly count of events divided by 365.25 days; the count is the page's figure of about 10 a year.</td></tr>
+<tr id="n-7" data-grade="D"><th scope="row">Slope of the size law for events</th><td class="val" data-key="0.4">0.4 <span class="unit">index</span></td><td data-key="D"><span class="gradeitem"><span class="grade g-d">D</span>Analogy</span></td><td>Design notes: travel, Solar particle events as a size law (2026-09-28)</td><td>Gabriel and Feynman 1996 give a power law with a differential index of 1.2 to 1.4, so a cumulative index of 0.2 to 0.4, read here from the abstract through a web search; the paper itself was not opened.</td></tr>
+<tr id="n-8" data-grade="B"><th scope="row">Worst event, bare hull at 1 AU, once a cycle</th><td class="val" data-key="5000.0">5,000 <span class="unit">mSv</span></td><td data-key="B"><span class="gradeitem"><span class="grade g-b">B</span>Secondary</span></td><td><a href="https://www.projectrho.com/public_html/rocket/radiation.php">Atomic Rockets, radiation</a>, Effectiveness of Shielding Materials</td><td>The page says the 1972 event was 5000 rem (50 sieverts) outside a ship and about 500 rem (5 sieverts) inside a command module.</td></tr>
+<tr id="n-9" data-grade="E"><th scope="row">Smallest event the size law draws</th><td class="val" data-key="0.03939928054733853">0.0394 <span class="unit">mSv</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Solved from the size law so the worst event comes once in the number of events a solar cycle holds; the once a cycle rate is the game's choice, and the page names only the single 1972 event.</td></tr>
+<tr id="n-10" data-grade="D"><th scope="row">Exponent for how fast a storm weakens with distance from the Sun</th><td class="val" data-key="2.0">2 <span class="unit">power of 1/R</span></td><td data-key="D"><span class="gradeitem"><span class="grade g-d">D</span>Analogy</span></td><td>Design notes: travel, Solar particle events as a size law (2026-09-28)</td><td>The notes cite published fits of fluence against distance from the Sun, 1.4 to 2.7 and 2.1 plus or minus 0.3, all inside 1 AU; those papers were not opened for this grade, and the game extends the law outward with the inverse square. The sources are silent on this figure.</td></tr>
+<tr id="n-11" data-grade="E"><th scope="row">Nearest distance from the Sun the storm scale uses</th><td class="val" data-key="0.3">0.3 <span class="unit">AU</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>The game chose a nearest distance so the storm scale is never computed deep inside the orbit of the innermost body; no source applies.</td></tr>
+<tr id="n-12" data-grade="B"><th scope="row">Annual limit the screens quote</th><td class="val" data-key="50.0">50 <span class="unit">mSv</span></td><td data-key="B"><span class="gradeitem"><span class="grade g-b">B</span>Secondary</span></td><td><a href="https://www.projectrho.com/public_html/rocket/radiation.php">Atomic Rockets, radiation</a>, Trapped Radiation (the Jupiter dose table), and the Chronic Radiation Syndrome Chart for the adult annual limit</td><td>The page gives the single-year limit as 50 millisieverts, and the annual limit for an adult as 0.05 sieverts.</td></tr>
+<tr id="n-13" data-grade="B"><th scope="row">Five-year limit the screens quote</th><td class="val" data-key="100.0">100 <span class="unit">mSv</span></td><td data-key="B"><span class="gradeitem"><span class="grade g-b">B</span>Secondary</span></td><td><a href="https://www.projectrho.com/public_html/rocket/radiation.php">Atomic Rockets, radiation</a>, Trapped Radiation (the Jupiter dose table)</td><td>The page gives the maximum five-year cumulative exposure as 100 millisieverts.</td></tr>
+<tr id="n-14" data-grade="B"><th scope="row">Lifetime dose at which a hand asks to go ashore</th><td class="val" data-key="1000.0">1,000 <span class="unit">mSv</span></td><td data-key="B"><span class="gradeitem"><span class="grade g-b">B</span>Secondary</span></td><td><a href="https://www.projectrho.com/public_html/rocket/radiation.php">Atomic Rockets, radiation</a>, Observation (the ESA limit passage)</td><td>The page says the radiation limit for ESA astronauts is 1 sievert.</td></tr>
+<tr id="n-15" data-grade="B"><th scope="row">Acute dose at which a hand is radiation sick</th><td class="val" data-key="1000.0">1,000 <span class="unit">mSv</span></td><td data-key="B"><span class="gradeitem"><span class="grade g-b">B</span>Secondary</span></td><td><a href="https://www.projectrho.com/public_html/rocket/radiation.php">Atomic Rockets, radiation</a>, Acute Radiation Syndrome Chart</td><td>The acute chart says mild symptoms begin to appear at 1 gray and become common at 2 gray; the game treats gray and sievert as equal for this radiation.</td></tr>
+<tr id="n-16" data-grade="C"><th scope="row">Acute dose the body clears each day</th><td class="val" data-key="35.0">35 <span class="unit">mSv per day</span></td><td data-key="C"><span class="gradeitem"><span class="grade g-c">C</span>Derived</span></td><td><a href="https://www.projectrho.com/public_html/rocket/radiation.php">Atomic Rockets, radiation</a>, Acute Radiation Syndrome Chart</td><td>The chart gives a latent phase of 10 to 14 days plus symptoms of up to 4 weeks for 1 to 2 gray, about 42 days, so a mid dose of 1.5 gray clears at about 36 millisieverts a day.</td></tr>
+<tr id="n-17" data-grade="E"><th scope="row">Time inside a belt per visit</th><td class="val" data-key="0.25">0.25 <span class="unit">hours</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>The one authored number in the radiation model, chosen by the game as the time to approach, dock and leave a belt in one visit; no source gives it.</td></tr>
+<tr id="n-18" data-grade="E"><th scope="row">Morale lost each day while radiation sick</th><td class="val" data-key="4.0">4 <span class="unit">morale per day</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Chosen by the game to match the size and shape of the fatigue drain; the notes record no source for morale loss from sickness.</td></tr>
+<tr id="n-19" data-grade="D"><th scope="row">Acute dose bands (floor, grade, term)</th><td class="val" data-key="2000.0">2,000, 6, radiation sickness, 1,000, 5, mild radiation sickness, 750, 4, nausea risk, 500, 3, immune impairment, 250, 2, subclinical, 50, 1, over annual limit, 0, 0, within annual limit <span class="unit">mSv</span></td><td data-key="D"><span class="gradeitem"><span class="grade g-d">D</span>Analogy</span></td><td><a href="https://www.projectrho.com/public_html/rocket/radiation.php">Atomic Rockets, radiation</a>, Acute Radiation Syndrome Chart</td><td>The floors follow the chart's own steps (blood changes at 0.25 gray, immune impairment at 0.5, nausea risk at 0.75, symptoms at 1) and the annual limit; the grade numbers and clinical labels are the game's.</td></tr>
+<tr id="n-20" data-grade="B"><th scope="row">Io belt dose (read by getbeltdoseforvisit)</th><td class="val" data-key="36000.0">36,000 <span class="unit">mSv per day</span></td><td data-key="B"><span class="gradeitem"><span class="grade g-b">B</span>Secondary</span></td><td><a href="https://www.projectrho.com/public_html/rocket/radiation.php">Atomic Rockets, radiation</a>, Trapped Radiation (the Jupiter dose table)</td><td>The page's Jupiter dose table gives Io 36 sieverts a day.</td></tr>
+<tr id="n-21" data-grade="B"><th scope="row">Europa belt dose</th><td class="val" data-key="5000.0">5,000 <span class="unit">mSv per day</span></td><td data-key="B"><span class="gradeitem"><span class="grade g-b">B</span>Secondary</span></td><td><a href="https://www.projectrho.com/public_html/rocket/radiation.php">Atomic Rockets, radiation</a>, Trapped Radiation (the Jupiter dose table)</td><td>The page's Jupiter dose table gives Europa 5 sieverts a day.</td></tr>
+<tr id="n-22" data-grade="B"><th scope="row">Ganymede belt dose</th><td class="val" data-key="80.0">80 <span class="unit">mSv per day</span></td><td data-key="B"><span class="gradeitem"><span class="grade g-b">B</span>Secondary</span></td><td><a href="https://www.projectrho.com/public_html/rocket/radiation.php">Atomic Rockets, radiation</a>, Trapped Radiation (the Jupiter dose table)</td><td>The page's Jupiter dose table gives Ganymede 0.08 sieverts a day.</td></tr>
+<tr id="n-23" data-grade="B"><th scope="row">Callisto belt dose</th><td class="val" data-key="0.1">0.1 <span class="unit">mSv per day</span></td><td data-key="B"><span class="gradeitem"><span class="grade g-b">B</span>Secondary</span></td><td><a href="https://www.projectrho.com/public_html/rocket/radiation.php">Atomic Rockets, radiation</a>, Trapped Radiation (the Jupiter dose table)</td><td>The page's Jupiter dose table gives Callisto 0.0001 sieverts a day, outside the belt at 26.4 Jupiter radii.</td></tr>
+<tr id="n-24" data-grade="E"><th scope="row">Shielding of the RS-1 module</th><td class="val" data-key="2.0">2 <span class="unit">g/cm^2</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Chosen by the game as the bottom rung of the shielding ladder; the notes name a real craft for the other rungs but none at this thickness.</td></tr>
+<tr id="n-25" data-grade="B"><th scope="row">Shielding of the RS-6 module</th><td class="val" data-key="25.0">25 <span class="unit">g/cm^2</span></td><td data-key="B"><span class="gradeitem"><span class="grade g-b">B</span>Secondary</span></td><td><a href="https://www.projectrho.com/public_html/rocket/radiation.php">Atomic Rockets, radiation</a>, Observation (the storm shelter passage)</td><td>The page says a storm shelter can be as low as 25 grams per square centimeter and still keep astronauts out of serious risk.</td></tr>
+<tr id="n-26" data-grade="E"><th scope="row">Cut to daily fatigue and to a solar event&#x27;s dose per point of Medical competence</th><td class="val" data-key="0.005">0.005 <span class="unit">fraction per competence point</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Chosen so that a medic reading the dosimeters gets people into the shelter. No source gives how much a medic cuts a dose.</td></tr>
+<tr id="n-27" data-grade="E"><th scope="row">Most the Medical department can cut daily fatigue and event dose</th><td class="val" data-key="0.5">0.5 <span class="unit">fraction</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Chosen so that no crew is ever spared a hard burn.</td></tr>
+<tr id="n-28" data-grade="E"><th scope="row">Acute dose one patient clears per day per point of Medical competence</th><td class="val" data-key="0.7">0.7 <span class="unit">mSv per day per competence point</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Chosen so that a rookie medic (competence 50) adds 35 mSv a day, which doubles natural recovery for one patient a day. The lifetime dose stays. No source gives a treatment rate.</td></tr>
+<tr id="n-29" data-grade="E"><th scope="row">The lifetime dose bands the screens name</th><td class="val" data-key="1000.0">1,000, past the career limit, 100, over five years&#x27; permitted exposure, 50, over a year&#x27;s permitted exposure, 0, inside a year&#x27;s permitted exposure <span class="unit">bands</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>The bands are the regulator limits already on this shelf (career, five-year, annual), never a symptom, because a slow dose makes nobody sick. The wording of each band is authored.</td></tr>
+<tr id="n-30" data-grade="B"><th scope="row">Areal density of real shelters that the module screen compares a number to</th><td class="val" data-key="25.0">25, a solar-storm shelter, 20, a planned lunar base, 15, the ISS storm cellar, 10, the Space Shuttle, 7, an Apollo command module, 0, little more than a suit <span class="unit">g/cm^2</span></td><td data-key="B"><span class="gradeitem"><span class="grade g-b">B</span>Secondary</span></td><td><a href="https://www.projectrho.com/public_html/rocket/radiation.php">Atomic Rockets, radiation</a>, the passage comparing suit, Apollo, Shuttle, ISS and lunar base shielding</td><td>The mirror gives a suit at 0.25, an Apollo command module at 7 to 8, the Space Shuttle at 10 to 11, the ISS storm cellar at 15, planned lunar bases above 20, and a storm shelter as low as 25 g/cm^2.</td></tr>
+</tbody></table></div>
+</div>
+</details>
+<details class="section" id="why">
+<summary><h2>Why: the real physics or procedure</h2><span class="hint">8 points</span></summary>
+<div class="sectionbody">
+<ul>
+<li>A dose is the energy that radiation leaves in a body, and the sievert is the unit that weighs the damage by the kind of radiation.</li>
+<li>A chronic dose builds up slowly and raises the chance of cancer, so it never heals.</li>
+<li>An acute dose lands in hours and burns tissue, so it can make a person sick but the body can heal it.</li>
+<li>In open space the dose is steady: Curiosity measured 1.84 mSv a day on the way to Mars, with no shielding.</li>
+<li>The danger is the solar storm: the 1972 event reached about 50 Sv outside a ship and 5 Sv inside a command module.</li>
+<li>Solar protons are easier to stop than cosmic rays, so a storm shelter of about 25 g/cm^2 makes a storm survivable.</li>
+<li>Jupiter's magnetic field traps particles, so a belt around Io gives about 36 Sv a day while Callisto sits outside it.</li>
+<li>A career limit of 1 Sv is the ESA astronaut limit, and the yearly limit for an adult is 50 mSv.</li>
+</ul>
+</div>
+</details>
+<details class="section" id="departs">
+<summary><h2>Where the game departs from reality</h2><span class="hint">7 points</span></summary>
+<div class="sectionbody">
+<ul>
+<li>Gray and sievert are treated as the same unit for this radiation.</li>
+<li>A belt visit counts as an acute dose, although the mirror files belts under chronic. A visit lasts a fraction of an hour, which is the mirror's own idea of acute.</li>
+<li>The time in a belt is the one authored number in the model. Three Io visits come to about one sievert by design.</li>
+<li>The clearing rate for acute dose is derived from the chart's recovery times, about six weeks for the 1 to 2 Gy band.</li>
+<li>The lifetime limit uses the ESA figure of 1 Sv. The NASA career table, which depends on age and sex, is not used.</li>
+<li>The captain carries no dose, and death at the LD50 level is not modeled.</li>
+<li>The mirror says a crew often gets warning of a storm. The game reports the dose after it lands.</li>
+</ul>
+</div>
+</details>
+<details class="section" id="silent">
+<summary><h2>Where the sources are silent</h2><span class="hint">3 points</span></summary>
+<div class="sectionbody">
+<ul>
+<li>The mirror gives no clearing rate in mSv a day. It gives recovery times in weeks and months for each acute band only.</li>
+<li>The mirror gives no storm size law past 1 AU. The distance scaling for the outer system is an extrapolation.</li>
+<li>The mirror does not say how long a ship spends in a belt on a visit.</li>
+</ul>
+</div>
+</details>
+<details class="section" id="sources">
+<summary><h2>Sources</h2><span class="hint">9 documents</span></summary>
+<div class="sectionbody">
+<ul>
+<li><a href="https://www.projectrho.com/public_html/rocket/radiation.php">Atomic Rockets, radiation</a>, Galactic Cosmic Radiation (Curiosity measurement): Curiosity measured 1.84 mSv a day on the trip to Mars from cosmic rays and solar storms, with no shielding. It flew at the peak of the 11-year solar cycle, when cosmic ray flux is relatively low. (<a href="sources.html#doc-rocket-radiation-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/radiation.php">Atomic Rockets, radiation</a>, Radiation levels on the way to Mars: A round trip of 360 days in space and 500 days on the surface adds up to about 1.01 Sv. The ESA astronaut limit is 1 Sv. (<a href="sources.html#doc-rocket-radiation-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/radiation.php">Atomic Rockets, radiation</a>, Solar storms: A shelter of about 25 g/cm^2 keeps astronauts out of serious risk, and 30 g/cm^2 of water is also called enough. Solar particles are easier to stop than cosmic rays. (<a href="sources.html#doc-rocket-radiation-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/radiation.php">Atomic Rockets, radiation</a>, Space Radiation Risks: GCR vs SFE: One event in 1972, between Apollo 16 and 17, reached about 5,000 REM (50 Sv) outside a ship. About 20 g/cm^2 of aluminum cuts a 5 Sv dose inside a command module to 0.2 Sv. 15 to 20 g/cm^2 of water cuts the cosmic-ray dose to about half. (<a href="sources.html#doc-rocket-radiation-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/radiation.php">Atomic Rockets, radiation</a>, Gradual SPEs (NASA text): About 10 gradual solar particle events happen each year. They are erratic, run for days, and usually follow a visible coronal mass ejection, so a crew often has warning. (<a href="sources.html#doc-rocket-radiation-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/radiation.php">Atomic Rockets, radiation</a>, Trapped Radiation (Jupiter dose table): Dose a day: Io 36 Sv, Europa 5 Sv, Ganymede 0.08 Sv, Callisto 0.0001 Sv. Callisto lies at 26.4 Jupiter radii, outside the belt. The single-year limit is 50 mSv and the five-year limit is 100 mSv. (<a href="sources.html#doc-rocket-radiation-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/radiation.php">Atomic Rockets, radiation</a>, Chronic Radiation Syndrome Chart: The annual limit for an adult is 0.05 Sv. (<a href="sources.html#doc-rocket-radiation-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/radiation.php">Atomic Rockets, radiation</a>, Acute Radiation Syndrome Chart: Mild acute symptoms appear from 1 Gy and become common near 2 Gy, after a latent phase of 10 to 14 days. The fatality rate in the 1 to 2 Gy band is about 10%, and LD50 is near 4.5 Gy. (<a href="sources.html#doc-rocket-radiation-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/radiation.php">Atomic Rockets, radiation</a>, Acute and chronic exposure (paragraph beginning &#x27;There are two kinds of radiation exposure&#x27;): Acute damage heals with time, and chronic damage gradually builds up over a lifetime. Chronic dose raises the cancer risk decades later. "acute radiation damage will heal. Chronic damage does not." (<a href="sources.html#doc-rocket-radiation-php-html">all uses</a>)</li>
+</ul>
+</div>
+</details>
+<nav aria-label="Other mechanics"><ul class="pager"><li><a href="fuel-and-the-torch-drive.html" rel="prev"><span class="dir">Previous</span>Fuel and the torch drive</a></li><li class="next"><a href="running-dark.html" rel="next"><span class="dir">Next</span>Running dark</a></li></ul></nav>
+</main>
+<footer class="stamp">
+<p>Read from game commit efdee508 (committed 2026-10-18). Pages written 2026-10-18.
+The explanations are stand-in text and may change.</p>
+</footer>
+</div>
+<script>
+(function () {
+  "use strict";
+  var doc = document;
+  function each(list, fn) { Array.prototype.forEach.call(list, fn); }
+  function make(tag, cls, text) {
+    var el = doc.createElement(tag);
+    if (cls) el.className = cls;
+    if (text) el.textContent = text;
+    return el;
+  }
+  function reveal(el) {
+    for (var node = el; node; node = node.parentElement) {
+      if (node.tagName === "DETAILS") node.open = true;
+    }
+  }
+  function target(hash) {
+    try { return doc.getElementById(decodeURIComponent(hash.slice(1))); } catch (e) { return null; }
+  }
+  function followhash() {
+    var el = location.hash && target(location.hash);
+    if (el) { reveal(el); el.scrollIntoView(); }
+  }
+  doc.addEventListener("click", function (event) {
+    var link = event.target.closest && event.target.closest('a[href^="#"]');
+    var el = link && target(link.getAttribute("href"));
+    if (el) reveal(el);
+  });
+  window.addEventListener("hashchange", followhash);
+  window.addEventListener("beforeprint", function () { each(doc.querySelectorAll("details"), function (d) { d.open = true; }); });
+
+  var sections = doc.querySelectorAll("details.section");
+  var holder = doc.querySelector("[data-openall]");
+  if (holder && sections.length > 1) {
+    var toggle = make("button", "openall");
+    toggle.type = "button";
+    var allopen = function () { return Array.prototype.every.call(sections, function (d) { return d.open; }); };
+    var label = function () { toggle.textContent = allopen() ? "Close all sections" : "Open all sections"; };
+    toggle.addEventListener("click", function () {
+      var open = !allopen();
+      each(sections, function (d) { d.open = open; });
+      label();
+    });
+    each(sections, function (d) { d.addEventListener("toggle", label); });
+    label();
+    holder.appendChild(toggle);
+  }
+
+  var params = new URLSearchParams(location.search);
+  each(doc.querySelectorAll("table[data-sort]"), setup);
+  followhash();
+
+  function keyof(row, col) {
+    var cell = row.cells[col];
+    if (!cell) return "";
+    var key = cell.getAttribute("data-key");
+    return key !== null ? key : cell.textContent.trim();
+  }
+
+  function setup(table) {
+    var body = table.tBodies[0], region = table.parentElement;
+    var rows = [], fixed = [], heads = table.tHead.rows[0].cells, current = { col: -1, dir: 1 };
+    each(body.rows, function (row, i) {
+      row.setAttribute("data-order", i);
+      row.searchtext = row.textContent.toLowerCase();
+      (row.hasAttribute("data-fixed") ? fixed : rows).push(row);
+    });
+    table.classList.add("live");
+
+    function paint() {
+      var shown = 0;
+      rows.concat(fixed).forEach(function (row) {
+        if (!row.hidden) { row.classList.toggle("alt", shown % 2 === 1); shown += 1; }
+      });
+      return rows.filter(function (row) { return !row.hidden; }).length;
+    }
+    function order(col, dir, type) {
+      var sorted = rows.slice().sort(function (a, b) {
+        var x = col < 0 ? 0 : keyof(a, col), y = col < 0 ? 0 : keyof(b, col), result = 0;
+        if (col >= 0 && type === "num") {
+          var p = parseFloat(x), q = parseFloat(y);
+          if (isNaN(p) || isNaN(q)) return (isNaN(p) - isNaN(q)) || a.getAttribute("data-order") - b.getAttribute("data-order");
+          result = (p - q) * dir;
+        } else if (col >= 0) {
+          result = String(x).localeCompare(String(y), undefined, { numeric: true, sensitivity: "base" }) * dir;
+        }
+        return result || a.getAttribute("data-order") - b.getAttribute("data-order");
+      });
+      sorted.concat(fixed).forEach(function (row) { body.appendChild(row); });
+      rows = sorted;
+      current = { col: col, dir: dir };
+      each(heads, function (th, i) {
+        if (th.hasAttribute("aria-sort")) th.setAttribute("aria-sort", i === col ? (dir > 0 ? "ascending" : "descending") : "none");
+      });
+      paint();
+    }
+    each(heads, function (th, col) {
+      var type = th.getAttribute("data-type");
+      if (!type) return;
+      var button = make("button", "sort");
+      button.type = "button";
+      while (th.firstChild) button.appendChild(th.firstChild);
+      var arrow = make("span", "arrow");
+      arrow.setAttribute("aria-hidden", "true");
+      button.appendChild(arrow);
+      th.appendChild(button);
+      th.setAttribute("aria-sort", "none");
+      button.addEventListener("click", function () { order(col, current.col === col ? -current.dir : 1, type); });
+    });
+
+    var modes = (table.getAttribute("data-filter") || "").split(" ").filter(Boolean);
+    if (!modes.length) { paint(); return; }
+    var nouns = (table.getAttribute("data-noun") || "row rows").split(" ");
+    var noun = function (n) { return n === 1 ? nouns[0] : nouns[1]; };
+    var tools = make("div", "tools");
+    tools.setAttribute("role", "group");
+    tools.setAttribute("aria-label", "Sort and filter the table");
+    var find = make("label", "find");
+    var input = make("input");
+    input.type = "search";
+    input.autocomplete = "off";
+    input.spellcheck = false;
+    input.placeholder = table.getAttribute("data-placeholder") || "Type a word";
+    find.appendChild(make("span", "", "Find"));
+    find.appendChild(input);
+    tools.appendChild(find);
+    var picked = {}, chips = [];
+    if (modes.indexOf("grade") >= 0) {
+      var group = make("div", "chips");
+      group.setAttribute("role", "group");
+      group.setAttribute("aria-label", "Show only these grades");
+      group.appendChild(make("span", "chipslabel", "Grade"));
+      "ABCDE".split("").forEach(function (letter) {
+        var count = rows.filter(function (row) { return row.getAttribute("data-grade") === letter; }).length;
+        var chip = make("button", "chip", letter + " " + count);
+        chip.type = "button";
+        chip.setAttribute("aria-pressed", "false");
+        chip.setAttribute("aria-label", "Grade " + letter + ", " + count + " " + noun(count));
+        chip.disabled = !count;
+        chip.addEventListener("click", function () {
+          picked[letter] = !picked[letter];
+          chip.setAttribute("aria-pressed", String(picked[letter]));
+          apply();
+        });
+        chip.letter = letter;
+        group.appendChild(chip);
+        chips.push(chip);
+      });
+      tools.appendChild(group);
+    }
+    var reset = make("button", "reset", "Clear the filter and sort");
+    reset.type = "button";
+    var status = make("p", "status");
+    status.setAttribute("aria-live", "polite");
+    tools.appendChild(reset);
+    tools.appendChild(status);
+    region.parentNode.insertBefore(tools, region);
+    var empty = make("p", "empty");
+    region.parentNode.insertBefore(empty, region.nextSibling);
+
+    function apply() {
+      var words = input.value.toLowerCase().split(/\s+/).filter(Boolean);
+      var grades = Object.keys(picked).filter(function (g) { return picked[g]; });
+      rows.forEach(function (row) {
+        var ok = words.every(function (w) { return row.searchtext.indexOf(w) >= 0; });
+        row.hidden = !(ok && (!grades.length || grades.indexOf(row.getAttribute("data-grade")) >= 0));
+      });
+      var active = words.length > 0 || grades.length > 0;
+      fixed.forEach(function (row) { row.hidden = active; });
+      var shown = paint();
+      status.textContent = active ? "Showing " + shown + " of " + rows.length + " " + noun(rows.length) + "." : rows.length + " " + noun(rows.length) + ". Select a column heading to sort.";
+      reset.hidden = !active && current.col < 0;
+      empty.hidden = shown > 0;
+      empty.textContent = "No " + nouns[0] + " matches the filter. Clear the filter to see all " + rows.length + ".";
+    }
+    input.addEventListener("input", apply);
+    reset.addEventListener("click", function () {
+      input.value = "";
+      picked = {};
+      chips.forEach(function (chip) { chip.setAttribute("aria-pressed", "false"); });
+      order(-1, 1, "");
+      apply();
+      input.focus();
+    });
+    each(heads, function (th) {
+      var button = th.querySelector("button.sort");
+      if (button) button.addEventListener("click", function () { reset.hidden = false; });
+    });
+    var want = (params.get("grade") || "").toUpperCase();
+    chips.forEach(function (chip) {
+      if (want.indexOf(chip.letter) >= 0 && !chip.disabled) { picked[chip.letter] = true; chip.setAttribute("aria-pressed", "true"); }
+    });
+    if (params.get("q")) input.value = params.get("q");
+    apply();
+  }
+})();
+</script>
+</body>
+</html>

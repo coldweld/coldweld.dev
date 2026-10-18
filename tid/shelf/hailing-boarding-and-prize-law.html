@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hailing, boarding and prize law</title>
+<meta name="description" content="What the game does for hailing, boarding and prize law, its numbers, and where each comes from.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+:root {
+  color-scheme: light dark;
+  --bg: #fbf8f1; --panel: #f0eadb; --rule: #b9ae94; --text: #231c0f; --muted: #51493a; --accent: #7a4300;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #0e0903; --panel: #16110a; --rule: #4a4130; --text: #d6cbb6; --muted: #a89f88; --accent: #ffb040; }
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: 1rem; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 1.0625rem/1.65 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; padding: 0 1rem 4rem; }
+::selection { background: var(--accent); color: var(--bg); }
+.skip { position: absolute; left: 1rem; top: -4rem; background: var(--accent); color: var(--bg); padding: .5rem 1rem; z-index: 10; }
+.skip:focus { top: .5rem; }
+.wrap { max-width: 72rem; margin: 0 auto; }
+.mono, h1, h2, h3, caption, th, nav, .brand, .stamp, .grade, .val, .hint, .chip, .chipslabel, .find span, .openall, .pager .dir, summary { font-family: "DM Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+a { color: var(--accent); text-underline-offset: .2em; text-decoration-thickness: 1px; }
+a:hover { text-decoration-thickness: 2px; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.top { padding: 2rem 0 1rem; border-bottom: 1px solid var(--rule); }
+.brand { margin: 0 0 .75rem; font-size: .8rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .25rem 1.5rem; }
+nav a { display: inline-block; padding: .45rem 0; }
+nav a[aria-current] { color: var(--text); text-decoration: none; border-bottom: 2px solid var(--accent); }
+h1 { font-size: clamp(1.6rem, 4.5vw, 2.25rem); line-height: 1.2; margin: 2.25rem 0 1rem; font-weight: 500; letter-spacing: -.01em; text-wrap: balance; }
+h2 { font-size: 1.5rem; line-height: 1.3; margin: 2.5rem 0 .75rem; font-weight: 500; text-wrap: balance; }
+h3 { font-size: 1.2rem; line-height: 1.35; margin: 1.75rem 0 .5rem; font-weight: 500; }
+p, li, dd { max-width: 40rem; }
+li + li { margin-top: .4rem; }
+code { font-family: "DM Mono", ui-monospace, Consolas, monospace; font-size: .9em; overflow-wrap: anywhere; }
+.lead { font-size: 1.15rem; line-height: 1.6; }
+.note { background: var(--panel); border: 1px solid var(--rule); padding: .75rem 1rem; max-width: 40rem; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; padding: 0; margin: -1px; }
+.glance { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem 1.4rem; margin: 1.5rem 0; padding: .85rem 1rem; background: var(--panel); border: 1px solid var(--rule); font-size: .95rem; }
+.glance p { margin: 0; }
+.glance ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .5rem 1.1rem; }
+.glance li { margin: 0; white-space: nowrap; }
+.toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem 1.5rem; margin: 0 0 1.5rem; }
+.toc { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .25rem 1.25rem; }
+.toc li { margin: 0; }
+.toc a { display: inline-block; padding: .35rem 0; }
+.openall { font-size: .85rem; background: transparent; color: var(--accent); border: 1px solid var(--rule); border-radius: 4px; padding: .45rem .8rem; cursor: pointer; }
+.openall:hover { border-color: var(--accent); }
+details.section { border-top: 1px solid var(--rule); }
+details.section:last-of-type { border-bottom: 1px solid var(--rule); }
+details.section > summary { display: flex; align-items: baseline; flex-wrap: wrap; gap: .25rem .9rem; padding: 1.05rem .25rem; cursor: pointer; list-style: none; }
+details.section > summary::-webkit-details-marker { display: none; }
+details.section > summary::before { content: ""; flex: none; align-self: center; width: .5rem; height: .5rem; border-right: 2px solid var(--accent); border-bottom: 2px solid var(--accent); transform: rotate(-45deg); transition: transform .18s ease-out; }
+details.section[open] > summary::before { transform: translateY(-.15rem) rotate(45deg); }
+details.section > summary h2 { margin: 0; font-size: 1.5rem; }
+details.section > summary:hover h2 { color: var(--accent); }
+.hint { margin-left: auto; color: var(--muted); font-size: .82rem; }
+.sectionbody { padding: 0 0 2rem; }
+.region { overflow-x: auto; margin: .75rem 0 1rem; border: 1px solid var(--rule); scrollbar-color: var(--rule) transparent; }
+table { border-collapse: collapse; width: 100%; min-width: 40rem; font-size: .95rem; line-height: 1.55; font-variant-numeric: tabular-nums; }
+caption { text-align: left; padding: .75rem .85rem; font-size: .9rem; color: var(--muted); }
+caption.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; padding: 0; }
+th, td { text-align: left; vertical-align: top; padding: .7rem .85rem; border-top: 1px solid var(--rule); }
+thead th { background: var(--panel); font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; white-space: nowrap; vertical-align: bottom; }
+thead .sub { display: block; font-size: .78rem; letter-spacing: 0; text-transform: none; color: var(--muted); font-weight: 400; }
+tbody th { font-weight: 500; font-family: inherit; min-width: 11rem; }
+table:not(.live) tbody tr:nth-child(even) > *, table.live tbody tr.alt > * { background: var(--panel); }
+tbody tr:target > * { background: color-mix(in srgb, var(--accent) 18%, var(--bg)) !important; }
+td.val { overflow-wrap: break-word; min-width: 7rem; font-size: 1rem; }
+.unit { display: block; font-size: .82rem; color: var(--muted); overflow-wrap: normal; }
+.nosource { color: var(--muted); }
+.numbers { min-width: 58rem; }
+.numbers tbody th { min-width: 13rem; width: 20%; }
+.numbers td:nth-child(4) { min-width: 11rem; width: 18%; }
+.numbers td:nth-child(5) { min-width: 22rem; width: 42%; }
+.allnumbers { min-width: 52rem; }
+.allnumbers tbody th { min-width: 14rem; width: 28%; }
+.allnumbers td:nth-child(2) { min-width: 10rem; }
+td.count { text-align: right; }
+.counts thead th:not(:first-child) { text-align: right; }
+.counts tr[data-fixed] > * { border-top: 2px solid var(--rule); font-weight: 600; }
+.uses { min-width: 34rem; }
+button.sort { all: unset; cursor: pointer; display: inline-flex; align-items: center; gap: .45rem; text-align: left; }
+button.sort:hover { color: var(--accent); }
+button.sort:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+.arrow { flex: none; width: 0; height: 0; border-left: .3rem solid transparent; border-right: .3rem solid transparent; border-top: .38rem solid currentColor; opacity: .35; }
+th[aria-sort="ascending"] .arrow { opacity: 1; transform: rotate(180deg); color: var(--accent); }
+th[aria-sort="descending"] .arrow { opacity: 1; color: var(--accent); }
+.tools { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem 1.5rem; margin: 1rem 0 .5rem; font-size: .9rem; }
+.find { display: flex; align-items: center; gap: .6rem; }
+.find span, .chipslabel { font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.find input { font: inherit; font-size: 1rem; color: var(--text); background: var(--bg); border: 1px solid var(--rule); border-radius: 4px; padding: .45rem .65rem; width: 18rem; max-width: 100%; caret-color: var(--accent); }
+.find input::placeholder { color: var(--muted); opacity: 1; }
+.find input:focus-visible { border-color: var(--accent); }
+.chips { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem; }
+.chip { font-size: .85rem; background: transparent; color: var(--text); border: 1px solid var(--rule); border-radius: 999px; padding: .3rem .75rem; min-height: 2.25rem; cursor: pointer; }
+.chip:hover:not(:disabled) { border-color: var(--accent); }
+.chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+.chip:disabled { opacity: .45; cursor: default; }
+.reset { font: inherit; background: none; border: 0; padding: .3rem 0; color: var(--accent); text-decoration: underline; text-underline-offset: .2em; cursor: pointer; }
+.status { flex-basis: 100%; margin: 0; color: var(--muted); font-size: .88rem; }
+.empty { margin: 0 0 1rem; padding: 1rem; border: 1px dashed var(--rule); color: var(--muted); }
+details.uses { margin: .5rem 0 1rem; }
+details.uses > summary { cursor: pointer; padding: .45rem 0; font-size: .85rem; color: var(--accent); }
+.cited { margin: .25rem 0 .5rem; color: var(--muted); }
+.grade { display: inline-block; border: 2px solid currentColor; border-radius: 4px; min-width: 1.7rem; text-align: center; padding: 0 .3rem; font-weight: 600; line-height: 1.45; margin-right: .45rem; }
+.grade.g-a, .grade.g-b { background: var(--text); border-color: var(--text); color: var(--bg); }
+.grade.g-e { border-width: 1.5px; border-style: dashed; color: var(--muted); }
+.gradeitem { white-space: nowrap; }
+.stamp { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--rule); font-size: .8rem; color: var(--muted); }
+dl.keys dt { font-weight: 600; margin-top: 1rem; }
+dl.keys dd { margin: .25rem 0 0; }
+.pager { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; margin: 3rem 0 0; padding: 0; list-style: none; }
+.pager li { margin: 0; flex: 1 1 16rem; max-width: 28rem; }
+.pager li.next { margin-left: auto; text-align: right; }
+.pager a { display: block; padding: .8rem 1rem; border: 1px solid var(--rule); text-decoration: none; }
+.pager a:hover { border-color: var(--accent); }
+.pager .dir { display: block; font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+@media (max-width: 40rem) {
+  body { padding: 0 1rem 3rem; font-size: 1rem; }
+  th, td { padding: .6rem; }
+  .hint { margin-left: 1.4rem; flex-basis: 100%; }
+  .find { flex-basis: 100%; }
+  .find input { flex: 1; width: auto; }
+  .chip { min-height: 2.75rem; min-width: 2.75rem; }
+  .numbers { min-width: 46rem; } .numbers tbody th { min-width: 8rem; width: auto; } .numbers td.val { min-width: 6.5rem; } .numbers td:nth-child(3) { min-width: 5.5rem; }
+  .allnumbers { min-width: 40rem; } .allnumbers tbody th { min-width: 9rem; }
+  .numbers .gradeitem, .allnumbers .gradeitem { white-space: normal; } .numbers .grade, .allnumbers .grade { display: block; width: max-content; margin: 0 0 .2rem; }
+}
+@media (min-width: 40rem) {
+  .numbers tbody th, .allnumbers tbody th { position: sticky; left: 0; z-index: 1; background: var(--bg); }
+}
+@media (prefers-reduced-motion: reduce) { details.section > summary::before { transition: none; } }
+@media print { .skip, .tools, .openall, .empty { display: none; } details.section > summary::before { display: none; } }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to the content</a>
+<div class="wrap">
+<header class="top">
+<p class="brand"><a href="https://coldweld.dev/">Coldweld</a> / The Infinite Diaspora / Reference shelf</p>
+<nav aria-label="Reference shelf"><ul>
+<li><a href="index.html">Mechanics</a></li>
+<li><a href="numbers.html">All numbers</a></li>
+<li><a href="grades.html">Grades</a></li>
+<li><a href="sources.html">Sources</a></li>
+<li><a href="updates.html">Source updates</a></li>
+</ul></nav>
+</header>
+<main id="main">
+<h1>Hailing, boarding and prize law</h1>
+<p class="lead">A hail is a radio call that asks another ship to identify itself or stop. A boarding is a party crossing to a ship that has stopped or been disabled so it can search the ship or take it.</p>
+<div class="glance"><p><strong>46 numbers</strong>, 1 with an outside source</p><ul aria-label="Numbers by grade"><li><span class="grade g-a">A</span>0 <span class="sr">numbers at grade A</span></li><li><span class="grade g-b">B</span>0 <span class="sr">numbers at grade B</span></li><li><span class="grade g-c">C</span>0 <span class="sr">numbers at grade C</span></li><li><span class="grade g-d">D</span>1 <span class="sr">numbers at grade D</span></li><li><span class="grade g-e">E</span>45 <span class="sr">numbers at grade E</span></li></ul></div>
+<div class="toolbar" data-openall></div>
+<details class="section" id="does">
+<summary><h2>What the game does</h2><span class="hint">2 topics</span></summary>
+<div class="sectionbody">
+<h3>Ways Out</h3>
+<ul>
+<li>[M] | every way out, and why a blocked one is blocked.</li>
+<li>HAND IT TO THE SECOND | the Second fights on by your standing orders.</li>
+<li>YIELD | only when the hostiles offer terms.</li>
+<li>DEMAND SURRENDER | orders every breaking hostile to stand down.</li>
+<li>CRACK THEIR CHANNEL | names the ship each hostile is on. The last of 3 tries works.</li>
+<li>A demand or a crack holds your fire for 20 s.</li>
+<li>BREAK OFF AND RUN | on the helm, a full burn away.</li>
+<li>You are clear when every hostile is past 3,000 km.</li>
+</ul>
+<h3>Boarding</h3>
+<ul>
+<li>A raider boards by matching your speed inside 5 km for 20 s.</li>
+<li>The helm breaks a boarding match unless that procedure asks you first.</li>
+<li>THE DECK FIGHT | your armed crew and boarding party meet the boarders.</li>
+<li>You command it, even when the Second flies the ship.</li>
+<li>GENERAL QUARTERS has the crew suited before they arrive.</li>
+<li>Win, and that raider has nobody left to board with.</li>
+<li>Lose, and the raiders fill their hold from yours, the most valuable goods first.</li>
+<li>They take the ship only if you fought on after the Second's warning.</li>
+</ul>
+</div>
+</details>
+<details class="section" id="numbers">
+<summary><h2>The numbers</h2><span class="hint">46 numbers: 1 D, 45 E</span></summary>
+<div class="sectionbody">
+<p>Each value is read from the game code. Sort by any column heading, or filter by grade or by a word.</p>
+<div class="region" role="region" tabindex="0" aria-label="Numbers the game runs for hailing, boarding and prize law">
+<table class="numbers" data-sort="1" data-filter="text grade" data-noun="number numbers" data-placeholder="Quantity, source or word">
+<caption>Numbers the game runs for hailing, boarding and prize law</caption>
+<thead><tr>
+<th scope="col" data-type="text">Quantity</th>
+<th scope="col" data-type="num">Value</th>
+<th scope="col" data-type="text">Grade</th>
+<th scope="col" data-type="text">Source</th>
+<th scope="col">Why this value</th>
+</tr></thead>
+<tbody>
+<tr id="n-1" data-grade="E"><th scope="row">Base chance a DEMAND ID hail works, before sensor and Communications bonuses</th><td class="val" data-key="30.0">30 <span class="unit">percent</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Chosen for play as the start point. Sensors and the Communications officer move it. No source gives a chance that a request for identity works.</td></tr>
+<tr id="n-2" data-grade="E"><th scope="row">Base chance an OFFER PASSAGE hail works, before standing and Communications bonus</th><td class="val" data-key="30.0">30 <span class="unit">percent</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Chosen for play as the start point. Standing with the Unclaimed and the Communications officer move it. No source gives a chance that a raider accepts a fee.</td></tr>
+<tr id="n-3" data-grade="E"><th scope="row">Chance a THREATEN hail works, by size class of the other ship, before the Communications bonus</th><td class="val" data-key="65.0">LIGHT CRAFT 65, MEDIUM CRAFT 45, HEAVY CRAFT 20 <span class="unit">percent</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Chosen for play: a smaller ship gives way more easily than a larger one. No source gives an intimidation chance by ship size.</td></tr>
+<tr id="n-4" data-grade="E"><th scope="row">Communications bonus to every hail roll, per point of department competence</th><td class="val" data-key="0.15">0.15 <span class="unit">percent points</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Chosen so Communications scales like Engineering and Gunnery do: the same bonus for each point of department competence. No source gives a hail bonus.</td></tr>
+<tr id="n-5" data-grade="E"><th scope="row">Base chance a patrol opens fire after you refuse, before standing and Communications bonus (a raider always fires)</th><td class="val" data-key="50.0">50 <span class="unit">percent</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Chosen for play as a coin for whether a patrol fires after a refusal. The handbook gives the steps of force but no chance of firing.</td></tr>
+<tr id="n-6" data-grade="E"><th scope="row">The Second&#x27;s odds of a lost fight (the two ways a raider wins) when it expects to lose; a raider prices its demand on them</th><td class="val" data-key="0.5">0.5, 0.22 <span class="unit">fraction</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Measured in the game's own simulated raider fights, not taken from a source. No real document gives the odds of losing a ship.</td></tr>
+<tr id="n-7" data-grade="E"><th scope="row">The Second&#x27;s odds of a lost fight when it calls it even</th><td class="val" data-key="0.13">0.13, 0.07 <span class="unit">fraction</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Measured in the game's own simulated raider fights, not taken from a source. No real document gives the odds of losing a ship.</td></tr>
+<tr id="n-8" data-grade="E"><th scope="row">The Second&#x27;s odds of a lost fight when it expects to win</th><td class="val" data-key="0.06">0.06, 0.05 <span class="unit">fraction</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Measured in the game's own simulated raider fights, not taken from a source. No real document gives the odds of losing a ship.</td></tr>
+<tr id="n-9" data-grade="E"><th scope="row">The odds the boarders take the ship when you fight on after the Second&#x27;s warning and it expects to lose</th><td class="val" data-key="0.43">0.43 <span class="unit">fraction</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Measured in the game's own simulated fights after the Second's warning, not taken from a source. No real document gives these odds.</td></tr>
+<tr id="n-10" data-grade="E"><th scope="row">The odds the boarders take the ship when you fight on after the Second&#x27;s warning, on any other call</th><td class="val" data-key="0.2">0.2 <span class="unit">fraction</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Measured in the game's own simulated fights after the Second's warning, not taken from a source. No real document gives these odds.</td></tr>
+<tr id="n-11" data-grade="E"><th scope="row">Base chance a haggle with a raider wins, before Persuade or Pressure</th><td class="val" data-key="0.35">0.35 <span class="unit">fraction</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Chosen for play and defended by arithmetic: an untrained captain loses a little on the mean and a skilled captain gains. No source gives haggle odds.</td></tr>
+<tr id="n-12" data-grade="E"><th scope="row">Share a haggle cuts from a raider&#x27;s price on a win, and adds on a loss</th><td class="val" data-key="0.25">0.25 <span class="unit">fraction</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Chosen as a share of the price, so the bet means the same for any hold size. The same share cuts on a win and adds on a loss.</td></tr>
+<tr id="n-13" data-grade="E"><th scope="row">The yard bill after a refusal, as a share of the ship&#x27;s price, when the Second expects to lose</th><td class="val" data-key="0.2">0.2 <span class="unit">fraction</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Measured in the game's own simulated refusals: the repair and rearm bill after a fight, as a share of the ship's price. No source gives such a bill.</td></tr>
+<tr id="n-14" data-grade="E"><th scope="row">The yard bill after a refusal, as a share of the ship&#x27;s price, when the Second calls it even</th><td class="val" data-key="0.63">0.63 <span class="unit">fraction</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Measured in the game's own simulated refusals: the repair and rearm bill after a fight, as a share of the ship's price. No source gives such a bill.</td></tr>
+<tr id="n-15" data-grade="E"><th scope="row">The yard bill after a refusal, as a share of the ship&#x27;s price, when the Second expects to win</th><td class="val" data-key="0.49">0.49 <span class="unit">fraction</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Measured in the game's own simulated refusals: the repair and rearm bill after a fight, as a share of the ship's price. No source gives such a bill.</td></tr>
+<tr id="n-16" data-grade="E"><th scope="row">Cargo a refusal destroys outside a lost fight, as a share of the hold&#x27;s value, when the Second expects to lose</th><td class="val" data-key="0.0049">0.0049 <span class="unit">fraction</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/pirate.php">Atomic Rockets, pirate</a>, Approach</td><td>Measured in the game's own simulated refusals: cargo destroyed by rounds and fires outside a lost fight. The mirror gives no share of hits. The sources are silent on this figure.</td></tr>
+<tr id="n-17" data-grade="E"><th scope="row">Cargo a refusal destroys outside a lost fight, as a share of the hold&#x27;s value, when the Second calls it even</th><td class="val" data-key="0.0092">0.0092 <span class="unit">fraction</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/pirate.php">Atomic Rockets, pirate</a>, Approach</td><td>Measured in the game's own simulated refusals: cargo destroyed by rounds and fires outside a lost fight. The mirror gives no share of hits. The sources are silent on this figure.</td></tr>
+<tr id="n-18" data-grade="E"><th scope="row">Cargo a refusal destroys outside a lost fight, as a share of the hold&#x27;s value, when the Second expects to win</th><td class="val" data-key="0.0123">0.0123 <span class="unit">fraction</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/pirate.php">Atomic Rockets, pirate</a>, Approach</td><td>Measured in the game's own simulated refusals: cargo destroyed by rounds and fires outside a lost fight. The mirror gives no share of hits. The sources are silent on this figure.</td></tr>
+<tr id="n-19" data-grade="E"><th scope="row">Largest credit transfer a raider forces from a thin hold in a yield</th><td class="val" data-key="3000.0">3,000 <span class="unit">Cr</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Chosen as a number of days of dock work, so one forced transfer never strands the captain. No source sets a toll.</td></tr>
+<tr id="n-20" data-grade="E"><th scope="row">Credits a raider always leaves the captain in a yield (one dock shift)</th><td class="val" data-key="150.0">150 <span class="unit">Cr</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Chosen as the pay of one dock-gang shift, so a yield always leaves the captain enough to work a day. No source sets a floor.</td></tr>
+<tr id="n-21" data-grade="E"><th scope="row">Standing lost with the flag when you refuse its terms of surrender</th><td class="val" data-key="-4.0">-4 <span class="unit">standing points</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Chosen far larger than routine standing changes, because refusing a surrender is a rare and serious act. No source gives a standing figure.</td></tr>
+<tr id="n-22" data-grade="E"><th scope="row">Heat gained for refusing a lawful inspection</th><td class="val" data-key="6.0">6 <span class="unit">heat</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><a href="https://www.govinfo.gov/content/pkg/GOVPUB-D201-PURL-gpo56195/pdf/GOVPUB-D201-PURL-gpo56195.pdf">The Commander&#x27;s Handbook on the Law of Naval Operations (NWP 1-14M), 1995 edition</a>, 3.11.5; Where the source is silent</td><td>A price set for play. The notes record that no source gives a number for refusing an inspection, and the handbook allows only reasonable force to stop a ship. The sources are silent on this figure.</td></tr>
+<tr id="n-23" data-grade="E"><th scope="row">Chance a flag&#x27;s patrol offers a stand-down order on each opening it gets</th><td class="val" data-key="0.45">0.45 <span class="unit">fraction</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Chosen for play and rolled on a separate random stream. Sources give the order of a stop but no odds that a patrol offers one.</td></tr>
+<tr id="n-24" data-grade="E"><th scope="row">Hull share a patrol must still hold to give a stand-down order</th><td class="val" data-key="0.5">0.5 <span class="unit">fraction</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Chosen so a patrol orders a stand-down only while it is winning clearly enough to mean it. No source gives a threshold.</td></tr>
+<tr id="n-25" data-grade="E"><th scope="row">Fine on contraband found in a search, as a share of its value</th><td class="val" data-key="0.3">0.3 <span class="unit">fraction</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><a href="https://www.govinfo.gov/content/pkg/GOVPUB-D201-PURL-gpo56195/pdf/GOVPUB-D201-PURL-gpo56195.pdf">The Commander&#x27;s Handbook on the Law of Naval Operations (NWP 1-14M), 1995 edition</a>, 7.10; Where the source is silent</td><td>A price set for play. The handbook makes contraband a ground for seizure and a prize court, and sets no fine or percentage. The sources are silent on this figure.</td></tr>
+<tr id="n-26" data-grade="E"><th scope="row">Chance a hostile at its break point answers a demand to surrender, each roll</th><td class="val" data-key="40.0">40 <span class="unit">percent</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><a href="https://www.secnav.navy.mil/doni/Directives/03000%20Naval%20Operations%20and%20Readiness/03-100%20Naval%20Operations%20Support/3120.32D%20W%20CH-1.pdf">Standard Organization and Regulations of the U.S. Navy (SORM)</a>, Where the source is silent (Surrender)</td><td>Chosen for play. SORM gives no procedure for yielding a ship, and no source gives odds that a beaten hostile surrenders. The sources are silent on this figure.</td></tr>
+<tr id="n-27" data-grade="E"><th scope="row">Same chance after the hostile&#x27;s captain has fallen</th><td class="val" data-key="75.0">75 <span class="unit">percent</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Chosen higher than the ordinary surrender chance, because the fall of the hostile's captain breaks the crew whatever the hull holds. No source gives a figure.</td></tr>
+<tr id="n-28" data-grade="E"><th scope="row">Range inside which a raider can board</th><td class="val" data-key="5.0">5 <span class="unit">km</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/pirate.php">Atomic Rockets, pirate</a>, Intercepting the target</td><td>Chosen so a raider must come alongside to take cargo. The mirror says a boarder must match the target's trajectory but gives no range. The sources are silent on this figure.</td></tr>
+<tr id="n-29" data-grade="D"><th scope="row">Largest relative speed a boarding match allows</th><td class="val" data-key="0.05">0.05 <span class="unit">km/s</span></td><td data-key="D"><span class="gradeitem"><span class="grade g-d">D</span>Analogy</span></td><td><a href="https://ntrs.nasa.gov/citations/19730010144">Apollo-Salyut/Soyuz docking: the speed and alignment a docking mechanism must take</a>, Initial-impact criteria: axial closing velocity 0.05 to 0.3 m/s</td><td>A NASA report on Apollo and Soyuz docking requires a docking mechanism to work at a closing velocity of 0.05 to 0.3 m/s and a lateral velocity of 0.1 m/s. The game allows 0.05 km/s, which is 50 m/s, about 170 to 1,000 times looser. The source covers joining two craft, not a crew crossing a gap. The game keeps its number.</td></tr>
+<tr id="n-30" data-grade="E"><th scope="row">Time the match must hold before the boarders are across</th><td class="val" data-key="20.0">20 <span class="unit">s</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/pirate.php">Atomic Rockets, pirate</a>, Intercepting the target</td><td>Chosen as the time a held match needs before the boarders are across. The mirror gives no crossing time. The sources are silent on this figure.</td></tr>
+<tr id="n-31" data-grade="E"><th scope="row">Base chance a thorough strip of a beaten wreck works</th><td class="val" data-key="15.0">15 <span class="unit">percent</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Chosen for play as the start point of a thorough strip. The marine combat score adds to it. No source gives boarding odds.</td></tr>
+<tr id="n-32" data-grade="E"><th scope="row">Chance added per point of the fleet&#x27;s marine combat score</th><td class="val" data-key="0.5">0.5 <span class="unit">percent per point</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Chosen for play: how much each point of the fleet's marine combat score adds to the strip chance. No source gives boarding odds.</td></tr>
+<tr id="n-33" data-grade="E"><th scope="row">Highest chance a boarding can reach</th><td class="val" data-key="90.0">90 <span class="unit">percent</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Chosen as a cap, so no marine score makes a strip certain.</td></tr>
+<tr id="n-34" data-grade="E"><th scope="row">Capture bonus on a boarded wreck, as a share of the kill bounty</th><td class="val" data-key="0.25">0.25 <span class="unit">fraction</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><a href="https://www.govinfo.gov/content/pkg/GOVPUB-D201-PURL-gpo56195/pdf/GOVPUB-D201-PURL-gpo56195.pdf">The Commander&#x27;s Handbook on the Law of Naval Operations (NWP 1-14M), 1995 edition</a>, 7.10; Where the source is silent (Payment to a captor)</td><td>A game number. The handbook names the prize court and gives the capturing crew no share, fee or bounty. The sources are silent on this figure.</td></tr>
+<tr id="n-35" data-grade="E"><th scope="row">Hull damage when a strip is driven back</th><td class="val" data-key="10.0">10 <span class="unit">hull points</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Chosen for play as the price of a strip that is driven back. No source gives damage from a failed boarding.</td></tr>
+<tr id="n-36" data-grade="E"><th scope="row">Cabin berths one captured crew takes</th><td class="val" data-key="8.0">8 <span class="unit">berths</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Chosen so a station's berths hold a handful of captured crews and not dozens. No source gives berths for a prisoner crew.</td></tr>
+<tr id="n-37" data-grade="E"><th scope="row">Value of a captured crew, as a share of the surrendered hull&#x27;s catalog price</th><td class="val" data-key="0.05">0.05 <span class="unit">fraction</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><a href="https://www.govinfo.gov/content/pkg/GOVPUB-D201-PURL-gpo56195/pdf/GOVPUB-D201-PURL-gpo56195.pdf">The Commander&#x27;s Handbook on the Law of Naval Operations (NWP 1-14M), 1995 edition</a>, 3.5.3.1; Where the source is silent</td><td>A game payment. The handbook sends pirates to the nearest port for the law of the capturing state and names no payment to the captor. The sources are silent on this figure.</td></tr>
+<tr id="n-38" data-grade="E"><th scope="row">Lowest value of a captured crew</th><td class="val" data-key="250.0">250 <span class="unit">Cr</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Chosen as a floor, so a small hull's crew still pays. No source gives a value for a captured crew.</td></tr>
+<tr id="n-39" data-grade="E"><th scope="row">Standing gained with the flag per crew handed in</th><td class="val" data-key="1.5">1.5 <span class="unit">standing points</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Chosen for play as the standing a flag gives for each crew handed in. No source gives a standing figure.</td></tr>
+<tr id="n-40" data-grade="E"><th scope="row">Standing lost with a crew&#x27;s own flag when you hand it to that flag&#x27;s enemy</th><td class="val" data-key="-2.5">-2.5 <span class="unit">standing points</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Chosen for play as the cost with a crew's own flag when the crew goes to that flag's enemy. No source gives a standing figure.</td></tr>
+<tr id="n-41" data-grade="E"><th scope="row">Hours to move cargo mass between two hulls</th><td class="val" data-key="6.0">6 <span class="unit">hours</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/rescue.php">Atomic Rockets, rescue</a>, Introduction</td><td>The game treats a cargo seizure as a real rendezvous, unlike a hail or a credit transfer. The mirror says matching a course costs a great deal of delta-v and gives no hours for the transfer. The sources are silent on this figure.</td></tr>
+<tr id="n-42" data-grade="E"><th scope="row">Hull strength a raider gains from each robbery of the captain</th><td class="val" data-key="0.18">0.18 <span class="unit">fraction of hull</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Chosen so that a raider who has done well off the captain is harder, because a refit is the only way anybody in the game gets a stronger hull. No source gives a refit rate.</td></tr>
+<tr id="n-43" data-grade="E"><th scope="row">Most hull strength a raider can gain from refits</th><td class="val" data-key="0.72">0.72 <span class="unit">fraction of hull</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Chosen so that a successful raider is harder and never unbeatable.</td></tr>
+<tr id="n-44" data-grade="E"><th scope="row">Base chance that a patrol or raider closes on the captain in travel</th><td class="val" data-key="75.0">75 <span class="unit">percent</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Chosen high so that most contacts close, with relative acceleration as a small nudge. It is separate from the mid-fight escape chance, which is tuned lower.</td></tr>
+<tr id="n-45" data-grade="E"><th scope="row">Chance that a cornered civilian master hands over cargo, for a lane with nobody named on it</th><td class="val" data-key="65.0">65 <span class="unit">percent</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><a href="https://www.un.org/depts/los/convention_agreements/texts/unclos/unclos_e.pdf">United Nations Convention on the Law of the Sea (UNCLOS), 1982</a>, Articles 100 to 111</td><td>Chosen for play as the base for an unnamed master. UNCLOS sets the right of visit and gives no rate of compliance. The sources are silent on this figure.</td></tr>
+<tr id="n-46" data-grade="E"><th scope="row">Chance that a named master complies, by temperament</th><td class="val" data-key="85.0">Stoic 85, Deadpan 80, Wry 75, Easygoing 70, Earnest 65, Brooding 60, Intense 45, Hot-blooded 35 <span class="unit">percent</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Chosen so that the mean stays near the flat base and the spread carries the decision: a Stoic master files the paperwork and a Hot-blooded one runs. No source relates temperament to compliance.</td></tr>
+</tbody></table></div>
+</div>
+</details>
+<details class="section" id="why">
+<summary><h2>Why: the real physics or procedure</h2><span class="hint">8 points</span></summary>
+<div class="sectionbody">
+<ul>
+<li>A warship may approach any ship at sea to check its nationality, but it may stop and board only on a short list of grounds.</li>
+<li>The grounds are piracy, the slave trade, unauthorized broadcasting, no nationality, and a false flag.</li>
+<li>The check runs in order: a signal to stop, then a boat with an officer, then the papers, and force only if the ship will not stop.</li>
+<li>A warning shot counts as a signal and not as a use of force, so disabling fire comes later, aimed at the steering gear or engine room.</li>
+<li>The boarding officer examines the papers and then recommends release, or detaining the ship and sending it in for adjudication.</li>
+<li>A captured ship goes to a port under the captor's control as a prize for a court, so the capturing crew does not own it.</li>
+<li>Only warships and marked government ships may seize a pirate ship, and a seizure without good grounds makes the seizing state pay for the loss.</li>
+<li>A coastal state may stop a ship in its own zone for customs, tax, immigration and health laws, and hot pursuit starts inside its own waters.</li>
+</ul>
+</div>
+</details>
+<details class="section" id="departs">
+<summary><h2>Where the game departs from reality</h2><span class="hint">7 points</span></summary>
+<div class="sectionbody">
+<ul>
+<li>Who may stop you: choosehostilefleet lets any flag's patrol stop a captain in any flag's space, but the sources limit a stop at sea to five grounds or to the coastal state's own zone. The game marks this DEPARTURE, unexplained.</li>
+<li>Order of force: the game goes from REFUSE to a roll to a fight, with no warning-shot step shown. The stand-down screen's line about disabled thrusters and cold guns implies the disabling-fire aim.</li>
+<li>Contraband: the hail path pays the whole contraband value and keeps the cargo, while the combat stand-down impounds it and fines 30%. The sources support impound and adjudication, so the hail path is the departure. The game marks it NOT FIXED and says no source sets a fine, so the figure is a price.</li>
+<li>Capture bonus: the 25% paid on a boarded wreck is a game number, because no source gives a captor a share. The label was changed from salvage bonus to capture bonus for this reason.</li>
+<li>Prisoners: the Handbook sends pirates to the nearest port for the capturing state's law, but the game pays the captain for a crew and moves standing with the flag. The game gives no source for the payment and says only that a crew taken alive costs berths and a trip.</li>
+<li>A private captain seizing: UNCLOS 107 gives seizure to warships and marked government ships, but the player boards and takes prisoners in a private hull. The game gives no reason, so this is unexplained.</li>
+<li>No cost for a patrol that stops you with no grounds: UNCLOS 106 and 110(3) make the stopper liable, and the game has no such cost.</li>
+</ul>
+</div>
+</details>
+<details class="section" id="silent">
+<summary><h2>Where the sources are silent</h2><span class="hint">8 points</span></summary>
+<div class="sectionbody">
+<ul>
+<li>Payment to a captor: the Handbook names the prize court and gives no share, fee or bounty, and UNCLOS sets no fine, bounty or share.</li>
+<li>A surrender: SORM never says who may strike colors, because Navy Regulations is the document that would speak and it is not on the shelf.</li>
+<li>Rules of engagement: the Handbook only points to them, and the text is classified.</li>
+<li>Bounty hunters and bail: no source on the shelf covers them.</li>
+<li>A feigned surrender followed by a shot (the TRICK row): no page on the shelf covers it.</li>
+<li>Space: there is no sea, coastal state or zone in the setting, so the articles give a shape and not a map.</li>
+<li>The Atomic Rockets mirror gives only the jurisdiction point and says nothing on boarding steps.</li>
+<li>These sources were read through their shelf pages, and the original PDFs were not reopened for this page.</li>
+</ul>
+</div>
+</details>
+<details class="section" id="inspiration">
+<summary><h2>Inspiration</h2><span class="hint">1 work</span></summary>
+<div class="sectionbody">
+<ul>
+<li><strong>Atomic Rockets, Pirates page</strong> (book): A raider needs the prize intact and is seen days ahead, so a loss comes from a decision and the price is shown first.</li>
+</ul>
+</div>
+</details>
+<details class="section" id="sources">
+<summary><h2>Sources</h2><span class="hint">4 documents</span></summary>
+<div class="sectionbody">
+<ul>
+<li><a href="https://www.un.org/depts/los/convention_agreements/texts/unclos/unclos_e.pdf">United Nations Convention on the Law of the Sea (UNCLOS), 1982</a>, Articles 33, 105, 106, 107, 110 and 111: A warship boards a foreign ship on the high seas only on reasonable ground (article 110). Only warships or marked government ships may seize for piracy (107). A stop with no adequate grounds makes the stopper liable (106). Hot pursuit begins inside the coastal state's waters after a signal to stop (111). A coastal state controls customs, tax, immigration and health in a 24 nautical mile zone (33). (<a href="sources.html#doc-docs-sources-unclos-md">all uses</a>)</li>
+<li><a href="https://www.govinfo.gov/content/pkg/GOVPUB-D201-PURL-gpo56195/pdf/GOVPUB-D201-PURL-gpo56195.pdf">The Commander&#x27;s Handbook on the Law of Naval Operations (NWP 1-14M), 1995 edition</a>, Sections 3.4, 3.11.5.2, 7.6.1 and 7.10: Visit and search runs: summon by signal, boat with an officer, papers first, then force if the ship flees (7.6.1). Disabling fire follows ignored warning shots (3.11.5.2). A captured ship goes to a port as prize for a court, with a prize master and crew (7.10). "does not constitute a use of force" (<a href="sources.html#doc-docs-sources-navy-commanders-handbook-1995-md">all uses</a>)</li>
+<li><a href="https://www.secnav.navy.mil/doni/Directives/03000%20Naval%20Operations%20and%20Readiness/03-100%20Naval%20Operations%20Support/3120.32D%20W%20CH-1.pdf">Standard Organization and Regulations of the U.S. Navy (SORM)</a>, Section 6.3.21 d(1), e(1), f(1), f(6): The executive officer names an examining officer, a boarding officer and a Prize Master. The examining officer recommends release, or detain and send in for adjudication. The prize crew delivers a seized ship to the proper authorities. (<a href="sources.html#doc-docs-sources-sorm-md">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/pirate.php">Atomic Rockets, pirate</a>, Piracy: Piracy is an offense of universal jurisdiction today, so any state can board and seize a ship engaged in it. This is a secondary summary of the same law. (<a href="sources.html#doc-rocket-pirate-php-html">all uses</a>)</li>
+</ul>
+</div>
+</details>
+<nav aria-label="Other mechanics"><ul class="pager"><li><a href="hull-wear-and-repair.html" rel="prev"><span class="dir">Previous</span>Hull wear and repair</a></li><li class="next"><a href="salvage-and-distress.html" rel="next"><span class="dir">Next</span>Salvage and distress</a></li></ul></nav>
+</main>
+<footer class="stamp">
+<p>Read from game commit efdee508 (committed 2026-10-18). Pages written 2026-10-18.
+The explanations are stand-in text and may change.</p>
+</footer>
+</div>
+<script>
+(function () {
+  "use strict";
+  var doc = document;
+  function each(list, fn) { Array.prototype.forEach.call(list, fn); }
+  function make(tag, cls, text) {
+    var el = doc.createElement(tag);
+    if (cls) el.className = cls;
+    if (text) el.textContent = text;
+    return el;
+  }
+  function reveal(el) {
+    for (var node = el; node; node = node.parentElement) {
+      if (node.tagName === "DETAILS") node.open = true;
+    }
+  }
+  function target(hash) {
+    try { return doc.getElementById(decodeURIComponent(hash.slice(1))); } catch (e) { return null; }
+  }
+  function followhash() {
+    var el = location.hash && target(location.hash);
+    if (el) { reveal(el); el.scrollIntoView(); }
+  }
+  doc.addEventListener("click", function (event) {
+    var link = event.target.closest && event.target.closest('a[href^="#"]');
+    var el = link && target(link.getAttribute("href"));
+    if (el) reveal(el);
+  });
+  window.addEventListener("hashchange", followhash);
+  window.addEventListener("beforeprint", function () { each(doc.querySelectorAll("details"), function (d) { d.open = true; }); });
+
+  var sections = doc.querySelectorAll("details.section");
+  var holder = doc.querySelector("[data-openall]");
+  if (holder && sections.length > 1) {
+    var toggle = make("button", "openall");
+    toggle.type = "button";
+    var allopen = function () { return Array.prototype.every.call(sections, function (d) { return d.open; }); };
+    var label = function () { toggle.textContent = allopen() ? "Close all sections" : "Open all sections"; };
+    toggle.addEventListener("click", function () {
+      var open = !allopen();
+      each(sections, function (d) { d.open = open; });
+      label();
+    });
+    each(sections, function (d) { d.addEventListener("toggle", label); });
+    label();
+    holder.appendChild(toggle);
+  }
+
+  var params = new URLSearchParams(location.search);
+  each(doc.querySelectorAll("table[data-sort]"), setup);
+  followhash();
+
+  function keyof(row, col) {
+    var cell = row.cells[col];
+    if (!cell) return "";
+    var key = cell.getAttribute("data-key");
+    return key !== null ? key : cell.textContent.trim();
+  }
+
+  function setup(table) {
+    var body = table.tBodies[0], region = table.parentElement;
+    var rows = [], fixed = [], heads = table.tHead.rows[0].cells, current = { col: -1, dir: 1 };
+    each(body.rows, function (row, i) {
+      row.setAttribute("data-order", i);
+      row.searchtext = row.textContent.toLowerCase();
+      (row.hasAttribute("data-fixed") ? fixed : rows).push(row);
+    });
+    table.classList.add("live");
+
+    function paint() {
+      var shown = 0;
+      rows.concat(fixed).forEach(function (row) {
+        if (!row.hidden) { row.classList.toggle("alt", shown % 2 === 1); shown += 1; }
+      });
+      return rows.filter(function (row) { return !row.hidden; }).length;
+    }
+    function order(col, dir, type) {
+      var sorted = rows.slice().sort(function (a, b) {
+        var x = col < 0 ? 0 : keyof(a, col), y = col < 0 ? 0 : keyof(b, col), result = 0;
+        if (col >= 0 && type === "num") {
+          var p = parseFloat(x), q = parseFloat(y);
+          if (isNaN(p) || isNaN(q)) return (isNaN(p) - isNaN(q)) || a.getAttribute("data-order") - b.getAttribute("data-order");
+          result = (p - q) * dir;
+        } else if (col >= 0) {
+          result = String(x).localeCompare(String(y), undefined, { numeric: true, sensitivity: "base" }) * dir;
+        }
+        return result || a.getAttribute("data-order") - b.getAttribute("data-order");
+      });
+      sorted.concat(fixed).forEach(function (row) { body.appendChild(row); });
+      rows = sorted;
+      current = { col: col, dir: dir };
+      each(heads, function (th, i) {
+        if (th.hasAttribute("aria-sort")) th.setAttribute("aria-sort", i === col ? (dir > 0 ? "ascending" : "descending") : "none");
+      });
+      paint();
+    }
+    each(heads, function (th, col) {
+      var type = th.getAttribute("data-type");
+      if (!type) return;
+      var button = make("button", "sort");
+      button.type = "button";
+      while (th.firstChild) button.appendChild(th.firstChild);
+      var arrow = make("span", "arrow");
+      arrow.setAttribute("aria-hidden", "true");
+      button.appendChild(arrow);
+      th.appendChild(button);
+      th.setAttribute("aria-sort", "none");
+      button.addEventListener("click", function () { order(col, current.col === col ? -current.dir : 1, type); });
+    });
+
+    var modes = (table.getAttribute("data-filter") || "").split(" ").filter(Boolean);
+    if (!modes.length) { paint(); return; }
+    var nouns = (table.getAttribute("data-noun") || "row rows").split(" ");
+    var noun = function (n) { return n === 1 ? nouns[0] : nouns[1]; };
+    var tools = make("div", "tools");
+    tools.setAttribute("role", "group");
+    tools.setAttribute("aria-label", "Sort and filter the table");
+    var find = make("label", "find");
+    var input = make("input");
+    input.type = "search";
+    input.autocomplete = "off";
+    input.spellcheck = false;
+    input.placeholder = table.getAttribute("data-placeholder") || "Type a word";
+    find.appendChild(make("span", "", "Find"));
+    find.appendChild(input);
+    tools.appendChild(find);
+    var picked = {}, chips = [];
+    if (modes.indexOf("grade") >= 0) {
+      var group = make("div", "chips");
+      group.setAttribute("role", "group");
+      group.setAttribute("aria-label", "Show only these grades");
+      group.appendChild(make("span", "chipslabel", "Grade"));
+      "ABCDE".split("").forEach(function (letter) {
+        var count = rows.filter(function (row) { return row.getAttribute("data-grade") === letter; }).length;
+        var chip = make("button", "chip", letter + " " + count);
+        chip.type = "button";
+        chip.setAttribute("aria-pressed", "false");
+        chip.setAttribute("aria-label", "Grade " + letter + ", " + count + " " + noun(count));
+        chip.disabled = !count;
+        chip.addEventListener("click", function () {
+          picked[letter] = !picked[letter];
+          chip.setAttribute("aria-pressed", String(picked[letter]));
+          apply();
+        });
+        chip.letter = letter;
+        group.appendChild(chip);
+        chips.push(chip);
+      });
+      tools.appendChild(group);
+    }
+    var reset = make("button", "reset", "Clear the filter and sort");
+    reset.type = "button";
+    var status = make("p", "status");
+    status.setAttribute("aria-live", "polite");
+    tools.appendChild(reset);
+    tools.appendChild(status);
+    region.parentNode.insertBefore(tools, region);
+    var empty = make("p", "empty");
+    region.parentNode.insertBefore(empty, region.nextSibling);
+
+    function apply() {
+      var words = input.value.toLowerCase().split(/\s+/).filter(Boolean);
+      var grades = Object.keys(picked).filter(function (g) { return picked[g]; });
+      rows.forEach(function (row) {
+        var ok = words.every(function (w) { return row.searchtext.indexOf(w) >= 0; });
+        row.hidden = !(ok && (!grades.length || grades.indexOf(row.getAttribute("data-grade")) >= 0));
+      });
+      var active = words.length > 0 || grades.length > 0;
+      fixed.forEach(function (row) { row.hidden = active; });
+      var shown = paint();
+      status.textContent = active ? "Showing " + shown + " of " + rows.length + " " + noun(rows.length) + "." : rows.length + " " + noun(rows.length) + ". Select a column heading to sort.";
+      reset.hidden = !active && current.col < 0;
+      empty.hidden = shown > 0;
+      empty.textContent = "No " + nouns[0] + " matches the filter. Clear the filter to see all " + rows.length + ".";
+    }
+    input.addEventListener("input", apply);
+    reset.addEventListener("click", function () {
+      input.value = "";
+      picked = {};
+      chips.forEach(function (chip) { chip.setAttribute("aria-pressed", "false"); });
+      order(-1, 1, "");
+      apply();
+      input.focus();
+    });
+    each(heads, function (th) {
+      var button = th.querySelector("button.sort");
+      if (button) button.addEventListener("click", function () { reset.hidden = false; });
+    });
+    var want = (params.get("grade") || "").toUpperCase();
+    chips.forEach(function (chip) {
+      if (want.indexOf(chip.letter) >= 0 && !chip.disabled) { picked[chip.letter] = true; chip.setAttribute("aria-pressed", "true"); }
+    });
+    if (params.get("q")) input.value = params.get("q");
+    apply();
+  }
+})();
+</script>
+</body>
+</html>

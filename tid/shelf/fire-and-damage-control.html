@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fire and damage control</title>
+<meta name="description" content="What the game does for fire and damage control, its numbers, and where each comes from.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+:root {
+  color-scheme: light dark;
+  --bg: #fbf8f1; --panel: #f0eadb; --rule: #b9ae94; --text: #231c0f; --muted: #51493a; --accent: #7a4300;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #0e0903; --panel: #16110a; --rule: #4a4130; --text: #d6cbb6; --muted: #a89f88; --accent: #ffb040; }
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: 1rem; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 1.0625rem/1.65 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; padding: 0 1rem 4rem; }
+::selection { background: var(--accent); color: var(--bg); }
+.skip { position: absolute; left: 1rem; top: -4rem; background: var(--accent); color: var(--bg); padding: .5rem 1rem; z-index: 10; }
+.skip:focus { top: .5rem; }
+.wrap { max-width: 72rem; margin: 0 auto; }
+.mono, h1, h2, h3, caption, th, nav, .brand, .stamp, .grade, .val, .hint, .chip, .chipslabel, .find span, .openall, .pager .dir, summary { font-family: "DM Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+a { color: var(--accent); text-underline-offset: .2em; text-decoration-thickness: 1px; }
+a:hover { text-decoration-thickness: 2px; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.top { padding: 2rem 0 1rem; border-bottom: 1px solid var(--rule); }
+.brand { margin: 0 0 .75rem; font-size: .8rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .25rem 1.5rem; }
+nav a { display: inline-block; padding: .45rem 0; }
+nav a[aria-current] { color: var(--text); text-decoration: none; border-bottom: 2px solid var(--accent); }
+h1 { font-size: clamp(1.6rem, 4.5vw, 2.25rem); line-height: 1.2; margin: 2.25rem 0 1rem; font-weight: 500; letter-spacing: -.01em; text-wrap: balance; }
+h2 { font-size: 1.5rem; line-height: 1.3; margin: 2.5rem 0 .75rem; font-weight: 500; text-wrap: balance; }
+h3 { font-size: 1.2rem; line-height: 1.35; margin: 1.75rem 0 .5rem; font-weight: 500; }
+p, li, dd { max-width: 40rem; }
+li + li { margin-top: .4rem; }
+code { font-family: "DM Mono", ui-monospace, Consolas, monospace; font-size: .9em; overflow-wrap: anywhere; }
+.lead { font-size: 1.15rem; line-height: 1.6; }
+.note { background: var(--panel); border: 1px solid var(--rule); padding: .75rem 1rem; max-width: 40rem; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; padding: 0; margin: -1px; }
+.glance { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem 1.4rem; margin: 1.5rem 0; padding: .85rem 1rem; background: var(--panel); border: 1px solid var(--rule); font-size: .95rem; }
+.glance p { margin: 0; }
+.glance ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .5rem 1.1rem; }
+.glance li { margin: 0; white-space: nowrap; }
+.toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem 1.5rem; margin: 0 0 1.5rem; }
+.toc { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .25rem 1.25rem; }
+.toc li { margin: 0; }
+.toc a { display: inline-block; padding: .35rem 0; }
+.openall { font-size: .85rem; background: transparent; color: var(--accent); border: 1px solid var(--rule); border-radius: 4px; padding: .45rem .8rem; cursor: pointer; }
+.openall:hover { border-color: var(--accent); }
+details.section { border-top: 1px solid var(--rule); }
+details.section:last-of-type { border-bottom: 1px solid var(--rule); }
+details.section > summary { display: flex; align-items: baseline; flex-wrap: wrap; gap: .25rem .9rem; padding: 1.05rem .25rem; cursor: pointer; list-style: none; }
+details.section > summary::-webkit-details-marker { display: none; }
+details.section > summary::before { content: ""; flex: none; align-self: center; width: .5rem; height: .5rem; border-right: 2px solid var(--accent); border-bottom: 2px solid var(--accent); transform: rotate(-45deg); transition: transform .18s ease-out; }
+details.section[open] > summary::before { transform: translateY(-.15rem) rotate(45deg); }
+details.section > summary h2 { margin: 0; font-size: 1.5rem; }
+details.section > summary:hover h2 { color: var(--accent); }
+.hint { margin-left: auto; color: var(--muted); font-size: .82rem; }
+.sectionbody { padding: 0 0 2rem; }
+.region { overflow-x: auto; margin: .75rem 0 1rem; border: 1px solid var(--rule); scrollbar-color: var(--rule) transparent; }
+table { border-collapse: collapse; width: 100%; min-width: 40rem; font-size: .95rem; line-height: 1.55; font-variant-numeric: tabular-nums; }
+caption { text-align: left; padding: .75rem .85rem; font-size: .9rem; color: var(--muted); }
+caption.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; padding: 0; }
+th, td { text-align: left; vertical-align: top; padding: .7rem .85rem; border-top: 1px solid var(--rule); }
+thead th { background: var(--panel); font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; white-space: nowrap; vertical-align: bottom; }
+thead .sub { display: block; font-size: .78rem; letter-spacing: 0; text-transform: none; color: var(--muted); font-weight: 400; }
+tbody th { font-weight: 500; font-family: inherit; min-width: 11rem; }
+table:not(.live) tbody tr:nth-child(even) > *, table.live tbody tr.alt > * { background: var(--panel); }
+tbody tr:target > * { background: color-mix(in srgb, var(--accent) 18%, var(--bg)) !important; }
+td.val { overflow-wrap: break-word; min-width: 7rem; font-size: 1rem; }
+.unit { display: block; font-size: .82rem; color: var(--muted); overflow-wrap: normal; }
+.nosource { color: var(--muted); }
+.numbers { min-width: 58rem; }
+.numbers tbody th { min-width: 13rem; width: 20%; }
+.numbers td:nth-child(4) { min-width: 11rem; width: 18%; }
+.numbers td:nth-child(5) { min-width: 22rem; width: 42%; }
+.allnumbers { min-width: 52rem; }
+.allnumbers tbody th { min-width: 14rem; width: 28%; }
+.allnumbers td:nth-child(2) { min-width: 10rem; }
+td.count { text-align: right; }
+.counts thead th:not(:first-child) { text-align: right; }
+.counts tr[data-fixed] > * { border-top: 2px solid var(--rule); font-weight: 600; }
+.uses { min-width: 34rem; }
+button.sort { all: unset; cursor: pointer; display: inline-flex; align-items: center; gap: .45rem; text-align: left; }
+button.sort:hover { color: var(--accent); }
+button.sort:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+.arrow { flex: none; width: 0; height: 0; border-left: .3rem solid transparent; border-right: .3rem solid transparent; border-top: .38rem solid currentColor; opacity: .35; }
+th[aria-sort="ascending"] .arrow { opacity: 1; transform: rotate(180deg); color: var(--accent); }
+th[aria-sort="descending"] .arrow { opacity: 1; color: var(--accent); }
+.tools { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem 1.5rem; margin: 1rem 0 .5rem; font-size: .9rem; }
+.find { display: flex; align-items: center; gap: .6rem; }
+.find span, .chipslabel { font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.find input { font: inherit; font-size: 1rem; color: var(--text); background: var(--bg); border: 1px solid var(--rule); border-radius: 4px; padding: .45rem .65rem; width: 18rem; max-width: 100%; caret-color: var(--accent); }
+.find input::placeholder { color: var(--muted); opacity: 1; }
+.find input:focus-visible { border-color: var(--accent); }
+.chips { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem; }
+.chip { font-size: .85rem; background: transparent; color: var(--text); border: 1px solid var(--rule); border-radius: 999px; padding: .3rem .75rem; min-height: 2.25rem; cursor: pointer; }
+.chip:hover:not(:disabled) { border-color: var(--accent); }
+.chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+.chip:disabled { opacity: .45; cursor: default; }
+.reset { font: inherit; background: none; border: 0; padding: .3rem 0; color: var(--accent); text-decoration: underline; text-underline-offset: .2em; cursor: pointer; }
+.status { flex-basis: 100%; margin: 0; color: var(--muted); font-size: .88rem; }
+.empty { margin: 0 0 1rem; padding: 1rem; border: 1px dashed var(--rule); color: var(--muted); }
+details.uses { margin: .5rem 0 1rem; }
+details.uses > summary { cursor: pointer; padding: .45rem 0; font-size: .85rem; color: var(--accent); }
+.cited { margin: .25rem 0 .5rem; color: var(--muted); }
+.grade { display: inline-block; border: 2px solid currentColor; border-radius: 4px; min-width: 1.7rem; text-align: center; padding: 0 .3rem; font-weight: 600; line-height: 1.45; margin-right: .45rem; }
+.grade.g-a, .grade.g-b { background: var(--text); border-color: var(--text); color: var(--bg); }
+.grade.g-e { border-width: 1.5px; border-style: dashed; color: var(--muted); }
+.gradeitem { white-space: nowrap; }
+.stamp { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--rule); font-size: .8rem; color: var(--muted); }
+dl.keys dt { font-weight: 600; margin-top: 1rem; }
+dl.keys dd { margin: .25rem 0 0; }
+.pager { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; margin: 3rem 0 0; padding: 0; list-style: none; }
+.pager li { margin: 0; flex: 1 1 16rem; max-width: 28rem; }
+.pager li.next { margin-left: auto; text-align: right; }
+.pager a { display: block; padding: .8rem 1rem; border: 1px solid var(--rule); text-decoration: none; }
+.pager a:hover { border-color: var(--accent); }
+.pager .dir { display: block; font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+@media (max-width: 40rem) {
+  body { padding: 0 1rem 3rem; font-size: 1rem; }
+  th, td { padding: .6rem; }
+  .hint { margin-left: 1.4rem; flex-basis: 100%; }
+  .find { flex-basis: 100%; }
+  .find input { flex: 1; width: auto; }
+  .chip { min-height: 2.75rem; min-width: 2.75rem; }
+  .numbers { min-width: 46rem; } .numbers tbody th { min-width: 8rem; width: auto; } .numbers td.val { min-width: 6.5rem; } .numbers td:nth-child(3) { min-width: 5.5rem; }
+  .allnumbers { min-width: 40rem; } .allnumbers tbody th { min-width: 9rem; }
+  .numbers .gradeitem, .allnumbers .gradeitem { white-space: normal; } .numbers .grade, .allnumbers .grade { display: block; width: max-content; margin: 0 0 .2rem; }
+}
+@media (min-width: 40rem) {
+  .numbers tbody th, .allnumbers tbody th { position: sticky; left: 0; z-index: 1; background: var(--bg); }
+}
+@media (prefers-reduced-motion: reduce) { details.section > summary::before { transition: none; } }
+@media print { .skip, .tools, .openall, .empty { display: none; } details.section > summary::before { display: none; } }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to the content</a>
+<div class="wrap">
+<header class="top">
+<p class="brand"><a href="https://coldweld.dev/">Coldweld</a> / The Infinite Diaspora / Reference shelf</p>
+<nav aria-label="Reference shelf"><ul>
+<li><a href="index.html">Mechanics</a></li>
+<li><a href="numbers.html">All numbers</a></li>
+<li><a href="grades.html">Grades</a></li>
+<li><a href="sources.html">Sources</a></li>
+<li><a href="updates.html">Source updates</a></li>
+</ul></nav>
+</header>
+<main id="main">
+<h1>Fire and damage control</h1>
+<p class="lead">Damage control is the work of the ship's own crew to put out fires and seal vents after a round gets inside the hull. A fire order is a captain's choice to vent, cut power to or throw out the thing that burns.</p>
+<div class="glance"><p><strong>45 numbers</strong>, 9 with an outside source</p><ul aria-label="Numbers by grade"><li><span class="grade g-a">A</span>0 <span class="sr">numbers at grade A</span></li><li><span class="grade g-b">B</span>3 <span class="sr">numbers at grade B</span></li><li><span class="grade g-c">C</span>0 <span class="sr">numbers at grade C</span></li><li><span class="grade g-d">D</span>6 <span class="sr">numbers at grade D</span></li><li><span class="grade g-e">E</span>36 <span class="sr">numbers at grade E</span></li></ul></div>
+<div class="toolbar" data-openall></div>
+<details class="section" id="does">
+<summary><h2>What the game does</h2><span class="hint">4 topics</span></summary>
+<div class="sectionbody">
+<h3>Damage Control</h3>
+<ul>
+<li>A round inside the hull can start a FIRE, and it burns 3% of your hull every 20 s.</li>
+<li>A fire nobody fights grows a level every 40 s.</li>
+<li>A big hole VENTS 6 life support every 20 s until it is sealed.</li>
+<li>LOCKERS | none, light (10%), standard (20%) or heavy (35%) of the hands, set at Engineering [4].</li>
+<li>Your ship sends standard, a raider light, and a merchant none.</li>
+<li>Your Damage Control department makes them faster.</li>
+<li>FIRST RESPONSE | up to 5 hands fight a new fire or vent for 40 s, even at none.</li>
+<li>A hurt or killed Damage Control head stops the parties lending hands for 40 s.</li>
+<li>A fire still going after the fight burns 60 s more. Hostiles fight theirs the same way.</li>
+</ul>
+<h3>Fire Classes</h3>
+<ul>
+<li>A fire's class is what burns: A is ordinary stuff, B a liquid or gas, C live electrics, D metal.</li>
+<li>The crew names the class of the worst fire in each space.</li>
+<li>SMOKE | every fire costs life support every 20 s. A D fire smokes least.</li>
+<li>REACTOR | a D fire, or a C fire with the power on, in the machinery space takes containment. At 0 the ship is lost.</li>
+<li>LOOP LEAK | a hit plant or a hot loop can leak lithium: a D fire.</li>
+<li>The first-response team has no breathing sets, so it fights only level 1 A, B and C fires.</li>
+<li>Every hand fights a live C fire at half pace.</li>
+<li>A suited crew lets the team fight a bigger fire. Only the locker parties fight a D fire.</li>
+</ul>
+<h3>Freight Fire</h3>
+<ul>
+<li>A fire in the hold burns the lot it started in: 2% of the hold's room every 20 s for each level.</li>
+<li>When that lot is gone the fire takes the next lot that burns. With none left, it goes out.</li>
+<li>A OR B | the class a lot feeds. Ore, water, metal ingots and most gases will not burn.</li>
+<li>VOLATILE | a flammable gas or liquid flashes a level higher and grows every 20 s.</li>
+<li>OXIDIZER | oxygen does not burn, but a cargo fire beside it starts a level higher.</li>
+<li>The market and the CARGO HOLD say what each good does in a fire before you load it.</li>
+</ul>
+<h3>Fire Orders</h3>
+<ul>
+<li>A fire order is your own, and it quotes its price before you give it.</li>
+<li>VENT | the fire burns 20 s more while the crew gets out, then dies. The space bleeds 6 life support every 20 s until sealed.</li>
+<li>The hold cools 60 s and refills for minutes or hours. Nobody goes in unsuited, and a berth sells you the air.</li>
+<li>DE-ENERGIZE | a live C fire burns on as A. For 40 s the space is dark. A warship's engineer does it unasked.</li>
+<li>JETTISON | a burning lot goes overboard with its fire, if it sits by the hatch.</li>
+<li>The crew stops the clock when a fire is worth an order.</li>
+<li>[4] ENGINEERING | its fire orders row gives one at any time.</li>
+<li>The Second and every other captain use one rule.</li>
+</ul>
+</div>
+</details>
+<details class="section" id="numbers">
+<summary><h2>The numbers</h2><span class="hint">45 numbers: 3 B, 6 D, 36 E</span></summary>
+<div class="sectionbody">
+<p>Each value is read from the game code. Sort by any column heading, or filter by grade or by a word.</p>
+<div class="region" role="region" tabindex="0" aria-label="Numbers the game runs for fire and damage control">
+<table class="numbers" data-sort="1" data-filter="text grade" data-noun="number numbers" data-placeholder="Quantity, source or word">
+<caption>Numbers the game runs for fire and damage control</caption>
+<thead><tr>
+<th scope="col" data-type="text">Quantity</th>
+<th scope="col" data-type="num">Value</th>
+<th scope="col" data-type="text">Grade</th>
+<th scope="col" data-type="text">Source</th>
+<th scope="col">Why this value</th>
+</tr></thead>
+<tbody>
+<tr id="n-1" data-grade="E"><th scope="row">Length of one fight tick, which every fire and vent number below is per</th><td class="val" data-key="20.0">20 <span class="unit">seconds</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>The fight tick keeps the length of the old menu fight round, so one rule serves both fights. No source gives a tick length.</td></tr>
+<tr id="n-2" data-grade="E"><th scope="row">Chance one interior breach starts a fire</th><td class="val" data-key="0.5">0.5 <span class="unit">chance</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><a href="https://media.defense.gov/2014/Feb/21/2002655450/-1/-1/1/140221-N-ZZ182-5359.pdf">US Navy training manual, &quot;Damage Control&quot; (chapter 12)</a>, Fire, 12-18 to 12-21</td><td>No source gives the chance that a hit inside the hull starts a fire. The value was chosen against the game's own count of interior breaches per fight. The sources are silent on this figure.</td></tr>
+<tr id="n-3" data-grade="E"><th scope="row">Hull a fire burns per tick, per level, as a share of the hull&#x27;s maximum health</th><td class="val" data-key="0.03">0.03 <span class="unit">share</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><a href="https://media.defense.gov/2014/Feb/21/2002655450/-1/-1/1/140221-N-ZZ182-5359.pdf">US Navy training manual, &quot;Damage Control&quot; (chapter 12)</a>, Fire, 12-18</td><td>The Navy chapter says a fire not controlled quickly can do more damage than the first casualty, and gives no burn rate. The value was chosen against the median hull and fight length. The sources are silent on this figure.</td></tr>
+<tr id="n-4" data-grade="E"><th scope="row">Highest level a fire reaches</th><td class="val" data-key="3.0">3 <span class="unit">level</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><a href="https://media.defense.gov/2014/Feb/21/2002655450/-1/-1/1/140221-N-ZZ182-5359.pdf">US Navy training manual, &quot;Damage Control&quot; (chapter 12)</a>, Fire, 12-18 to 12-21</td><td>The game grades a fire in a few levels for play. No source grades a fire by level. The sources are silent on this figure.</td></tr>
+<tr id="n-5" data-grade="E"><th scope="row">Ticks an unfought fire waits before it grows a level</th><td class="val" data-key="2.0">2 <span class="unit">ticks</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><a href="https://media.defense.gov/2014/Feb/21/2002655450/-1/-1/1/140221-N-ZZ182-5359.pdf">US Navy training manual, &quot;Damage Control&quot; (chapter 12)</a>, Fire, 12-18</td><td>The Navy chapter says a fire left alone gets worse and gives no growth time. The growth step was chosen for play. The sources are silent on this figure.</td></tr>
+<tr id="n-6" data-grade="E"><th scope="row">Ticks a fire still burning after the shooting costs the hull</th><td class="val" data-key="3.0">3 <span class="unit">ticks</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>No source says how long a fire keeps burning after the shooting stops. The game charges a short fixed burn after each fight. The sources are silent on this figure.</td></tr>
+<tr id="n-7" data-grade="E"><th scope="row">Life support a venting compartment bleeds per tick</th><td class="val" data-key="6.0">6 <span class="unit">life support</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/advdesign.php">Atomic Rockets, advdesign</a>, Airlock discussion</td><td>Atomic Rockets says venting wastes limited breathing mix and gives no drain rate. The rate was chosen for play. The sources are silent on this figure.</td></tr>
+<tr id="n-8" data-grade="E"><th scope="row">Share of the hands in the repair lockers, by locker level</th><td class="val" data-key="0.0">NONE 0, LIGHT 0.1, STANDARD 0.2, HEAVY 0.35 <span class="unit">share of hands</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><a href="https://media.defense.gov/2014/Feb/21/2002655450/-1/-1/1/140221-N-ZZ182-5359.pdf">US Navy training manual, &quot;Damage Control&quot; (chapter 12)</a>, Repair lockers, 12-7; general quarters, 12-8</td><td>The Navy manual mans fixed repair lockers in full at general quarters. The four shares of hands are a game choice, so that hands in the lockers are hands off the guns.</td></tr>
+<tr id="n-9" data-grade="E"><th scope="row">Locker level the player&#x27;s own ship starts at</th><td class="val">STANDARD <span class="unit">level</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>No source sets a default split of hands. The starting level is a game choice.</td></tr>
+<tr id="n-10" data-grade="E"><th scope="row">Hostile warship lockers (level, competence)</th><td class="val">STANDARD, 70 <span class="unit">level, competence</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><a href="https://media.defense.gov/2014/Feb/21/2002655450/-1/-1/1/140221-N-ZZ182-5359.pdf">US Navy training manual, &quot;Damage Control&quot; (chapter 12)</a>, Repair lockers, 12-7</td><td>The Navy manual has every warship man repair lockers and gives no share of hands or skill level. Both values are chosen. The sources are silent on this figure.</td></tr>
+<tr id="n-11" data-grade="E"><th scope="row">Hostile raider lockers (level, competence)</th><td class="val">LIGHT, 40 <span class="unit">level, competence</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><a href="https://media.defense.gov/2014/Feb/21/2002655450/-1/-1/1/140221-N-ZZ182-5359.pdf">US Navy training manual, &quot;Damage Control&quot; (chapter 12)</a>, Where the source is silent: merchant ships</td><td>No source covers the damage control of a raider crew. Both the level and the skill are chosen. The sources are silent on this figure.</td></tr>
+<tr id="n-12" data-grade="E"><th scope="row">Hostile merchant lockers (level, competence)</th><td class="val">NONE, 20 <span class="unit">level, competence</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/emergency.php">Atomic Rockets, emergency</a>, Escape Craft, and again under damage control</td><td>Atomic Rockets quotes Christopher Weuve that a merchant ship's primary piece of damage control equipment is a lifeboat, so a merchant hull has no lockers. The skill value is chosen.</td></tr>
+<tr id="n-13" data-grade="E"><th scope="row">Aim lost per step of hands in the lockers</th><td class="val" data-key="1.0">1 <span class="unit">aim</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><a href="https://media.defense.gov/2014/Feb/21/2002655450/-1/-1/1/140221-N-ZZ182-5359.pdf">US Navy training manual, &quot;Damage Control&quot; (chapter 12)</a>, Where the source is silent: costs</td><td>The Navy manual gives no price for manning lockers. The aim lost for each step of hands is chosen so that the split is a trade. The sources are silent on this figure.</td></tr>
+<tr id="n-14" data-grade="E"><th scope="row">Size of that step, as a share of the hands</th><td class="val" data-key="0.05">0.05 <span class="unit">share</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>One step of hands is a unit chosen for the aim price. No source gives it.</td></tr>
+<tr id="n-15" data-grade="E"><th scope="row">Share of the reactor top-up lost for each share of hands in the lockers</th><td class="val" data-key="0.5">0.5 <span class="unit">share</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><a href="https://media.defense.gov/2014/Feb/21/2002655450/-1/-1/1/140221-N-ZZ182-5359.pdf">US Navy training manual, &quot;Damage Control&quot; (chapter 12)</a>, Where the source is silent: costs</td><td>The lockers are manned from the watch that would run the reactor top-up. No source gives the loss, so the value is chosen. The sources are silent on this figure.</td></tr>
+<tr id="n-16" data-grade="E"><th scope="row">Most hands the first-response team can send</th><td class="val" data-key="5.0">5 <span class="unit">hands</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><a href="https://media.defense.gov/2014/Feb/21/2002655450/-1/-1/1/140221-N-ZZ182-5359.pdf">US Navy training manual, &quot;Damage Control&quot; (chapter 12)</a>, Teams outside the lockers, rapid response team, 12-8</td><td>The Navy rapid response team is at least four fire-team people plus the fire marshal (12-8). The notes record the game cap as chosen.</td></tr>
+<tr id="n-17" data-grade="E"><th scope="row">Ticks the first-response team works a new fire or vent</th><td class="val" data-key="2.0">2 <span class="unit">ticks</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><a href="https://media.defense.gov/2014/Feb/21/2002655450/-1/-1/1/140221-N-ZZ182-5359.pdf">US Navy training manual, &quot;Damage Control&quot; (chapter 12)</a>, Teams outside the lockers, rapid response team, 12-8</td><td>The Navy manual says a full team relieves the rapid response team after a preset time and gives no time. The game ties the team's working time to the fire growth step. The sources are silent on this figure.</td></tr>
+<tr id="n-18" data-grade="E"><th scope="row">Classes the first-response team can fight</th><td class="val">A, B, C <span class="unit">classes</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/basicdesign.php">Atomic Rockets, basicdesign</a>, Fire</td><td>Atomic Rockets says water and carbon dioxide make a burning metal fire worse, and the Navy rapid response team carries no breathing apparatus. Which classes the team fights is a design choice from both.</td></tr>
+<tr id="n-19" data-grade="E"><th scope="row">Pace of every hand against a live electrical fire</th><td class="val" data-key="0.5">0.5 <span class="unit">share of full pace</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><a href="https://media.defense.gov/2014/Feb/21/2002655450/-1/-1/1/140221-N-ZZ182-5359.pdf">US Navy training manual, &quot;Damage Control&quot; (chapter 12)</a>, Figure 12-9, the four classes, 12-22</td><td>The Navy manual says to de-energize an electrical fire and fight it as class A, and gives no work rate for a live fire. The pace was chosen for the shock risk. The sources are silent on this figure.</td></tr>
+<tr id="n-20" data-grade="E"><th scope="row">Burn tier by fire class (multiplier on the hull burn)</th><td class="val" data-key="1.0">A 1, C 1, B 1.5, K 1.5, D 2 <span class="unit">multiplier</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><a href="https://media.defense.gov/2014/Feb/21/2002655450/-1/-1/1/140221-N-ZZ182-5359.pdf">US Navy training manual, &quot;Damage Control&quot; (chapter 12)</a>, Figure 12-9, the four classes, 12-22</td><td>The Navy manual and Atomic Rockets name the fire classes and give no burn rates or temperatures. The tiers, with burning metal worst, are chosen. The sources are silent on this figure.</td></tr>
+<tr id="n-21" data-grade="E"><th scope="row">Life support a fire takes per tick, per level, by class</th><td class="val" data-key="2.0">A 2, C 3, B 3, K 3, D 1 <span class="unit">life support</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><a href="https://media.defense.gov/2014/Feb/21/2002655450/-1/-1/1/140221-N-ZZ182-5359.pdf">US Navy training manual, &quot;Damage Control&quot; (chapter 12)</a>, Fire, 12-18 to 12-21</td><td>The Navy chapter says only that hot smoke runs along passageways and up hatches (12-21). It gives no smoke rate, so the rates by class are chosen. The sources are silent on this figure.</td></tr>
+<tr id="n-22" data-grade="E"><th scope="row">Reactor containment lost per tick, per level, by class, in the machinery space</th><td class="val" data-key="4.0">C 4, D 8 <span class="unit">containment</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>No source gives how fast a fire in a reactor space harms containment. The rates were chosen so an unfought metal fire can end a reactor within a long fight. The sources are silent on this figure.</td></tr>
+<tr id="n-23" data-grade="E"><th scope="row">Where each class can start (class and weight out of 100, by place)</th><td class="val">the machinery space C, 70, D, 30, a passageway A, 70, C, 30, the air plant C, 60, A, 40, the crew spaces A, 80, C, 20 <span class="unit">weight</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><a href="https://media.defense.gov/2014/Feb/21/2002655450/-1/-1/1/140221-N-ZZ182-5359.pdf">US Navy training manual, &quot;Damage Control&quot; (chapter 12)</a>, Figure 12-9, the four classes, 12-22</td><td>The Navy manual defines the four fire classes. Where each class can start on a hull, and the weights, are chosen from the fuel the game models in each place.</td></tr>
+<tr id="n-24" data-grade="E"><th scope="row">Share of the hold&#x27;s room a cargo fire burns per tick, per level</th><td class="val" data-key="0.02">0.02 <span class="unit">share</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><a href="https://www.govinfo.gov/content/pkg/CFR-2025-title49-vol2/pdf/CFR-2025-title49-vol2-part173.pdf">49 CFR 172.101 and 173: US hazardous materials classes (the UN classes the IMDG Code uses)</a>, 49 CFR 173.2, 173.120, 173.127</td><td>The hazardous materials table classes a cargo and gives no burn rate. The share is chosen to sit beside the hull burn. The sources are silent on this figure.</td></tr>
+<tr id="n-25" data-grade="E"><th scope="row">Ticks between growth steps for a volatile cargo fire</th><td class="val" data-key="1.0">1 <span class="unit">ticks</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><a href="https://www.govinfo.gov/content/pkg/CFR-2025-title49-vol2/pdf/CFR-2025-title49-vol2-part173.pdf">49 CFR 172.101 and 173: US hazardous materials classes (the UN classes the IMDG Code uses)</a>, 49 CFR 173.2, 173.120, 173.127</td><td>The hazardous materials table sets the volatile case as a flammable gas or a liquid with a flash point of 60 C or less. How fast such a fire grows is chosen. The sources are silent on this figure.</td></tr>
+<tr id="n-26" data-grade="E"><th scope="row">Ticks a de-energized space stays dark</th><td class="val" data-key="2.0">2 <span class="unit">ticks</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><a href="https://media.defense.gov/2014/Feb/21/2002655450/-1/-1/1/140221-N-ZZ182-5359.pdf">US Navy training manual, &quot;Damage Control&quot; (chapter 12)</a>, Figure 12-9, the four classes, 12-22</td><td>The Navy manual says to de-energize an electrical fire and gives no time. The span a space stays dark is chosen. The sources are silent on this figure.</td></tr>
+<tr id="n-27" data-grade="E"><th scope="row">Aim lost while a passageway is dark</th><td class="val" data-key="5.0">5 <span class="unit">aim</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><a href="https://media.defense.gov/2014/Feb/21/2002655450/-1/-1/1/140221-N-ZZ182-5359.pdf">US Navy training manual, &quot;Damage Control&quot; (chapter 12)</a>, Figure 12-9, the four classes, 12-22</td><td>The Navy manual says to de-energize and is silent on what goes dark with it. The aim price of a dark passageway is chosen. The sources are silent on this figure.</td></tr>
+<tr id="n-28" data-grade="D"><th scope="row">Ticks a vented hold stays open while its cargo cools</th><td class="val" data-key="3.0">3 <span class="unit">ticks</span></td><td data-key="D"><span class="gradeitem"><span class="grade g-d">D</span>Analogy</span></td><td>NSTM chapter 555, volume 1: Surface Ship Firefighting (an EXTRACT of 6 pages), Post fire actions: post-fire ordnance cooling, minimum 15 minutes (555-8.13.9)</td><td>The Navy firefighting manual says post-fire cooling of hot ordnance must continue for a minimum of 15 minutes, so the weapon cases return to a safe temperature. The game holds a vented hold open for 3 ticks, which is 60 seconds at 20 seconds a tick. The real figure is for ordnance in a magazine, not freight, and is 15 times longer. The Navy personnel manual names a re-flash watch and gives no time. The game keeps its number.</td></tr>
+<tr id="n-29" data-grade="E"><th scope="row">Work a fire needs to go out, per level, as a share of the ship</th><td class="val" data-key="0.12">0.12 <span class="unit">share of the ship per tick</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Sized as a share of the ship because a fire on a 50 meter hull is a small fire; sized in hands, a 3-hand crew put out 0 of 49 fires on 4 seeds. The Navy chapter gives no work rate.</td></tr>
+<tr id="n-30" data-grade="E"><th scope="row">Work a vent needs to be sealed, as a share of the ship</th><td class="val" data-key="0.1">0.1 <span class="unit">share of the ship per tick</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Chosen by the game beside the fire effort; no source gives a time to seal a breach.</td></tr>
+<tr id="n-31" data-grade="E"><th scope="row">Ticks before a fallback party takes over the lending after the Damage Control head goes down</th><td class="val" data-key="2.0">2 <span class="unit">ticks</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><a href="https://media.defense.gov/2014/Feb/21/2002655450/-1/-1/1/140221-N-ZZ182-5359.pdf">US Navy training manual, &quot;Damage Control&quot; (chapter 12)</a>, All hands, 12-1</td><td>Authored: the Navy manual says a preset time and gives none, so it shares the first-response team's ticks. The sources are silent on this figure.</td></tr>
+<tr id="n-32" data-grade="E"><th scope="row">Pace of a hand working in a dark space</th><td class="val" data-key="0.5">0.5 <span class="unit">share of normal pace</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Authored from the design lead's rule that everything is less effective under emergency lighting; one share for every task.</td></tr>
+<tr id="n-33" data-grade="D"><th scope="row">Fire classes that need live power to start</th><td class="val">C, K <span class="unit">classes</span></td><td data-key="D"><span class="gradeitem"><span class="grade g-d">D</span>Analogy</span></td><td><a href="https://media.defense.gov/2014/Feb/21/2002655450/-1/-1/1/140221-N-ZZ182-5359.pdf">US Navy training manual, &quot;Damage Control&quot; (chapter 12)</a>, Figure 12-9, the four classes (12-22)</td><td>The Navy manual defines class C as an energized electrical fire; the game adds class K, a galley fire, which needs the galley lit. The manual lists no class K, so the K is the game's.</td></tr>
+<tr id="n-34" data-grade="E"><th scope="row">Fire classes from the least to the worst</th><td class="val">A, C, K, B, D <span class="unit">order</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><a href="https://media.defense.gov/2014/Feb/21/2002655450/-1/-1/1/140221-N-ZZ182-5359.pdf">US Navy training manual, &quot;Damage Control&quot; (chapter 12)</a>, Figure 12-9, the four classes (12-22)</td><td>The order A, C, K, B, D is the game's own: the last class burning is the worst. The Navy manual lists the classes and ranks none. The sources are silent on this figure.</td></tr>
+<tr id="n-35" data-grade="D"><th scope="row">Ticks the crew takes to clear a space before it is vented</th><td class="val" data-key="1.0">1 <span class="unit">ticks (20 seconds each)</span></td><td data-key="D"><span class="gradeitem"><span class="grade g-d">D</span>Analogy</span></td><td><a href="https://www.govinfo.gov/content/pkg/CFR-2025-title46-vol1/pdf/CFR-2025-title46-vol1-part35.pdf">46 CFR parts 35, 95, 97 and 199: US merchant vessel fire and emergency rules</a>, 95.16-45(a)(1)</td><td>The regulation holds a flooding release at least 20 seconds, enough for one person to walk from the farthest point to the exit; the longest walk in any hold is under 20 meters, so the 20 second floor sets one tick. The CFR text applies to clean agent systems and the game applies it to a vent.</td></tr>
+<tr id="n-36" data-grade="B"><th scope="row">Density of air</th><td class="val" data-key="1.225">1.225 <span class="unit">kg per m^3</span></td><td data-key="B"><span class="gradeitem"><span class="grade g-b">B</span>Secondary</span></td><td><a href="https://www.projectrho.com/public_html/rocket/lifesupport.php">Atomic Rockets, lifesupport</a>, Air density note (1.225 kg per cubic meter)</td><td>The page gives air at 1.225 kilograms per cubic meter, and the game uses it as stated.</td></tr>
+<tr id="n-37" data-grade="E"><th scope="row">Rate the ship&#x27;s gas refills a vented hold</th><td class="val" data-key="0.25">0.25 <span class="unit">kg per second</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Authored; the notes bracket it with two station rates on the Shuttle airlock of 0.017 to 0.35 kilograms a second, and the 0.25 falls inside that bracket.</td></tr>
+<tr id="n-38" data-grade="B"><th scope="row">Mix of the refill gas: nitrogen and oxygen by share of volume, with molar masses</th><td class="val">Nitrogen, 0.79, 28, Oxygen, 0.21, 32 <span class="unit">share and g/mol</span></td><td data-key="B"><span class="gradeitem"><span class="grade g-b">B</span>Secondary</span></td><td><a href="https://www.projectrho.com/public_html/rocket/lifesupport.php">Atomic Rockets, lifesupport</a>, Space Shuttle atmosphere (79 percent nitrogen, 21 percent oxygen)</td><td>The page says the Space Shuttle uses a 79 percent nitrogen and 21 percent oxygen mix; the molar masses of 28 and 32 are standard values that were not opened here (UNVERIFIED).</td></tr>
+<tr id="n-39" data-grade="B"><th scope="row">Hours a sealed reefer keeps its cargo without power, chilled and frozen</th><td class="val" data-key="7200.0">chilled 7,200, frozen 28,800 <span class="unit">seconds</span></td><td data-key="B"><span class="gradeitem"><span class="grade g-b">B</span>Secondary</span></td><td><a href="https://www.swedishclub.com/uploads/2023/12/Cargo-Advice-Refrigerated-cargoes.pdf">Reefer carriage: how long refrigerated cargo keeps without power</a></td><td>A shipping line advises a generator after 2 hours for chilled cargo and 8 hours for frozen on an inland move. The game takes that line as stated, not the line's stricter 1 hour, and spoils the whole lot.</td></tr>
+<tr id="n-40" data-grade="D"><th scope="row">Chance a lithium loop leaks, per point of containment lost, while the plant runs</th><td class="val" data-key="0.0003">0.0003 <span class="unit">chance per 20 seconds per point</span></td><td data-key="D"><span class="gradeitem"><span class="grade g-d">D</span>Analogy</span></td><td><a href="https://www.nrc.gov/docs/ML1835/ML18353B121.pdf">Liquid-metal coolant leaks: what starts them and what puts them out</a>, NRC report 3.4 item 6: BN-600, 30 sodium leaks in 15 years</td><td>The NRC report counts 30 sodium leaks (2 large, 28 small) over 15 years of BN-600 operation, and says weld cracks caused them. That is about 1.3e-6 a 20 second tick for a whole plant at normal conditions. The game uses 0.0003 a tick for each point of containment lost, so a 34 point hit gives about 1 percent, roughly 240 times the BN-600 rate per point. The source gives no rate for a damaged plant. The game keeps its number.</td></tr>
+<tr id="n-41" data-grade="D"><th scope="row">Chance a lithium loop leaks while it runs past its heat points</th><td class="val" data-key="0.01">0.01 <span class="unit">chance per 20 seconds</span></td><td data-key="D"><span class="gradeitem"><span class="grade g-d">D</span>Analogy</span></td><td><a href="https://www.nrc.gov/docs/ML1835/ML18353B121.pdf">Liquid-metal coolant leaks: what starts them and what puts them out</a>, NRC report 3.4 item 6: BN-600, 30 sodium leaks in 15 years</td><td>The NRC report counts 30 sodium leaks over 15 years of BN-600 operation, about 1.3e-6 a 20 second tick for a whole plant. The report says operation outside design parameters shortens component life and gives no rate. The game uses 0.01 a tick for a loop past its heat points, about 7,900 times the normal BN-600 rate. The game keeps its number.</td></tr>
+<tr id="n-42" data-grade="E"><th scope="row">Share of a life support clip a damage control crew removes, per point of skill</th><td class="val" data-key="0.06">0.06 <span class="unit">share per point</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Chosen by the game so even an ace tech makes a hit softer and never free; no source sets it.</td></tr>
+<tr id="n-43" data-grade="D"><th scope="row">Gun sizes whose hole can empty a compartment at once</th><td class="val">Heavy, Superheavy <span class="unit">sizes</span></td><td data-key="D"><span class="gradeitem"><span class="grade g-d">D</span>Analogy</span></td><td><a href="https://www.projectrho.com/public_html/rocket/lifesupport.php">Atomic Rockets, lifesupport</a>, Explosive decompression (the 126 millisecond passage)</td><td>The mirror says a large opening empties a small space in about a tenth of a second and can carry a person, while most holes only leak. The game takes that as the heavy and superheavy guns, 160 and 220 millimeters.</td></tr>
+<tr id="n-44" data-grade="E"><th scope="row">Crowd a vented compartment holds, as a multiple of the hull&#x27;s crew occupancy</th><td class="val" data-key="4.0">4 <span class="unit">multiple</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Authored: a compartment holds people who were not in the line of the shot, and nothing measures it. The measured crowd is 0.16 on a Trochilus to 1.67 on an Angel.</td></tr>
+<tr id="n-45" data-grade="E"><th scope="row">Damage control skill of an escort the captain owns</th><td class="val" data-key="30.0">30 <span class="unit">skill points</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Chosen by the game: an escort the captain owns has hands but no Damage Control department of its own, so its lockers work at a flat 30. No source rates such a crew.</td></tr>
+</tbody></table></div>
+</div>
+</details>
+<details class="section" id="why">
+<summary><h2>Why: the real physics or procedure</h2><span class="hint">8 points</span></summary>
+<div class="sectionbody">
+<ul>
+<li>A real ship treats fire as the work of the whole crew, so every hand has a damage control duty.</li>
+<li>A fire needs fuel, heat and oxygen, and flame also needs the chain reaction, so removing any one stops it.</li>
+<li>Fire has four classes by fuel: A is ordinary solids, B is liquids and gases, C is live electrics, D is burning metal.</li>
+<li>A class C fire is best handled by cutting the power first and then fighting it as class A.</li>
+<li>A burning metal fire is different, because water can make hydrogen from it, so the crew uses dry powder or sand.</li>
+<li>A pure oxygen atmosphere makes any fire violent, and the Apollo 1 fire killed its crew in one.</li>
+<li>A small first team goes to a new fire without breathing sets, because speed matters most. A larger team relieves it if it fails.</li>
+<li>A merchant ship writes these duties on a muster list before the voyage, so its master holds the authority in advance.</li>
+</ul>
+</div>
+</details>
+<details class="section" id="departs">
+<summary><h2>Where the game departs from reality</h2><span class="hint">10 points</span></summary>
+<div class="sectionbody">
+<ul>
+<li>The captain splits the hands into NONE, LIGHT, STANDARD and HEAVY lockers, where the Navy manual has fixed lockers fully manned at general quarters. coldweld chose the split on 2026-09-26 so that hands in the lockers are hands off the guns.</li>
+<li>A hostile merchant hull gets no lockers, which follows the Weuve line in the mirror that its damage control is its lifeboat. The first-response team still works every hull, after the manual's rapid response team.</li>
+<li>All fire numbers are AUTHORED, because the sources give no rates. The game uses a 20 second tick rather than minutes of real time.</li>
+<li>A class starts only where its fuel exists on that hull. No hull carries oil or burnable structure, so the only burning metal is the lithium in the cooling loop.</li>
+<li>Titanium Ingot is inert and no cargo is class D, because the hazmat table names only titanium powder and sponge.</li>
+<li>The game takes both sources on class D: the team's water and CO2 make it worse, as the mirror says, and only a locker party working from cover fights it, as the Navy manual says.</li>
+<li>Vent and jettison are a captain's press on every hull, by coldweld's ruling of 2026-10-08, because no source names who holds them. The nearest cases are SORM 6.4.1 e for sprinkling a magazine and 46 CFR 35.35-75 for the senior officer's emergency action.</li>
+<li>De-energize follows the sources: a warship's engineer cuts the power unasked (SORM 6.4.1 e), and a merchant captain presses it. The merchant rule is a fair reading of a precaution, not a quote.</li>
+<li>The 'evacuate the compartment' line is fiction, so the game charges venting its real cost in breathing mix.</li>
+<li>The game's smoke, containment loss and cargo fire are authored to make a fire a ship-ending risk.</li>
+</ul>
+</div>
+</details>
+<details class="section" id="silent">
+<summary><h2>Where the sources are silent</h2><span class="hint">7 points</span></summary>
+<div class="sectionbody">
+<ul>
+<li>No source gives a burn rate, a smoke rate or a time to put out a fire. The Navy chapter defines flash point and fire point and gives no figure.</li>
+<li>The Navy chapter says nothing on merchant crews, vacuum, venting or reactors. The Atomic Rockets mirror gives no damage control rates.</li>
+<li>Who orders a compartment vented or a fixed agent released is silent in the Navy chapter, the 46 CFR parts and MGN 71. Jettison is silent in all of them, and the word does not appear in the four 46 CFR parts.</li>
+<li>Who leads a merchant fire party on the scene is silent. MGN 71 says only that a party must not be left without a leader.</li>
+<li>No source covers lithium metal as a coolant, or a class K fire in a ship's galley beyond the Navy's inspection list.</li>
+<li>The 49 CFR table classes a cargo and does not say how fast a lot burns. The mirror is silent too.</li>
+<li>NSTM chapter 555 is only a 6-page extract, and it names no fire order or officer.</li>
+</ul>
+</div>
+</details>
+<details class="section" id="sources">
+<summary><h2>Sources</h2><span class="hint">14 documents</span></summary>
+<div class="sectionbody">
+<ul>
+<li><a href="https://media.defense.gov/2014/Feb/21/2002655450/-1/-1/1/140221-N-ZZ182-5359.pdf">US Navy training manual, &quot;Damage Control&quot; (chapter 12)</a>, All hands, 12-1: The US Navy training chapter says damage control belongs to all hands, from the commanding officer to the newest recruit. (<a href="sources.html#doc-docs-sources-navy-damage-control-manual-md">all uses</a>)</li>
+<li><a href="https://media.defense.gov/2014/Feb/21/2002655450/-1/-1/1/140221-N-ZZ182-5359.pdf">US Navy training manual, &quot;Damage Control&quot; (chapter 12)</a>, Rapid response team, 12-8: Each ship has a rapid response team of at least four fire-team-qualified people plus the fire marshal. It does not stop to put on protective clothing or breathing apparatus, and a full team relieves it if it cannot gain control in a preset time. (<a href="sources.html#doc-docs-sources-navy-damage-control-manual-md">all uses</a>)</li>
+<li><a href="https://media.defense.gov/2014/Feb/21/2002655450/-1/-1/1/140221-N-ZZ182-5359.pdf">US Navy training manual, &quot;Damage Control&quot; (chapter 12)</a>, Fire, 12-18 to 12-21: A fire not controlled quickly can do more damage than the first casualty and can lose the ship. Fire needs fuel, heat and oxygen, and flame needs the chain reaction too. Hot smoke runs along passageways and up hatches, so openings to the fire area stay closed until the party is in place. (<a href="sources.html#doc-docs-sources-navy-damage-control-manual-md">all uses</a>)</li>
+<li><a href="https://media.defense.gov/2014/Feb/21/2002655450/-1/-1/1/140221-N-ZZ182-5359.pdf">US Navy training manual, &quot;Damage Control&quot; (chapter 12)</a>, Figure 12-9, the four classes, 12-22: A is wood, cloth, paper (water or fog). B is flammable liquids and gases (secure the flow first). C is energized electrical (de-energize and fight as class A). D is combustible metal such as magnesium or titanium (water in quantity from a safe distance, because explosions may occur). (<a href="sources.html#doc-docs-sources-navy-damage-control-manual-md">all uses</a>)</li>
+<li>NSTM chapter 555, volume 1: Surface Ship Firefighting (an EXTRACT of 6 pages), 555-8.14, lithium battery fires: A 6-page extract of the Navy's firefighting manual covers batteries only. It says dry chemical and CO2 do not work on a lithium battery fire and that a narrow-angle fog of water is preferred. It says Navy batteries hold little free lithium, so this does not carry over to liquid metal lithium. (<a href="sources.html#doc-docs-sources-nstm-555-extract-md">all uses</a>)</li>
+<li><a href="https://www.govinfo.gov/content/pkg/CFR-2025-title46-vol1/pdf/CFR-2025-title46-vol1-part35.pdf">46 CFR parts 35, 95, 97 and 199: US merchant vessel fire and emergency rules</a>, 46 CFR 199.80(b) and 97.55-1: The master writes the muster list and posts it before the voyage. The list assigns each fire duty, including the emergency squad for fires, and names substitutes. Only the master has the rule to de-energize a cargo hold's circuits, and that rule is a precaution before loading. (<a href="sources.html#doc-docs-sources-46-cfr-merchant-fire-md">all uses</a>)</li>
+<li><a href="https://assets.publishing.service.gov.uk/media/5a7c330840f0b67d0b11f857/mgn071.pdf">MGN 71 (M): Musters, drills, on-board training and instructions, and Decision Support Systems</a>, Sections 2.1, 2.4, 7.5, 7.10: The UK note says the master compiles the muster list, which shows each crew member's fire duties and the closing of openings. It says crews drill closing openings to cut the air to a fire. It says on a small-crew cargo ship every member will usually need to know all the fire-fighting. (<a href="sources.html#doc-docs-sources-mgn71-md">all uses</a>)</li>
+<li><a href="https://www.govinfo.gov/content/pkg/CFR-2025-title49-vol2/pdf/CFR-2025-title49-vol2-part173.pdf">49 CFR 172.101 and 173: US hazardous materials classes (the UN classes the IMDG Code uses)</a>, 49 CFR 173.2, 173.120, 173.127: The US hazardous materials table sets the classes the freight rules use: a flammable gas, a flammable liquid with a flash point of 60 C or less, and an oxidizer that yields oxygen and so helps other things burn. (<a href="sources.html#doc-docs-sources-49-cfr-hazmat-classes-md">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/crew.php">Atomic Rockets, crew</a>, Damage Control: Atomic Rockets says all crew get basic damage control training, and the focus is fire suppression, controlling decompression and keeping the ship working. A damage control officer sets up parties by section, and the parties take orders from a central watch center. It also says the Mir fire in 1997 hid the extinguisher in smoke. "stabilize the damage as quick as possible" (<a href="sources.html#doc-rocket-crew-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/emergency.php">Atomic Rockets, emergency</a>, Escape Craft, and again under damage control: The page quotes Christopher Weuve, who says a merchant ship's primary piece of damage control equipment is a lifeboat. It also says to throw the threat overboard instead of building a lifeboat. (<a href="sources.html#doc-rocket-emergency-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/basicdesign.php">Atomic Rockets, basicdesign</a>, Fire: Titanium and magnesium burn fiercely in an oxygen atmosphere. Water on burning magnesium makes hydrogen, and CO2 does not work either, so the page recommends a class D extinguisher or a lot of sand. (<a href="sources.html#doc-rocket-basicdesign-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/lifesupport.php">Atomic Rockets, lifesupport</a>, Atmosphere discussion near the oxygen consumption figures: The page says pure oxygen as a ship's atmosphere is very dangerous, and gives the Apollo 1 accident as the proof. It recommends a breathing mix of oxygen and nitrogen. "insanely dangerous to use as the ship&#x27;s atmosphere" (<a href="sources.html#doc-rocket-lifesupport-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/advdesign.php">Atomic Rockets, advdesign</a>, Airlock discussion: Venting an airlock to space is a waste of limited breathing mix, and is done only in an emergency. (<a href="sources.html#doc-rocket-advdesign-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/prelimnotes.php">Atomic Rockets, prelimnotes</a>, A story excerpt, not a measured claim: A fiction passage says a fire in space can nearly always be put out by evacuating the compartment, but that a power room fire can get out of hand and reach the reactor control circuits. The game treats this as fiction. (<a href="sources.html#doc-rocket-prelimnotes-php-html">all uses</a>)</li>
+</ul>
+</div>
+</details>
+<nav aria-label="Other mechanics"><ul class="pager"><li class="next"><a href="armor-and-the-six-faces.html" rel="next"><span class="dir">Next</span>Armor and the six faces</a></li></ul></nav>
+</main>
+<footer class="stamp">
+<p>Read from game commit efdee508 (committed 2026-10-18). Pages written 2026-10-18.
+The explanations are stand-in text and may change.</p>
+</footer>
+</div>
+<script>
+(function () {
+  "use strict";
+  var doc = document;
+  function each(list, fn) { Array.prototype.forEach.call(list, fn); }
+  function make(tag, cls, text) {
+    var el = doc.createElement(tag);
+    if (cls) el.className = cls;
+    if (text) el.textContent = text;
+    return el;
+  }
+  function reveal(el) {
+    for (var node = el; node; node = node.parentElement) {
+      if (node.tagName === "DETAILS") node.open = true;
+    }
+  }
+  function target(hash) {
+    try { return doc.getElementById(decodeURIComponent(hash.slice(1))); } catch (e) { return null; }
+  }
+  function followhash() {
+    var el = location.hash && target(location.hash);
+    if (el) { reveal(el); el.scrollIntoView(); }
+  }
+  doc.addEventListener("click", function (event) {
+    var link = event.target.closest && event.target.closest('a[href^="#"]');
+    var el = link && target(link.getAttribute("href"));
+    if (el) reveal(el);
+  });
+  window.addEventListener("hashchange", followhash);
+  window.addEventListener("beforeprint", function () { each(doc.querySelectorAll("details"), function (d) { d.open = true; }); });
+
+  var sections = doc.querySelectorAll("details.section");
+  var holder = doc.querySelector("[data-openall]");
+  if (holder && sections.length > 1) {
+    var toggle = make("button", "openall");
+    toggle.type = "button";
+    var allopen = function () { return Array.prototype.every.call(sections, function (d) { return d.open; }); };
+    var label = function () { toggle.textContent = allopen() ? "Close all sections" : "Open all sections"; };
+    toggle.addEventListener("click", function () {
+      var open = !allopen();
+      each(sections, function (d) { d.open = open; });
+      label();
+    });
+    each(sections, function (d) { d.addEventListener("toggle", label); });
+    label();
+    holder.appendChild(toggle);
+  }
+
+  var params = new URLSearchParams(location.search);
+  each(doc.querySelectorAll("table[data-sort]"), setup);
+  followhash();
+
+  function keyof(row, col) {
+    var cell = row.cells[col];
+    if (!cell) return "";
+    var key = cell.getAttribute("data-key");
+    return key !== null ? key : cell.textContent.trim();
+  }
+
+  function setup(table) {
+    var body = table.tBodies[0], region = table.parentElement;
+    var rows = [], fixed = [], heads = table.tHead.rows[0].cells, current = { col: -1, dir: 1 };
+    each(body.rows, function (row, i) {
+      row.setAttribute("data-order", i);
+      row.searchtext = row.textContent.toLowerCase();
+      (row.hasAttribute("data-fixed") ? fixed : rows).push(row);
+    });
+    table.classList.add("live");
+
+    function paint() {
+      var shown = 0;
+      rows.concat(fixed).forEach(function (row) {
+        if (!row.hidden) { row.classList.toggle("alt", shown % 2 === 1); shown += 1; }
+      });
+      return rows.filter(function (row) { return !row.hidden; }).length;
+    }
+    function order(col, dir, type) {
+      var sorted = rows.slice().sort(function (a, b) {
+        var x = col < 0 ? 0 : keyof(a, col), y = col < 0 ? 0 : keyof(b, col), result = 0;
+        if (col >= 0 && type === "num") {
+          var p = parseFloat(x), q = parseFloat(y);
+          if (isNaN(p) || isNaN(q)) return (isNaN(p) - isNaN(q)) || a.getAttribute("data-order") - b.getAttribute("data-order");
+          result = (p - q) * dir;
+        } else if (col >= 0) {
+          result = String(x).localeCompare(String(y), undefined, { numeric: true, sensitivity: "base" }) * dir;
+        }
+        return result || a.getAttribute("data-order") - b.getAttribute("data-order");
+      });
+      sorted.concat(fixed).forEach(function (row) { body.appendChild(row); });
+      rows = sorted;
+      current = { col: col, dir: dir };
+      each(heads, function (th, i) {
+        if (th.hasAttribute("aria-sort")) th.setAttribute("aria-sort", i === col ? (dir > 0 ? "ascending" : "descending") : "none");
+      });
+      paint();
+    }
+    each(heads, function (th, col) {
+      var type = th.getAttribute("data-type");
+      if (!type) return;
+      var button = make("button", "sort");
+      button.type = "button";
+      while (th.firstChild) button.appendChild(th.firstChild);
+      var arrow = make("span", "arrow");
+      arrow.setAttribute("aria-hidden", "true");
+      button.appendChild(arrow);
+      th.appendChild(button);
+      th.setAttribute("aria-sort", "none");
+      button.addEventListener("click", function () { order(col, current.col === col ? -current.dir : 1, type); });
+    });
+
+    var modes = (table.getAttribute("data-filter") || "").split(" ").filter(Boolean);
+    if (!modes.length) { paint(); return; }
+    var nouns = (table.getAttribute("data-noun") || "row rows").split(" ");
+    var noun = function (n) { return n === 1 ? nouns[0] : nouns[1]; };
+    var tools = make("div", "tools");
+    tools.setAttribute("role", "group");
+    tools.setAttribute("aria-label", "Sort and filter the table");
+    var find = make("label", "find");
+    var input = make("input");
+    input.type = "search";
+    input.autocomplete = "off";
+    input.spellcheck = false;
+    input.placeholder = table.getAttribute("data-placeholder") || "Type a word";
+    find.appendChild(make("span", "", "Find"));
+    find.appendChild(input);
+    tools.appendChild(find);
+    var picked = {}, chips = [];
+    if (modes.indexOf("grade") >= 0) {
+      var group = make("div", "chips");
+      group.setAttribute("role", "group");
+      group.setAttribute("aria-label", "Show only these grades");
+      group.appendChild(make("span", "chipslabel", "Grade"));
+      "ABCDE".split("").forEach(function (letter) {
+        var count = rows.filter(function (row) { return row.getAttribute("data-grade") === letter; }).length;
+        var chip = make("button", "chip", letter + " " + count);
+        chip.type = "button";
+        chip.setAttribute("aria-pressed", "false");
+        chip.setAttribute("aria-label", "Grade " + letter + ", " + count + " " + noun(count));
+        chip.disabled = !count;
+        chip.addEventListener("click", function () {
+          picked[letter] = !picked[letter];
+          chip.setAttribute("aria-pressed", String(picked[letter]));
+          apply();
+        });
+        chip.letter = letter;
+        group.appendChild(chip);
+        chips.push(chip);
+      });
+      tools.appendChild(group);
+    }
+    var reset = make("button", "reset", "Clear the filter and sort");
+    reset.type = "button";
+    var status = make("p", "status");
+    status.setAttribute("aria-live", "polite");
+    tools.appendChild(reset);
+    tools.appendChild(status);
+    region.parentNode.insertBefore(tools, region);
+    var empty = make("p", "empty");
+    region.parentNode.insertBefore(empty, region.nextSibling);
+
+    function apply() {
+      var words = input.value.toLowerCase().split(/\s+/).filter(Boolean);
+      var grades = Object.keys(picked).filter(function (g) { return picked[g]; });
+      rows.forEach(function (row) {
+        var ok = words.every(function (w) { return row.searchtext.indexOf(w) >= 0; });
+        row.hidden = !(ok && (!grades.length || grades.indexOf(row.getAttribute("data-grade")) >= 0));
+      });
+      var active = words.length > 0 || grades.length > 0;
+      fixed.forEach(function (row) { row.hidden = active; });
+      var shown = paint();
+      status.textContent = active ? "Showing " + shown + " of " + rows.length + " " + noun(rows.length) + "." : rows.length + " " + noun(rows.length) + ". Select a column heading to sort.";
+      reset.hidden = !active && current.col < 0;
+      empty.hidden = shown > 0;
+      empty.textContent = "No " + nouns[0] + " matches the filter. Clear the filter to see all " + rows.length + ".";
+    }
+    input.addEventListener("input", apply);
+    reset.addEventListener("click", function () {
+      input.value = "";
+      picked = {};
+      chips.forEach(function (chip) { chip.setAttribute("aria-pressed", "false"); });
+      order(-1, 1, "");
+      apply();
+      input.focus();
+    });
+    each(heads, function (th) {
+      var button = th.querySelector("button.sort");
+      if (button) button.addEventListener("click", function () { reset.hidden = false; });
+    });
+    var want = (params.get("grade") || "").toUpperCase();
+    chips.forEach(function (chip) {
+      if (want.indexOf(chip.letter) >= 0 && !chip.disabled) { picked[chip.letter] = true; chip.setAttribute("aria-pressed", "true"); }
+    });
+    if (params.get("q")) input.value = params.get("q");
+    apply();
+  }
+})();
+</script>
+</body>
+</html>
