@@ -18,58 +18,126 @@
   :root { --bg: #0e0903; --panel: #16110a; --rule: #4a4130; --text: #d6cbb6; --muted: #a89f88; --accent: #ffb040; }
 }
 *, *::before, *::after { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; }
-body { margin: 0; background: var(--bg); color: var(--text); font: 1rem/1.65 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; padding: 0 1rem 4rem; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: 1rem; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 1.0625rem/1.65 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; padding: 0 1rem 4rem; }
+::selection { background: var(--accent); color: var(--bg); }
 .skip { position: absolute; left: 1rem; top: -4rem; background: var(--accent); color: var(--bg); padding: .5rem 1rem; z-index: 10; }
 .skip:focus { top: .5rem; }
-.wrap { max-width: 64rem; margin: 0 auto; }
-.mono, h1, h2, h3, caption, th, nav, .brand, .stamp, .grade, .val { font-family: "DM Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
-a { color: var(--accent); text-underline-offset: .2em; }
-a:focus-visible, .region:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.wrap { max-width: 72rem; margin: 0 auto; }
+.mono, h1, h2, h3, caption, th, nav, .brand, .stamp, .grade, .val, .hint, .chip, .chipslabel, .find span, .openall, .pager .dir, summary { font-family: "DM Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+a { color: var(--accent); text-underline-offset: .2em; text-decoration-thickness: 1px; }
+a:hover { text-decoration-thickness: 2px; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
 .top { padding: 2rem 0 1rem; border-bottom: 1px solid var(--rule); }
-.brand { margin: 0 0 .75rem; font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.brand { margin: 0 0 .75rem; font-size: .8rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
 nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .25rem 1.5rem; }
-nav a { display: inline-block; padding: .35rem 0; }
-h1 { font-size: clamp(1.4rem, 5vw, 2rem); line-height: 1.25; margin: 2rem 0 1rem; font-weight: 500; }
-h2 { font-size: 1.5rem; margin: 2.5rem 0 .75rem; padding-top: 1.25rem; border-top: 1px solid var(--rule); font-weight: 500; }
-h3 { font-size: 1.15rem; margin: 1.5rem 0 .5rem; font-weight: 500; }
-p, li { max-width: 46rem; }
-li + li { margin-top: .35rem; }
-code { font-family: "DM Mono", ui-monospace, Consolas, monospace; font-size: .92em; overflow-wrap: anywhere; }
-.lead { font-size: 1.1rem; }
-.note { background: var(--panel); border: 1px solid var(--rule); padding: .75rem 1rem; max-width: 46rem; }
-.region { overflow-x: auto; margin: 1rem 0; border: 1px solid var(--rule); }
-table { border-collapse: collapse; width: 100%; min-width: 40rem; font-size: .92rem; line-height: 1.55; }
-caption { text-align: left; padding: .75rem; font-size: .95rem; color: var(--muted); }
+nav a { display: inline-block; padding: .45rem 0; }
+nav a[aria-current] { color: var(--text); text-decoration: none; border-bottom: 2px solid var(--accent); }
+h1 { font-size: clamp(1.6rem, 4.5vw, 2.25rem); line-height: 1.2; margin: 2.25rem 0 1rem; font-weight: 500; letter-spacing: -.01em; text-wrap: balance; }
+h2 { font-size: 1.5rem; line-height: 1.3; margin: 2.5rem 0 .75rem; font-weight: 500; text-wrap: balance; }
+h3 { font-size: 1.2rem; line-height: 1.35; margin: 1.75rem 0 .5rem; font-weight: 500; }
+p, li, dd { max-width: 40rem; }
+li + li { margin-top: .4rem; }
+code { font-family: "DM Mono", ui-monospace, Consolas, monospace; font-size: .9em; overflow-wrap: anywhere; }
+.lead { font-size: 1.15rem; line-height: 1.6; }
+.note { background: var(--panel); border: 1px solid var(--rule); padding: .75rem 1rem; max-width: 40rem; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; padding: 0; margin: -1px; }
+.glance { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem 1.4rem; margin: 1.5rem 0; padding: .85rem 1rem; background: var(--panel); border: 1px solid var(--rule); font-size: .95rem; }
+.glance p { margin: 0; }
+.glance ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .5rem 1.1rem; }
+.glance li { margin: 0; white-space: nowrap; }
+.toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem 1.5rem; margin: 0 0 1.5rem; }
+.toc { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .25rem 1.25rem; }
+.toc li { margin: 0; }
+.toc a { display: inline-block; padding: .35rem 0; }
+.openall { font-size: .85rem; background: transparent; color: var(--accent); border: 1px solid var(--rule); border-radius: 4px; padding: .45rem .8rem; cursor: pointer; }
+.openall:hover { border-color: var(--accent); }
+details.section { border-top: 1px solid var(--rule); }
+details.section:last-of-type { border-bottom: 1px solid var(--rule); }
+details.section > summary { display: flex; align-items: baseline; flex-wrap: wrap; gap: .25rem .9rem; padding: 1.05rem .25rem; cursor: pointer; list-style: none; }
+details.section > summary::-webkit-details-marker { display: none; }
+details.section > summary::before { content: ""; flex: none; align-self: center; width: .5rem; height: .5rem; border-right: 2px solid var(--accent); border-bottom: 2px solid var(--accent); transform: rotate(-45deg); transition: transform .18s ease-out; }
+details.section[open] > summary::before { transform: translateY(-.15rem) rotate(45deg); }
+details.section > summary h2 { margin: 0; font-size: 1.5rem; }
+details.section > summary:hover h2 { color: var(--accent); }
+.hint { margin-left: auto; color: var(--muted); font-size: .82rem; }
+.sectionbody { padding: 0 0 2rem; }
+.region { overflow-x: auto; margin: .75rem 0 1rem; border: 1px solid var(--rule); scrollbar-color: var(--rule) transparent; }
+table { border-collapse: collapse; width: 100%; min-width: 40rem; font-size: .95rem; line-height: 1.55; font-variant-numeric: tabular-nums; }
+caption { text-align: left; padding: .75rem .85rem; font-size: .9rem; color: var(--muted); }
 caption.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; padding: 0; }
 th, td { text-align: left; vertical-align: top; padding: .7rem .85rem; border-top: 1px solid var(--rule); }
-thead th { background: var(--panel); font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; white-space: nowrap; }
+thead th { background: var(--panel); font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; white-space: nowrap; vertical-align: bottom; }
+thead .sub { display: block; font-size: .78rem; letter-spacing: 0; text-transform: none; color: var(--muted); font-weight: 400; }
 tbody th { font-weight: 500; font-family: inherit; min-width: 11rem; }
-tbody tr:nth-child(even) th, tbody tr:nth-child(even) td { background: var(--panel); }
-td.val { overflow-wrap: anywhere; min-width: 7rem; font-size: .95rem; }
-.unit { display: block; font-size: .8rem; color: var(--muted); overflow-wrap: normal; }
+table:not(.live) tbody tr:nth-child(even) > *, table.live tbody tr.alt > * { background: var(--panel); }
+tbody tr:target > * { background: color-mix(in srgb, var(--accent) 18%, var(--bg)) !important; }
+td.val { overflow-wrap: break-word; min-width: 7rem; font-size: 1rem; }
+.unit { display: block; font-size: .82rem; color: var(--muted); overflow-wrap: normal; }
+.nosource { color: var(--muted); }
 .numbers { min-width: 58rem; }
 .numbers tbody th { min-width: 13rem; width: 20%; }
-.numbers td:nth-child(4) { min-width: 11rem; width: 18%; color: var(--muted); }
+.numbers td:nth-child(4) { min-width: 11rem; width: 18%; }
 .numbers td:nth-child(5) { min-width: 22rem; width: 42%; }
-td.count { text-align: right; font-variant-numeric: tabular-nums; }
+.allnumbers { min-width: 52rem; }
+.allnumbers tbody th { min-width: 14rem; width: 28%; }
+.allnumbers td:nth-child(2) { min-width: 10rem; }
+td.count { text-align: right; }
+.counts thead th:not(:first-child) { text-align: right; }
+.counts tr[data-fixed] > * { border-top: 2px solid var(--rule); font-weight: 600; }
 .uses { min-width: 34rem; }
-details { margin: .5rem 0 1rem; }
-summary { cursor: pointer; padding: .45rem 0; font-family: "DM Mono", ui-monospace, Consolas, monospace; font-size: .85rem; color: var(--accent); }
-summary:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
-.docs { font-size: .9rem; gap: .1rem 1rem; }
+button.sort { all: unset; cursor: pointer; display: inline-flex; align-items: center; gap: .45rem; text-align: left; }
+button.sort:hover { color: var(--accent); }
+button.sort:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+.arrow { flex: none; width: 0; height: 0; border-left: .3rem solid transparent; border-right: .3rem solid transparent; border-top: .38rem solid currentColor; opacity: .35; }
+th[aria-sort="ascending"] .arrow { opacity: 1; transform: rotate(180deg); color: var(--accent); }
+th[aria-sort="descending"] .arrow { opacity: 1; color: var(--accent); }
+.tools { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem 1.5rem; margin: 1rem 0 .5rem; font-size: .9rem; }
+.find { display: flex; align-items: center; gap: .6rem; }
+.find span, .chipslabel { font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.find input { font: inherit; font-size: 1rem; color: var(--text); background: var(--bg); border: 1px solid var(--rule); border-radius: 4px; padding: .45rem .65rem; width: 18rem; max-width: 100%; caret-color: var(--accent); }
+.find input::placeholder { color: var(--muted); opacity: 1; }
+.find input:focus-visible { border-color: var(--accent); }
+.chips { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem; }
+.chip { font-size: .85rem; background: transparent; color: var(--text); border: 1px solid var(--rule); border-radius: 999px; padding: .3rem .75rem; min-height: 2.25rem; cursor: pointer; }
+.chip:hover:not(:disabled) { border-color: var(--accent); }
+.chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+.chip:disabled { opacity: .45; cursor: default; }
+.reset { font: inherit; background: none; border: 0; padding: .3rem 0; color: var(--accent); text-decoration: underline; text-underline-offset: .2em; cursor: pointer; }
+.status { flex-basis: 100%; margin: 0; color: var(--muted); font-size: .88rem; }
+.empty { margin: 0 0 1rem; padding: 1rem; border: 1px dashed var(--rule); color: var(--muted); }
+details.uses { margin: .5rem 0 1rem; }
+details.uses > summary { cursor: pointer; padding: .45rem 0; font-size: .85rem; color: var(--accent); }
 .cited { margin: .25rem 0 .5rem; color: var(--muted); }
-.grade { display: inline-block; border: 2px solid currentColor; border-radius: 4px; min-width: 1.6rem; text-align: center; padding: 0 .3rem; font-weight: 600; margin-right: .4rem; }
+.grade { display: inline-block; border: 2px solid currentColor; border-radius: 4px; min-width: 1.7rem; text-align: center; padding: 0 .3rem; font-weight: 600; line-height: 1.45; margin-right: .45rem; }
+.grade.g-a, .grade.g-b { background: var(--text); border-color: var(--text); color: var(--bg); }
+.grade.g-e { border-width: 1.5px; border-style: dashed; color: var(--muted); }
 .gradeitem { white-space: nowrap; }
 .stamp { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--rule); font-size: .8rem; color: var(--muted); }
-.toc { list-style: none; margin: 0 0 1rem; padding: 0; display: flex; flex-wrap: wrap; gap: .25rem 1.25rem; }
-.toc li { margin: 0; }
-.toc a { display: inline-block; padding: .3rem 0; }
 dl.keys dt { font-weight: 600; margin-top: 1rem; }
-dl.keys dd { margin: .25rem 0 0; max-width: 46rem; }
-@media (max-width: 40rem) { body { padding: 0 1rem 3rem; } th, td { padding: .6rem; } .numbers { min-width: 46rem; } .numbers tbody th { min-width: 8rem; width: auto; } .numbers td.val { min-width: 6.5rem; } .numbers td:nth-child(3) { min-width: 5.5rem; } .gradeitem { white-space: normal; } .numbers .grade { display: block; width: max-content; margin: 0 0 .2rem; } }
-@media (min-width: 40rem) { .numbers tbody th { position: sticky; left: 0; z-index: 1; background: var(--bg); } .numbers tbody tr:nth-child(even) th { background: var(--panel); } }
-@media print { .skip { display: none; } }
+dl.keys dd { margin: .25rem 0 0; }
+.pager { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; margin: 3rem 0 0; padding: 0; list-style: none; }
+.pager li { margin: 0; flex: 1 1 16rem; max-width: 28rem; }
+.pager li.next { margin-left: auto; text-align: right; }
+.pager a { display: block; padding: .8rem 1rem; border: 1px solid var(--rule); text-decoration: none; }
+.pager a:hover { border-color: var(--accent); }
+.pager .dir { display: block; font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+@media (max-width: 40rem) {
+  body { padding: 0 1rem 3rem; font-size: 1rem; }
+  th, td { padding: .6rem; }
+  .hint { margin-left: 1.4rem; flex-basis: 100%; }
+  .find { flex-basis: 100%; }
+  .find input { flex: 1; width: auto; }
+  .chip { min-height: 2.75rem; min-width: 2.75rem; }
+  .numbers { min-width: 46rem; } .numbers tbody th { min-width: 8rem; width: auto; } .numbers td.val { min-width: 6.5rem; } .numbers td:nth-child(3) { min-width: 5.5rem; }
+  .allnumbers { min-width: 40rem; } .allnumbers tbody th { min-width: 9rem; }
+  .numbers .gradeitem, .allnumbers .gradeitem { white-space: normal; } .numbers .grade, .allnumbers .grade { display: block; width: max-content; margin: 0 0 .2rem; }
+}
+@media (min-width: 40rem) {
+  .numbers tbody th, .allnumbers tbody th { position: sticky; left: 0; z-index: 1; background: var(--bg); }
+}
+@media (prefers-reduced-motion: reduce) { details.section > summary::before { transition: none; } }
+@media print { .skip, .tools, .openall, .empty { display: none; } details.section > summary::before { display: none; } }
 </style>
 </head>
 <body>
@@ -79,49 +147,53 @@ dl.keys dd { margin: .25rem 0 0; max-width: 46rem; }
 <p class="brand"><a href="https://coldweld.dev/">Coldweld</a> / The Infinite Diaspora / Reference shelf</p>
 <nav aria-label="Reference shelf"><ul>
 <li><a href="index.html">Mechanics</a></li>
+<li><a href="numbers.html">All numbers</a></li>
 <li><a href="grades.html">Grades</a></li>
 <li><a href="sources.html">Sources</a></li>
 </ul></nav>
 </header>
 <main id="main">
 <h1>Hull classes, sizes and slots</h1>
-<ul class="toc">
-<li><a href="#brief">In brief</a></li>
-<li><a href="#does">What the game does</a></li>
-<li><a href="#numbers">The numbers</a></li>
-<li><a href="#why">Why: the real physics or procedure</a></li>
-<li><a href="#departs">Where the game departs from reality</a></li>
-<li><a href="#silent">Where the sources are silent</a></li>
-<li><a href="#sources">Sources</a></li>
-</ul>
-<h2 id="brief">In brief</h2>
 <p class="lead">A hull class is the size band of a hull, light, medium or heavy craft, and it sets the reactor, the heat capacity, the reactor armor slot and the Safeguards rules for the hull.</p>
-<h2 id="does">What the game does</h2>
-<h2 id="numbers">The numbers</h2>
-<p>10 numbers, read from the game code. 10 grade E.</p>
+<div class="glance"><p><strong>10 numbers</strong>, 0 with an outside source</p><ul aria-label="Numbers by grade"><li><span class="grade g-a">A</span>0 <span class="sr">numbers at grade A</span></li><li><span class="grade g-b">B</span>0 <span class="sr">numbers at grade B</span></li><li><span class="grade g-c">C</span>0 <span class="sr">numbers at grade C</span></li><li><span class="grade g-d">D</span>0 <span class="sr">numbers at grade D</span></li><li><span class="grade g-e">E</span>10 <span class="sr">numbers at grade E</span></li></ul></div>
+<div class="toolbar" data-openall></div>
+<details class="section" id="does">
+<summary><h2>What the game does</h2></summary>
+<div class="sectionbody">
+
+</div>
+</details>
+<details class="section" id="numbers">
+<summary><h2>The numbers</h2><span class="hint">10 numbers: 10 E</span></summary>
+<div class="sectionbody">
+<p>Each value is read from the game code. Sort by any column heading, or filter by grade or by a word.</p>
 <div class="region" role="region" tabindex="0" aria-label="Numbers the game runs for hull classes, sizes and slots">
-<table class="numbers">
+<table class="numbers" data-sort="1" data-filter="text grade" data-noun="number numbers" data-placeholder="Quantity, source or word">
 <caption>Numbers the game runs for hull classes, sizes and slots</caption>
 <thead><tr>
-<th scope="col">Quantity</th>
-<th scope="col">Value</th>
-<th scope="col">Grade</th>
-<th scope="col">Source</th>
-<th scope="col">Basis</th>
+<th scope="col" data-type="text">Quantity</th>
+<th scope="col" data-type="num">Value</th>
+<th scope="col" data-type="text">Grade</th>
+<th scope="col" data-type="text">Source</th>
+<th scope="col">Why this value</th>
 </tr></thead>
 <tbody>
-<tr id="n-1"><th scope="row">The size class of each hull model</th><td class="val">Lyrid LIGHT CRAFT, Wayland LIGHT CRAFT, Trochilus LIGHT CRAFT, Adriatic LIGHT CRAFT, Apis LIGHT CRAFT, Ilmarinen LIGHT CRAFT, Gyges LIGHT CRAFT, Perseid LIGHT CRAFT, Tyto MEDIUM CRAFT, Fringilla MEDIUM CRAFT, Aegean MEDIUM CRAFT, Corinth MEDIUM CRAFT, Niagara MEDIUM CRAFT, Locusta MEDIUM CRAFT, Leonid MEDIUM CRAFT, San Andreas MEDIUM CRAFT, Malus MEDIUM CRAFT, Montu MEDIUM CRAFT, Tembo MEDIUM CRAFT, Gibraltar MEDIUM CRAFT, Anatolian MEDIUM CRAFT, Szabo MEDIUM CRAFT, Kiel MEDIUM CRAFT, Malacca MEDIUM CRAFT, Fraxinus MEDIUM CRAFT, Tyr MEDIUM CRAFT, Bosporus HEAVY CRAFT, Panama HEAVY CRAFT, Dardanelles HEAVY CRAFT, Suez HEAVY CRAFT, Iguazu HEAVY CRAFT, Brennan HEAVY CRAFT, Quercus HEAVY CRAFT, Victoria HEAVY CRAFT, Nergal HEAVY CRAFT, Ginkgo HEAVY CRAFT, Kaieteur HEAVY CRAFT, Ivanova HEAVY CRAFT, Angel HEAVY CRAFT, Kerrigan HEAVY CRAFT, Sequoia HEAVY CRAFT, Ares HEAVY CRAFT, Mangala HEAVY CRAFT <span class="unit">size class by model</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Authored per model, because a save carries the model, while price and role read back as None. The classes are the game's own. The shelf pages hold no size bands for craft.</td></tr>
-<tr id="n-2"><th scope="row">Most hull points of a light craft, for a hull nobody authored</th><td class="val">120 <span class="unit">hull points</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>Design notes: hullclass, The rule</td><td>The old threshold the table was generated from, kept as the fallback for a hand-built stub or a new model.</td></tr>
-<tr id="n-3"><th scope="row">Most hull points of a medium craft, for a hull nobody authored</th><td class="val">250 <span class="unit">hull points</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>Design notes: hullclass, The rule</td><td>The old threshold the table was generated from, kept as the fallback for a hand-built stub or a new model.</td></tr>
-<tr id="n-4"><th scope="row">Sleek hull slopes by face</th><td class="val">FORE 30, PORT 10, STARBOARD 10, UPPER 10, LOWER 10, AFT 10 <span class="unit">degrees</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/spacewardefense.php">Atomic Rockets, spacewardefense</a>, Section 10: General Armor Tactics, sloped armor</td><td>Chosen: a sleek hull is wedged with the steepest slope at the bow. The mirror advises long, thin nosecones for warships and gives no angle for each face. The sources are silent on this figure.</td></tr>
-<tr id="n-5"><th scope="row">Square hull slopes by face</th><td class="val">FORE 0, PORT 0, STARBOARD 0, UPPER 0, LOWER 0, AFT 0 <span class="unit">degrees</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/spacewardefense.php">Atomic Rockets, spacewardefense</a>, Section 10: General Armor Tactics, sloped armor</td><td>Zero slope on every face: a flat-faced hull. A sloped plate reads thicker by the secant of its angle (mirror, General Armor Tactics), and a slope of zero adds nothing.</td></tr>
-<tr id="n-6"><th scope="row">Reactor armor slot size by size class</th><td class="val">LIGHT CRAFT light, MEDIUM CRAFT standard, HEAVY CRAFT heavy <span class="unit">slot size by class</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Every hull carries one reactor armor slot, sized by its class. The plate ratings (35, 80 and 115) are authored.</td></tr>
-<tr id="n-7"><th scope="row">Hull roles that are built with reactor armor fitted</th><td class="val">frozenset({&#x27;DRONE CARRIER&#x27;, &#x27;DESTROYER&#x27;, &#x27;TROOP TRANSPORT&#x27;, &#x27;CARRIER&#x27;, &#x27;COMBAT&#x27;, &#x27;FLEET CARRIER&#x27;, &#x27;CRUISER&#x27;}) <span class="unit">hull roles</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>A navy or pirate warship comes with the plate. A yard hull comes bare, as its guns do.</td></tr>
-<tr id="n-8"><th scope="row">Service years behind a hull before the captain</th><td class="val">200 <span class="unit">years</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>Design notes: setting-canon, Timeline, 2076 to 2276</td><td>No captain buys a new hull, because a shipbuilding plant's output goes to whoever needs tonnage that does not yet exist. The span is the two centuries of shipbuilding iteration that canon gives a hull.</td></tr>
-<tr id="n-9"><th scope="row">The year the game begins</th><td class="val">2,500 <span class="unit">year</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>Design notes: setting-canon, Timeline, 2276 to 2500</td><td>Canon: the game begins on 1 January 2500, after 224 years in which the plants built the same drawing.</td></tr>
-<tr id="n-10"><th scope="row">Cargo the locker holds</th><td class="val">5 <span class="unit">tonnes</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The locker is a room ashore with a bed, a shelf and a kitchenette, and not a hull. Chosen so that a captain who sells up keeps an object that holds some cargo and cannot travel.</td></tr>
+<tr id="n-1" data-grade="E"><th scope="row">The size class of each hull model</th><td class="val">Lyrid LIGHT CRAFT, Wayland LIGHT CRAFT, Trochilus LIGHT CRAFT, Adriatic LIGHT CRAFT, Apis LIGHT CRAFT, Ilmarinen LIGHT CRAFT, Gyges LIGHT CRAFT, Perseid LIGHT CRAFT, Tyto MEDIUM CRAFT, Fringilla MEDIUM CRAFT, Aegean MEDIUM CRAFT, Corinth MEDIUM CRAFT, Niagara MEDIUM CRAFT, Locusta MEDIUM CRAFT, Leonid MEDIUM CRAFT, San Andreas MEDIUM CRAFT, Malus MEDIUM CRAFT, Montu MEDIUM CRAFT, Tembo MEDIUM CRAFT, Gibraltar MEDIUM CRAFT, Anatolian MEDIUM CRAFT, Szabo MEDIUM CRAFT, Kiel MEDIUM CRAFT, Malacca MEDIUM CRAFT, Fraxinus MEDIUM CRAFT, Tyr MEDIUM CRAFT, Bosporus HEAVY CRAFT, Panama HEAVY CRAFT, Dardanelles HEAVY CRAFT, Suez HEAVY CRAFT, Iguazu HEAVY CRAFT, Brennan HEAVY CRAFT, Quercus HEAVY CRAFT, Victoria HEAVY CRAFT, Nergal HEAVY CRAFT, Ginkgo HEAVY CRAFT, Kaieteur HEAVY CRAFT, Ivanova HEAVY CRAFT, Angel HEAVY CRAFT, Kerrigan HEAVY CRAFT, Sequoia HEAVY CRAFT, Ares HEAVY CRAFT, Mangala HEAVY CRAFT <span class="unit">size class by model</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Authored per model, because a save carries the model, while price and role read back as None. The classes are the game's own. The shelf pages hold no size bands for craft.</td></tr>
+<tr id="n-2" data-grade="E"><th scope="row">Most hull points of a light craft, for a hull nobody authored</th><td class="val" data-key="120.0">120 <span class="unit">hull points</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td>Design notes: hullclass, The rule</td><td>The old threshold the table was generated from, kept as the fallback for a hand-built stub or a new model.</td></tr>
+<tr id="n-3" data-grade="E"><th scope="row">Most hull points of a medium craft, for a hull nobody authored</th><td class="val" data-key="250.0">250 <span class="unit">hull points</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td>Design notes: hullclass, The rule</td><td>The old threshold the table was generated from, kept as the fallback for a hand-built stub or a new model.</td></tr>
+<tr id="n-4" data-grade="E"><th scope="row">Sleek hull slopes by face</th><td class="val" data-key="30.0">FORE 30, PORT 10, STARBOARD 10, UPPER 10, LOWER 10, AFT 10 <span class="unit">degrees</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/spacewardefense.php">Atomic Rockets, spacewardefense</a>, Section 10: General Armor Tactics, sloped armor</td><td>Chosen: a sleek hull is wedged with the steepest slope at the bow. The mirror advises long, thin nosecones for warships and gives no angle for each face. The sources are silent on this figure.</td></tr>
+<tr id="n-5" data-grade="E"><th scope="row">Square hull slopes by face</th><td class="val" data-key="0.0">FORE 0, PORT 0, STARBOARD 0, UPPER 0, LOWER 0, AFT 0 <span class="unit">degrees</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/spacewardefense.php">Atomic Rockets, spacewardefense</a>, Section 10: General Armor Tactics, sloped armor</td><td>Zero slope on every face: a flat-faced hull. A sloped plate reads thicker by the secant of its angle (mirror, General Armor Tactics), and a slope of zero adds nothing.</td></tr>
+<tr id="n-6" data-grade="E"><th scope="row">Reactor armor slot size by size class</th><td class="val">LIGHT CRAFT light, MEDIUM CRAFT standard, HEAVY CRAFT heavy <span class="unit">slot size by class</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Every hull carries one reactor armor slot, sized by its class. The plate ratings (35, 80 and 115) are authored.</td></tr>
+<tr id="n-7" data-grade="E"><th scope="row">Hull roles that are built with reactor armor fitted</th><td class="val">frozenset({&#x27;COMBAT&#x27;, &#x27;CRUISER&#x27;, &#x27;CARRIER&#x27;, &#x27;DESTROYER&#x27;, &#x27;FLEET CARRIER&#x27;, &#x27;DRONE CARRIER&#x27;, &#x27;TROOP TRANSPORT&#x27;}) <span class="unit">hull roles</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>A navy or pirate warship comes with the plate. A yard hull comes bare, as its guns do.</td></tr>
+<tr id="n-8" data-grade="E"><th scope="row">Service years behind a hull before the captain</th><td class="val" data-key="200.0">200 <span class="unit">years</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td>Design notes: setting-canon, Timeline, 2076 to 2276</td><td>No captain buys a new hull, because a shipbuilding plant's output goes to whoever needs tonnage that does not yet exist. The span is the two centuries of shipbuilding iteration that canon gives a hull.</td></tr>
+<tr id="n-9" data-grade="E"><th scope="row">The year the game begins</th><td class="val" data-key="2500.0">2,500 <span class="unit">year</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td>Design notes: setting-canon, Timeline, 2276 to 2500</td><td>Canon: the game begins on 1 January 2500, after 224 years in which the plants built the same drawing.</td></tr>
+<tr id="n-10" data-grade="E"><th scope="row">Cargo the locker holds</th><td class="val" data-key="5.0">5 <span class="unit">tonnes</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>The locker is a room ashore with a bed, a shelf and a kitchenette, and not a hull. Chosen so that a captain who sells up keeps an object that holds some cargo and cannot travel.</td></tr>
 </tbody></table></div>
-<h2 id="why">Why: the real physics or procedure</h2>
+</div>
+</details>
+<details class="section" id="why">
+<summary><h2>Why: the real physics or procedure</h2><span class="hint">5 points</span></summary>
+<div class="sectionbody">
 <ul>
 <li>A hull's points say how much shooting it survives, and its class says what it is.</li>
 <li>The class sets reactor output, capacitor size, heat capacity, thermal signature, to-hit and the Safeguards license.</li>
@@ -129,25 +201,237 @@ dl.keys dd { margin: .25rem 0 0; max-width: 46rem; }
 <li>Every hull carries one reactor armor slot, sized by its class.</li>
 <li>A sloped plate reads thicker by the secant of its angle, so a hull sloped on a face stops more there.</li>
 </ul>
-<h2 id="departs">Where the game departs from reality</h2>
+</div>
+</details>
+<details class="section" id="departs">
+<summary><h2>Where the game departs from reality</h2><span class="hint">2 points</span></summary>
+<div class="sectionbody">
 <ul>
 <li>The thresholds of 120 and 250 hull points are the fallback only, for a hull nobody authored.</li>
 <li>The locker is a Ship object with no fuel capacity, so every body reads out of range.</li>
 </ul>
-<h2 id="silent">Where the sources are silent</h2>
+</div>
+</details>
+<details class="section" id="silent">
+<summary><h2>Where the sources are silent</h2><span class="hint">1 point</span></summary>
+<div class="sectionbody">
 <ul>
 <li>The shelf and mirror pages read for this page hold no size bands for craft, so the three classes and every threshold are authored.</li>
 </ul>
-<h2 id="sources">Sources</h2>
+</div>
+</details>
+<details class="section" id="sources">
+<summary><h2>Sources</h2><span class="hint">2 documents</span></summary>
+<div class="sectionbody">
 <ul>
 <li>Design notes: hullclass, Why one number was carrying two facts: The game's own record: class used to be read off hull points with two thresholds, and the split made class independent of points. (<a href="sources.html#doc-docs-notes-hullclass-md">all uses</a>)</li>
 <li>Design notes: setting-canon, Timeline: The shipbuilding plants have built the same drawing since 2276, and the game begins on 1 January 2500. (<a href="sources.html#doc-docs-notes-setting-canon-md">all uses</a>)</li>
 </ul>
+</div>
+</details>
+<nav aria-label="Other mechanics"><ul class="pager"><li><a href="production-plant-condition.html" rel="prev"><span class="dir">Previous</span>Production plant condition</a></li><li class="next"><a href="ship-vitals-and-fight-penalties.html" rel="next"><span class="dir">Next</span>Ship vitals and fight penalties</a></li></ul></nav>
 </main>
 <footer class="stamp">
-<p>Read from game commit f6b8d18d (committed 2026-10-18). Pages written 2026-10-18.
+<p>Read from game commit 24e4f710 (committed 2026-10-18). Pages written 2026-10-18.
 The explanations are stand-in text and may change.</p>
 </footer>
 </div>
+<script>
+(function () {
+  "use strict";
+  var doc = document;
+  function each(list, fn) { Array.prototype.forEach.call(list, fn); }
+  function make(tag, cls, text) {
+    var el = doc.createElement(tag);
+    if (cls) el.className = cls;
+    if (text) el.textContent = text;
+    return el;
+  }
+  function reveal(el) {
+    for (var node = el; node; node = node.parentElement) {
+      if (node.tagName === "DETAILS") node.open = true;
+    }
+  }
+  function target(hash) {
+    try { return doc.getElementById(decodeURIComponent(hash.slice(1))); } catch (e) { return null; }
+  }
+  function followhash() {
+    var el = location.hash && target(location.hash);
+    if (el) { reveal(el); el.scrollIntoView(); }
+  }
+  doc.addEventListener("click", function (event) {
+    var link = event.target.closest && event.target.closest('a[href^="#"]');
+    var el = link && target(link.getAttribute("href"));
+    if (el) reveal(el);
+  });
+  window.addEventListener("hashchange", followhash);
+  window.addEventListener("beforeprint", function () { each(doc.querySelectorAll("details"), function (d) { d.open = true; }); });
+
+  var sections = doc.querySelectorAll("details.section");
+  var holder = doc.querySelector("[data-openall]");
+  if (holder && sections.length > 1) {
+    var toggle = make("button", "openall");
+    toggle.type = "button";
+    var allopen = function () { return Array.prototype.every.call(sections, function (d) { return d.open; }); };
+    var label = function () { toggle.textContent = allopen() ? "Close all sections" : "Open all sections"; };
+    toggle.addEventListener("click", function () {
+      var open = !allopen();
+      each(sections, function (d) { d.open = open; });
+      label();
+    });
+    each(sections, function (d) { d.addEventListener("toggle", label); });
+    label();
+    holder.appendChild(toggle);
+  }
+
+  var params = new URLSearchParams(location.search);
+  each(doc.querySelectorAll("table[data-sort]"), setup);
+  followhash();
+
+  function keyof(row, col) {
+    var cell = row.cells[col];
+    if (!cell) return "";
+    var key = cell.getAttribute("data-key");
+    return key !== null ? key : cell.textContent.trim();
+  }
+
+  function setup(table) {
+    var body = table.tBodies[0], region = table.parentElement;
+    var rows = [], fixed = [], heads = table.tHead.rows[0].cells, current = { col: -1, dir: 1 };
+    each(body.rows, function (row, i) {
+      row.setAttribute("data-order", i);
+      row.searchtext = row.textContent.toLowerCase();
+      (row.hasAttribute("data-fixed") ? fixed : rows).push(row);
+    });
+    table.classList.add("live");
+
+    function paint() {
+      var shown = 0;
+      rows.concat(fixed).forEach(function (row) {
+        if (!row.hidden) { row.classList.toggle("alt", shown % 2 === 1); shown += 1; }
+      });
+      return rows.filter(function (row) { return !row.hidden; }).length;
+    }
+    function order(col, dir, type) {
+      var sorted = rows.slice().sort(function (a, b) {
+        var x = col < 0 ? 0 : keyof(a, col), y = col < 0 ? 0 : keyof(b, col), result = 0;
+        if (col >= 0 && type === "num") {
+          var p = parseFloat(x), q = parseFloat(y);
+          if (isNaN(p) || isNaN(q)) return (isNaN(p) - isNaN(q)) || a.getAttribute("data-order") - b.getAttribute("data-order");
+          result = (p - q) * dir;
+        } else if (col >= 0) {
+          result = String(x).localeCompare(String(y), undefined, { numeric: true, sensitivity: "base" }) * dir;
+        }
+        return result || a.getAttribute("data-order") - b.getAttribute("data-order");
+      });
+      sorted.concat(fixed).forEach(function (row) { body.appendChild(row); });
+      rows = sorted;
+      current = { col: col, dir: dir };
+      each(heads, function (th, i) {
+        if (th.hasAttribute("aria-sort")) th.setAttribute("aria-sort", i === col ? (dir > 0 ? "ascending" : "descending") : "none");
+      });
+      paint();
+    }
+    each(heads, function (th, col) {
+      var type = th.getAttribute("data-type");
+      if (!type) return;
+      var button = make("button", "sort");
+      button.type = "button";
+      while (th.firstChild) button.appendChild(th.firstChild);
+      var arrow = make("span", "arrow");
+      arrow.setAttribute("aria-hidden", "true");
+      button.appendChild(arrow);
+      th.appendChild(button);
+      th.setAttribute("aria-sort", "none");
+      button.addEventListener("click", function () { order(col, current.col === col ? -current.dir : 1, type); });
+    });
+
+    var modes = (table.getAttribute("data-filter") || "").split(" ").filter(Boolean);
+    if (!modes.length) { paint(); return; }
+    var nouns = (table.getAttribute("data-noun") || "row rows").split(" ");
+    var noun = function (n) { return n === 1 ? nouns[0] : nouns[1]; };
+    var tools = make("div", "tools");
+    tools.setAttribute("role", "group");
+    tools.setAttribute("aria-label", "Sort and filter the table");
+    var find = make("label", "find");
+    var input = make("input");
+    input.type = "search";
+    input.autocomplete = "off";
+    input.spellcheck = false;
+    input.placeholder = table.getAttribute("data-placeholder") || "Type a word";
+    find.appendChild(make("span", "", "Find"));
+    find.appendChild(input);
+    tools.appendChild(find);
+    var picked = {}, chips = [];
+    if (modes.indexOf("grade") >= 0) {
+      var group = make("div", "chips");
+      group.setAttribute("role", "group");
+      group.setAttribute("aria-label", "Show only these grades");
+      group.appendChild(make("span", "chipslabel", "Grade"));
+      "ABCDE".split("").forEach(function (letter) {
+        var count = rows.filter(function (row) { return row.getAttribute("data-grade") === letter; }).length;
+        var chip = make("button", "chip", letter + " " + count);
+        chip.type = "button";
+        chip.setAttribute("aria-pressed", "false");
+        chip.setAttribute("aria-label", "Grade " + letter + ", " + count + " " + noun(count));
+        chip.disabled = !count;
+        chip.addEventListener("click", function () {
+          picked[letter] = !picked[letter];
+          chip.setAttribute("aria-pressed", String(picked[letter]));
+          apply();
+        });
+        chip.letter = letter;
+        group.appendChild(chip);
+        chips.push(chip);
+      });
+      tools.appendChild(group);
+    }
+    var reset = make("button", "reset", "Clear the filter and sort");
+    reset.type = "button";
+    var status = make("p", "status");
+    status.setAttribute("aria-live", "polite");
+    tools.appendChild(reset);
+    tools.appendChild(status);
+    region.parentNode.insertBefore(tools, region);
+    var empty = make("p", "empty");
+    region.parentNode.insertBefore(empty, region.nextSibling);
+
+    function apply() {
+      var words = input.value.toLowerCase().split(/\s+/).filter(Boolean);
+      var grades = Object.keys(picked).filter(function (g) { return picked[g]; });
+      rows.forEach(function (row) {
+        var ok = words.every(function (w) { return row.searchtext.indexOf(w) >= 0; });
+        row.hidden = !(ok && (!grades.length || grades.indexOf(row.getAttribute("data-grade")) >= 0));
+      });
+      var active = words.length > 0 || grades.length > 0;
+      fixed.forEach(function (row) { row.hidden = active; });
+      var shown = paint();
+      status.textContent = active ? "Showing " + shown + " of " + rows.length + " " + noun(rows.length) + "." : rows.length + " " + noun(rows.length) + ". Select a column heading to sort.";
+      reset.hidden = !active && current.col < 0;
+      empty.hidden = shown > 0;
+      empty.textContent = "No " + nouns[0] + " matches the filter. Clear the filter to see all " + rows.length + ".";
+    }
+    input.addEventListener("input", apply);
+    reset.addEventListener("click", function () {
+      input.value = "";
+      picked = {};
+      chips.forEach(function (chip) { chip.setAttribute("aria-pressed", "false"); });
+      order(-1, 1, "");
+      apply();
+      input.focus();
+    });
+    each(heads, function (th) {
+      var button = th.querySelector("button.sort");
+      if (button) button.addEventListener("click", function () { reset.hidden = false; });
+    });
+    var want = (params.get("grade") || "").toUpperCase();
+    chips.forEach(function (chip) {
+      if (want.indexOf(chip.letter) >= 0 && !chip.disabled) { picked[chip.letter] = true; chip.setAttribute("aria-pressed", "true"); }
+    });
+    if (params.get("q")) input.value = params.get("q");
+    apply();
+  }
+})();
+</script>
 </body>
 </html>

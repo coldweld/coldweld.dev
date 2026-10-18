@@ -18,58 +18,126 @@
   :root { --bg: #0e0903; --panel: #16110a; --rule: #4a4130; --text: #d6cbb6; --muted: #a89f88; --accent: #ffb040; }
 }
 *, *::before, *::after { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; }
-body { margin: 0; background: var(--bg); color: var(--text); font: 1rem/1.65 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; padding: 0 1rem 4rem; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: 1rem; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 1.0625rem/1.65 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; padding: 0 1rem 4rem; }
+::selection { background: var(--accent); color: var(--bg); }
 .skip { position: absolute; left: 1rem; top: -4rem; background: var(--accent); color: var(--bg); padding: .5rem 1rem; z-index: 10; }
 .skip:focus { top: .5rem; }
-.wrap { max-width: 64rem; margin: 0 auto; }
-.mono, h1, h2, h3, caption, th, nav, .brand, .stamp, .grade, .val { font-family: "DM Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
-a { color: var(--accent); text-underline-offset: .2em; }
-a:focus-visible, .region:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.wrap { max-width: 72rem; margin: 0 auto; }
+.mono, h1, h2, h3, caption, th, nav, .brand, .stamp, .grade, .val, .hint, .chip, .chipslabel, .find span, .openall, .pager .dir, summary { font-family: "DM Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+a { color: var(--accent); text-underline-offset: .2em; text-decoration-thickness: 1px; }
+a:hover { text-decoration-thickness: 2px; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
 .top { padding: 2rem 0 1rem; border-bottom: 1px solid var(--rule); }
-.brand { margin: 0 0 .75rem; font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.brand { margin: 0 0 .75rem; font-size: .8rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
 nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .25rem 1.5rem; }
-nav a { display: inline-block; padding: .35rem 0; }
-h1 { font-size: clamp(1.4rem, 5vw, 2rem); line-height: 1.25; margin: 2rem 0 1rem; font-weight: 500; }
-h2 { font-size: 1.5rem; margin: 2.5rem 0 .75rem; padding-top: 1.25rem; border-top: 1px solid var(--rule); font-weight: 500; }
-h3 { font-size: 1.15rem; margin: 1.5rem 0 .5rem; font-weight: 500; }
-p, li { max-width: 46rem; }
-li + li { margin-top: .35rem; }
-code { font-family: "DM Mono", ui-monospace, Consolas, monospace; font-size: .92em; overflow-wrap: anywhere; }
-.lead { font-size: 1.1rem; }
-.note { background: var(--panel); border: 1px solid var(--rule); padding: .75rem 1rem; max-width: 46rem; }
-.region { overflow-x: auto; margin: 1rem 0; border: 1px solid var(--rule); }
-table { border-collapse: collapse; width: 100%; min-width: 40rem; font-size: .92rem; line-height: 1.55; }
-caption { text-align: left; padding: .75rem; font-size: .95rem; color: var(--muted); }
+nav a { display: inline-block; padding: .45rem 0; }
+nav a[aria-current] { color: var(--text); text-decoration: none; border-bottom: 2px solid var(--accent); }
+h1 { font-size: clamp(1.6rem, 4.5vw, 2.25rem); line-height: 1.2; margin: 2.25rem 0 1rem; font-weight: 500; letter-spacing: -.01em; text-wrap: balance; }
+h2 { font-size: 1.5rem; line-height: 1.3; margin: 2.5rem 0 .75rem; font-weight: 500; text-wrap: balance; }
+h3 { font-size: 1.2rem; line-height: 1.35; margin: 1.75rem 0 .5rem; font-weight: 500; }
+p, li, dd { max-width: 40rem; }
+li + li { margin-top: .4rem; }
+code { font-family: "DM Mono", ui-monospace, Consolas, monospace; font-size: .9em; overflow-wrap: anywhere; }
+.lead { font-size: 1.15rem; line-height: 1.6; }
+.note { background: var(--panel); border: 1px solid var(--rule); padding: .75rem 1rem; max-width: 40rem; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; padding: 0; margin: -1px; }
+.glance { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem 1.4rem; margin: 1.5rem 0; padding: .85rem 1rem; background: var(--panel); border: 1px solid var(--rule); font-size: .95rem; }
+.glance p { margin: 0; }
+.glance ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .5rem 1.1rem; }
+.glance li { margin: 0; white-space: nowrap; }
+.toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem 1.5rem; margin: 0 0 1.5rem; }
+.toc { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .25rem 1.25rem; }
+.toc li { margin: 0; }
+.toc a { display: inline-block; padding: .35rem 0; }
+.openall { font-size: .85rem; background: transparent; color: var(--accent); border: 1px solid var(--rule); border-radius: 4px; padding: .45rem .8rem; cursor: pointer; }
+.openall:hover { border-color: var(--accent); }
+details.section { border-top: 1px solid var(--rule); }
+details.section:last-of-type { border-bottom: 1px solid var(--rule); }
+details.section > summary { display: flex; align-items: baseline; flex-wrap: wrap; gap: .25rem .9rem; padding: 1.05rem .25rem; cursor: pointer; list-style: none; }
+details.section > summary::-webkit-details-marker { display: none; }
+details.section > summary::before { content: ""; flex: none; align-self: center; width: .5rem; height: .5rem; border-right: 2px solid var(--accent); border-bottom: 2px solid var(--accent); transform: rotate(-45deg); transition: transform .18s ease-out; }
+details.section[open] > summary::before { transform: translateY(-.15rem) rotate(45deg); }
+details.section > summary h2 { margin: 0; font-size: 1.5rem; }
+details.section > summary:hover h2 { color: var(--accent); }
+.hint { margin-left: auto; color: var(--muted); font-size: .82rem; }
+.sectionbody { padding: 0 0 2rem; }
+.region { overflow-x: auto; margin: .75rem 0 1rem; border: 1px solid var(--rule); scrollbar-color: var(--rule) transparent; }
+table { border-collapse: collapse; width: 100%; min-width: 40rem; font-size: .95rem; line-height: 1.55; font-variant-numeric: tabular-nums; }
+caption { text-align: left; padding: .75rem .85rem; font-size: .9rem; color: var(--muted); }
 caption.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; padding: 0; }
 th, td { text-align: left; vertical-align: top; padding: .7rem .85rem; border-top: 1px solid var(--rule); }
-thead th { background: var(--panel); font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; white-space: nowrap; }
+thead th { background: var(--panel); font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; white-space: nowrap; vertical-align: bottom; }
+thead .sub { display: block; font-size: .78rem; letter-spacing: 0; text-transform: none; color: var(--muted); font-weight: 400; }
 tbody th { font-weight: 500; font-family: inherit; min-width: 11rem; }
-tbody tr:nth-child(even) th, tbody tr:nth-child(even) td { background: var(--panel); }
-td.val { overflow-wrap: anywhere; min-width: 7rem; font-size: .95rem; }
-.unit { display: block; font-size: .8rem; color: var(--muted); overflow-wrap: normal; }
+table:not(.live) tbody tr:nth-child(even) > *, table.live tbody tr.alt > * { background: var(--panel); }
+tbody tr:target > * { background: color-mix(in srgb, var(--accent) 18%, var(--bg)) !important; }
+td.val { overflow-wrap: break-word; min-width: 7rem; font-size: 1rem; }
+.unit { display: block; font-size: .82rem; color: var(--muted); overflow-wrap: normal; }
+.nosource { color: var(--muted); }
 .numbers { min-width: 58rem; }
 .numbers tbody th { min-width: 13rem; width: 20%; }
-.numbers td:nth-child(4) { min-width: 11rem; width: 18%; color: var(--muted); }
+.numbers td:nth-child(4) { min-width: 11rem; width: 18%; }
 .numbers td:nth-child(5) { min-width: 22rem; width: 42%; }
-td.count { text-align: right; font-variant-numeric: tabular-nums; }
+.allnumbers { min-width: 52rem; }
+.allnumbers tbody th { min-width: 14rem; width: 28%; }
+.allnumbers td:nth-child(2) { min-width: 10rem; }
+td.count { text-align: right; }
+.counts thead th:not(:first-child) { text-align: right; }
+.counts tr[data-fixed] > * { border-top: 2px solid var(--rule); font-weight: 600; }
 .uses { min-width: 34rem; }
-details { margin: .5rem 0 1rem; }
-summary { cursor: pointer; padding: .45rem 0; font-family: "DM Mono", ui-monospace, Consolas, monospace; font-size: .85rem; color: var(--accent); }
-summary:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
-.docs { font-size: .9rem; gap: .1rem 1rem; }
+button.sort { all: unset; cursor: pointer; display: inline-flex; align-items: center; gap: .45rem; text-align: left; }
+button.sort:hover { color: var(--accent); }
+button.sort:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+.arrow { flex: none; width: 0; height: 0; border-left: .3rem solid transparent; border-right: .3rem solid transparent; border-top: .38rem solid currentColor; opacity: .35; }
+th[aria-sort="ascending"] .arrow { opacity: 1; transform: rotate(180deg); color: var(--accent); }
+th[aria-sort="descending"] .arrow { opacity: 1; color: var(--accent); }
+.tools { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem 1.5rem; margin: 1rem 0 .5rem; font-size: .9rem; }
+.find { display: flex; align-items: center; gap: .6rem; }
+.find span, .chipslabel { font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.find input { font: inherit; font-size: 1rem; color: var(--text); background: var(--bg); border: 1px solid var(--rule); border-radius: 4px; padding: .45rem .65rem; width: 18rem; max-width: 100%; caret-color: var(--accent); }
+.find input::placeholder { color: var(--muted); opacity: 1; }
+.find input:focus-visible { border-color: var(--accent); }
+.chips { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem; }
+.chip { font-size: .85rem; background: transparent; color: var(--text); border: 1px solid var(--rule); border-radius: 999px; padding: .3rem .75rem; min-height: 2.25rem; cursor: pointer; }
+.chip:hover:not(:disabled) { border-color: var(--accent); }
+.chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+.chip:disabled { opacity: .45; cursor: default; }
+.reset { font: inherit; background: none; border: 0; padding: .3rem 0; color: var(--accent); text-decoration: underline; text-underline-offset: .2em; cursor: pointer; }
+.status { flex-basis: 100%; margin: 0; color: var(--muted); font-size: .88rem; }
+.empty { margin: 0 0 1rem; padding: 1rem; border: 1px dashed var(--rule); color: var(--muted); }
+details.uses { margin: .5rem 0 1rem; }
+details.uses > summary { cursor: pointer; padding: .45rem 0; font-size: .85rem; color: var(--accent); }
 .cited { margin: .25rem 0 .5rem; color: var(--muted); }
-.grade { display: inline-block; border: 2px solid currentColor; border-radius: 4px; min-width: 1.6rem; text-align: center; padding: 0 .3rem; font-weight: 600; margin-right: .4rem; }
+.grade { display: inline-block; border: 2px solid currentColor; border-radius: 4px; min-width: 1.7rem; text-align: center; padding: 0 .3rem; font-weight: 600; line-height: 1.45; margin-right: .45rem; }
+.grade.g-a, .grade.g-b { background: var(--text); border-color: var(--text); color: var(--bg); }
+.grade.g-e { border-width: 1.5px; border-style: dashed; color: var(--muted); }
 .gradeitem { white-space: nowrap; }
 .stamp { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--rule); font-size: .8rem; color: var(--muted); }
-.toc { list-style: none; margin: 0 0 1rem; padding: 0; display: flex; flex-wrap: wrap; gap: .25rem 1.25rem; }
-.toc li { margin: 0; }
-.toc a { display: inline-block; padding: .3rem 0; }
 dl.keys dt { font-weight: 600; margin-top: 1rem; }
-dl.keys dd { margin: .25rem 0 0; max-width: 46rem; }
-@media (max-width: 40rem) { body { padding: 0 1rem 3rem; } th, td { padding: .6rem; } .numbers { min-width: 46rem; } .numbers tbody th { min-width: 8rem; width: auto; } .numbers td.val { min-width: 6.5rem; } .numbers td:nth-child(3) { min-width: 5.5rem; } .gradeitem { white-space: normal; } .numbers .grade { display: block; width: max-content; margin: 0 0 .2rem; } }
-@media (min-width: 40rem) { .numbers tbody th { position: sticky; left: 0; z-index: 1; background: var(--bg); } .numbers tbody tr:nth-child(even) th { background: var(--panel); } }
-@media print { .skip { display: none; } }
+dl.keys dd { margin: .25rem 0 0; }
+.pager { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; margin: 3rem 0 0; padding: 0; list-style: none; }
+.pager li { margin: 0; flex: 1 1 16rem; max-width: 28rem; }
+.pager li.next { margin-left: auto; text-align: right; }
+.pager a { display: block; padding: .8rem 1rem; border: 1px solid var(--rule); text-decoration: none; }
+.pager a:hover { border-color: var(--accent); }
+.pager .dir { display: block; font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+@media (max-width: 40rem) {
+  body { padding: 0 1rem 3rem; font-size: 1rem; }
+  th, td { padding: .6rem; }
+  .hint { margin-left: 1.4rem; flex-basis: 100%; }
+  .find { flex-basis: 100%; }
+  .find input { flex: 1; width: auto; }
+  .chip { min-height: 2.75rem; min-width: 2.75rem; }
+  .numbers { min-width: 46rem; } .numbers tbody th { min-width: 8rem; width: auto; } .numbers td.val { min-width: 6.5rem; } .numbers td:nth-child(3) { min-width: 5.5rem; }
+  .allnumbers { min-width: 40rem; } .allnumbers tbody th { min-width: 9rem; }
+  .numbers .gradeitem, .allnumbers .gradeitem { white-space: normal; } .numbers .grade, .allnumbers .grade { display: block; width: max-content; margin: 0 0 .2rem; }
+}
+@media (min-width: 40rem) {
+  .numbers tbody th, .allnumbers tbody th { position: sticky; left: 0; z-index: 1; background: var(--bg); }
+}
+@media (prefers-reduced-motion: reduce) { details.section > summary::before { transition: none; } }
+@media print { .skip, .tools, .openall, .empty { display: none; } details.section > summary::before { display: none; } }
 </style>
 </head>
 <body>
@@ -79,24 +147,19 @@ dl.keys dd { margin: .25rem 0 0; max-width: 46rem; }
 <p class="brand"><a href="https://coldweld.dev/">Coldweld</a> / The Infinite Diaspora / Reference shelf</p>
 <nav aria-label="Reference shelf"><ul>
 <li><a href="index.html">Mechanics</a></li>
+<li><a href="numbers.html">All numbers</a></li>
 <li><a href="grades.html">Grades</a></li>
 <li><a href="sources.html">Sources</a></li>
 </ul></nav>
 </header>
 <main id="main">
 <h1>Hull wear and repair</h1>
-<ul class="toc">
-<li><a href="#brief">In brief</a></li>
-<li><a href="#does">What the game does</a></li>
-<li><a href="#numbers">The numbers</a></li>
-<li><a href="#why">Why: the real physics or procedure</a></li>
-<li><a href="#departs">Where the game departs from reality</a></li>
-<li><a href="#silent">Where the sources are silent</a></li>
-<li><a href="#sources">Sources</a></li>
-</ul>
-<h2 id="brief">In brief</h2>
 <p class="lead">Hull wear is the slow loss of drive performance that comes with use, and repair is the work of renewing the structure that damage has taken.</p>
-<h2 id="does">What the game does</h2>
+<div class="glance"><p><strong>35 numbers</strong>, 5 with an outside source</p><ul aria-label="Numbers by grade"><li><span class="grade g-a">A</span>2 <span class="sr">numbers at grade A</span></li><li><span class="grade g-b">B</span>0 <span class="sr">numbers at grade B</span></li><li><span class="grade g-c">C</span>1 <span class="sr">numbers at grade C</span></li><li><span class="grade g-d">D</span>2 <span class="sr">numbers at grade D</span></li><li><span class="grade g-e">E</span>30 <span class="sr">numbers at grade E</span></li></ul></div>
+<div class="toolbar" data-openall></div>
+<details class="section" id="does">
+<summary><h2>What the game does</h2><span class="hint">3 topics</span></summary>
+<div class="sectionbody">
 <h3>Condition</h3>
 <ul>
 <li>A hull has health, and combat and travel hazards take it down.</li>
@@ -124,56 +187,64 @@ dl.keys dd { margin: .25rem 0 0; max-width: 46rem; }
 <li>Unpaid wear stays with the hull, so a sale pays the yard first.</li>
 <li>CHOOSE THE WORK runs only when you can pay its whole bill. SERVICE pays what you hold.</li>
 </ul>
-<h2 id="numbers">The numbers</h2>
-<p>35 numbers, read from the game code. 2 grade A, 1 grade C, 2 grade D, 30 grade E.</p>
+</div>
+</details>
+<details class="section" id="numbers">
+<summary><h2>The numbers</h2><span class="hint">35 numbers: 2 A, 1 C, 2 D, 30 E</span></summary>
+<div class="sectionbody">
+<p>Each value is read from the game code. Sort by any column heading, or filter by grade or by a word.</p>
 <div class="region" role="region" tabindex="0" aria-label="Numbers the game runs for hull wear and repair">
-<table class="numbers">
+<table class="numbers" data-sort="1" data-filter="text grade" data-noun="number numbers" data-placeholder="Quantity, source or word">
 <caption>Numbers the game runs for hull wear and repair</caption>
 <thead><tr>
-<th scope="col">Quantity</th>
-<th scope="col">Value</th>
-<th scope="col">Grade</th>
-<th scope="col">Source</th>
-<th scope="col">Basis</th>
+<th scope="col" data-type="text">Quantity</th>
+<th scope="col" data-type="num">Value</th>
+<th scope="col" data-type="text">Grade</th>
+<th scope="col" data-type="text">Source</th>
+<th scope="col">Why this value</th>
 </tr></thead>
 <tbody>
-<tr id="n-1"><th scope="row">Share of rated thrust lost per wear step</th><td class="val">0.15 <span class="unit">fraction of thrust</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose how much thrust each step of neglect costs. The mirror and the Navy manual give no wear that grows with use and costs thrust. The sources are silent on this figure.</td></tr>
-<tr id="n-2"><th scope="row">Lowest share of rated thrust a worn drive delivers</th><td class="val">0.55 <span class="unit">fraction of thrust</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose a floor so a neglected hull always still flies. No source gives a worn drive's thrust. The sources are silent on this figure.</td></tr>
-<tr id="n-3"><th scope="row">Maintenance owed per travel day, as a share of hull upkeep value</th><td class="val">0.0016 <span class="unit">fraction of value</span></td><td><span class="gradeitem"><span class="grade">D</span>Analogy</span></td><td><a href="https://www.projectrho.com/public_html/rocket/starshipowner.php">Atomic Rockets, starshipowner</a>, cost of running a cargo starship</td><td>The mirror assumes a cargo starship costs $300,000 a tonne a year to run against $1 million a tonne to buy, about 30 percent a year. The game spreads that over its flown days.</td></tr>
-<tr id="n-4"><th scope="row">Maintenance owed that drops the drive one step, as a share of hull upkeep value</th><td class="val">0.022 <span class="unit">fraction of value</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose how much owed upkeep costs one step of thrust, as a share of hull value, so one rule fits every hull. No source gives it.</td></tr>
-<tr id="n-5"><th scope="row">Share of dry mass that is structure</th><td class="val">0.4 <span class="unit">fraction</span></td><td><span class="gradeitem"><span class="grade">C</span>Derived</span></td><td><a href="https://www.projectrho.com/public_html/rocket/appworkedexample.php">Atomic Rockets, appworkedexample</a>, Structure and Specifications table</td><td>The mirror's worked example gives 50 t of structure in 126 t of dry mass, 50 / 126 = 40 percent. Its other two cases give 41 / 84 = 49 percent and 68 / 168 = 40 percent.</td></tr>
-<tr id="n-6"><th scope="row">Person-hours to renew one tonne of structure</th><td class="val">230 <span class="unit">person-hours</span></td><td><span class="gradeitem"><span class="grade">D</span>Analogy</span></td><td>Design notes: repair</td><td>Butler's repair estimate guide, as the game's repair notes record it, gives 230 person-hours a tonne to renew 12.5 mm steel plate. This pass did not reopen the PDF. The sources are silent on this figure.</td></tr>
-<tr id="n-7"><th scope="row">Hours in one working shift</th><td class="val">8 <span class="unit">hours</span></td><td><span class="gradeitem"><span class="grade">A</span>Primary</span></td><td><a href="https://www.ilo.org/sites/default/files/wcmsp5/groups/public/@ed_norm/@normes/documents/normativeinstrument/wcms_090250.pdf">Maritime Labour Convention, 2006 (ILO)</a>, Guideline B2.2.2, para 1(a)</td><td>The Maritime Labour Convention guideline says normal hours for working out wages should not exceed eight hours a day.</td></tr>
-<tr id="n-8"><th scope="row">Share of a station&#x27;s people who work its yard</th><td class="val">0.1 <span class="unit">fraction</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>coldweld chose the share of a station's people who work its yard. The game notes tie it to a colony ladder, but this pass found no workforce share on that mirror page.</td></tr>
-<tr id="n-9"><th scope="row">Hands that fit around one tonne of structure</th><td class="val">1 <span class="unit">hands per tonne</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose how many hands fit around one tonne of structure. No source gives a yard gang size. The sources are silent on this figure.</td></tr>
-<tr id="n-10"><th scope="row">Crew pace with no training</th><td class="val">0.5 <span class="unit">fraction of standard pace</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose the pace of an untrained crew. No source gives a repair pace. The sources are silent on this figure.</td></tr>
-<tr id="n-11"><th scope="row">Crew pace added per competence point</th><td class="val">0.01 <span class="unit">fraction of standard pace</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose how much a point of competence adds to a crew's pace. No source gives it. The sources are silent on this figure.</td></tr>
-<tr id="n-12"><th scope="row">Pace added per rating point of a machine shop</th><td class="val">0.25 <span class="unit">fraction of pace</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose how much a machine shop speeds the crew for each rating point. No source gives it. The sources are silent on this figure.</td></tr>
-<tr id="n-13"><th scope="row">Rating of the largest machine shop (MS-6)</th><td class="val">6 <span class="unit">rating points</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose a ladder of ratings for the six machine shops, priced by size. No source rates a ship's machine shop.</td></tr>
-<tr id="n-14"><th scope="row">Share of structure that one whole drive part equals</th><td class="val">0.05 <span class="unit">fraction</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose what share of the structure a whole drive part equals. The game notes record that the mirror gives no part mass.</td></tr>
-<tr id="n-15"><th scope="row">Yard price of one hull point, as a share of hull price over its points</th><td class="val">0.1 <span class="unit">fraction</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td><a href="https://media.defense.gov/2014/Feb/21/2002655450/-1/-1/1/140221-N-ZZ182-5359.pdf">US Navy training manual, &quot;Damage Control&quot; (chapter 12)</a>, Where the source is silent</td><td>The game chose a yard price for a hull point, set in days of dock work so it stays defensible. The Navy manual gives no price for any repair. The sources are silent on this figure.</td></tr>
-<tr id="n-16"><th scope="row">Lowest yard price of a hull point</th><td class="val">5 <span class="unit">Cr</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose a flat lowest yard price so no hull point is free to mend. No source gives a yard tariff.</td></tr>
-<tr id="n-17"><th scope="row">Job length above which the yard offers a day&#x27;s work</th><td class="val">1 <span class="unit">days</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose the job length above which the yard offers a day's work, so a long job asks the captain first. It is a pacing choice with no source.</td></tr>
-<tr id="n-18"><th scope="row">Morale each hand loses on a repair day under way</th><td class="val">1 <span class="unit">morale</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose a small morale cost for a hand who does repair work under way. No source gives a morale cost for ship repair.</td></tr>
-<tr id="n-19"><th scope="row">Share of hull price the dealer pays for a hull traded in</th><td class="val">0.45 <span class="unit">fraction</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose what the dealer pays for a hull, set below what the dealer sells a used hull for, so no flip makes money. No source gives a trade-in price.</td></tr>
-<tr id="n-20"><th scope="row">Share of module price the dealer pays on a trade-in</th><td class="val">0.5 <span class="unit">fraction</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose what the dealer pays for a fitted module, below what pulling it yourself pays. No source gives a price.</td></tr>
-<tr id="n-21"><th scope="row">Share of module price paid for a module taken out</th><td class="val">0.75 <span class="unit">fraction</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose a higher price for a module the captain pulls than for one the dealer takes with the hull, to give a reason to strip a hull.</td></tr>
-<tr id="n-22"><th scope="row">Share of hull price a salvage-titled hull fetches</th><td class="val">0.3 <span class="unit">fraction</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>coldweld chose this discount on 2026-09-28 from his own reading that a salvage title sells 20 to 40 percent under a clean one. The game records no source for that range.</td></tr>
-<tr id="n-23"><th scope="row">Condition range of a hulk on a salvage lot</th><td class="val">0.05, 0.25 <span class="unit">fraction of full health</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose the condition of a hulk on the lot, low enough that it cannot fly until rebuilt.</td></tr>
-<tr id="n-24"><th scope="row">Hulks on a salvage lot</th><td class="val">2, 4 <span class="unit">hulks</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose how many hulks a lot holds. It is a content size with no source.</td></tr>
-<tr id="n-25"><th scope="row">Days between salvage lot refreshes</th><td class="val">14 <span class="unit">days</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose how often a salvage lot restocks. It is a pacing choice with no source.</td></tr>
-<tr id="n-26"><th scope="row">Condition at which a hulk can fly</th><td class="val">0.5 <span class="unit">fraction of full health</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td><a href="https://treaties.fco.gov.uk/data/Library2/pdf/1996-TS0093.pdf">International Convention on Salvage, 1989</a>, What the document says</td><td>coldweld chose on 2026-09-28 the condition at which a rebuilt hulk can fly. The Salvage Convention sets a reward and gives no condition for a wreck to fly. The sources are silent on this figure.</td></tr>
-<tr id="n-27"><th scope="row">Hours in one dock gang shift</th><td class="val">8 <span class="unit">hours</span></td><td><span class="gradeitem"><span class="grade">A</span>Primary</span></td><td><a href="https://www.ilo.org/sites/default/files/wcmsp5/groups/public/@ed_norm/@normes/documents/normativeinstrument/wcms_090250.pdf">Maritime Labour Convention, 2006 (ILO)</a>, Guideline B2.2.2, para 1(a)</td><td>The Maritime Labour Convention guideline says normal hours for working out wages should not exceed eight hours a day. The dock shift is that day.</td></tr>
-<tr id="n-28"><th scope="row">Share of new price a used hull at full condition is worth</th><td class="val">0.7 <span class="unit">fraction of new price</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen so that the dealer always sells dearer than it buys back and no flip makes money. No source prices a used hull.</td></tr>
-<tr id="n-29"><th scope="row">Share of new price a decommissioned cruiser or carrier hull is worth</th><td class="val">0.975 <span class="unit">fraction of new price</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen so that the capital tier is priced as a standing commitment and not a hull to flip. No source prices a decommissioned hull.</td></tr>
-<tr id="n-30"><th scope="row">Share of module price paid for a module taken from a decommissioned hull</th><td class="val">0.975 <span class="unit">fraction of module price</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen with the hull factor so that the whole capital tier trades near full value. No source prices a module.</td></tr>
-<tr id="n-31"><th scope="row">Days between refreshes of the used-ship dealer stock</th><td class="val">7 <span class="unit">days</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen to match a weekly board. No source gives a dealer cycle.</td></tr>
-<tr id="n-32"><th scope="row">Used hulls on the dealer forecourt</th><td class="val">4, 6 <span class="unit">hulls (low, high)</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen so that the forecourt has a few hulls and not a catalog. No source gives a lot size.</td></tr>
-<tr id="n-33"><th scope="row">Condition range of a used hull on the forecourt</th><td class="val">0.15, 0.6 <span class="unit">fraction of full condition (low, high)</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen so that a used hull is worn and never wrecked. No source gives the condition of a used hull.</td></tr>
-<tr id="n-34"><th scope="row">Most modules a used hull arrives with fitted</th><td class="val">2 <span class="unit">modules</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen so that a used hull is sometimes pre-fitted and never fully outfitted.</td></tr>
-<tr id="n-35"><th scope="row">Share of new price a salvaged carrier that a save already owns trades in for</th><td class="val">0.08 <span class="unit">fraction of new price</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen low because a salvaged capital hull is a laid-up wreck. Laid-up capital hulls are for entities only now, never the lot.</td></tr>
+<tr id="n-1" data-grade="E"><th scope="row">Share of rated thrust lost per wear step</th><td class="val" data-key="0.15">0.15 <span class="unit">fraction of thrust</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>The game chose how much thrust each step of neglect costs. The mirror and the Navy manual give no wear that grows with use and costs thrust. The sources are silent on this figure.</td></tr>
+<tr id="n-2" data-grade="E"><th scope="row">Lowest share of rated thrust a worn drive delivers</th><td class="val" data-key="0.55">0.55 <span class="unit">fraction of thrust</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>The game chose a floor so a neglected hull always still flies. No source gives a worn drive's thrust. The sources are silent on this figure.</td></tr>
+<tr id="n-3" data-grade="D"><th scope="row">Maintenance owed per travel day, as a share of hull upkeep value</th><td class="val" data-key="0.00165">0.0016 <span class="unit">fraction of value</span></td><td data-key="D"><span class="gradeitem"><span class="grade g-d">D</span>Analogy</span></td><td><a href="https://www.projectrho.com/public_html/rocket/starshipowner.php">Atomic Rockets, starshipowner</a>, cost of running a cargo starship</td><td>The mirror assumes a cargo starship costs $300,000 a tonne a year to run against $1 million a tonne to buy, about 30 percent a year. The game spreads that over its flown days.</td></tr>
+<tr id="n-4" data-grade="E"><th scope="row">Maintenance owed that drops the drive one step, as a share of hull upkeep value</th><td class="val" data-key="0.022">0.022 <span class="unit">fraction of value</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>The game chose how much owed upkeep costs one step of thrust, as a share of hull value, so one rule fits every hull. No source gives it.</td></tr>
+<tr id="n-5" data-grade="C"><th scope="row">Share of dry mass that is structure</th><td class="val" data-key="0.4">0.4 <span class="unit">fraction</span></td><td data-key="C"><span class="gradeitem"><span class="grade g-c">C</span>Derived</span></td><td><a href="https://www.projectrho.com/public_html/rocket/appworkedexample.php">Atomic Rockets, appworkedexample</a>, Structure and Specifications table</td><td>The mirror's worked example gives 50 t of structure in 126 t of dry mass, 50 / 126 = 40 percent. Its other two cases give 41 / 84 = 49 percent and 68 / 168 = 40 percent.</td></tr>
+<tr id="n-6" data-grade="D"><th scope="row">Person-hours to renew one tonne of structure</th><td class="val" data-key="230.0">230 <span class="unit">person-hours</span></td><td data-key="D"><span class="gradeitem"><span class="grade g-d">D</span>Analogy</span></td><td>Design notes: repair</td><td>Butler's repair estimate guide, as the game's repair notes record it, gives 230 person-hours a tonne to renew 12.5 mm steel plate. This pass did not reopen the PDF. The sources are silent on this figure.</td></tr>
+<tr id="n-7" data-grade="A"><th scope="row">Hours in one working shift</th><td class="val" data-key="8.0">8 <span class="unit">hours</span></td><td data-key="A"><span class="gradeitem"><span class="grade g-a">A</span>Primary</span></td><td><a href="https://www.ilo.org/sites/default/files/wcmsp5/groups/public/@ed_norm/@normes/documents/normativeinstrument/wcms_090250.pdf">Maritime Labour Convention, 2006 (ILO)</a>, Guideline B2.2.2, para 1(a)</td><td>The Maritime Labour Convention guideline says normal hours for working out wages should not exceed eight hours a day.</td></tr>
+<tr id="n-8" data-grade="E"><th scope="row">Share of a station&#x27;s people who work its yard</th><td class="val" data-key="0.1">0.1 <span class="unit">fraction</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>coldweld chose the share of a station's people who work its yard. The game notes tie it to a colony ladder, but this pass found no workforce share on that mirror page.</td></tr>
+<tr id="n-9" data-grade="E"><th scope="row">Hands that fit around one tonne of structure</th><td class="val" data-key="1.0">1 <span class="unit">hands per tonne</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>The game chose how many hands fit around one tonne of structure. No source gives a yard gang size. The sources are silent on this figure.</td></tr>
+<tr id="n-10" data-grade="E"><th scope="row">Crew pace with no training</th><td class="val" data-key="0.5">0.5 <span class="unit">fraction of standard pace</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>The game chose the pace of an untrained crew. No source gives a repair pace. The sources are silent on this figure.</td></tr>
+<tr id="n-11" data-grade="E"><th scope="row">Crew pace added per competence point</th><td class="val" data-key="0.01">0.01 <span class="unit">fraction of standard pace</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>The game chose how much a point of competence adds to a crew's pace. No source gives it. The sources are silent on this figure.</td></tr>
+<tr id="n-12" data-grade="E"><th scope="row">Pace added per rating point of a machine shop</th><td class="val" data-key="0.25">0.25 <span class="unit">fraction of pace</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>The game chose how much a machine shop speeds the crew for each rating point. No source gives it. The sources are silent on this figure.</td></tr>
+<tr id="n-13" data-grade="E"><th scope="row">Rating of the largest machine shop (MS-6)</th><td class="val" data-key="6.0">6 <span class="unit">rating points</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>The game chose a ladder of ratings for the six machine shops, priced by size. No source rates a ship's machine shop.</td></tr>
+<tr id="n-14" data-grade="E"><th scope="row">Share of structure that one whole drive part equals</th><td class="val" data-key="0.05">0.05 <span class="unit">fraction</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>The game chose what share of the structure a whole drive part equals. The game notes record that the mirror gives no part mass.</td></tr>
+<tr id="n-15" data-grade="E"><th scope="row">Yard price of one hull point, as a share of hull price over its points</th><td class="val" data-key="0.1">0.1 <span class="unit">fraction</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><a href="https://media.defense.gov/2014/Feb/21/2002655450/-1/-1/1/140221-N-ZZ182-5359.pdf">US Navy training manual, &quot;Damage Control&quot; (chapter 12)</a>, Where the source is silent</td><td>The game chose a yard price for a hull point, set in days of dock work so it stays defensible. The Navy manual gives no price for any repair. The sources are silent on this figure.</td></tr>
+<tr id="n-16" data-grade="E"><th scope="row">Lowest yard price of a hull point</th><td class="val" data-key="5.0">5 <span class="unit">Cr</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>The game chose a flat lowest yard price so no hull point is free to mend. No source gives a yard tariff.</td></tr>
+<tr id="n-17" data-grade="E"><th scope="row">Job length above which the yard offers a day&#x27;s work</th><td class="val" data-key="1.0">1 <span class="unit">days</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>The game chose the job length above which the yard offers a day's work, so a long job asks the captain first. It is a pacing choice with no source.</td></tr>
+<tr id="n-18" data-grade="E"><th scope="row">Morale each hand loses on a repair day under way</th><td class="val" data-key="1.0">1 <span class="unit">morale</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>The game chose a small morale cost for a hand who does repair work under way. No source gives a morale cost for ship repair.</td></tr>
+<tr id="n-19" data-grade="E"><th scope="row">Share of hull price the dealer pays for a hull traded in</th><td class="val" data-key="0.45">0.45 <span class="unit">fraction</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>The game chose what the dealer pays for a hull, set below what the dealer sells a used hull for, so no flip makes money. No source gives a trade-in price.</td></tr>
+<tr id="n-20" data-grade="E"><th scope="row">Share of module price the dealer pays on a trade-in</th><td class="val" data-key="0.5">0.5 <span class="unit">fraction</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>The game chose what the dealer pays for a fitted module, below what pulling it yourself pays. No source gives a price.</td></tr>
+<tr id="n-21" data-grade="E"><th scope="row">Share of module price paid for a module taken out</th><td class="val" data-key="0.75">0.75 <span class="unit">fraction</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>The game chose a higher price for a module the captain pulls than for one the dealer takes with the hull, to give a reason to strip a hull.</td></tr>
+<tr id="n-22" data-grade="E"><th scope="row">Share of hull price a salvage-titled hull fetches</th><td class="val" data-key="0.3">0.3 <span class="unit">fraction</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>coldweld chose this discount on 2026-09-28 from his own reading that a salvage title sells 20 to 40 percent under a clean one. The game records no source for that range.</td></tr>
+<tr id="n-23" data-grade="E"><th scope="row">Condition range of a hulk on a salvage lot</th><td class="val" data-key="0.05">0.05, 0.25 <span class="unit">fraction of full health</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>The game chose the condition of a hulk on the lot, low enough that it cannot fly until rebuilt.</td></tr>
+<tr id="n-24" data-grade="E"><th scope="row">Hulks on a salvage lot</th><td class="val" data-key="2.0">2, 4 <span class="unit">hulks</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>The game chose how many hulks a lot holds. It is a content size with no source.</td></tr>
+<tr id="n-25" data-grade="E"><th scope="row">Days between salvage lot refreshes</th><td class="val" data-key="14.0">14 <span class="unit">days</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>The game chose how often a salvage lot restocks. It is a pacing choice with no source.</td></tr>
+<tr id="n-26" data-grade="E"><th scope="row">Condition at which a hulk can fly</th><td class="val" data-key="0.5">0.5 <span class="unit">fraction of full health</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><a href="https://treaties.fco.gov.uk/data/Library2/pdf/1996-TS0093.pdf">International Convention on Salvage, 1989</a>, What the document says</td><td>coldweld chose on 2026-09-28 the condition at which a rebuilt hulk can fly. The Salvage Convention sets a reward and gives no condition for a wreck to fly. The sources are silent on this figure.</td></tr>
+<tr id="n-27" data-grade="A"><th scope="row">Hours in one dock gang shift</th><td class="val" data-key="8.0">8 <span class="unit">hours</span></td><td data-key="A"><span class="gradeitem"><span class="grade g-a">A</span>Primary</span></td><td><a href="https://www.ilo.org/sites/default/files/wcmsp5/groups/public/@ed_norm/@normes/documents/normativeinstrument/wcms_090250.pdf">Maritime Labour Convention, 2006 (ILO)</a>, Guideline B2.2.2, para 1(a)</td><td>The Maritime Labour Convention guideline says normal hours for working out wages should not exceed eight hours a day. The dock shift is that day.</td></tr>
+<tr id="n-28" data-grade="E"><th scope="row">Share of new price a used hull at full condition is worth</th><td class="val" data-key="0.7">0.7 <span class="unit">fraction of new price</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Chosen so that the dealer always sells dearer than it buys back and no flip makes money. No source prices a used hull.</td></tr>
+<tr id="n-29" data-grade="E"><th scope="row">Share of new price a decommissioned cruiser or carrier hull is worth</th><td class="val" data-key="0.975">0.975 <span class="unit">fraction of new price</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Chosen so that the capital tier is priced as a standing commitment and not a hull to flip. No source prices a decommissioned hull.</td></tr>
+<tr id="n-30" data-grade="E"><th scope="row">Share of module price paid for a module taken from a decommissioned hull</th><td class="val" data-key="0.975">0.975 <span class="unit">fraction of module price</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Chosen with the hull factor so that the whole capital tier trades near full value. No source prices a module.</td></tr>
+<tr id="n-31" data-grade="E"><th scope="row">Days between refreshes of the used-ship dealer stock</th><td class="val" data-key="7.0">7 <span class="unit">days</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Chosen to match a weekly board. No source gives a dealer cycle.</td></tr>
+<tr id="n-32" data-grade="E"><th scope="row">Used hulls on the dealer forecourt</th><td class="val" data-key="4.0">4, 6 <span class="unit">hulls (low, high)</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Chosen so that the forecourt has a few hulls and not a catalog. No source gives a lot size.</td></tr>
+<tr id="n-33" data-grade="E"><th scope="row">Condition range of a used hull on the forecourt</th><td class="val" data-key="0.15">0.15, 0.6 <span class="unit">fraction of full condition (low, high)</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Chosen so that a used hull is worn and never wrecked. No source gives the condition of a used hull.</td></tr>
+<tr id="n-34" data-grade="E"><th scope="row">Most modules a used hull arrives with fitted</th><td class="val" data-key="2.0">2 <span class="unit">modules</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Chosen so that a used hull is sometimes pre-fitted and never fully outfitted.</td></tr>
+<tr id="n-35" data-grade="E"><th scope="row">Share of new price a salvaged carrier that a save already owns trades in for</th><td class="val" data-key="0.08">0.08 <span class="unit">fraction of new price</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Chosen low because a salvaged capital hull is a laid-up wreck. Laid-up capital hulls are for entities only now, never the lot.</td></tr>
 </tbody></table></div>
-<h2 id="why">Why: the real physics or procedure</h2>
+</div>
+</details>
+<details class="section" id="why">
+<summary><h2>Why: the real physics or procedure</h2><span class="hint">6 points</span></summary>
+<div class="sectionbody">
 <ul>
 <li>A ship's drive and moving parts wear as they work, so a ship that stays at dock wears little.</li>
 <li>A working ship costs about a third of its price each year to keep, by one estimate.</li>
@@ -182,7 +253,11 @@ dl.keys dd { margin: .25rem 0 0; max-width: 46rem; }
 <li>Major overhaul needs a dock or a yard, and doing it away from one takes longer and overworks the gang.</li>
 <li>A wreck is only worth the labor and steel that bring it back to sound.</li>
 </ul>
-<h2 id="departs">Where the game departs from reality</h2>
+</div>
+</details>
+<details class="section" id="departs">
+<summary><h2>Where the game departs from reality</h2><span class="hint">6 points</span></summary>
+<div class="sectionbody">
 <ul>
 <li>The mirror treats maintenance as a yearly job. The game wears a hull with use and not with time, so an idle hull pays berthing and nothing is charged twice.</li>
 <li>The yard bill does not follow repair labor. The game's repair notes ('The price did not move, on purpose') say that pricing yard labor at the dock wage was measured and refused, so time, steel and gang are physical and the bill stays the old tariff.</li>
@@ -191,7 +266,11 @@ dl.keys dd { margin: .25rem 0 0; max-width: 46rem; }
 <li>Crew under way renew hull with steel from the hold at the same hours per tonne as the yard, but a short gang is slow. The machine shop adds pace and mends nothing alone.</li>
 <li>A guns-knocked-offline repair and armor re-plate stay instant at the counter.</li>
 </ul>
-<h2 id="silent">Where the sources are silent</h2>
+</div>
+</details>
+<details class="section" id="silent">
+<summary><h2>Where the sources are silent</h2><span class="hint">5 points</span></summary>
+<div class="sectionbody">
 <ul>
 <li>The mirror is silent on repair labor. It gives no person-hours per tonne of hull, so the 230 comes from the Butler guide as cited in the game's repair notes and is UNVERIFIED here.</li>
 <li>The mirror and the Navy manual are silent on wear that grows with use and costs thrust, so the steps (15 percent, floor 55 percent) are authored.</li>
@@ -199,7 +278,11 @@ dl.keys dd { margin: .25rem 0 0; max-width: 46rem; }
 <li>No source gives a price or a drop in value for a wreck that carries a salvage title. The 30 percent factor is coldweld's choice, dated 2026-09-28.</li>
 <li>The mirror has no figure for how long a drive part takes to renew. The game's repair notes say the drive part share is an open measure.</li>
 </ul>
-<h2 id="sources">Sources</h2>
+</div>
+</details>
+<details class="section" id="sources">
+<summary><h2>Sources</h2><span class="hint">6 documents</span></summary>
+<div class="sectionbody">
 <ul>
 <li><a href="https://www.projectrho.com/public_html/rocket/starshipowner.php">Atomic Rockets, starshipowner</a>, cost of running a cargo starship: The page assumes a cargo starship costs $300,000 per tonne of capacity per year to run, against a purchase price of $1 million per tonne. That is a share of about 30 percent of the price each year. (<a href="sources.html#doc-rocket-starshipowner-php-html">all uses</a>)</li>
 <li><a href="https://www.projectrho.com/public_html/rocket/starshipowner.php">Atomic Rockets, starshipowner</a>, maintenance remarks: The page says annual maintenance comes sooner than owners expect and needs a dock or yard. It carries about one maintenance technician per $100 million of ship, because maintenance cannot all wait for a layover. (<a href="sources.html#doc-rocket-starshipowner-php-html">all uses</a>)</li>
@@ -208,11 +291,211 @@ dl.keys dd { margin: .25rem 0 0; max-width: 46rem; }
 <li><a href="https://media.defense.gov/2014/Feb/21/2002655450/-1/-1/1/140221-N-ZZ182-5359.pdf">US Navy training manual, &quot;Damage Control&quot; (chapter 12)</a>, What it says (repair lockers) and Where the source is silent: The manual describes repair lockers and parties for a ship under attack. It states plainly that it gives no price, wage or time for any party. (<a href="sources.html#doc-docs-sources-navy-damage-control-manual-md">all uses</a>)</li>
 <li><a href="https://treaties.fco.gov.uk/data/Library2/pdf/1996-TS0093.pdf">International Convention on Salvage, 1989</a>, What the game does with it: The Convention covers a reward for helping property in danger. The game notes that hulk work on abandoned property fits, but the Convention does not cover a yard that sells a wreck. (<a href="sources.html#doc-docs-sources-salvage-convention-1989-md">all uses</a>)</li>
 </ul>
+</div>
+</details>
+<nav aria-label="Other mechanics"><ul class="pager"><li><a href="mining-the-belt.html" rel="prev"><span class="dir">Previous</span>Mining the belt</a></li><li class="next"><a href="hailing-boarding-and-prize-law.html" rel="next"><span class="dir">Next</span>Hailing, boarding and prize law</a></li></ul></nav>
 </main>
 <footer class="stamp">
-<p>Read from game commit f6b8d18d (committed 2026-10-18). Pages written 2026-10-18.
+<p>Read from game commit 24e4f710 (committed 2026-10-18). Pages written 2026-10-18.
 The explanations are stand-in text and may change.</p>
 </footer>
 </div>
+<script>
+(function () {
+  "use strict";
+  var doc = document;
+  function each(list, fn) { Array.prototype.forEach.call(list, fn); }
+  function make(tag, cls, text) {
+    var el = doc.createElement(tag);
+    if (cls) el.className = cls;
+    if (text) el.textContent = text;
+    return el;
+  }
+  function reveal(el) {
+    for (var node = el; node; node = node.parentElement) {
+      if (node.tagName === "DETAILS") node.open = true;
+    }
+  }
+  function target(hash) {
+    try { return doc.getElementById(decodeURIComponent(hash.slice(1))); } catch (e) { return null; }
+  }
+  function followhash() {
+    var el = location.hash && target(location.hash);
+    if (el) { reveal(el); el.scrollIntoView(); }
+  }
+  doc.addEventListener("click", function (event) {
+    var link = event.target.closest && event.target.closest('a[href^="#"]');
+    var el = link && target(link.getAttribute("href"));
+    if (el) reveal(el);
+  });
+  window.addEventListener("hashchange", followhash);
+  window.addEventListener("beforeprint", function () { each(doc.querySelectorAll("details"), function (d) { d.open = true; }); });
+
+  var sections = doc.querySelectorAll("details.section");
+  var holder = doc.querySelector("[data-openall]");
+  if (holder && sections.length > 1) {
+    var toggle = make("button", "openall");
+    toggle.type = "button";
+    var allopen = function () { return Array.prototype.every.call(sections, function (d) { return d.open; }); };
+    var label = function () { toggle.textContent = allopen() ? "Close all sections" : "Open all sections"; };
+    toggle.addEventListener("click", function () {
+      var open = !allopen();
+      each(sections, function (d) { d.open = open; });
+      label();
+    });
+    each(sections, function (d) { d.addEventListener("toggle", label); });
+    label();
+    holder.appendChild(toggle);
+  }
+
+  var params = new URLSearchParams(location.search);
+  each(doc.querySelectorAll("table[data-sort]"), setup);
+  followhash();
+
+  function keyof(row, col) {
+    var cell = row.cells[col];
+    if (!cell) return "";
+    var key = cell.getAttribute("data-key");
+    return key !== null ? key : cell.textContent.trim();
+  }
+
+  function setup(table) {
+    var body = table.tBodies[0], region = table.parentElement;
+    var rows = [], fixed = [], heads = table.tHead.rows[0].cells, current = { col: -1, dir: 1 };
+    each(body.rows, function (row, i) {
+      row.setAttribute("data-order", i);
+      row.searchtext = row.textContent.toLowerCase();
+      (row.hasAttribute("data-fixed") ? fixed : rows).push(row);
+    });
+    table.classList.add("live");
+
+    function paint() {
+      var shown = 0;
+      rows.concat(fixed).forEach(function (row) {
+        if (!row.hidden) { row.classList.toggle("alt", shown % 2 === 1); shown += 1; }
+      });
+      return rows.filter(function (row) { return !row.hidden; }).length;
+    }
+    function order(col, dir, type) {
+      var sorted = rows.slice().sort(function (a, b) {
+        var x = col < 0 ? 0 : keyof(a, col), y = col < 0 ? 0 : keyof(b, col), result = 0;
+        if (col >= 0 && type === "num") {
+          var p = parseFloat(x), q = parseFloat(y);
+          if (isNaN(p) || isNaN(q)) return (isNaN(p) - isNaN(q)) || a.getAttribute("data-order") - b.getAttribute("data-order");
+          result = (p - q) * dir;
+        } else if (col >= 0) {
+          result = String(x).localeCompare(String(y), undefined, { numeric: true, sensitivity: "base" }) * dir;
+        }
+        return result || a.getAttribute("data-order") - b.getAttribute("data-order");
+      });
+      sorted.concat(fixed).forEach(function (row) { body.appendChild(row); });
+      rows = sorted;
+      current = { col: col, dir: dir };
+      each(heads, function (th, i) {
+        if (th.hasAttribute("aria-sort")) th.setAttribute("aria-sort", i === col ? (dir > 0 ? "ascending" : "descending") : "none");
+      });
+      paint();
+    }
+    each(heads, function (th, col) {
+      var type = th.getAttribute("data-type");
+      if (!type) return;
+      var button = make("button", "sort");
+      button.type = "button";
+      while (th.firstChild) button.appendChild(th.firstChild);
+      var arrow = make("span", "arrow");
+      arrow.setAttribute("aria-hidden", "true");
+      button.appendChild(arrow);
+      th.appendChild(button);
+      th.setAttribute("aria-sort", "none");
+      button.addEventListener("click", function () { order(col, current.col === col ? -current.dir : 1, type); });
+    });
+
+    var modes = (table.getAttribute("data-filter") || "").split(" ").filter(Boolean);
+    if (!modes.length) { paint(); return; }
+    var nouns = (table.getAttribute("data-noun") || "row rows").split(" ");
+    var noun = function (n) { return n === 1 ? nouns[0] : nouns[1]; };
+    var tools = make("div", "tools");
+    tools.setAttribute("role", "group");
+    tools.setAttribute("aria-label", "Sort and filter the table");
+    var find = make("label", "find");
+    var input = make("input");
+    input.type = "search";
+    input.autocomplete = "off";
+    input.spellcheck = false;
+    input.placeholder = table.getAttribute("data-placeholder") || "Type a word";
+    find.appendChild(make("span", "", "Find"));
+    find.appendChild(input);
+    tools.appendChild(find);
+    var picked = {}, chips = [];
+    if (modes.indexOf("grade") >= 0) {
+      var group = make("div", "chips");
+      group.setAttribute("role", "group");
+      group.setAttribute("aria-label", "Show only these grades");
+      group.appendChild(make("span", "chipslabel", "Grade"));
+      "ABCDE".split("").forEach(function (letter) {
+        var count = rows.filter(function (row) { return row.getAttribute("data-grade") === letter; }).length;
+        var chip = make("button", "chip", letter + " " + count);
+        chip.type = "button";
+        chip.setAttribute("aria-pressed", "false");
+        chip.setAttribute("aria-label", "Grade " + letter + ", " + count + " " + noun(count));
+        chip.disabled = !count;
+        chip.addEventListener("click", function () {
+          picked[letter] = !picked[letter];
+          chip.setAttribute("aria-pressed", String(picked[letter]));
+          apply();
+        });
+        chip.letter = letter;
+        group.appendChild(chip);
+        chips.push(chip);
+      });
+      tools.appendChild(group);
+    }
+    var reset = make("button", "reset", "Clear the filter and sort");
+    reset.type = "button";
+    var status = make("p", "status");
+    status.setAttribute("aria-live", "polite");
+    tools.appendChild(reset);
+    tools.appendChild(status);
+    region.parentNode.insertBefore(tools, region);
+    var empty = make("p", "empty");
+    region.parentNode.insertBefore(empty, region.nextSibling);
+
+    function apply() {
+      var words = input.value.toLowerCase().split(/\s+/).filter(Boolean);
+      var grades = Object.keys(picked).filter(function (g) { return picked[g]; });
+      rows.forEach(function (row) {
+        var ok = words.every(function (w) { return row.searchtext.indexOf(w) >= 0; });
+        row.hidden = !(ok && (!grades.length || grades.indexOf(row.getAttribute("data-grade")) >= 0));
+      });
+      var active = words.length > 0 || grades.length > 0;
+      fixed.forEach(function (row) { row.hidden = active; });
+      var shown = paint();
+      status.textContent = active ? "Showing " + shown + " of " + rows.length + " " + noun(rows.length) + "." : rows.length + " " + noun(rows.length) + ". Select a column heading to sort.";
+      reset.hidden = !active && current.col < 0;
+      empty.hidden = shown > 0;
+      empty.textContent = "No " + nouns[0] + " matches the filter. Clear the filter to see all " + rows.length + ".";
+    }
+    input.addEventListener("input", apply);
+    reset.addEventListener("click", function () {
+      input.value = "";
+      picked = {};
+      chips.forEach(function (chip) { chip.setAttribute("aria-pressed", "false"); });
+      order(-1, 1, "");
+      apply();
+      input.focus();
+    });
+    each(heads, function (th) {
+      var button = th.querySelector("button.sort");
+      if (button) button.addEventListener("click", function () { reset.hidden = false; });
+    });
+    var want = (params.get("grade") || "").toUpperCase();
+    chips.forEach(function (chip) {
+      if (want.indexOf(chip.letter) >= 0 && !chip.disabled) { picked[chip.letter] = true; chip.setAttribute("aria-pressed", "true"); }
+    });
+    if (params.get("q")) input.value = params.get("q");
+    apply();
+  }
+})();
+</script>
 </body>
 </html>

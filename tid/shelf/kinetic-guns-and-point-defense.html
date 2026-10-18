@@ -18,58 +18,126 @@
   :root { --bg: #0e0903; --panel: #16110a; --rule: #4a4130; --text: #d6cbb6; --muted: #a89f88; --accent: #ffb040; }
 }
 *, *::before, *::after { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; }
-body { margin: 0; background: var(--bg); color: var(--text); font: 1rem/1.65 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; padding: 0 1rem 4rem; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: 1rem; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 1.0625rem/1.65 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; padding: 0 1rem 4rem; }
+::selection { background: var(--accent); color: var(--bg); }
 .skip { position: absolute; left: 1rem; top: -4rem; background: var(--accent); color: var(--bg); padding: .5rem 1rem; z-index: 10; }
 .skip:focus { top: .5rem; }
-.wrap { max-width: 64rem; margin: 0 auto; }
-.mono, h1, h2, h3, caption, th, nav, .brand, .stamp, .grade, .val { font-family: "DM Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
-a { color: var(--accent); text-underline-offset: .2em; }
-a:focus-visible, .region:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.wrap { max-width: 72rem; margin: 0 auto; }
+.mono, h1, h2, h3, caption, th, nav, .brand, .stamp, .grade, .val, .hint, .chip, .chipslabel, .find span, .openall, .pager .dir, summary { font-family: "DM Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+a { color: var(--accent); text-underline-offset: .2em; text-decoration-thickness: 1px; }
+a:hover { text-decoration-thickness: 2px; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
 .top { padding: 2rem 0 1rem; border-bottom: 1px solid var(--rule); }
-.brand { margin: 0 0 .75rem; font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.brand { margin: 0 0 .75rem; font-size: .8rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
 nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .25rem 1.5rem; }
-nav a { display: inline-block; padding: .35rem 0; }
-h1 { font-size: clamp(1.4rem, 5vw, 2rem); line-height: 1.25; margin: 2rem 0 1rem; font-weight: 500; }
-h2 { font-size: 1.5rem; margin: 2.5rem 0 .75rem; padding-top: 1.25rem; border-top: 1px solid var(--rule); font-weight: 500; }
-h3 { font-size: 1.15rem; margin: 1.5rem 0 .5rem; font-weight: 500; }
-p, li { max-width: 46rem; }
-li + li { margin-top: .35rem; }
-code { font-family: "DM Mono", ui-monospace, Consolas, monospace; font-size: .92em; overflow-wrap: anywhere; }
-.lead { font-size: 1.1rem; }
-.note { background: var(--panel); border: 1px solid var(--rule); padding: .75rem 1rem; max-width: 46rem; }
-.region { overflow-x: auto; margin: 1rem 0; border: 1px solid var(--rule); }
-table { border-collapse: collapse; width: 100%; min-width: 40rem; font-size: .92rem; line-height: 1.55; }
-caption { text-align: left; padding: .75rem; font-size: .95rem; color: var(--muted); }
+nav a { display: inline-block; padding: .45rem 0; }
+nav a[aria-current] { color: var(--text); text-decoration: none; border-bottom: 2px solid var(--accent); }
+h1 { font-size: clamp(1.6rem, 4.5vw, 2.25rem); line-height: 1.2; margin: 2.25rem 0 1rem; font-weight: 500; letter-spacing: -.01em; text-wrap: balance; }
+h2 { font-size: 1.5rem; line-height: 1.3; margin: 2.5rem 0 .75rem; font-weight: 500; text-wrap: balance; }
+h3 { font-size: 1.2rem; line-height: 1.35; margin: 1.75rem 0 .5rem; font-weight: 500; }
+p, li, dd { max-width: 40rem; }
+li + li { margin-top: .4rem; }
+code { font-family: "DM Mono", ui-monospace, Consolas, monospace; font-size: .9em; overflow-wrap: anywhere; }
+.lead { font-size: 1.15rem; line-height: 1.6; }
+.note { background: var(--panel); border: 1px solid var(--rule); padding: .75rem 1rem; max-width: 40rem; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; padding: 0; margin: -1px; }
+.glance { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem 1.4rem; margin: 1.5rem 0; padding: .85rem 1rem; background: var(--panel); border: 1px solid var(--rule); font-size: .95rem; }
+.glance p { margin: 0; }
+.glance ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .5rem 1.1rem; }
+.glance li { margin: 0; white-space: nowrap; }
+.toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem 1.5rem; margin: 0 0 1.5rem; }
+.toc { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .25rem 1.25rem; }
+.toc li { margin: 0; }
+.toc a { display: inline-block; padding: .35rem 0; }
+.openall { font-size: .85rem; background: transparent; color: var(--accent); border: 1px solid var(--rule); border-radius: 4px; padding: .45rem .8rem; cursor: pointer; }
+.openall:hover { border-color: var(--accent); }
+details.section { border-top: 1px solid var(--rule); }
+details.section:last-of-type { border-bottom: 1px solid var(--rule); }
+details.section > summary { display: flex; align-items: baseline; flex-wrap: wrap; gap: .25rem .9rem; padding: 1.05rem .25rem; cursor: pointer; list-style: none; }
+details.section > summary::-webkit-details-marker { display: none; }
+details.section > summary::before { content: ""; flex: none; align-self: center; width: .5rem; height: .5rem; border-right: 2px solid var(--accent); border-bottom: 2px solid var(--accent); transform: rotate(-45deg); transition: transform .18s ease-out; }
+details.section[open] > summary::before { transform: translateY(-.15rem) rotate(45deg); }
+details.section > summary h2 { margin: 0; font-size: 1.5rem; }
+details.section > summary:hover h2 { color: var(--accent); }
+.hint { margin-left: auto; color: var(--muted); font-size: .82rem; }
+.sectionbody { padding: 0 0 2rem; }
+.region { overflow-x: auto; margin: .75rem 0 1rem; border: 1px solid var(--rule); scrollbar-color: var(--rule) transparent; }
+table { border-collapse: collapse; width: 100%; min-width: 40rem; font-size: .95rem; line-height: 1.55; font-variant-numeric: tabular-nums; }
+caption { text-align: left; padding: .75rem .85rem; font-size: .9rem; color: var(--muted); }
 caption.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; padding: 0; }
 th, td { text-align: left; vertical-align: top; padding: .7rem .85rem; border-top: 1px solid var(--rule); }
-thead th { background: var(--panel); font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; white-space: nowrap; }
+thead th { background: var(--panel); font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; white-space: nowrap; vertical-align: bottom; }
+thead .sub { display: block; font-size: .78rem; letter-spacing: 0; text-transform: none; color: var(--muted); font-weight: 400; }
 tbody th { font-weight: 500; font-family: inherit; min-width: 11rem; }
-tbody tr:nth-child(even) th, tbody tr:nth-child(even) td { background: var(--panel); }
-td.val { overflow-wrap: anywhere; min-width: 7rem; font-size: .95rem; }
-.unit { display: block; font-size: .8rem; color: var(--muted); overflow-wrap: normal; }
+table:not(.live) tbody tr:nth-child(even) > *, table.live tbody tr.alt > * { background: var(--panel); }
+tbody tr:target > * { background: color-mix(in srgb, var(--accent) 18%, var(--bg)) !important; }
+td.val { overflow-wrap: break-word; min-width: 7rem; font-size: 1rem; }
+.unit { display: block; font-size: .82rem; color: var(--muted); overflow-wrap: normal; }
+.nosource { color: var(--muted); }
 .numbers { min-width: 58rem; }
 .numbers tbody th { min-width: 13rem; width: 20%; }
-.numbers td:nth-child(4) { min-width: 11rem; width: 18%; color: var(--muted); }
+.numbers td:nth-child(4) { min-width: 11rem; width: 18%; }
 .numbers td:nth-child(5) { min-width: 22rem; width: 42%; }
-td.count { text-align: right; font-variant-numeric: tabular-nums; }
+.allnumbers { min-width: 52rem; }
+.allnumbers tbody th { min-width: 14rem; width: 28%; }
+.allnumbers td:nth-child(2) { min-width: 10rem; }
+td.count { text-align: right; }
+.counts thead th:not(:first-child) { text-align: right; }
+.counts tr[data-fixed] > * { border-top: 2px solid var(--rule); font-weight: 600; }
 .uses { min-width: 34rem; }
-details { margin: .5rem 0 1rem; }
-summary { cursor: pointer; padding: .45rem 0; font-family: "DM Mono", ui-monospace, Consolas, monospace; font-size: .85rem; color: var(--accent); }
-summary:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
-.docs { font-size: .9rem; gap: .1rem 1rem; }
+button.sort { all: unset; cursor: pointer; display: inline-flex; align-items: center; gap: .45rem; text-align: left; }
+button.sort:hover { color: var(--accent); }
+button.sort:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+.arrow { flex: none; width: 0; height: 0; border-left: .3rem solid transparent; border-right: .3rem solid transparent; border-top: .38rem solid currentColor; opacity: .35; }
+th[aria-sort="ascending"] .arrow { opacity: 1; transform: rotate(180deg); color: var(--accent); }
+th[aria-sort="descending"] .arrow { opacity: 1; color: var(--accent); }
+.tools { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem 1.5rem; margin: 1rem 0 .5rem; font-size: .9rem; }
+.find { display: flex; align-items: center; gap: .6rem; }
+.find span, .chipslabel { font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.find input { font: inherit; font-size: 1rem; color: var(--text); background: var(--bg); border: 1px solid var(--rule); border-radius: 4px; padding: .45rem .65rem; width: 18rem; max-width: 100%; caret-color: var(--accent); }
+.find input::placeholder { color: var(--muted); opacity: 1; }
+.find input:focus-visible { border-color: var(--accent); }
+.chips { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem; }
+.chip { font-size: .85rem; background: transparent; color: var(--text); border: 1px solid var(--rule); border-radius: 999px; padding: .3rem .75rem; min-height: 2.25rem; cursor: pointer; }
+.chip:hover:not(:disabled) { border-color: var(--accent); }
+.chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+.chip:disabled { opacity: .45; cursor: default; }
+.reset { font: inherit; background: none; border: 0; padding: .3rem 0; color: var(--accent); text-decoration: underline; text-underline-offset: .2em; cursor: pointer; }
+.status { flex-basis: 100%; margin: 0; color: var(--muted); font-size: .88rem; }
+.empty { margin: 0 0 1rem; padding: 1rem; border: 1px dashed var(--rule); color: var(--muted); }
+details.uses { margin: .5rem 0 1rem; }
+details.uses > summary { cursor: pointer; padding: .45rem 0; font-size: .85rem; color: var(--accent); }
 .cited { margin: .25rem 0 .5rem; color: var(--muted); }
-.grade { display: inline-block; border: 2px solid currentColor; border-radius: 4px; min-width: 1.6rem; text-align: center; padding: 0 .3rem; font-weight: 600; margin-right: .4rem; }
+.grade { display: inline-block; border: 2px solid currentColor; border-radius: 4px; min-width: 1.7rem; text-align: center; padding: 0 .3rem; font-weight: 600; line-height: 1.45; margin-right: .45rem; }
+.grade.g-a, .grade.g-b { background: var(--text); border-color: var(--text); color: var(--bg); }
+.grade.g-e { border-width: 1.5px; border-style: dashed; color: var(--muted); }
 .gradeitem { white-space: nowrap; }
 .stamp { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--rule); font-size: .8rem; color: var(--muted); }
-.toc { list-style: none; margin: 0 0 1rem; padding: 0; display: flex; flex-wrap: wrap; gap: .25rem 1.25rem; }
-.toc li { margin: 0; }
-.toc a { display: inline-block; padding: .3rem 0; }
 dl.keys dt { font-weight: 600; margin-top: 1rem; }
-dl.keys dd { margin: .25rem 0 0; max-width: 46rem; }
-@media (max-width: 40rem) { body { padding: 0 1rem 3rem; } th, td { padding: .6rem; } .numbers { min-width: 46rem; } .numbers tbody th { min-width: 8rem; width: auto; } .numbers td.val { min-width: 6.5rem; } .numbers td:nth-child(3) { min-width: 5.5rem; } .gradeitem { white-space: normal; } .numbers .grade { display: block; width: max-content; margin: 0 0 .2rem; } }
-@media (min-width: 40rem) { .numbers tbody th { position: sticky; left: 0; z-index: 1; background: var(--bg); } .numbers tbody tr:nth-child(even) th { background: var(--panel); } }
-@media print { .skip { display: none; } }
+dl.keys dd { margin: .25rem 0 0; }
+.pager { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; margin: 3rem 0 0; padding: 0; list-style: none; }
+.pager li { margin: 0; flex: 1 1 16rem; max-width: 28rem; }
+.pager li.next { margin-left: auto; text-align: right; }
+.pager a { display: block; padding: .8rem 1rem; border: 1px solid var(--rule); text-decoration: none; }
+.pager a:hover { border-color: var(--accent); }
+.pager .dir { display: block; font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+@media (max-width: 40rem) {
+  body { padding: 0 1rem 3rem; font-size: 1rem; }
+  th, td { padding: .6rem; }
+  .hint { margin-left: 1.4rem; flex-basis: 100%; }
+  .find { flex-basis: 100%; }
+  .find input { flex: 1; width: auto; }
+  .chip { min-height: 2.75rem; min-width: 2.75rem; }
+  .numbers { min-width: 46rem; } .numbers tbody th { min-width: 8rem; width: auto; } .numbers td.val { min-width: 6.5rem; } .numbers td:nth-child(3) { min-width: 5.5rem; }
+  .allnumbers { min-width: 40rem; } .allnumbers tbody th { min-width: 9rem; }
+  .numbers .gradeitem, .allnumbers .gradeitem { white-space: normal; } .numbers .grade, .allnumbers .grade { display: block; width: max-content; margin: 0 0 .2rem; }
+}
+@media (min-width: 40rem) {
+  .numbers tbody th, .allnumbers tbody th { position: sticky; left: 0; z-index: 1; background: var(--bg); }
+}
+@media (prefers-reduced-motion: reduce) { details.section > summary::before { transition: none; } }
+@media print { .skip, .tools, .openall, .empty { display: none; } details.section > summary::before { display: none; } }
 </style>
 </head>
 <body>
@@ -79,25 +147,19 @@ dl.keys dd { margin: .25rem 0 0; max-width: 46rem; }
 <p class="brand"><a href="https://coldweld.dev/">Coldweld</a> / The Infinite Diaspora / Reference shelf</p>
 <nav aria-label="Reference shelf"><ul>
 <li><a href="index.html">Mechanics</a></li>
+<li><a href="numbers.html">All numbers</a></li>
 <li><a href="grades.html">Grades</a></li>
 <li><a href="sources.html">Sources</a></li>
 </ul></nav>
 </header>
 <main id="main">
 <h1>Kinetic guns and point defense</h1>
-<ul class="toc">
-<li><a href="#brief">In brief</a></li>
-<li><a href="#does">What the game does</a></li>
-<li><a href="#numbers">The numbers</a></li>
-<li><a href="#why">Why: the real physics or procedure</a></li>
-<li><a href="#departs">Where the game departs from reality</a></li>
-<li><a href="#silent">Where the sources are silent</a></li>
-<li><a href="#inspiration">Inspiration</a></li>
-<li><a href="#sources">Sources</a></li>
-</ul>
-<h2 id="brief">In brief</h2>
 <p class="lead">A kinetic gun throws a solid round at a target. Point defense is a set of fast guns that shoot incoming rounds and drones out of the sky.</p>
-<h2 id="does">What the game does</h2>
+<div class="glance"><p><strong>49 numbers</strong>, 9 with an outside source</p><ul aria-label="Numbers by grade"><li><span class="grade g-a">A</span>0 <span class="sr">numbers at grade A</span></li><li><span class="grade g-b">B</span>4 <span class="sr">numbers at grade B</span></li><li><span class="grade g-c">C</span>3 <span class="sr">numbers at grade C</span></li><li><span class="grade g-d">D</span>2 <span class="sr">numbers at grade D</span></li><li><span class="grade g-e">E</span>40 <span class="sr">numbers at grade E</span></li></ul></div>
+<div class="toolbar" data-openall></div>
+<details class="section" id="does">
+<summary><h2>What the game does</h2><span class="hint">4 topics</span></summary>
+<div class="sectionbody">
 <h3>The Guns</h3>
 <ul>
 <li>Every gun in known space is kinetic, which means it fires a solid round.</li>
@@ -137,70 +199,78 @@ dl.keys dd { margin: .25rem 0 0; max-width: 46rem; }
 <li>Point defense can stop any drone inside 40 km.</li>
 <li>DRONE RULE | what the operator launches without asking.</li>
 </ul>
-<h2 id="numbers">The numbers</h2>
-<p>49 numbers, read from the game code. 2 grade B, 1 grade C, 1 grade D, 45 grade E.</p>
+</div>
+</details>
+<details class="section" id="numbers">
+<summary><h2>The numbers</h2><span class="hint">49 numbers: 4 B, 3 C, 2 D, 40 E</span></summary>
+<div class="sectionbody">
+<p>Each value is read from the game code. Sort by any column heading, or filter by grade or by a word.</p>
 <div class="region" role="region" tabindex="0" aria-label="Numbers the game runs for kinetic guns and point defense">
-<table class="numbers">
+<table class="numbers" data-sort="1" data-filter="text grade" data-noun="number numbers" data-placeholder="Quantity, source or word">
 <caption>Numbers the game runs for kinetic guns and point defense</caption>
 <thead><tr>
-<th scope="col">Quantity</th>
-<th scope="col">Value</th>
-<th scope="col">Grade</th>
-<th scope="col">Source</th>
-<th scope="col">Basis</th>
+<th scope="col" data-type="text">Quantity</th>
+<th scope="col" data-type="num">Value</th>
+<th scope="col" data-type="text">Grade</th>
+<th scope="col" data-type="text">Source</th>
+<th scope="col">Why this value</th>
 </tr></thead>
 <tbody>
-<tr id="n-1"><th scope="row">Muzzle speed by mechanism</th><td class="val">Coilgun 4, Autocannon 1.5, Railgun 6, Canister 4 <span class="unit">km/s</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/spacegunconvent.php">Atomic Rockets, spacegunconvent</a>, Railguns</td><td>The railgun speed matches the mirror's maximum of about six kilometers per second. The other speeds are chosen to keep the range order between gun types.</td></tr>
-<tr id="n-2"><th scope="row">Launcher energy that caps an electric gun&#x27;s muzzle speed, by mount size</th><td class="val">Micro 2, Light 20, Compact 60, Standard 120, Heavy 250, Superheavy 500 <span class="unit">MJ</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen so the lightest mount keeps full rail speed. Speed follows from kinetic energy, so a heavier round leaves slower from the same energy.</td></tr>
-<tr id="n-3"><th scope="row">Mass of one round, by mount size</th><td class="val">Micro 0.0001, Light 0.001, Compact 0.006, Standard 0.015, Heavy 0.045, Superheavy 0.118 <span class="unit">t</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/spacegunconvent.php">Atomic Rockets, spacegunconvent</a>, Kinetic Kill Weapons</td><td>Chosen as a round mass for each caliber. The mirror gives no table of round masses for ship guns. The sources are silent on this figure.</td></tr>
-<tr id="n-4"><th scope="row">Pellets in one canister shell, by mount size</th><td class="val">Micro 20, Light 40, Compact 80, Standard 150, Heavy 250, Superheavy 400 <span class="unit">pellets</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/spacegunintro.php">Atomic Rockets, spacegunintro</a>, Introduction</td><td>Chosen as tens to hundreds of pellets in a shell. The mirror compares a kinetic weapon to a shotgun and gives no pellet count. The sources are silent on this figure.</td></tr>
-<tr id="n-5"><th scope="row">Power of closing speed that scales a round&#x27;s damage</th><td class="val">2 <span class="unit">exponent</span></td><td><span class="gradeitem"><span class="grade">B</span>Secondary</span></td><td><a href="https://www.projectrho.com/public_html/rocket/spacegunconvent.php">Atomic Rockets, spacegunconvent</a>, Robinson&#x27;s First Law of Space Warfare paragraph</td><td>The mirror says kinetic energy, counted in Ricks, scales with the square of velocity.</td></tr>
-<tr id="n-6"><th scope="row">Power of closing speed that scales a round&#x27;s penetration</th><td class="val">0.6667 <span class="unit">exponent</span></td><td><span class="gradeitem"><span class="grade">C</span>Derived</span></td><td><a href="https://www.projectrho.com/public_html/rocket/spacewardefense.php">Atomic Rockets, spacewardefense</a>, Section 10: Armor, Damage and Survivability, Tate formula and crater passage</td><td>The page ties crater volume to impact energy and puts depth near the cube root of volume. Energy goes with speed squared, so depth goes with speed to the power two thirds.</td></tr>
-<tr id="n-7"><th scope="row">Impact speed above which plate hardness fades</th><td class="val">3 <span class="unit">km/s</span></td><td><span class="gradeitem"><span class="grade">B</span>Secondary</span></td><td><a href="https://www.projectrho.com/public_html/rocket/spacewardefense.php">Atomic Rockets, spacewardefense</a>, Section 10: Armor, Damage and Survivability, Whipple shield passage</td><td>The mirror says Whipple shields become worthwhile at about 3 km/s, the speed at which projectiles begin to melt on impact.</td></tr>
-<tr id="n-8"><th scope="row">Multiplier on the radiator clip chance for a canister cloud</th><td class="val">3 <span class="unit">times</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/spacegunconvent2.php">Atomic Rockets, spacegunconvent2</a>, Equations, kinetic particle attacks (laser cannon section)</td><td>Chosen so a pellet cloud clips radiators more often than a slug. The mirror says buckshot could puncture radiator tubes and calls the effect unknown. The sources are silent on this figure.</td></tr>
-<tr id="n-9"><th scope="row">Half-angle a keel gun can lay off the bow, by mount size</th><td class="val">Micro 10, Light 8, Compact 6, Standard 4, Heavy 3, Superheavy 2 <span class="unit">deg</span></td><td><span class="gradeitem"><span class="grade">D</span>Analogy</span></td><td><a href="https://www.projectrho.com/public_html/rocket/controldeck.php">Atomic Rockets, controldeck</a>, Gimbaled engines and thrust vectoring</td><td>A NERVA engine pivots up to 3 degrees and thrust vectoring stops near 10 degrees. The game uses those two figures as its limits and chooses the sizes between.</td></tr>
-<tr id="n-10"><th scope="row">Speed a turret traverses, by mount size</th><td class="val">Micro 90, Light 60, Compact 30, Standard 15, Heavy 8, Superheavy 4 <span class="unit">deg/s</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>Design notes: newtonian-combat-direction, Next arc: one set of rules, then the guns&#x27; own physics (coldweld, 2026-09-29)</td><td>Real gun mounts turn 30 to 115 degrees a second. No source gives a rate for a railgun or a capital mount, so the game chose a rate for each size. The sources are silent on this figure.</td></tr>
-<tr id="n-11"><th scope="row">Firings before the rails are spent, by mount size</th><td class="val">Micro 150, Light 100, Compact 60, Standard 40, Heavy 25, Superheavy 15 <span class="unit">firings</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>Design notes: newtonian-combat-direction, Next arc: one set of rules, then the guns&#x27; own physics (coldweld, 2026-09-29)</td><td>The sources put rail life anywhere from about a dozen shots to a goal of 1,000 rounds, so the game chose a life for each size.</td></tr>
-<tr id="n-12"><th scope="row">Rounds one point defense mount can engage in a second</th><td class="val">2 <span class="unit">rounds</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/spacewardefense.php">Atomic Rockets, spacewardefense</a>, Kinetic PD</td><td>Chosen so a stream of rounds can saturate one mount. The mirror gives no engagement rate and says point defense can be saturated. The sources are silent on this figure.</td></tr>
-<tr id="n-13"><th scope="row">A round is engaged by point defense once it is this close to arriving</th><td class="val">5 <span class="unit">s</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/spacewardefense.php">Atomic Rockets, spacewardefense</a>, Kinetic PD</td><td>Chosen as how late point defense engages a round. The mirror gives no engagement window. The sources are silent on this figure.</td></tr>
-<tr id="n-14"><th scope="row">Reach of point defense against a drone</th><td class="val">40 <span class="unit">km</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/spacewardefense.php">Atomic Rockets, spacewardefense</a>, Kinetic PD</td><td>Chosen as the reach of point defense against a drone. The mirror has no kill vehicle figures. The sources are silent on this figure.</td></tr>
-<tr id="n-15"><th scope="row">Time between a mount&#x27;s tries on one drone</th><td class="val">5 <span class="unit">s</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen so a drone at cruise meets several tries from each mount. Before this value a mount had one try. No source gives a retry time.</td></tr>
-<tr id="n-16"><th scope="row">Tries one mount gets on a drone at cruise speed</th><td class="val">4 <span class="unit">tries</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Computed from the reach, the cruise speed and the retry time, which are all chosen. No source gives a try count.</td></tr>
-<tr id="n-17"><th scope="row">Highest chance one mount stops a drone on one try</th><td class="val">0.9 <span class="unit">share</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/spacewardefense.php">Atomic Rockets, spacewardefense</a>, Kinetic PD</td><td>Chosen so a mount never stops a drone for certain. The mirror gives no kill chance for point defense. The sources are silent on this figure.</td></tr>
-<tr id="n-18"><th scope="row">Drones one operator can steer at once, by skill</th><td class="val">rookie 1, seasoned 2, veteran 4 <span class="unit">drones</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>Design notes: setting-canon, 2. Safeguards</td><td>Chosen: one hand holds one drone until it lands, and higher skill gives more hands. The canon bans self-steering seekers, so a person steers each drone.</td></tr>
-<tr id="n-19"><th scope="row">Furthest an operator will send a drone</th><td class="val">300 <span class="unit">km</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen as the farthest an operator will send a drone. A drone at cruise needs a long time to cover it. No source gives a figure.</td></tr>
-<tr id="n-20"><th scope="row">Closing speed a drone burns up to, then coasts</th><td class="val">2 <span class="unit">km/s</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen so a drone burns up to a speed and then coasts to keep fuel for the last correction. The mirror has no kill vehicle figures.</td></tr>
-<tr id="n-21"><th scope="row">Time a rack takes to cycle between launches</th><td class="val">3 <span class="unit">s</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen as the time a rack needs between launches, far shorter than the time an operator needs to steer a drone.</td></tr>
-<tr id="n-22"><th scope="row">A drone&#x27;s whole fuel</th><td class="val">4 <span class="unit">km/s</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen as a drone's whole fuel, which limits how fast a target can open range. The mirror has no kill vehicle figures.</td></tr>
-<tr id="n-23"><th scope="row">A drone&#x27;s life before it is lost</th><td class="val">900 <span class="unit">s</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen as how long a drone lives before it is lost. The mirror has no kill vehicle figures.</td></tr>
-<tr id="n-24"><th scope="row">Drone acceleration, by bay size</th><td class="val">Micro 400, Light 300, Compact 250, Standard 200, Heavy 150, Superheavy 100 <span class="unit">m/s^2</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen so a small drone is quicker than a big one. The mirror has no kill vehicle figures.</td></tr>
-<tr id="n-25"><th scope="row">Rounds one firing puts downrange, by mechanism</th><td class="val">Coilgun 7, Autocannon 3, Railgun 1, Canister 1 <span class="unit">rounds</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen by the game as a fixed burst per mechanism (coilgun 7, autocannon 3, railgun 1, canister 1 shell), so the sound and the penetration chances count the same rounds; no source sets a burst.</td></tr>
-<tr id="n-26"><th scope="row">Burst of a gun with no mechanism listed</th><td class="val">3 <span class="unit">rounds</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>A fallback chosen by the game, equal to the autocannon burst.</td></tr>
-<tr id="n-27"><th scope="row">Furthest range band each mechanism can shoot at</th><td class="val">Coilgun 1, Autocannon 0, Railgun 2, Canister 1 <span class="unit">band (0 close, 1 mid, 2 long)</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/spacewartactic.php">Atomic Rockets, spacewartactic</a>, the range and fire control discussion</td><td>The railgun is the sniper, the autocannon the brawler and the coilgun between. The notes credit the mirror with the idea that fire control sets the limit; the mirror gives no band for a mechanism. The sources are silent on this figure.</td></tr>
-<tr id="n-28"><th scope="row">Furthest range band of a gun with no mechanism listed</th><td class="val">1 <span class="unit">band</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>A fallback chosen by the game, equal to the coilgun band.</td></tr>
-<tr id="n-29"><th scope="row">Muzzle speed of a gun with no mechanism listed</th><td class="val">4 <span class="unit">km/s</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>A fallback chosen by the game, equal to the coilgun muzzle speed.</td></tr>
-<tr id="n-30"><th scope="row">Deep stores of rounds, by mechanism (rearmed in port)</th><td class="val">Coilgun 1,100, Autocannon 500, Railgun 200, Canister 160 <span class="unit">rounds</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Sized to 20 to 25 fights each off the measured spend at the 4-round median fight (coilgun about 54 rounds a fight, autocannon about 23, railgun about 8); a measurement of the game, not of a gun.</td></tr>
-<tr id="n-31"><th scope="row">Deep stores of a gun with no mechanism listed</th><td class="val">500 <span class="unit">rounds</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>A fallback chosen by the game, equal to the autocannon stores.</td></tr>
-<tr id="n-32"><th scope="row">Rounds in the locker at a mount (the ready rounds)</th><td class="val">50 <span class="unit">rounds</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Sized off 846 mount-actions across 304 fights: the busiest mount spends a median 35 rounds, p90 56. 40 ran a pass with no kills and 80 never ran in this build.</td></tr>
-<tr id="n-33"><th scope="row">Mass of a round for a gun with no size listed</th><td class="val">0.015 <span class="unit">kg</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>A fallback chosen by the game for a round of unknown size; the sized rounds have their own table.</td></tr>
-<tr id="n-34"><th scope="row">Hit-chance bonus by hull size for an autocannon</th><td class="val">LIGHT CRAFT -12, MEDIUM CRAFT 0, HEAVY CRAFT 10 <span class="unit">points of hit chance</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen by the game: an autocannon's aim swings with target size, minus 12 against a light craft and plus 10 against a heavy one.</td></tr>
-<tr id="n-35"><th scope="row">Hit-chance penalty against a dodging target for an autocannon</th><td class="val">8 <span class="unit">points of hit chance</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen by the game and used only where no range model applies; the range model's own dodge physics replaces it elsewhere.</td></tr>
-<tr id="n-36"><th scope="row">Least share of its damage a railgun round drives through armor</th><td class="val">0.5 <span class="unit">share</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen by the game so a railgun always drives half its damage through armor that blocks the other guns down to 1; no source sets it.</td></tr>
-<tr id="n-37"><th scope="row">Caliber by gun size</th><td class="val">Micro 20, Light 40, Compact 70, Standard 110, Heavy 160, Superheavy 220 <span class="unit">millimeters</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The six gun sizes of the game catalog, 20 to 220 millimeters, used to scale ammunition price and the canister fuze; no source orders the sizes.</td></tr>
-<tr id="n-38"><th scope="row">Point defense rounds per second, by caliber</th><td class="val">15 80, 20 75, 25 70, 30 70, 35 17, 40 5.5 <span class="unit">rounds per second</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The comment cites a Phalanx at 75 a second and a Goalkeeper at 70 and calls the 15, 25, 35 and 40 millimeter rates recalled. The mirror was searched for a Phalanx rate on 2026-10-16 and has none. The sources are silent on this figure.</td></tr>
-<tr id="n-39"><th scope="row">Point defense caliber by mount size</th><td class="val">Micro 15, Light 20, Compact 25, Standard 30, Heavy 35, Superheavy 40 <span class="unit">millimeters</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen by the game as a gun caliber for each mount size, 15 to 40 millimeters.</td></tr>
-<tr id="n-40"><th scope="row">Seconds of fire in a point defense mount&#x27;s own drum</th><td class="val">20 <span class="unit">seconds</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The comment gives a Phalanx drum of 1,550 rounds at 75 a second (20.7 s) and a Goalkeeper of 1,190 at 70 (17 s); both are recalled and were not opened, so the 20 is the game's own. The sources are silent on this figure.</td></tr>
-<tr id="n-41"><th scope="row">Seconds of fire in one point defense engagement</th><td class="val">1 <span class="unit">seconds</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The comment says the mirror's Phalanx bursts run 60 to 100 rounds; no such passage turned up when the mirror was searched on 2026-10-16 (UNVERIFIED), so the one second is the game's own. The sources are silent on this figure.</td></tr>
-<tr id="n-42"><th scope="row">Drones in the ready rack at a bay</th><td class="val">2 <span class="unit">drones</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen by coldweld on 2026-09-18, so a median fight of about four rounds makes the time to launch a decision.</td></tr>
-<tr id="n-43"><th scope="row">Drones in the bay stores</th><td class="val">40 <span class="unit">drones</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen by coldweld on 2026-09-18 as about 20 fights of drones, the same rule as the guns.</td></tr>
-<tr id="n-44"><th scope="row">Volume of one drone, by bay size</th><td class="val">Micro 0.03, Light 0.06, Compact 0.12, Standard 0.25, Heavy 0.5, Superheavy 1 <span class="unit">m^3</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Authored so a full store takes about a tenth of a carrier's hold; the mirror has no kill-vehicle mass (searched 2026-09-18). The sources are silent on this figure.</td></tr>
-<tr id="n-45"><th scope="row">Mass of one drone, by bay size</th><td class="val">Micro 0.015, Light 0.03, Compact 0.06, Standard 0.125, Heavy 0.25, Superheavy 0.5 <span class="unit">tonnes</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Authored with the volume above; the mirror has no kill-vehicle mass (searched 2026-09-18). The sources are silent on this figure.</td></tr>
-<tr id="n-46"><th scope="row">Keel gun or turret on each weapon slot, by hull model</th><td class="val">Fraxinus SPINAL, TURRET, Quercus SPINAL, TURRET, Tyr SPINAL, TURRET, Nergal SPINAL, TURRET, Szabo SPINAL, TURRET, Brennan SPINAL, TURRET, Sequoia SPINAL, TURRET, Ares SPINAL, TURRET, Kerrigan SPINAL, TURRET, Ginkgo SPINAL, TURRET, Mangala SPINAL, TURRET, Ivanova SPINAL, TURRET, Niagara SPINAL, TURRET, Dardanelles SPINAL, TURRET, Iguazu SPINAL, TURRET, Victoria SPINAL, TURRET, Kaieteur SPINAL, TURRET, TURRET, Angel SPINAL, TURRET <span class="unit">mount kinds</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Catalog data chosen by the game: navy patrol hulls carry one doctrine gun on the keel and one turret, and a model with no entry carries turrets. No source assigns a mount to a hull.</td></tr>
-<tr id="n-47"><th scope="row">Seconds of flight that bound the point defense bands</th><td class="val">15, 40 <span class="unit">seconds</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>A flight under 15 seconds is the joust's close band and over 40 its long band; chosen by the game to match the range bands.</td></tr>
-<tr id="n-48"><th scope="row">Share of what the fight is worth that a side will spend on drones</th><td class="val">0.25 <span class="unit">share</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Authored by the design lead; the bench read a quarter and a half. It is a decision rule and no source covers it.</td></tr>
-<tr id="n-49"><th scope="row">Point defense strength by range band (close, mid, long)</th><td class="val">0.5, 1, 1.6 <span class="unit">multiplier</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/spacewartactic.php">Atomic Rockets, spacewartactic</a>, plenty of time to shoot down incoming projectiles</td><td>The mirror says a long gap gives time to shoot down incoming projectiles; the game turns that into 0.5, 1.0 and 1.6 by band, and the figures are the game's own.</td></tr>
+<tr id="n-1" data-grade="E"><th scope="row">Muzzle speed by mechanism</th><td class="val" data-key="4.0">Coilgun 4, Autocannon 1.5, Railgun 6, Canister 4 <span class="unit">km/s</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/spacegunconvent.php">Atomic Rockets, spacegunconvent</a>, Railguns</td><td>The railgun speed matches the mirror's maximum of about six kilometers per second. The other speeds are chosen to keep the range order between gun types.</td></tr>
+<tr id="n-2" data-grade="E"><th scope="row">Launcher energy that caps an electric gun&#x27;s muzzle speed, by mount size</th><td class="val" data-key="2.0">Micro 2, Light 20, Compact 60, Standard 120, Heavy 250, Superheavy 500 <span class="unit">MJ</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Chosen so the lightest mount keeps full rail speed. Speed follows from kinetic energy, so a heavier round leaves slower from the same energy.</td></tr>
+<tr id="n-3" data-grade="B"><th scope="row">Mass of one round, by mount size</th><td class="val" data-key="0.0001">Micro 0.0001, Light 0.001, Compact 0.006, Standard 0.015, Heavy 0.045, Superheavy 0.118 <span class="unit">t</span></td><td data-key="B"><span class="gradeitem"><span class="grade g-b">B</span>Secondary</span></td><td><a href="https://www.navweaps.com/Weapons/WNUS_Phalanx.php">NavWeaps naval gun pages: rates of fire, round mass, slew rates, drums</a>, Projectile weights in the Phalanx, Bofors, 76 mm and Mark 71 tables</td><td>NavWeaps gives a Phalanx round at 0.10 kg, a Bofors 40 mm round at 0.96 kg, a 76 mm shell at 6.296 kg and a 203 mm shell at 117.8 kg. These match the game's 0.1, 1, 6 and 118 kg for four sizes. The game's 15 kg and 45 kg for its two middle sizes are below the real 31 kg (127 mm) and 90 to 102 kg (155 mm) rounds.</td></tr>
+<tr id="n-4" data-grade="E"><th scope="row">Pellets in one canister shell, by mount size</th><td class="val" data-key="20.0">Micro 20, Light 40, Compact 80, Standard 150, Heavy 250, Superheavy 400 <span class="unit">pellets</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/spacegunintro.php">Atomic Rockets, spacegunintro</a>, Introduction</td><td>Chosen as tens to hundreds of pellets in a shell. The mirror compares a kinetic weapon to a shotgun and gives no pellet count. The sources are silent on this figure.</td></tr>
+<tr id="n-5" data-grade="B"><th scope="row">Power of closing speed that scales a round&#x27;s damage</th><td class="val" data-key="2.0">2 <span class="unit">exponent</span></td><td data-key="B"><span class="gradeitem"><span class="grade g-b">B</span>Secondary</span></td><td><a href="https://www.projectrho.com/public_html/rocket/spacegunconvent.php">Atomic Rockets, spacegunconvent</a>, Robinson&#x27;s First Law of Space Warfare paragraph</td><td>The mirror says kinetic energy, counted in Ricks, scales with the square of velocity.</td></tr>
+<tr id="n-6" data-grade="C"><th scope="row">Power of closing speed that scales a round&#x27;s penetration</th><td class="val" data-key="0.6666666666666666">0.6667 <span class="unit">exponent</span></td><td data-key="C"><span class="gradeitem"><span class="grade g-c">C</span>Derived</span></td><td><a href="https://www.projectrho.com/public_html/rocket/spacewardefense.php">Atomic Rockets, spacewardefense</a>, Section 10: Armor, Damage and Survivability, Tate formula and crater passage</td><td>The page ties crater volume to impact energy and puts depth near the cube root of volume. Energy goes with speed squared, so depth goes with speed to the power two thirds.</td></tr>
+<tr id="n-7" data-grade="B"><th scope="row">Impact speed above which plate hardness fades</th><td class="val" data-key="3.0">3 <span class="unit">km/s</span></td><td data-key="B"><span class="gradeitem"><span class="grade g-b">B</span>Secondary</span></td><td><a href="https://www.projectrho.com/public_html/rocket/spacewardefense.php">Atomic Rockets, spacewardefense</a>, Section 10: Armor, Damage and Survivability, Whipple shield passage</td><td>The mirror says Whipple shields become worthwhile at about 3 km/s, the speed at which projectiles begin to melt on impact.</td></tr>
+<tr id="n-8" data-grade="E"><th scope="row">Multiplier on the radiator clip chance for a canister cloud</th><td class="val" data-key="3.0">3 <span class="unit">times</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/spacegunconvent2.php">Atomic Rockets, spacegunconvent2</a>, Equations, kinetic particle attacks (laser cannon section)</td><td>Chosen so a pellet cloud clips radiators more often than a slug. The mirror says buckshot could puncture radiator tubes and calls the effect unknown. The sources are silent on this figure.</td></tr>
+<tr id="n-9" data-grade="D"><th scope="row">Half-angle a keel gun can lay off the bow, by mount size</th><td class="val" data-key="10.0">Micro 10, Light 8, Compact 6, Standard 4, Heavy 3, Superheavy 2 <span class="unit">deg</span></td><td data-key="D"><span class="gradeitem"><span class="grade g-d">D</span>Analogy</span></td><td><a href="https://www.projectrho.com/public_html/rocket/controldeck.php">Atomic Rockets, controldeck</a>, Gimbaled engines and thrust vectoring</td><td>A NERVA engine pivots up to 3 degrees and thrust vectoring stops near 10 degrees. The game uses those two figures as its limits and chooses the sizes between.</td></tr>
+<tr id="n-10" data-grade="D"><th scope="row">Speed a turret traverses, by mount size</th><td class="val" data-key="90.0">Micro 90, Light 60, Compact 30, Standard 15, Heavy 8, Superheavy 4 <span class="unit">deg/s</span></td><td data-key="D"><span class="gradeitem"><span class="grade g-d">D</span>Analogy</span></td><td><a href="https://www.navweaps.com/Weapons/WNUS_Phalanx.php">NavWeaps naval gun pages: rates of fire, round mass, slew rates, drums</a>, Slew rates in the tables for Phalanx, Bofors, Millennium, 76 mm, Mark 45 and Mark 71</td><td>Real mounts turn at stated rates. Phalanx trains 100 degrees a second, the 40 mm Bofors 85 to 92, the 76 mm Compact 60, the 127 mm Mark 45 30 and the 203 mm Mark 71 30. The game uses 90, 60, 30, 15, 8 and 4 for its six sizes. The two small sizes sit inside the real range. The game turns the heavy sizes slower than the real mounts.</td></tr>
+<tr id="n-11" data-grade="E"><th scope="row">Firings before the rails are spent, by mount size</th><td class="val" data-key="150.0">Micro 150, Light 100, Compact 60, Standard 40, Heavy 25, Superheavy 15 <span class="unit">firings</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td>Design notes: newtonian-combat-direction, Next arc: one set of rules, then the guns&#x27; own physics (coldweld, 2026-09-29)</td><td>The sources put rail life anywhere from about a dozen shots to a goal of 1,000 rounds, so the game chose a life for each size.</td></tr>
+<tr id="n-12" data-grade="E"><th scope="row">Rounds one point defense mount can engage in a second</th><td class="val" data-key="2.0">2 <span class="unit">rounds</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/spacewardefense.php">Atomic Rockets, spacewardefense</a>, Kinetic PD</td><td>Chosen so a stream of rounds can saturate one mount. The mirror gives no engagement rate and says point defense can be saturated. The sources are silent on this figure.</td></tr>
+<tr id="n-13" data-grade="E"><th scope="row">A round is engaged by point defense once it is this close to arriving</th><td class="val" data-key="5.0">5 <span class="unit">s</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/spacewardefense.php">Atomic Rockets, spacewardefense</a>, Kinetic PD</td><td>Chosen as how late point defense engages a round. The mirror gives no engagement window. The sources are silent on this figure.</td></tr>
+<tr id="n-14" data-grade="E"><th scope="row">Reach of point defense against a drone</th><td class="val" data-key="40.0">40 <span class="unit">km</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/spacewardefense.php">Atomic Rockets, spacewardefense</a>, Kinetic PD</td><td>Chosen as the reach of point defense against a drone. The mirror has no kill vehicle figures. The sources are silent on this figure.</td></tr>
+<tr id="n-15" data-grade="E"><th scope="row">Time between a mount&#x27;s tries on one drone</th><td class="val" data-key="5.0">5 <span class="unit">s</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Chosen so a drone at cruise meets several tries from each mount. Before this value a mount had one try. No source gives a retry time.</td></tr>
+<tr id="n-16" data-grade="E"><th scope="row">Tries one mount gets on a drone at cruise speed</th><td class="val" data-key="4.0">4 <span class="unit">tries</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Computed from the reach, the cruise speed and the retry time, which are all chosen. No source gives a try count.</td></tr>
+<tr id="n-17" data-grade="E"><th scope="row">Highest chance one mount stops a drone on one try</th><td class="val" data-key="0.9">0.9 <span class="unit">share</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/spacewardefense.php">Atomic Rockets, spacewardefense</a>, Kinetic PD</td><td>Chosen so a mount never stops a drone for certain. The mirror gives no kill chance for point defense. The sources are silent on this figure.</td></tr>
+<tr id="n-18" data-grade="E"><th scope="row">Drones one operator can steer at once, by skill</th><td class="val" data-key="1.0">rookie 1, seasoned 2, veteran 4 <span class="unit">drones</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td>Design notes: setting-canon, 2. Safeguards</td><td>Chosen: one hand holds one drone until it lands, and higher skill gives more hands. The canon bans self-steering seekers, so a person steers each drone.</td></tr>
+<tr id="n-19" data-grade="E"><th scope="row">Furthest an operator will send a drone</th><td class="val" data-key="300.0">300 <span class="unit">km</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Chosen as the farthest an operator will send a drone. A drone at cruise needs a long time to cover it. No source gives a figure.</td></tr>
+<tr id="n-20" data-grade="E"><th scope="row">Closing speed a drone burns up to, then coasts</th><td class="val" data-key="2.0">2 <span class="unit">km/s</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Chosen so a drone burns up to a speed and then coasts to keep fuel for the last correction. The mirror has no kill vehicle figures.</td></tr>
+<tr id="n-21" data-grade="E"><th scope="row">Time a rack takes to cycle between launches</th><td class="val" data-key="3.0">3 <span class="unit">s</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Chosen as the time a rack needs between launches, far shorter than the time an operator needs to steer a drone.</td></tr>
+<tr id="n-22" data-grade="E"><th scope="row">A drone&#x27;s whole fuel</th><td class="val" data-key="4.0">4 <span class="unit">km/s</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Chosen as a drone's whole fuel, which limits how fast a target can open range. The mirror has no kill vehicle figures.</td></tr>
+<tr id="n-23" data-grade="E"><th scope="row">A drone&#x27;s life before it is lost</th><td class="val" data-key="900.0">900 <span class="unit">s</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Chosen as how long a drone lives before it is lost. The mirror has no kill vehicle figures.</td></tr>
+<tr id="n-24" data-grade="E"><th scope="row">Drone acceleration, by bay size</th><td class="val" data-key="400.0">Micro 400, Light 300, Compact 250, Standard 200, Heavy 150, Superheavy 100 <span class="unit">m/s^2</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Chosen so a small drone is quicker than a big one. The mirror has no kill vehicle figures.</td></tr>
+<tr id="n-25" data-grade="E"><th scope="row">Rounds one firing puts downrange, by mechanism</th><td class="val" data-key="7.0">Coilgun 7, Autocannon 3, Railgun 1, Canister 1 <span class="unit">rounds</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Chosen by the game as a fixed burst per mechanism (coilgun 7, autocannon 3, railgun 1, canister 1 shell), so the sound and the penetration chances count the same rounds; no source sets a burst.</td></tr>
+<tr id="n-26" data-grade="E"><th scope="row">Burst of a gun with no mechanism listed</th><td class="val" data-key="3.0">3 <span class="unit">rounds</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>A fallback chosen by the game, equal to the autocannon burst.</td></tr>
+<tr id="n-27" data-grade="E"><th scope="row">Furthest range band each mechanism can shoot at</th><td class="val" data-key="1.0">Coilgun 1, Autocannon 0, Railgun 2, Canister 1 <span class="unit">band (0 close, 1 mid, 2 long)</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/spacewartactic.php">Atomic Rockets, spacewartactic</a>, the range and fire control discussion</td><td>The railgun is the sniper, the autocannon the brawler and the coilgun between. The notes credit the mirror with the idea that fire control sets the limit; the mirror gives no band for a mechanism. The sources are silent on this figure.</td></tr>
+<tr id="n-28" data-grade="E"><th scope="row">Furthest range band of a gun with no mechanism listed</th><td class="val" data-key="1.0">1 <span class="unit">band</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>A fallback chosen by the game, equal to the coilgun band.</td></tr>
+<tr id="n-29" data-grade="E"><th scope="row">Muzzle speed of a gun with no mechanism listed</th><td class="val" data-key="4.0">4 <span class="unit">km/s</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>A fallback chosen by the game, equal to the coilgun muzzle speed.</td></tr>
+<tr id="n-30" data-grade="E"><th scope="row">Deep stores of rounds, by mechanism (rearmed in port)</th><td class="val" data-key="1100.0">Coilgun 1,100, Autocannon 500, Railgun 200, Canister 160 <span class="unit">rounds</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Sized to 20 to 25 fights each off the measured spend at the 4-round median fight (coilgun about 54 rounds a fight, autocannon about 23, railgun about 8); a measurement of the game, not of a gun.</td></tr>
+<tr id="n-31" data-grade="E"><th scope="row">Deep stores of a gun with no mechanism listed</th><td class="val" data-key="500.0">500 <span class="unit">rounds</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>A fallback chosen by the game, equal to the autocannon stores.</td></tr>
+<tr id="n-32" data-grade="E"><th scope="row">Rounds in the locker at a mount (the ready rounds)</th><td class="val" data-key="50.0">50 <span class="unit">rounds</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Sized off 846 mount-actions across 304 fights: the busiest mount spends a median 35 rounds, p90 56. 40 ran a pass with no kills and 80 never ran in this build.</td></tr>
+<tr id="n-33" data-grade="E"><th scope="row">Mass of a round for a gun with no size listed</th><td class="val" data-key="0.015">0.015 <span class="unit">kg</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>A fallback chosen by the game for a round of unknown size; the sized rounds have their own table.</td></tr>
+<tr id="n-34" data-grade="E"><th scope="row">Hit-chance bonus by hull size for an autocannon</th><td class="val" data-key="-12.0">LIGHT CRAFT -12, MEDIUM CRAFT 0, HEAVY CRAFT 10 <span class="unit">points of hit chance</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Chosen by the game: an autocannon's aim swings with target size, minus 12 against a light craft and plus 10 against a heavy one.</td></tr>
+<tr id="n-35" data-grade="E"><th scope="row">Hit-chance penalty against a dodging target for an autocannon</th><td class="val" data-key="8.0">8 <span class="unit">points of hit chance</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Chosen by the game and used only where no range model applies; the range model's own dodge physics replaces it elsewhere.</td></tr>
+<tr id="n-36" data-grade="E"><th scope="row">Least share of its damage a railgun round drives through armor</th><td class="val" data-key="0.5">0.5 <span class="unit">share</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Chosen by the game so a railgun always drives half its damage through armor that blocks the other guns down to 1; no source sets it.</td></tr>
+<tr id="n-37" data-grade="E"><th scope="row">Caliber by gun size</th><td class="val" data-key="20.0">Micro 20, Light 40, Compact 70, Standard 110, Heavy 160, Superheavy 220 <span class="unit">millimeters</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>The six gun sizes of the game catalog, 20 to 220 millimeters, used to scale ammunition price and the canister fuze; no source orders the sizes.</td></tr>
+<tr id="n-38" data-grade="B"><th scope="row">Point defense rounds per second, by caliber</th><td class="val" data-key="80.0">15 80, 20 75, 25 70, 30 70, 35 17, 40 5.5 <span class="unit">rounds per second</span></td><td data-key="B"><span class="gradeitem"><span class="grade g-b">B</span>Secondary</span></td><td><a href="https://www.navweaps.com/Weapons/WNUS_Phalanx.php">NavWeaps naval gun pages: rates of fire, round mass, slew rates, drums</a>, Rate of fire in the Phalanx, Goalkeeper, Millennium and Bofors tables</td><td>NavWeaps gives Phalanx up to 4,500 rounds per minute (75 a second), Goalkeeper up to 4,200 (70 a second), the 35 mm Millennium 1,000 (17 a second) and the 40 mm Bofors Mark 3 330 (5.5 a second). These match the game's 20, 30, 35 and 40 mm rates. No opened source gives the 15 mm and 25 mm rates. The 25 mm Mark 38 fires only 175 to 200 rounds per minute (search result, not opened), so the game's 70 a second there is a rotary design.</td></tr>
+<tr id="n-39" data-grade="E"><th scope="row">Point defense caliber by mount size</th><td class="val" data-key="15.0">Micro 15, Light 20, Compact 25, Standard 30, Heavy 35, Superheavy 40 <span class="unit">millimeters</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Chosen by the game as a gun caliber for each mount size, 15 to 40 millimeters.</td></tr>
+<tr id="n-40" data-grade="C"><th scope="row">Seconds of fire in a point defense mount&#x27;s own drum</th><td class="val" data-key="20.0">20 <span class="unit">seconds</span></td><td data-key="C"><span class="gradeitem"><span class="grade g-c">C</span>Derived</span></td><td><a href="https://www.navweaps.com/Weapons/WNUS_Phalanx.php">NavWeaps naval gun pages: rates of fire, round mass, slew rates, drums</a>, Drum capacity in the Phalanx and Goalkeeper tables</td><td>Phalanx Block 1 holds 1,550 rounds at 75 a second, which is 20.7 s. Goalkeeper holds 1,190 rounds at 70 a second, which is 17.0 s. The game uses 20 s, inside that range.</td></tr>
+<tr id="n-41" data-grade="C"><th scope="row">Seconds of fire in one point defense engagement</th><td class="val" data-key="1.0">1 <span class="unit">seconds</span></td><td data-key="C"><span class="gradeitem"><span class="grade g-c">C</span>Derived</span></td><td><a href="https://www.navweaps.com/Weapons/WNUS_Phalanx.php">NavWeaps naval gun pages: rates of fire, round mass, slew rates, drums</a>, Burst length in the Phalanx text and the Goalkeeper text</td><td>Phalanx Block 0 fires bursts of 60 or 100 rounds. At 75 a second that is 0.8 to 1.3 s, and the game's 1 s sits inside it. Goalkeeper fires about 0.2 s per engagement, much shorter than the game's.</td></tr>
+<tr id="n-42" data-grade="E"><th scope="row">Drones in the ready rack at a bay</th><td class="val" data-key="2.0">2 <span class="unit">drones</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Chosen by coldweld on 2026-09-18, so a median fight of about four rounds makes the time to launch a decision.</td></tr>
+<tr id="n-43" data-grade="E"><th scope="row">Drones in the bay stores</th><td class="val" data-key="40.0">40 <span class="unit">drones</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Chosen by coldweld on 2026-09-18 as about 20 fights of drones, the same rule as the guns.</td></tr>
+<tr id="n-44" data-grade="E"><th scope="row">Volume of one drone, by bay size</th><td class="val" data-key="0.03">Micro 0.03, Light 0.06, Compact 0.12, Standard 0.25, Heavy 0.5, Superheavy 1 <span class="unit">m^3</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Authored so a full store takes about a tenth of a carrier's hold; the mirror has no kill-vehicle mass (searched 2026-09-18). The sources are silent on this figure.</td></tr>
+<tr id="n-45" data-grade="E"><th scope="row">Mass of one drone, by bay size</th><td class="val" data-key="0.015">Micro 0.015, Light 0.03, Compact 0.06, Standard 0.125, Heavy 0.25, Superheavy 0.5 <span class="unit">tonnes</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Authored with the volume above; the mirror has no kill-vehicle mass (searched 2026-09-18). The sources are silent on this figure.</td></tr>
+<tr id="n-46" data-grade="E"><th scope="row">Keel gun or turret on each weapon slot, by hull model</th><td class="val">Fraxinus SPINAL, TURRET, Quercus SPINAL, TURRET, Tyr SPINAL, TURRET, Nergal SPINAL, TURRET, Szabo SPINAL, TURRET, Brennan SPINAL, TURRET, Sequoia SPINAL, TURRET, Ares SPINAL, TURRET, Kerrigan SPINAL, TURRET, Ginkgo SPINAL, TURRET, Mangala SPINAL, TURRET, Ivanova SPINAL, TURRET, Niagara SPINAL, TURRET, Dardanelles SPINAL, TURRET, Iguazu SPINAL, TURRET, Victoria SPINAL, TURRET, Kaieteur SPINAL, TURRET, TURRET, Angel SPINAL, TURRET <span class="unit">mount kinds</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Catalog data chosen by the game: navy patrol hulls carry one doctrine gun on the keel and one turret, and a model with no entry carries turrets. No source assigns a mount to a hull.</td></tr>
+<tr id="n-47" data-grade="E"><th scope="row">Seconds of flight that bound the point defense bands</th><td class="val" data-key="15.0">15, 40 <span class="unit">seconds</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>A flight under 15 seconds is the joust's close band and over 40 its long band; chosen by the game to match the range bands.</td></tr>
+<tr id="n-48" data-grade="E"><th scope="row">Share of what the fight is worth that a side will spend on drones</th><td class="val" data-key="0.25">0.25 <span class="unit">share</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Authored by the design lead; the bench read a quarter and a half. It is a decision rule and no source covers it.</td></tr>
+<tr id="n-49" data-grade="E"><th scope="row">Point defense strength by range band (close, mid, long)</th><td class="val" data-key="0.5">0.5, 1, 1.6 <span class="unit">multiplier</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/spacewartactic.php">Atomic Rockets, spacewartactic</a>, plenty of time to shoot down incoming projectiles</td><td>The mirror says a long gap gives time to shoot down incoming projectiles; the game turns that into 0.5, 1.0 and 1.6 by band, and the figures are the game's own.</td></tr>
 </tbody></table></div>
-<h2 id="why">Why: the real physics or procedure</h2>
+</div>
+</details>
+<details class="section" id="why">
+<summary><h2>Why: the real physics or procedure</h2><span class="hint">8 points</span></summary>
+<div class="sectionbody">
 <ul>
 <li>A round that hits at 3 km/s carries energy equal to its own mass in TNT.</li>
 <li>Energy grows with the square of speed, so a round at 6 km/s carries four times as much.</li>
@@ -211,7 +281,11 @@ dl.keys dd { margin: .25rem 0 0; max-width: 46rem; }
 <li>A wave of targets can use up the time a defense has, so point defense can be saturated.</li>
 <li>A seeker is a computer in a round, and its range depends on the power the target ship radiates.</li>
 </ul>
-<h2 id="departs">Where the game departs from reality</h2>
+</div>
+</details>
+<details class="section" id="departs">
+<summary><h2>Where the game departs from reality</h2><span class="hint">8 points</span></summary>
+<div class="sectionbody">
 <ul>
 <li>The railgun muzzle speed of 6 km/s is the mirror's figure. The coilgun's 4 km/s and the autocannon's 1.5 km/s are authored to keep the order of ranges between mechanisms. The mirror puts the practical limit of a chemical gun near 1,750 m/s (the Rheinmetall L/55), so the autocannon sits close to that limit (spacegunconvent.php.html).</li>
 <li>The launcher energy budgets are authored so that a Light mount keeps the full rail speed. They cap speed by the rule v = sqrt(2E / m).</li>
@@ -222,19 +296,31 @@ dl.keys dd { margin: .25rem 0 0; max-width: 46rem; }
 <li>Recoil, rail wear and radio lag are simplified. Recoil is not modeled because a railgun shot moves a 6,000 t hull about 0.02 m/s. Rail wear is modeled by mount size with authored numbers. Radio lag to a drone at 300 km is about a millisecond (the arithmetic here, distance over the speed of light) and is ignored.</li>
 <li>The keel gun's lay cone is bracketed by the mirror: a NERVA engine pivots up to 3 degrees and thrust vectoring stops at about 10 degrees (rocket/controldeck.php.html). The steps between sizes are authored.</li>
 </ul>
-<h2 id="silent">Where the sources are silent</h2>
+</div>
+</details>
+<details class="section" id="silent">
+<summary><h2>Where the sources are silent</h2><span class="hint">4 points</span></summary>
+<div class="sectionbody">
 <ul>
 <li>The mirror has no canister figure. The pellet counts, the fuze rule and the cloud width are authored.</li>
 <li>The mirror gives no rate, window or odds for kinetic point defense in a ship fight. The 2 rounds a second and the 5 second window are authored.</li>
 <li>The mirror has no kill-vehicle figures. Every drone number in the game is marked authored for that reason.</li>
 <li>The mirror gives no turn rate for a heavy or railgun mount. The traverse speeds are authored, and a comment in the game says real mounts turn 30 to 115 deg/s.</li>
 </ul>
-<h2 id="inspiration">Inspiration</h2>
+</div>
+</details>
+<details class="section" id="inspiration">
+<summary><h2>Inspiration</h2><span class="hint">2 works</span></summary>
+<div class="sectionbody">
 <ul>
 <li><strong>Phalanx CIWS and the GAU-8 cannon</strong> (real system): a cartridge gun fires in short bursts to spare its barrel</li>
 <li><strong>US Navy electromagnetic railgun</strong> (real system): rail erosion as the critical weakness, so rails wear and are replaced</li>
 </ul>
-<h2 id="sources">Sources</h2>
+</div>
+</details>
+<details class="section" id="sources">
+<summary><h2>Sources</h2><span class="hint">14 documents</span></summary>
+<div class="sectionbody">
 <ul>
 <li><a href="https://www.projectrho.com/public_html/rocket/spacegunconvent.php">Atomic Rockets, spacegunconvent</a>, Equations (Robinson&#x27;s First Law of Space Combat): Robinson's First Law: a round hitting at 3 km/s delivers energy equal to its mass in TNT. The figure scales with the square of speed, so a round at 6 km/s has 4 times as much. "kinetic energy equal to its own mass in TNT" (<a href="sources.html#doc-rocket-spacegunconvent-php-html">all uses</a>)</li>
 <li><a href="https://www.projectrho.com/public_html/rocket/spacegunconvent.php">Atomic Rockets, spacegunconvent</a>, Equations (hypervelocity impact): At or above 3 km/s kinetic energy dominates over momentum, and impacts resemble explosions. The shape of the projectile still changes the result. (<a href="sources.html#doc-rocket-spacegunconvent-php-html">all uses</a>)</li>
@@ -251,11 +337,211 @@ dl.keys dd { margin: .25rem 0 0; max-width: 46rem; }
 <li><a href="https://www.projectrho.com/public_html/rocket/spacewardefense.php">Atomic Rockets, spacewardefense</a>, Armor: A Whipple shield (a spaced bumper) is very effective against hypervelocity weapons. Above 10 km/s closing speed armor matters less than blow-through. (<a href="sources.html#doc-rocket-spacewardefense-php-html">all uses</a>)</li>
 <li>Design notes: setting-canon, 2. Safeguards: Safeguards bans the seeker: a guidance package that steers itself is computing with a weapons path. A drone steered by radio has a person in the loop, so it is legal, which is why a drone rack needs an operator aboard. (<a href="sources.html#doc-docs-notes-setting-canon-md">all uses</a>)</li>
 </ul>
+</div>
+</details>
+<nav aria-label="Other mechanics"><ul class="pager"><li><a href="the-newtonian-fight.html" rel="prev"><span class="dir">Previous</span>The Newtonian fight</a></li><li class="next"><a href="hold-balance-and-the-gimbal.html" rel="next"><span class="dir">Next</span>Hold balance and the gimbal</a></li></ul></nav>
 </main>
 <footer class="stamp">
-<p>Read from game commit f6b8d18d (committed 2026-10-18). Pages written 2026-10-18.
+<p>Read from game commit 24e4f710 (committed 2026-10-18). Pages written 2026-10-18.
 The explanations are stand-in text and may change.</p>
 </footer>
 </div>
+<script>
+(function () {
+  "use strict";
+  var doc = document;
+  function each(list, fn) { Array.prototype.forEach.call(list, fn); }
+  function make(tag, cls, text) {
+    var el = doc.createElement(tag);
+    if (cls) el.className = cls;
+    if (text) el.textContent = text;
+    return el;
+  }
+  function reveal(el) {
+    for (var node = el; node; node = node.parentElement) {
+      if (node.tagName === "DETAILS") node.open = true;
+    }
+  }
+  function target(hash) {
+    try { return doc.getElementById(decodeURIComponent(hash.slice(1))); } catch (e) { return null; }
+  }
+  function followhash() {
+    var el = location.hash && target(location.hash);
+    if (el) { reveal(el); el.scrollIntoView(); }
+  }
+  doc.addEventListener("click", function (event) {
+    var link = event.target.closest && event.target.closest('a[href^="#"]');
+    var el = link && target(link.getAttribute("href"));
+    if (el) reveal(el);
+  });
+  window.addEventListener("hashchange", followhash);
+  window.addEventListener("beforeprint", function () { each(doc.querySelectorAll("details"), function (d) { d.open = true; }); });
+
+  var sections = doc.querySelectorAll("details.section");
+  var holder = doc.querySelector("[data-openall]");
+  if (holder && sections.length > 1) {
+    var toggle = make("button", "openall");
+    toggle.type = "button";
+    var allopen = function () { return Array.prototype.every.call(sections, function (d) { return d.open; }); };
+    var label = function () { toggle.textContent = allopen() ? "Close all sections" : "Open all sections"; };
+    toggle.addEventListener("click", function () {
+      var open = !allopen();
+      each(sections, function (d) { d.open = open; });
+      label();
+    });
+    each(sections, function (d) { d.addEventListener("toggle", label); });
+    label();
+    holder.appendChild(toggle);
+  }
+
+  var params = new URLSearchParams(location.search);
+  each(doc.querySelectorAll("table[data-sort]"), setup);
+  followhash();
+
+  function keyof(row, col) {
+    var cell = row.cells[col];
+    if (!cell) return "";
+    var key = cell.getAttribute("data-key");
+    return key !== null ? key : cell.textContent.trim();
+  }
+
+  function setup(table) {
+    var body = table.tBodies[0], region = table.parentElement;
+    var rows = [], fixed = [], heads = table.tHead.rows[0].cells, current = { col: -1, dir: 1 };
+    each(body.rows, function (row, i) {
+      row.setAttribute("data-order", i);
+      row.searchtext = row.textContent.toLowerCase();
+      (row.hasAttribute("data-fixed") ? fixed : rows).push(row);
+    });
+    table.classList.add("live");
+
+    function paint() {
+      var shown = 0;
+      rows.concat(fixed).forEach(function (row) {
+        if (!row.hidden) { row.classList.toggle("alt", shown % 2 === 1); shown += 1; }
+      });
+      return rows.filter(function (row) { return !row.hidden; }).length;
+    }
+    function order(col, dir, type) {
+      var sorted = rows.slice().sort(function (a, b) {
+        var x = col < 0 ? 0 : keyof(a, col), y = col < 0 ? 0 : keyof(b, col), result = 0;
+        if (col >= 0 && type === "num") {
+          var p = parseFloat(x), q = parseFloat(y);
+          if (isNaN(p) || isNaN(q)) return (isNaN(p) - isNaN(q)) || a.getAttribute("data-order") - b.getAttribute("data-order");
+          result = (p - q) * dir;
+        } else if (col >= 0) {
+          result = String(x).localeCompare(String(y), undefined, { numeric: true, sensitivity: "base" }) * dir;
+        }
+        return result || a.getAttribute("data-order") - b.getAttribute("data-order");
+      });
+      sorted.concat(fixed).forEach(function (row) { body.appendChild(row); });
+      rows = sorted;
+      current = { col: col, dir: dir };
+      each(heads, function (th, i) {
+        if (th.hasAttribute("aria-sort")) th.setAttribute("aria-sort", i === col ? (dir > 0 ? "ascending" : "descending") : "none");
+      });
+      paint();
+    }
+    each(heads, function (th, col) {
+      var type = th.getAttribute("data-type");
+      if (!type) return;
+      var button = make("button", "sort");
+      button.type = "button";
+      while (th.firstChild) button.appendChild(th.firstChild);
+      var arrow = make("span", "arrow");
+      arrow.setAttribute("aria-hidden", "true");
+      button.appendChild(arrow);
+      th.appendChild(button);
+      th.setAttribute("aria-sort", "none");
+      button.addEventListener("click", function () { order(col, current.col === col ? -current.dir : 1, type); });
+    });
+
+    var modes = (table.getAttribute("data-filter") || "").split(" ").filter(Boolean);
+    if (!modes.length) { paint(); return; }
+    var nouns = (table.getAttribute("data-noun") || "row rows").split(" ");
+    var noun = function (n) { return n === 1 ? nouns[0] : nouns[1]; };
+    var tools = make("div", "tools");
+    tools.setAttribute("role", "group");
+    tools.setAttribute("aria-label", "Sort and filter the table");
+    var find = make("label", "find");
+    var input = make("input");
+    input.type = "search";
+    input.autocomplete = "off";
+    input.spellcheck = false;
+    input.placeholder = table.getAttribute("data-placeholder") || "Type a word";
+    find.appendChild(make("span", "", "Find"));
+    find.appendChild(input);
+    tools.appendChild(find);
+    var picked = {}, chips = [];
+    if (modes.indexOf("grade") >= 0) {
+      var group = make("div", "chips");
+      group.setAttribute("role", "group");
+      group.setAttribute("aria-label", "Show only these grades");
+      group.appendChild(make("span", "chipslabel", "Grade"));
+      "ABCDE".split("").forEach(function (letter) {
+        var count = rows.filter(function (row) { return row.getAttribute("data-grade") === letter; }).length;
+        var chip = make("button", "chip", letter + " " + count);
+        chip.type = "button";
+        chip.setAttribute("aria-pressed", "false");
+        chip.setAttribute("aria-label", "Grade " + letter + ", " + count + " " + noun(count));
+        chip.disabled = !count;
+        chip.addEventListener("click", function () {
+          picked[letter] = !picked[letter];
+          chip.setAttribute("aria-pressed", String(picked[letter]));
+          apply();
+        });
+        chip.letter = letter;
+        group.appendChild(chip);
+        chips.push(chip);
+      });
+      tools.appendChild(group);
+    }
+    var reset = make("button", "reset", "Clear the filter and sort");
+    reset.type = "button";
+    var status = make("p", "status");
+    status.setAttribute("aria-live", "polite");
+    tools.appendChild(reset);
+    tools.appendChild(status);
+    region.parentNode.insertBefore(tools, region);
+    var empty = make("p", "empty");
+    region.parentNode.insertBefore(empty, region.nextSibling);
+
+    function apply() {
+      var words = input.value.toLowerCase().split(/\s+/).filter(Boolean);
+      var grades = Object.keys(picked).filter(function (g) { return picked[g]; });
+      rows.forEach(function (row) {
+        var ok = words.every(function (w) { return row.searchtext.indexOf(w) >= 0; });
+        row.hidden = !(ok && (!grades.length || grades.indexOf(row.getAttribute("data-grade")) >= 0));
+      });
+      var active = words.length > 0 || grades.length > 0;
+      fixed.forEach(function (row) { row.hidden = active; });
+      var shown = paint();
+      status.textContent = active ? "Showing " + shown + " of " + rows.length + " " + noun(rows.length) + "." : rows.length + " " + noun(rows.length) + ". Select a column heading to sort.";
+      reset.hidden = !active && current.col < 0;
+      empty.hidden = shown > 0;
+      empty.textContent = "No " + nouns[0] + " matches the filter. Clear the filter to see all " + rows.length + ".";
+    }
+    input.addEventListener("input", apply);
+    reset.addEventListener("click", function () {
+      input.value = "";
+      picked = {};
+      chips.forEach(function (chip) { chip.setAttribute("aria-pressed", "false"); });
+      order(-1, 1, "");
+      apply();
+      input.focus();
+    });
+    each(heads, function (th) {
+      var button = th.querySelector("button.sort");
+      if (button) button.addEventListener("click", function () { reset.hidden = false; });
+    });
+    var want = (params.get("grade") || "").toUpperCase();
+    chips.forEach(function (chip) {
+      if (want.indexOf(chip.letter) >= 0 && !chip.disabled) { picked[chip.letter] = true; chip.setAttribute("aria-pressed", "true"); }
+    });
+    if (params.get("q")) input.value = params.get("q");
+    apply();
+  }
+})();
+</script>
 </body>
 </html>

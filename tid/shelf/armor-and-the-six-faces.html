@@ -18,58 +18,126 @@
   :root { --bg: #0e0903; --panel: #16110a; --rule: #4a4130; --text: #d6cbb6; --muted: #a89f88; --accent: #ffb040; }
 }
 *, *::before, *::after { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; }
-body { margin: 0; background: var(--bg); color: var(--text); font: 1rem/1.65 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; padding: 0 1rem 4rem; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: 1rem; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 1.0625rem/1.65 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; padding: 0 1rem 4rem; }
+::selection { background: var(--accent); color: var(--bg); }
 .skip { position: absolute; left: 1rem; top: -4rem; background: var(--accent); color: var(--bg); padding: .5rem 1rem; z-index: 10; }
 .skip:focus { top: .5rem; }
-.wrap { max-width: 64rem; margin: 0 auto; }
-.mono, h1, h2, h3, caption, th, nav, .brand, .stamp, .grade, .val { font-family: "DM Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
-a { color: var(--accent); text-underline-offset: .2em; }
-a:focus-visible, .region:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.wrap { max-width: 72rem; margin: 0 auto; }
+.mono, h1, h2, h3, caption, th, nav, .brand, .stamp, .grade, .val, .hint, .chip, .chipslabel, .find span, .openall, .pager .dir, summary { font-family: "DM Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+a { color: var(--accent); text-underline-offset: .2em; text-decoration-thickness: 1px; }
+a:hover { text-decoration-thickness: 2px; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
 .top { padding: 2rem 0 1rem; border-bottom: 1px solid var(--rule); }
-.brand { margin: 0 0 .75rem; font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.brand { margin: 0 0 .75rem; font-size: .8rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
 nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .25rem 1.5rem; }
-nav a { display: inline-block; padding: .35rem 0; }
-h1 { font-size: clamp(1.4rem, 5vw, 2rem); line-height: 1.25; margin: 2rem 0 1rem; font-weight: 500; }
-h2 { font-size: 1.5rem; margin: 2.5rem 0 .75rem; padding-top: 1.25rem; border-top: 1px solid var(--rule); font-weight: 500; }
-h3 { font-size: 1.15rem; margin: 1.5rem 0 .5rem; font-weight: 500; }
-p, li { max-width: 46rem; }
-li + li { margin-top: .35rem; }
-code { font-family: "DM Mono", ui-monospace, Consolas, monospace; font-size: .92em; overflow-wrap: anywhere; }
-.lead { font-size: 1.1rem; }
-.note { background: var(--panel); border: 1px solid var(--rule); padding: .75rem 1rem; max-width: 46rem; }
-.region { overflow-x: auto; margin: 1rem 0; border: 1px solid var(--rule); }
-table { border-collapse: collapse; width: 100%; min-width: 40rem; font-size: .92rem; line-height: 1.55; }
-caption { text-align: left; padding: .75rem; font-size: .95rem; color: var(--muted); }
+nav a { display: inline-block; padding: .45rem 0; }
+nav a[aria-current] { color: var(--text); text-decoration: none; border-bottom: 2px solid var(--accent); }
+h1 { font-size: clamp(1.6rem, 4.5vw, 2.25rem); line-height: 1.2; margin: 2.25rem 0 1rem; font-weight: 500; letter-spacing: -.01em; text-wrap: balance; }
+h2 { font-size: 1.5rem; line-height: 1.3; margin: 2.5rem 0 .75rem; font-weight: 500; text-wrap: balance; }
+h3 { font-size: 1.2rem; line-height: 1.35; margin: 1.75rem 0 .5rem; font-weight: 500; }
+p, li, dd { max-width: 40rem; }
+li + li { margin-top: .4rem; }
+code { font-family: "DM Mono", ui-monospace, Consolas, monospace; font-size: .9em; overflow-wrap: anywhere; }
+.lead { font-size: 1.15rem; line-height: 1.6; }
+.note { background: var(--panel); border: 1px solid var(--rule); padding: .75rem 1rem; max-width: 40rem; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; padding: 0; margin: -1px; }
+.glance { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem 1.4rem; margin: 1.5rem 0; padding: .85rem 1rem; background: var(--panel); border: 1px solid var(--rule); font-size: .95rem; }
+.glance p { margin: 0; }
+.glance ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .5rem 1.1rem; }
+.glance li { margin: 0; white-space: nowrap; }
+.toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem 1.5rem; margin: 0 0 1.5rem; }
+.toc { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .25rem 1.25rem; }
+.toc li { margin: 0; }
+.toc a { display: inline-block; padding: .35rem 0; }
+.openall { font-size: .85rem; background: transparent; color: var(--accent); border: 1px solid var(--rule); border-radius: 4px; padding: .45rem .8rem; cursor: pointer; }
+.openall:hover { border-color: var(--accent); }
+details.section { border-top: 1px solid var(--rule); }
+details.section:last-of-type { border-bottom: 1px solid var(--rule); }
+details.section > summary { display: flex; align-items: baseline; flex-wrap: wrap; gap: .25rem .9rem; padding: 1.05rem .25rem; cursor: pointer; list-style: none; }
+details.section > summary::-webkit-details-marker { display: none; }
+details.section > summary::before { content: ""; flex: none; align-self: center; width: .5rem; height: .5rem; border-right: 2px solid var(--accent); border-bottom: 2px solid var(--accent); transform: rotate(-45deg); transition: transform .18s ease-out; }
+details.section[open] > summary::before { transform: translateY(-.15rem) rotate(45deg); }
+details.section > summary h2 { margin: 0; font-size: 1.5rem; }
+details.section > summary:hover h2 { color: var(--accent); }
+.hint { margin-left: auto; color: var(--muted); font-size: .82rem; }
+.sectionbody { padding: 0 0 2rem; }
+.region { overflow-x: auto; margin: .75rem 0 1rem; border: 1px solid var(--rule); scrollbar-color: var(--rule) transparent; }
+table { border-collapse: collapse; width: 100%; min-width: 40rem; font-size: .95rem; line-height: 1.55; font-variant-numeric: tabular-nums; }
+caption { text-align: left; padding: .75rem .85rem; font-size: .9rem; color: var(--muted); }
 caption.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; padding: 0; }
 th, td { text-align: left; vertical-align: top; padding: .7rem .85rem; border-top: 1px solid var(--rule); }
-thead th { background: var(--panel); font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; white-space: nowrap; }
+thead th { background: var(--panel); font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; white-space: nowrap; vertical-align: bottom; }
+thead .sub { display: block; font-size: .78rem; letter-spacing: 0; text-transform: none; color: var(--muted); font-weight: 400; }
 tbody th { font-weight: 500; font-family: inherit; min-width: 11rem; }
-tbody tr:nth-child(even) th, tbody tr:nth-child(even) td { background: var(--panel); }
-td.val { overflow-wrap: anywhere; min-width: 7rem; font-size: .95rem; }
-.unit { display: block; font-size: .8rem; color: var(--muted); overflow-wrap: normal; }
+table:not(.live) tbody tr:nth-child(even) > *, table.live tbody tr.alt > * { background: var(--panel); }
+tbody tr:target > * { background: color-mix(in srgb, var(--accent) 18%, var(--bg)) !important; }
+td.val { overflow-wrap: break-word; min-width: 7rem; font-size: 1rem; }
+.unit { display: block; font-size: .82rem; color: var(--muted); overflow-wrap: normal; }
+.nosource { color: var(--muted); }
 .numbers { min-width: 58rem; }
 .numbers tbody th { min-width: 13rem; width: 20%; }
-.numbers td:nth-child(4) { min-width: 11rem; width: 18%; color: var(--muted); }
+.numbers td:nth-child(4) { min-width: 11rem; width: 18%; }
 .numbers td:nth-child(5) { min-width: 22rem; width: 42%; }
-td.count { text-align: right; font-variant-numeric: tabular-nums; }
+.allnumbers { min-width: 52rem; }
+.allnumbers tbody th { min-width: 14rem; width: 28%; }
+.allnumbers td:nth-child(2) { min-width: 10rem; }
+td.count { text-align: right; }
+.counts thead th:not(:first-child) { text-align: right; }
+.counts tr[data-fixed] > * { border-top: 2px solid var(--rule); font-weight: 600; }
 .uses { min-width: 34rem; }
-details { margin: .5rem 0 1rem; }
-summary { cursor: pointer; padding: .45rem 0; font-family: "DM Mono", ui-monospace, Consolas, monospace; font-size: .85rem; color: var(--accent); }
-summary:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
-.docs { font-size: .9rem; gap: .1rem 1rem; }
+button.sort { all: unset; cursor: pointer; display: inline-flex; align-items: center; gap: .45rem; text-align: left; }
+button.sort:hover { color: var(--accent); }
+button.sort:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+.arrow { flex: none; width: 0; height: 0; border-left: .3rem solid transparent; border-right: .3rem solid transparent; border-top: .38rem solid currentColor; opacity: .35; }
+th[aria-sort="ascending"] .arrow { opacity: 1; transform: rotate(180deg); color: var(--accent); }
+th[aria-sort="descending"] .arrow { opacity: 1; color: var(--accent); }
+.tools { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem 1.5rem; margin: 1rem 0 .5rem; font-size: .9rem; }
+.find { display: flex; align-items: center; gap: .6rem; }
+.find span, .chipslabel { font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.find input { font: inherit; font-size: 1rem; color: var(--text); background: var(--bg); border: 1px solid var(--rule); border-radius: 4px; padding: .45rem .65rem; width: 18rem; max-width: 100%; caret-color: var(--accent); }
+.find input::placeholder { color: var(--muted); opacity: 1; }
+.find input:focus-visible { border-color: var(--accent); }
+.chips { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem; }
+.chip { font-size: .85rem; background: transparent; color: var(--text); border: 1px solid var(--rule); border-radius: 999px; padding: .3rem .75rem; min-height: 2.25rem; cursor: pointer; }
+.chip:hover:not(:disabled) { border-color: var(--accent); }
+.chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+.chip:disabled { opacity: .45; cursor: default; }
+.reset { font: inherit; background: none; border: 0; padding: .3rem 0; color: var(--accent); text-decoration: underline; text-underline-offset: .2em; cursor: pointer; }
+.status { flex-basis: 100%; margin: 0; color: var(--muted); font-size: .88rem; }
+.empty { margin: 0 0 1rem; padding: 1rem; border: 1px dashed var(--rule); color: var(--muted); }
+details.uses { margin: .5rem 0 1rem; }
+details.uses > summary { cursor: pointer; padding: .45rem 0; font-size: .85rem; color: var(--accent); }
 .cited { margin: .25rem 0 .5rem; color: var(--muted); }
-.grade { display: inline-block; border: 2px solid currentColor; border-radius: 4px; min-width: 1.6rem; text-align: center; padding: 0 .3rem; font-weight: 600; margin-right: .4rem; }
+.grade { display: inline-block; border: 2px solid currentColor; border-radius: 4px; min-width: 1.7rem; text-align: center; padding: 0 .3rem; font-weight: 600; line-height: 1.45; margin-right: .45rem; }
+.grade.g-a, .grade.g-b { background: var(--text); border-color: var(--text); color: var(--bg); }
+.grade.g-e { border-width: 1.5px; border-style: dashed; color: var(--muted); }
 .gradeitem { white-space: nowrap; }
 .stamp { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--rule); font-size: .8rem; color: var(--muted); }
-.toc { list-style: none; margin: 0 0 1rem; padding: 0; display: flex; flex-wrap: wrap; gap: .25rem 1.25rem; }
-.toc li { margin: 0; }
-.toc a { display: inline-block; padding: .3rem 0; }
 dl.keys dt { font-weight: 600; margin-top: 1rem; }
-dl.keys dd { margin: .25rem 0 0; max-width: 46rem; }
-@media (max-width: 40rem) { body { padding: 0 1rem 3rem; } th, td { padding: .6rem; } .numbers { min-width: 46rem; } .numbers tbody th { min-width: 8rem; width: auto; } .numbers td.val { min-width: 6.5rem; } .numbers td:nth-child(3) { min-width: 5.5rem; } .gradeitem { white-space: normal; } .numbers .grade { display: block; width: max-content; margin: 0 0 .2rem; } }
-@media (min-width: 40rem) { .numbers tbody th { position: sticky; left: 0; z-index: 1; background: var(--bg); } .numbers tbody tr:nth-child(even) th { background: var(--panel); } }
-@media print { .skip { display: none; } }
+dl.keys dd { margin: .25rem 0 0; }
+.pager { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; margin: 3rem 0 0; padding: 0; list-style: none; }
+.pager li { margin: 0; flex: 1 1 16rem; max-width: 28rem; }
+.pager li.next { margin-left: auto; text-align: right; }
+.pager a { display: block; padding: .8rem 1rem; border: 1px solid var(--rule); text-decoration: none; }
+.pager a:hover { border-color: var(--accent); }
+.pager .dir { display: block; font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+@media (max-width: 40rem) {
+  body { padding: 0 1rem 3rem; font-size: 1rem; }
+  th, td { padding: .6rem; }
+  .hint { margin-left: 1.4rem; flex-basis: 100%; }
+  .find { flex-basis: 100%; }
+  .find input { flex: 1; width: auto; }
+  .chip { min-height: 2.75rem; min-width: 2.75rem; }
+  .numbers { min-width: 46rem; } .numbers tbody th { min-width: 8rem; width: auto; } .numbers td.val { min-width: 6.5rem; } .numbers td:nth-child(3) { min-width: 5.5rem; }
+  .allnumbers { min-width: 40rem; } .allnumbers tbody th { min-width: 9rem; }
+  .numbers .gradeitem, .allnumbers .gradeitem { white-space: normal; } .numbers .grade, .allnumbers .grade { display: block; width: max-content; margin: 0 0 .2rem; }
+}
+@media (min-width: 40rem) {
+  .numbers tbody th, .allnumbers tbody th { position: sticky; left: 0; z-index: 1; background: var(--bg); }
+}
+@media (prefers-reduced-motion: reduce) { details.section > summary::before { transition: none; } }
+@media print { .skip, .tools, .openall, .empty { display: none; } details.section > summary::before { display: none; } }
 </style>
 </head>
 <body>
@@ -79,24 +147,19 @@ dl.keys dd { margin: .25rem 0 0; max-width: 46rem; }
 <p class="brand"><a href="https://coldweld.dev/">Coldweld</a> / The Infinite Diaspora / Reference shelf</p>
 <nav aria-label="Reference shelf"><ul>
 <li><a href="index.html">Mechanics</a></li>
+<li><a href="numbers.html">All numbers</a></li>
 <li><a href="grades.html">Grades</a></li>
 <li><a href="sources.html">Sources</a></li>
 </ul></nav>
 </header>
 <main id="main">
 <h1>Armor and the six faces</h1>
-<ul class="toc">
-<li><a href="#brief">In brief</a></li>
-<li><a href="#does">What the game does</a></li>
-<li><a href="#numbers">The numbers</a></li>
-<li><a href="#why">Why: the real physics or procedure</a></li>
-<li><a href="#departs">Where the game departs from reality</a></li>
-<li><a href="#silent">Where the sources are silent</a></li>
-<li><a href="#sources">Sources</a></li>
-</ul>
-<h2 id="brief">In brief</h2>
 <p class="lead">Armor is plate on the hull that a round must break through before it reaches anything inside. The game gives a hull six faces of plate, each a grid of pools that wear one at a time.</p>
-<h2 id="does">What the game does</h2>
+<div class="glance"><p><strong>42 numbers</strong>, 9 with an outside source</p><ul aria-label="Numbers by grade"><li><span class="grade g-a">A</span>0 <span class="sr">numbers at grade A</span></li><li><span class="grade g-b">B</span>6 <span class="sr">numbers at grade B</span></li><li><span class="grade g-c">C</span>2 <span class="sr">numbers at grade C</span></li><li><span class="grade g-d">D</span>1 <span class="sr">numbers at grade D</span></li><li><span class="grade g-e">E</span>33 <span class="sr">numbers at grade E</span></li></ul></div>
+<div class="toolbar" data-openall></div>
+<details class="section" id="does">
+<summary><h2>What the game does</h2><span class="hint">3 topics</span></summary>
+<div class="sectionbody">
 <h3>Your Six Faces</h3>
 <ul>
 <li>Your hull has six faces: fore, port, starboard, upper, lower and aft.</li>
@@ -123,60 +186,71 @@ dl.keys dd { margin: .25rem 0 0; max-width: 46rem; }
 <li>STEEL is the heaviest plate, then LAMINATE, then CERAMIC. SPRAYED ABLATIVE is the lightest.</li>
 <li>The shipyard gives the weight and the acceleration it leaves before you buy.</li>
 </ul>
-<h2 id="numbers">The numbers</h2>
-<p>39 numbers, read from the game code. 2 grade B, 37 grade E.</p>
+</div>
+</details>
+<details class="section" id="numbers">
+<summary><h2>The numbers</h2><span class="hint">42 numbers: 6 B, 2 C, 1 D, 33 E</span></summary>
+<div class="sectionbody">
+<p>Each value is read from the game code. Sort by any column heading, or filter by grade or by a word.</p>
 <div class="region" role="region" tabindex="0" aria-label="Numbers the game runs for armor and the six faces">
-<table class="numbers">
+<table class="numbers" data-sort="1" data-filter="text grade" data-noun="number numbers" data-placeholder="Quantity, source or word">
 <caption>Numbers the game runs for armor and the six faces</caption>
 <thead><tr>
-<th scope="col">Quantity</th>
-<th scope="col">Value</th>
-<th scope="col">Grade</th>
-<th scope="col">Source</th>
-<th scope="col">Basis</th>
+<th scope="col" data-type="text">Quantity</th>
+<th scope="col" data-type="num">Value</th>
+<th scope="col" data-type="text">Grade</th>
+<th scope="col" data-type="text">Source</th>
+<th scope="col">Why this value</th>
 </tr></thead>
 <tbody>
-<tr id="n-1"><th scope="row">The six faces, in print order</th><td class="val">FORE, PORT, STARBOARD, UPPER, LOWER, AFT <span class="unit">faces</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen so a ship that turns shows a different face to a contact. A box has six faces, and no source sets a count for armor faces.</td></tr>
-<tr id="n-2"><th scope="row">Share of the plate each face gets, in the same order (bow heaviest)</th><td class="val">4, 2, 2, 2, 2, 3 <span class="unit">parts</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/slowerlight3.php">Atomic Rockets, slowerlight3</a>, Dust and near-light travel passage</td><td>Chosen to put the most plate on the bow and the next most aft. The mirror says a dust speck at near-light speed hits like an explosion.</td></tr>
-<tr id="n-3"><th scope="row">Pools along one side of a face</th><td class="val">3 <span class="unit">pools</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/spacewardefense.php">Atomic Rockets, spacewardefense</a>, Section 10: Armor, Damage and Survivability</td><td>Chosen so one round holes one spot of a face and leaves the next spot whole. The mirror has no armor grid. The sources are silent on this figure.</td></tr>
-<tr id="n-4"><th scope="row">Pools in one face</th><td class="val">9 <span class="unit">pools</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Follows from the grid: the number of pools on a face is the grid side times itself.</td></tr>
-<tr id="n-5"><th scope="row">Depth of a fresh pool, as a multiple of its face&#x27;s share</th><td class="val">6 <span class="unit">multiple</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen so a spot of plate is as deep as the whole plate, and a fresh pool can stop more than one matched round.</td></tr>
-<tr id="n-6"><th scope="row">Impact speed where a plate&#x27;s hardness starts to fade</th><td class="val">3 <span class="unit">km/s</span></td><td><span class="gradeitem"><span class="grade">B</span>Secondary</span></td><td><a href="https://www.projectrho.com/public_html/rocket/spacewardefense.php">Atomic Rockets, spacewardefense</a>, Section 10: Armor, Damage and Survivability, Whipple shield passage</td><td>The mirror says Whipple shields become worthwhile at about 3 km/s, the speed at which projectiles begin to melt on impact.</td></tr>
-<tr id="n-7"><th scope="row">Rating a laminate plate reads per point of depth, the anchor of the speed rule</th><td class="val">0.5 <span class="unit">rating per point</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Matches how the plate catalog rates laminate against its depth, so laminate reads its own rating at every speed. No source gives it.</td></tr>
-<tr id="n-8"><th scope="row">Density of each plate material</th><td class="val">ROLLED STEEL 7.85, LAMINATE 4.8, SINTERED CERAMIC 3.21, SPRAYED ABLATIVE 1 <span class="unit">t/m^3</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/spacegunconvent2.php">Atomic Rockets, spacegunconvent2</a>, Radiation shielding materials passage: iron at 7.84 g/cm^3 for steel, tungsten at 19.3 g/cm^3</td><td>Steel and silicon carbide use handbook densities. Laminate mixes silicon carbide with tungsten, about 10 percent by volume. Ablative is chosen. The mirror gives iron and tungsten only.</td></tr>
-<tr id="n-9"><th scope="row">Thickness of one point of plate depth</th><td class="val">0.0001 <span class="unit">m</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/spacewardefense.php">Atomic Rockets, spacewardefense</a>, Section 10: Armor, Damage and Survivability</td><td>Chosen so a median armored hull is about 20 percent slower in laminate. The mirror gives no plate thickness for the game's unit of depth. The sources are silent on this figure.</td></tr>
-<tr id="n-10"><th scope="row">Most a plate reads as leaning, to keep the line-of-sight factor finite</th><td class="val">75 <span class="unit">degrees</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/spacewardefense.php">Atomic Rockets, spacewardefense</a>, Section 10: General Armor Tactics, sloped armor</td><td>The mirror says sloped armor raises effective thickness by the secant of the angle. The game chose the angle where it stops applying the rule.</td></tr>
-<tr id="n-11"><th scope="row">Ceiling a full replate costs, by material</th><td class="val">ROLLED STEEL 0.02, SPRAYED ABLATIVE 0.03, LAMINATE 0.06, SINTERED CERAMIC 0.12 <span class="unit">share of ceiling</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/spacewardefense.php">Atomic Rockets, spacewardefense</a>, Section 10, armor ladder</td><td>Chosen so ceramic is scrap after about eight hard fights and steel outlasts a captain. The mirror ranks how materials fail but gives no repair cost. The sources are silent on this figure.</td></tr>
-<tr id="n-12"><th scope="row">Share of its original depth below which a yard calls a plate scrap</th><td class="val">0.25 <span class="unit">share</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen as the point where no yard will certify a worn plate. No source gives a scrap limit.</td></tr>
-<tr id="n-13"><th scope="row">Angles the helm can turn a face to a contact</th><td class="val">0, 30, 45 <span class="unit">degrees</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/spacegunconvent.php">Atomic Rockets, spacegunconvent</a>, Kinetics: rods and obliquity</td><td>Chosen as the turns a helm can offer. The mirror says a vessel can turn slightly to raise obliquity but gives no angles.</td></tr>
-<tr id="n-14"><th scope="row">Warship hull slopes by face</th><td class="val">FORE 35, PORT 15, STARBOARD 15, UPPER 10, LOWER 10, AFT 0 <span class="unit">degrees</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/spacewardefense.php">Atomic Rockets, spacewardefense</a>, Section 10: General Armor Tactics, sloped armor</td><td>Chosen: warships are wedged, with the steepest slope at the bow. The mirror advises long, thin nosecones for warships and gives no angle for each face.</td></tr>
-<tr id="n-15"><th scope="row">Blunt hull slopes by face (carriers, troop transports, multirole)</th><td class="val">FORE 20, PORT 0, STARBOARD 0, UPPER 0, LOWER 0, AFT 0 <span class="unit">degrees</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/spacewardefense.php">Atomic Rockets, spacewardefense</a>, Section 10: General Armor Tactics, sloped armor</td><td>Chosen: blunt hulls carry a slight bow slope on an otherwise square box. No source gives hull slopes by face. The sources are silent on this figure.</td></tr>
-<tr id="n-16"><th scope="row">Freighter hull slopes by face</th><td class="val">FORE 0, PORT 0, STARBOARD 0, UPPER 0, LOWER 0, AFT 0 <span class="unit">degrees</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/spacewardefense.php">Atomic Rockets, spacewardefense</a>, Section 10: Armor, Damage and Survivability</td><td>Chosen: freighters are built as square boxes with no slope on any face. No source gives hull slopes by face. The sources are silent on this figure.</td></tr>
-<tr id="n-17"><th scope="row">Muzzle speed of an autocannon</th><td class="val">1.5 <span class="unit">km/s</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/spacegunconvent.php">Atomic Rockets, spacegunconvent</a>, Chemical guns paragraph (Rheinmetall L/55 tank gun)</td><td>Chosen below the mirror's practical limit for chemical guns of about 1,750 m/s, to keep the range order between gun types.</td></tr>
-<tr id="n-18"><th scope="row">Muzzle speed of a coilgun</th><td class="val">4 <span class="unit">km/s</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/spacegunconvent.php">Atomic Rockets, spacegunconvent</a>, Coilguns</td><td>Chosen to keep the range order between gun types. The mirror gives no coilgun speed limit and treats 10 km/s as possible but very long.</td></tr>
-<tr id="n-19"><th scope="row">Muzzle speed of a railgun</th><td class="val">6 <span class="unit">km/s</span></td><td><span class="gradeitem"><span class="grade">B</span>Secondary</span></td><td><a href="https://www.projectrho.com/public_html/rocket/spacegunconvent.php">Atomic Rockets, spacegunconvent</a>, Railguns</td><td>The mirror says the maximum velocity of a railgun projectile is about six kilometers per second.</td></tr>
-<tr id="n-20"><th scope="row">Standard laminate plate, rating</th><td class="val">80 <span class="unit">rating</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen for the Standard size: the laminate plate is the balanced line and rates at half its depth, the rule every laminate plate follows.</td></tr>
-<tr id="n-21"><th scope="row">Standard laminate plate, depth</th><td class="val">160 <span class="unit">points</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen for the Standard size: laminate is the balanced line, deeper than ceramic and shallower than ablative.</td></tr>
-<tr id="n-22"><th scope="row">Standard sintered ceramic plate, rating</th><td class="val">105 <span class="unit">rating</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen for the Standard size: ceramic is the hard, shallow line, with the highest rating of the three.</td></tr>
-<tr id="n-23"><th scope="row">Standard sintered ceramic plate, depth</th><td class="val">100 <span class="unit">points</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen for the Standard size: ceramic is the shallowest of the three lines.</td></tr>
-<tr id="n-24"><th scope="row">Standard sprayed ablative plate, rating</th><td class="val">60 <span class="unit">rating</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen for the Standard size: ablative is the soft, deep line, with the lowest rating of the three.</td></tr>
-<tr id="n-25"><th scope="row">Standard sprayed ablative plate, depth</th><td class="val">230 <span class="unit">points</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen for the Standard size: ablative is the deepest of the three lines.</td></tr>
-<tr id="n-26"><th scope="row">Standard rolled steel plate, rating</th><td class="val">48 <span class="unit">rating</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/spacewardefense.php">Atomic Rockets, spacewardefense</a>, Section 10, armor ladder</td><td>Chosen for the Standard size: rolled steel is the improvised rung of the mirror armor ladder, and it rates lower than laminate.</td></tr>
-<tr id="n-27"><th scope="row">Standard rolled steel plate, depth</th><td class="val">178 <span class="unit">points</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen for the Standard size: rolled steel is a little deeper than laminate but rates lower, and its density makes it the heaviest plate.</td></tr>
-<tr id="n-28"><th scope="row">Girth of the hull model, half-girth over length (sets skin area and the target&#x27;s width)</th><td class="val">0.08 <span class="unit">ratio</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen to match the drawn hull shape, a long cylinder. No source gives a hull girth.</td></tr>
-<tr id="n-29"><th scope="row">Length of the median MEDIUM hull, the one anchor the scale uses</th><td class="val">100 <span class="unit">m</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen as the length the menu fight already gives a medium hull. All other hull lengths scale from it.</td></tr>
-<tr id="n-30"><th scope="row">Most a plate can eat, as a share of that weapon&#x27;s own damage</th><td class="val">0.9 <span class="unit">share</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen by the game at 0.90, up from 0.55: at 0.55 a plate was a discount rather than armor, and at 0.90 a matched plate stops a round, with hulls thinned to keep fights the same length.</td></tr>
-<tr id="n-31"><th scope="row">Share of the damage that went through, charged to the far face on exit</th><td class="val">0.25 <span class="unit">share</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen by the game: a round that met no plate is nearly spent when it leaves; no source gives an exit loss.</td></tr>
-<tr id="n-32"><th scope="row">Chance a hit also clips a random installed module</th><td class="val">0.1 <span class="unit">share</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen by the game; it was flat until 2026-09-20 and now rises as the hull is opened, so this is the base.</td></tr>
-<tr id="n-33"><th scope="row">The same chance at the brink of death for the hull</th><td class="val">0.32 <span class="unit">share</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen by the game as the top of the rising chance: the further a hull is opened, the likelier a round finds something that matters.</td></tr>
-<tr id="n-34"><th scope="row">Damage bands: share of the defender&#x27;s whole hull</th><td class="val">0.03, GRAZE, 0.1, BITE, 0.25, SHRED, 0.45, BREACH, 1.01, GUT <span class="unit">share of hull</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Bands chosen by the game at 3, 10, 25 and 45 percent of the target's hull, so one axis reads the weapon and the target size together; no source sets a band.</td></tr>
-<tr id="n-35"><th scope="row">Ship volume per person aboard</th><td class="val">40 <span class="unit">m^3 per person</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The comment names real warships (Nimitz about 37, Burke about 55, Virginia about 33); those figures are recalled and no source was opened, so the 40 is the game's own. The sources are silent on this figure.</td></tr>
-<tr id="n-36"><th scope="row">Area of a person a round can strike</th><td class="val">0.45 <span class="unit">m^2</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The comment averages 0.68 face-on and 0.25 side-on to 0.45; the mirror was searched for a body cross-section and has none (UNVERIFIED as a source). The sources are silent on this figure.</td></tr>
-<tr id="n-37"><th scope="row">Stowage factor: cubic meters of hold per tonne of cargo</th><td class="val">1 <span class="unit">m^3 per tonne</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The comment calls 1.0 the middle of the real range (dense ore under 0.5, general cargo 1.5 to 2); the range is recalled and no source was opened. The sources are silent on this figure.</td></tr>
-<tr id="n-38"><th scope="row">Chance a hit that did not get through still throws shrapnel at the crew</th><td class="val">0.05 <span class="unit">share</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen by the game: penetration kills and a near miss maims. A suit halves it, which measured about one wound in 14 fights.</td></tr>
-<tr id="n-39"><th scope="row">Cargo space wrecked per point of a round&#x27;s penetration</th><td class="val">0.02 <span class="unit">m^3 per point</span></td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/spacewardefense.php">Atomic Rockets, spacewardefense</a>, Whipple shield (the stuffed Whipple passage)</td><td>Authored in days of work: 0.02 wrecks 2 days of freight for a 20 millimeter round and 33 for the heaviest missile, and nothing measures it. The mirror says a packed hold is the filler of a stuffed Whipple shield.</td></tr>
+<tr id="n-1" data-grade="E"><th scope="row">The six faces, in print order</th><td class="val">FORE, PORT, STARBOARD, UPPER, LOWER, AFT <span class="unit">faces</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Chosen so a ship that turns shows a different face to a contact. A box has six faces, and no source sets a count for armor faces.</td></tr>
+<tr id="n-2" data-grade="E"><th scope="row">Share of the plate each face gets, in the same order (bow heaviest)</th><td class="val" data-key="4.0">4, 2, 2, 2, 2, 3 <span class="unit">parts</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/slowerlight3.php">Atomic Rockets, slowerlight3</a>, Dust and near-light travel passage</td><td>Chosen to put the most plate on the bow and the next most aft. The mirror says a dust speck at near-light speed hits like an explosion.</td></tr>
+<tr id="n-3" data-grade="E"><th scope="row">Pools along one side of a face</th><td class="val" data-key="3.0">3 <span class="unit">pools</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/spacewardefense.php">Atomic Rockets, spacewardefense</a>, Section 10: Armor, Damage and Survivability</td><td>Chosen so one round holes one spot of a face and leaves the next spot whole. The mirror has no armor grid. The sources are silent on this figure.</td></tr>
+<tr id="n-4" data-grade="E"><th scope="row">Pools in one face</th><td class="val" data-key="9.0">9 <span class="unit">pools</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Follows from the grid: the number of pools on a face is the grid side times itself.</td></tr>
+<tr id="n-5" data-grade="E"><th scope="row">Depth of a fresh pool, as a multiple of its face&#x27;s share</th><td class="val" data-key="6.0">6 <span class="unit">multiple</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Chosen so a spot of plate is as deep as the whole plate, and a fresh pool can stop more than one matched round.</td></tr>
+<tr id="n-6" data-grade="B"><th scope="row">Impact speed where a plate&#x27;s hardness starts to fade</th><td class="val" data-key="3.0">3 <span class="unit">km/s</span></td><td data-key="B"><span class="gradeitem"><span class="grade g-b">B</span>Secondary</span></td><td><a href="https://www.projectrho.com/public_html/rocket/spacewardefense.php">Atomic Rockets, spacewardefense</a>, Section 10: Armor, Damage and Survivability, Whipple shield passage</td><td>The mirror says Whipple shields become worthwhile at about 3 km/s, the speed at which projectiles begin to melt on impact.</td></tr>
+<tr id="n-7" data-grade="E"><th scope="row">Rating a laminate plate reads per point of depth, the anchor of the speed rule</th><td class="val" data-key="0.5">0.5 <span class="unit">rating per point</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Matches how the plate catalog rates laminate against its depth, so laminate reads its own rating at every speed. No source gives it.</td></tr>
+<tr id="n-8" data-grade="E"><th scope="row">Density of each plate material</th><td class="val" data-key="7.85">ROLLED STEEL 7.85, LAMINATE 4.8, SINTERED CERAMIC 3.21, SPRAYED ABLATIVE 1 <span class="unit">t/m^3</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/spacegunconvent2.php">Atomic Rockets, spacegunconvent2</a>, Radiation shielding materials passage: iron at 7.84 g/cm^3 for steel, tungsten at 19.3 g/cm^3</td><td>Steel and silicon carbide use handbook densities. Laminate mixes silicon carbide with tungsten, about 10 percent by volume. Ablative is chosen. The mirror gives iron and tungsten only.</td></tr>
+<tr id="n-9" data-grade="B"><th scope="row">Density of rolled steel plate</th><td class="val" data-key="7.85">7.85 <span class="unit">t/m^3</span></td><td data-key="B"><span class="gradeitem"><span class="grade g-b">B</span>Secondary</span></td><td><a href="https://www.projectrho.com/public_html/rocket/spacegunconvent2.php">Atomic Rockets, spacegunconvent2</a>, Radiation shielding materials, iron at 7.84 g/cm^3 to simulate steel</td><td>Atomic Rockets says it uses iron at 7.84 g/cm^3 to simulate steel. The game uses 7.85 t/m^3, 0.01 above the page.</td></tr>
+<tr id="n-10" data-grade="B"><th scope="row">Density of sintered ceramic plate (silicon carbide)</th><td class="val" data-key="3.21">3.21 <span class="unit">t/m^3</span></td><td data-key="B"><span class="gradeitem"><span class="grade g-b">B</span>Secondary</span></td><td><a href="https://en.wikipedia.org/wiki/Silicon_carbide">Wikipedia, Silicon carbide: density of the common polytypes</a>, Properties of major SiC polytypes table</td><td>Wikipedia gives 3.21 g/cm^3 for the common silicon carbide polytypes, the game's value. The table cites the Ioffe Institute page (not opened). The figure is for the crystal, so a porous sintered plate would be lighter.</td></tr>
+<tr id="n-11" data-grade="C"><th scope="row">Density of laminate plate (silicon carbide with tungsten)</th><td class="val" data-key="4.8">4.8 <span class="unit">t/m^3</span></td><td data-key="C"><span class="gradeitem"><span class="grade g-c">C</span>Derived</span></td><td><a href="https://en.wikipedia.org/wiki/Silicon_carbide">Wikipedia, Silicon carbide: density of the common polytypes</a>, Properties of major SiC polytypes table; tungsten from the Atomic Rockets shielding page</td><td>The game mixes about 10 percent tungsten by volume into the ceramic. With tungsten at 19.3 g/cm^3 (Atomic Rockets) and the ceramic at 3.21 g/cm^3, 0.9 x 3.21 + 0.1 x 19.3 = 4.82 t/m^3. The game uses 4.8. The 10 percent is the game choice.</td></tr>
+<tr id="n-12" data-grade="E"><th scope="row">Thickness of one point of plate depth</th><td class="val" data-key="0.00015">0.0001 <span class="unit">m</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/spacewardefense.php">Atomic Rockets, spacewardefense</a>, Section 10: Armor, Damage and Survivability</td><td>Chosen so a median armored hull is about 20 percent slower in laminate. The mirror gives no plate thickness for the game's unit of depth. The sources are silent on this figure.</td></tr>
+<tr id="n-13" data-grade="E"><th scope="row">Most a plate reads as leaning, to keep the line-of-sight factor finite</th><td class="val" data-key="75.0">75 <span class="unit">degrees</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/spacewardefense.php">Atomic Rockets, spacewardefense</a>, Section 10: General Armor Tactics, sloped armor</td><td>The mirror says sloped armor raises effective thickness by the secant of the angle. The game chose the angle where it stops applying the rule.</td></tr>
+<tr id="n-14" data-grade="E"><th scope="row">Ceiling a full replate costs, by material</th><td class="val" data-key="0.02">ROLLED STEEL 0.02, SPRAYED ABLATIVE 0.03, LAMINATE 0.06, SINTERED CERAMIC 0.12 <span class="unit">share of ceiling</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/spacewardefense.php">Atomic Rockets, spacewardefense</a>, Section 10, armor ladder</td><td>Chosen so ceramic is scrap after about eight hard fights and steel outlasts a captain. The mirror ranks how materials fail but gives no repair cost. The sources are silent on this figure.</td></tr>
+<tr id="n-15" data-grade="E"><th scope="row">Share of its original depth below which a yard calls a plate scrap</th><td class="val" data-key="0.25">0.25 <span class="unit">share</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Chosen as the point where no yard will certify a worn plate. No source gives a scrap limit.</td></tr>
+<tr id="n-16" data-grade="E"><th scope="row">Angles the helm can turn a face to a contact</th><td class="val" data-key="0.0">0, 30, 45 <span class="unit">degrees</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/spacegunconvent.php">Atomic Rockets, spacegunconvent</a>, Kinetics: rods and obliquity</td><td>Chosen as the turns a helm can offer. The mirror says a vessel can turn slightly to raise obliquity but gives no angles.</td></tr>
+<tr id="n-17" data-grade="E"><th scope="row">Warship hull slopes by face</th><td class="val" data-key="35.0">FORE 35, PORT 15, STARBOARD 15, UPPER 10, LOWER 10, AFT 0 <span class="unit">degrees</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/spacewardefense.php">Atomic Rockets, spacewardefense</a>, Section 10: General Armor Tactics, sloped armor</td><td>Chosen: warships are wedged, with the steepest slope at the bow. The mirror advises long, thin nosecones for warships and gives no angle for each face.</td></tr>
+<tr id="n-18" data-grade="E"><th scope="row">Blunt hull slopes by face (carriers, troop transports, multirole)</th><td class="val" data-key="20.0">FORE 20, PORT 0, STARBOARD 0, UPPER 0, LOWER 0, AFT 0 <span class="unit">degrees</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/spacewardefense.php">Atomic Rockets, spacewardefense</a>, Section 10: General Armor Tactics, sloped armor</td><td>Chosen: blunt hulls carry a slight bow slope on an otherwise square box. No source gives hull slopes by face. The sources are silent on this figure.</td></tr>
+<tr id="n-19" data-grade="E"><th scope="row">Freighter hull slopes by face</th><td class="val" data-key="0.0">FORE 0, PORT 0, STARBOARD 0, UPPER 0, LOWER 0, AFT 0 <span class="unit">degrees</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/spacewardefense.php">Atomic Rockets, spacewardefense</a>, Section 10: Armor, Damage and Survivability</td><td>Chosen: freighters are built as square boxes with no slope on any face. No source gives hull slopes by face. The sources are silent on this figure.</td></tr>
+<tr id="n-20" data-grade="B"><th scope="row">Muzzle speed of an autocannon</th><td class="val" data-key="1.5">1.5 <span class="unit">km/s</span></td><td data-key="B"><span class="gradeitem"><span class="grade g-b">B</span>Secondary</span></td><td><a href="https://www.navweaps.com/Weapons/WNUS_Phalanx.php">NavWeaps naval gun pages: rates of fire, round mass, slew rates, drums</a>, Muzzle velocity in the Phalanx, Goalkeeper, Bofors and Millennium tables; Atomic Rockets chemical gun paragraph</td><td>Atomic Rockets gives about 1,750 m/s as the practical limit for chemical guns. NavWeaps gives real autocannon rounds at 1.0 to 1.44 km/s (Phalanx 1,113 m/s, Goalkeeper 983 to 1,225, Millennium 1,050 to 1,440). The game's 1.5 km/s is just above the fastest real autocannon round and below the limit.</td></tr>
+<tr id="n-21" data-grade="E"><th scope="row">Muzzle speed of a coilgun</th><td class="val" data-key="4.0">4 <span class="unit">km/s</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/spacegunconvent.php">Atomic Rockets, spacegunconvent</a>, Coilguns</td><td>Chosen to keep the range order between gun types. The mirror gives no coilgun speed limit and treats 10 km/s as possible but very long.</td></tr>
+<tr id="n-22" data-grade="B"><th scope="row">Muzzle speed of a railgun</th><td class="val" data-key="6.0">6 <span class="unit">km/s</span></td><td data-key="B"><span class="gradeitem"><span class="grade g-b">B</span>Secondary</span></td><td><a href="https://www.projectrho.com/public_html/rocket/spacegunconvent.php">Atomic Rockets, spacegunconvent</a>, Railguns</td><td>The mirror says the maximum velocity of a railgun projectile is about six kilometers per second.</td></tr>
+<tr id="n-23" data-grade="E"><th scope="row">Standard laminate plate, rating</th><td class="val" data-key="80.0">80 <span class="unit">rating</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Chosen for the Standard size: the laminate plate is the balanced line and rates at half its depth, the rule every laminate plate follows.</td></tr>
+<tr id="n-24" data-grade="E"><th scope="row">Standard laminate plate, depth</th><td class="val" data-key="160.0">160 <span class="unit">points</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Chosen for the Standard size: laminate is the balanced line, deeper than ceramic and shallower than ablative.</td></tr>
+<tr id="n-25" data-grade="E"><th scope="row">Standard sintered ceramic plate, rating</th><td class="val" data-key="105.0">105 <span class="unit">rating</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Chosen for the Standard size: ceramic is the hard, shallow line, with the highest rating of the three.</td></tr>
+<tr id="n-26" data-grade="E"><th scope="row">Standard sintered ceramic plate, depth</th><td class="val" data-key="100.0">100 <span class="unit">points</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Chosen for the Standard size: ceramic is the shallowest of the three lines.</td></tr>
+<tr id="n-27" data-grade="E"><th scope="row">Standard sprayed ablative plate, rating</th><td class="val" data-key="60.0">60 <span class="unit">rating</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Chosen for the Standard size: ablative is the soft, deep line, with the lowest rating of the three.</td></tr>
+<tr id="n-28" data-grade="E"><th scope="row">Standard sprayed ablative plate, depth</th><td class="val" data-key="230.0">230 <span class="unit">points</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Chosen for the Standard size: ablative is the deepest of the three lines.</td></tr>
+<tr id="n-29" data-grade="E"><th scope="row">Standard rolled steel plate, rating</th><td class="val" data-key="48.0">48 <span class="unit">rating</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/spacewardefense.php">Atomic Rockets, spacewardefense</a>, Section 10, armor ladder</td><td>Chosen for the Standard size: rolled steel is the improvised rung of the mirror armor ladder, and it rates lower than laminate.</td></tr>
+<tr id="n-30" data-grade="E"><th scope="row">Standard rolled steel plate, depth</th><td class="val" data-key="178.0">178 <span class="unit">points</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Chosen for the Standard size: rolled steel is a little deeper than laminate but rates lower, and its density makes it the heaviest plate.</td></tr>
+<tr id="n-31" data-grade="E"><th scope="row">Girth of the hull model, half-girth over length (sets skin area and the target&#x27;s width)</th><td class="val" data-key="0.08">0.08 <span class="unit">ratio</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Chosen to match the drawn hull shape, a long cylinder. No source gives a hull girth.</td></tr>
+<tr id="n-32" data-grade="E"><th scope="row">Length of the median MEDIUM hull, the one anchor the scale uses</th><td class="val" data-key="100.0">100 <span class="unit">m</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Chosen as the length the menu fight already gives a medium hull. All other hull lengths scale from it.</td></tr>
+<tr id="n-33" data-grade="E"><th scope="row">Most a plate can eat, as a share of that weapon&#x27;s own damage</th><td class="val" data-key="0.9">0.9 <span class="unit">share</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Chosen by the game at 0.90, up from 0.55: at 0.55 a plate was a discount rather than armor, and at 0.90 a matched plate stops a round, with hulls thinned to keep fights the same length.</td></tr>
+<tr id="n-34" data-grade="E"><th scope="row">Share of the damage that went through, charged to the far face on exit</th><td class="val" data-key="0.25">0.25 <span class="unit">share</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Chosen by the game: a round that met no plate is nearly spent when it leaves; no source gives an exit loss.</td></tr>
+<tr id="n-35" data-grade="E"><th scope="row">Chance a hit also clips a random installed module</th><td class="val" data-key="0.1">0.1 <span class="unit">share</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Chosen by the game; it was flat until 2026-09-20 and now rises as the hull is opened, so this is the base.</td></tr>
+<tr id="n-36" data-grade="E"><th scope="row">The same chance at the brink of death for the hull</th><td class="val" data-key="0.32">0.32 <span class="unit">share</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Chosen by the game as the top of the rising chance: the further a hull is opened, the likelier a round finds something that matters.</td></tr>
+<tr id="n-37" data-grade="E"><th scope="row">Damage bands: share of the defender&#x27;s whole hull</th><td class="val" data-key="0.03">0.03, GRAZE, 0.1, BITE, 0.25, SHRED, 0.45, BREACH, 1.01, GUT <span class="unit">share of hull</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Bands chosen by the game at 3, 10, 25 and 45 percent of the target's hull, so one axis reads the weapon and the target size together; no source sets a band.</td></tr>
+<tr id="n-38" data-grade="D"><th scope="row">Ship volume per person aboard</th><td class="val" data-key="40.0">40 <span class="unit">m^3 per person</span></td><td data-key="D"><span class="gradeitem"><span class="grade g-d">D</span>Analogy</span></td><td><a href="https://en.wikipedia.org/wiki/Virginia-class_submarine">Wikipedia, warship displacement and crew: volume per person</a>, infobox displacement and complement of three classes</td><td>Wikipedia gives displacement and crew for three warship classes. Displaced volume per person is 16.5 m^3 (Nimitz), 29.3 m^3 (Arleigh Burke) and 57.1 m^3 (Virginia). The game's 40 m^3 lies inside that spread. The recalled figures in the game comment do not reproduce, and displaced volume is only the part below the waterline. The cited sources for the infobox figures were not opened.</td></tr>
+<tr id="n-39" data-grade="C"><th scope="row">Area of a person a round can strike</th><td class="val" data-key="0.45">0.45 <span class="unit">m^2</span></td><td data-key="C"><span class="gradeitem"><span class="grade g-c">C</span>Derived</span></td><td><a href="https://www.nasa.gov/wp-content/uploads/2020/10/2022-04-08_nasa-std-3001_vol_2_rev_c_final.pdf">NASA-STD-3001 Volume 2: crew health, the habitable atmosphere and pressure change</a>, Appendix F, F.4, Table 44, body surface area</td><td>The standard gives crew body surface area as 13,831 to 24,282 cm^2, so 1.38 to 2.43 m^2. The mean area seen from all directions of a convex body is one quarter of its surface area. That gives 0.35 to 0.61 m^2, and 0.48 m^2 at the middle of the range. The game value of 0.45 m^2 sits inside the range. A person is not convex, so this is an estimate.</td></tr>
+<tr id="n-40" data-grade="B"><th scope="row">Stowage factor: cubic meters of hold per tonne of cargo</th><td class="val" data-key="1.0">1 <span class="unit">m^3 per tonne</span></td><td data-key="B"><span class="gradeitem"><span class="grade g-b">B</span>Secondary</span></td><td><a href="https://en.wikipedia.org/wiki/Stowage_factor">Stowage factor: hold volume per tonne of cargo</a>, table of typical stowage factors</td><td>Wikipedia and a ship maker's encyclopedia list stowage factors: iron ore 0.4 to 0.5, coal 1.2 to 1.4, grain 1.2 to 2.0 m^3 per tonne. Wikipedia cites a maritime economics textbook for its table (not opened). The game's 1.0 sits between dense ore and coal. The comment's general cargo range of 1.5 to 2 is not stated by either page.</td></tr>
+<tr id="n-41" data-grade="E"><th scope="row">Chance a hit that did not get through still throws shrapnel at the crew</th><td class="val" data-key="0.05">0.05 <span class="unit">share</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Chosen by the game: penetration kills and a near miss maims. A suit halves it, which measured about one wound in 14 fights.</td></tr>
+<tr id="n-42" data-grade="E"><th scope="row">Cargo space wrecked per point of a round&#x27;s penetration</th><td class="val" data-key="0.02">0.02 <span class="unit">m^3 per point</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/spacewardefense.php">Atomic Rockets, spacewardefense</a>, Whipple shield (the stuffed Whipple passage)</td><td>Authored in days of work: 0.02 wrecks 2 days of freight for a 20 millimeter round and 33 for the heaviest missile, and nothing measures it. The mirror says a packed hold is the filler of a stuffed Whipple shield.</td></tr>
 </tbody></table></div>
-<h2 id="why">Why: the real physics or procedure</h2>
+</div>
+</details>
+<details class="section" id="why">
+<summary><h2>Why: the real physics or procedure</h2><span class="hint">7 points</span></summary>
+<div class="sectionbody">
 <ul>
 <li>A fast round meets a plate differently from a slow one, because above about 3 km/s the round begins to melt on impact.</li>
 <li>At that speed the round and the plate both flow like a fluid, so strength matters less and density matters more.</li>
@@ -186,7 +260,11 @@ dl.keys dd { margin: .25rem 0 0; max-width: 46rem; }
 <li>A sloped plate is hit at an angle, so the round must cross more plate. A ship that turns to raise the angle cuts the penetration.</li>
 <li>A plate has mass, and the drive must push every kilogram, so designers always look for ways to save mass.</li>
 </ul>
-<h2 id="departs">Where the game departs from reality</h2>
+</div>
+</details>
+<details class="section" id="departs">
+<summary><h2>Where the game departs from reality</h2><span class="hint">11 points</span></summary>
+<div class="sectionbody">
 <ul>
 <li>A plate is one layer, so the game has no Whipple shield or standoff gap. It models the speed effect by fading hardness and leaning on mass per area.</li>
 <li>The fade starts at 3 km/s, the mirror's melt line, by coldweld's call on 2026-10-04, over the 1.5 km/s the arc first planned.</li>
@@ -200,7 +278,11 @@ dl.keys dd { margin: .25rem 0 0; max-width: 46rem; }
 <li>A material differs by how it fails and how a yard mends it: steel welds back almost whole, ceramic spalls and patches poorly. The loss fractions are chosen so ceramic is scrap after about eight hard fights.</li>
 <li>The bow carries the most plate, with shares of 4, 2, 2, 2, 2, 3 in print order, for the dust reason in the mirror and because the drive sits aft.</li>
 </ul>
-<h2 id="silent">Where the sources are silent</h2>
+</div>
+</details>
+<details class="section" id="silent">
+<summary><h2>Where the sources are silent</h2><span class="hint">6 points</span></summary>
+<div class="sectionbody">
 <ul>
 <li>The mirror gives no density for any of the four plate materials. The game's steel and silicon carbide densities are handbook figures, and laminate and ablative are chosen.</li>
 <li>The mirror names the 3 to 7 km/s band where a Whipple shield works best, and gives no curve for how hardness fades inside it.</li>
@@ -209,7 +291,11 @@ dl.keys dd { margin: .25rem 0 0; max-width: 46rem; }
 <li>The Los Alamos paper behind the areal-density rule is not found, so its limits are unknown (rocket/spacewardefense.php.html).</li>
 <li>No source says how thick a plate on a game ship is. The 'point of depth' is a game unit.</li>
 </ul>
-<h2 id="sources">Sources</h2>
+</div>
+</details>
+<details class="section" id="sources">
+<summary><h2>Sources</h2><span class="hint">9 documents</span></summary>
+<div class="sectionbody">
 <ul>
 <li><a href="https://www.projectrho.com/public_html/rocket/spacewardefense.php">Atomic Rockets, spacewardefense</a>, Section 10: Armor, Damage and Survivability, Whipple shield passage: Whipple shields start to become worthwhile at about 3 km/s, when projectiles begin to melt on impact. They are most efficient at 7 km/s, and above that the projectile vaporizes, which is less effective but still far better than solid plate of the same mass. (<a href="sources.html#doc-rocket-spacewardefense-php-html">all uses</a>)</li>
 <li><a href="https://www.projectrho.com/public_html/rocket/spacewardefense.php">Atomic Rockets, spacewardefense</a>, Section 10, standoff and Orbital Debris citation: At typical orbital-debris speeds, a Whipple shield protects as well as a single barrier 10 to 20 times as massive. The page cites 'Orbital Debris: A Technical Assessment', p. 124. (<a href="sources.html#doc-rocket-spacewardefense-php-html">all uses</a>)</li>
@@ -221,11 +307,211 @@ dl.keys dd { margin: .25rem 0 0; max-width: 46rem; }
 <li><a href="https://www.projectrho.com/public_html/rocket/spacegunconvent.php">Atomic Rockets, spacegunconvent</a>, Whipple shield and standoff: There must be enough standoff between the Whipple shield and the main armor, or the inner plate is hit by a concentrated cloud of fragments and penetrated. The page says there is almost no test data above about 10 km/s. (<a href="sources.html#doc-rocket-spacegunconvent-php-html">all uses</a>)</li>
 <li><a href="https://www.projectrho.com/public_html/rocket/basicdesign.php">Atomic Rockets, basicdesign</a>, Section before &#x27;Everything Is Connected&#x27;: Mass is the main cost of a rocket ship, so designers look for ways to conserve it. A station can use heavy iron, but a rocket vehicle uses light metals. "always looking for ways to conserve mass" (<a href="sources.html#doc-rocket-basicdesign-php-html">all uses</a>)</li>
 </ul>
+</div>
+</details>
+<nav aria-label="Other mechanics"><ul class="pager"><li><a href="fire-and-damage-control.html" rel="prev"><span class="dir">Previous</span>Fire and damage control</a></li><li class="next"><a href="heat-and-radiators.html" rel="next"><span class="dir">Next</span>Heat and radiators</a></li></ul></nav>
 </main>
 <footer class="stamp">
-<p>Read from game commit f6b8d18d (committed 2026-10-18). Pages written 2026-10-18.
+<p>Read from game commit 24e4f710 (committed 2026-10-18). Pages written 2026-10-18.
 The explanations are stand-in text and may change.</p>
 </footer>
 </div>
+<script>
+(function () {
+  "use strict";
+  var doc = document;
+  function each(list, fn) { Array.prototype.forEach.call(list, fn); }
+  function make(tag, cls, text) {
+    var el = doc.createElement(tag);
+    if (cls) el.className = cls;
+    if (text) el.textContent = text;
+    return el;
+  }
+  function reveal(el) {
+    for (var node = el; node; node = node.parentElement) {
+      if (node.tagName === "DETAILS") node.open = true;
+    }
+  }
+  function target(hash) {
+    try { return doc.getElementById(decodeURIComponent(hash.slice(1))); } catch (e) { return null; }
+  }
+  function followhash() {
+    var el = location.hash && target(location.hash);
+    if (el) { reveal(el); el.scrollIntoView(); }
+  }
+  doc.addEventListener("click", function (event) {
+    var link = event.target.closest && event.target.closest('a[href^="#"]');
+    var el = link && target(link.getAttribute("href"));
+    if (el) reveal(el);
+  });
+  window.addEventListener("hashchange", followhash);
+  window.addEventListener("beforeprint", function () { each(doc.querySelectorAll("details"), function (d) { d.open = true; }); });
+
+  var sections = doc.querySelectorAll("details.section");
+  var holder = doc.querySelector("[data-openall]");
+  if (holder && sections.length > 1) {
+    var toggle = make("button", "openall");
+    toggle.type = "button";
+    var allopen = function () { return Array.prototype.every.call(sections, function (d) { return d.open; }); };
+    var label = function () { toggle.textContent = allopen() ? "Close all sections" : "Open all sections"; };
+    toggle.addEventListener("click", function () {
+      var open = !allopen();
+      each(sections, function (d) { d.open = open; });
+      label();
+    });
+    each(sections, function (d) { d.addEventListener("toggle", label); });
+    label();
+    holder.appendChild(toggle);
+  }
+
+  var params = new URLSearchParams(location.search);
+  each(doc.querySelectorAll("table[data-sort]"), setup);
+  followhash();
+
+  function keyof(row, col) {
+    var cell = row.cells[col];
+    if (!cell) return "";
+    var key = cell.getAttribute("data-key");
+    return key !== null ? key : cell.textContent.trim();
+  }
+
+  function setup(table) {
+    var body = table.tBodies[0], region = table.parentElement;
+    var rows = [], fixed = [], heads = table.tHead.rows[0].cells, current = { col: -1, dir: 1 };
+    each(body.rows, function (row, i) {
+      row.setAttribute("data-order", i);
+      row.searchtext = row.textContent.toLowerCase();
+      (row.hasAttribute("data-fixed") ? fixed : rows).push(row);
+    });
+    table.classList.add("live");
+
+    function paint() {
+      var shown = 0;
+      rows.concat(fixed).forEach(function (row) {
+        if (!row.hidden) { row.classList.toggle("alt", shown % 2 === 1); shown += 1; }
+      });
+      return rows.filter(function (row) { return !row.hidden; }).length;
+    }
+    function order(col, dir, type) {
+      var sorted = rows.slice().sort(function (a, b) {
+        var x = col < 0 ? 0 : keyof(a, col), y = col < 0 ? 0 : keyof(b, col), result = 0;
+        if (col >= 0 && type === "num") {
+          var p = parseFloat(x), q = parseFloat(y);
+          if (isNaN(p) || isNaN(q)) return (isNaN(p) - isNaN(q)) || a.getAttribute("data-order") - b.getAttribute("data-order");
+          result = (p - q) * dir;
+        } else if (col >= 0) {
+          result = String(x).localeCompare(String(y), undefined, { numeric: true, sensitivity: "base" }) * dir;
+        }
+        return result || a.getAttribute("data-order") - b.getAttribute("data-order");
+      });
+      sorted.concat(fixed).forEach(function (row) { body.appendChild(row); });
+      rows = sorted;
+      current = { col: col, dir: dir };
+      each(heads, function (th, i) {
+        if (th.hasAttribute("aria-sort")) th.setAttribute("aria-sort", i === col ? (dir > 0 ? "ascending" : "descending") : "none");
+      });
+      paint();
+    }
+    each(heads, function (th, col) {
+      var type = th.getAttribute("data-type");
+      if (!type) return;
+      var button = make("button", "sort");
+      button.type = "button";
+      while (th.firstChild) button.appendChild(th.firstChild);
+      var arrow = make("span", "arrow");
+      arrow.setAttribute("aria-hidden", "true");
+      button.appendChild(arrow);
+      th.appendChild(button);
+      th.setAttribute("aria-sort", "none");
+      button.addEventListener("click", function () { order(col, current.col === col ? -current.dir : 1, type); });
+    });
+
+    var modes = (table.getAttribute("data-filter") || "").split(" ").filter(Boolean);
+    if (!modes.length) { paint(); return; }
+    var nouns = (table.getAttribute("data-noun") || "row rows").split(" ");
+    var noun = function (n) { return n === 1 ? nouns[0] : nouns[1]; };
+    var tools = make("div", "tools");
+    tools.setAttribute("role", "group");
+    tools.setAttribute("aria-label", "Sort and filter the table");
+    var find = make("label", "find");
+    var input = make("input");
+    input.type = "search";
+    input.autocomplete = "off";
+    input.spellcheck = false;
+    input.placeholder = table.getAttribute("data-placeholder") || "Type a word";
+    find.appendChild(make("span", "", "Find"));
+    find.appendChild(input);
+    tools.appendChild(find);
+    var picked = {}, chips = [];
+    if (modes.indexOf("grade") >= 0) {
+      var group = make("div", "chips");
+      group.setAttribute("role", "group");
+      group.setAttribute("aria-label", "Show only these grades");
+      group.appendChild(make("span", "chipslabel", "Grade"));
+      "ABCDE".split("").forEach(function (letter) {
+        var count = rows.filter(function (row) { return row.getAttribute("data-grade") === letter; }).length;
+        var chip = make("button", "chip", letter + " " + count);
+        chip.type = "button";
+        chip.setAttribute("aria-pressed", "false");
+        chip.setAttribute("aria-label", "Grade " + letter + ", " + count + " " + noun(count));
+        chip.disabled = !count;
+        chip.addEventListener("click", function () {
+          picked[letter] = !picked[letter];
+          chip.setAttribute("aria-pressed", String(picked[letter]));
+          apply();
+        });
+        chip.letter = letter;
+        group.appendChild(chip);
+        chips.push(chip);
+      });
+      tools.appendChild(group);
+    }
+    var reset = make("button", "reset", "Clear the filter and sort");
+    reset.type = "button";
+    var status = make("p", "status");
+    status.setAttribute("aria-live", "polite");
+    tools.appendChild(reset);
+    tools.appendChild(status);
+    region.parentNode.insertBefore(tools, region);
+    var empty = make("p", "empty");
+    region.parentNode.insertBefore(empty, region.nextSibling);
+
+    function apply() {
+      var words = input.value.toLowerCase().split(/\s+/).filter(Boolean);
+      var grades = Object.keys(picked).filter(function (g) { return picked[g]; });
+      rows.forEach(function (row) {
+        var ok = words.every(function (w) { return row.searchtext.indexOf(w) >= 0; });
+        row.hidden = !(ok && (!grades.length || grades.indexOf(row.getAttribute("data-grade")) >= 0));
+      });
+      var active = words.length > 0 || grades.length > 0;
+      fixed.forEach(function (row) { row.hidden = active; });
+      var shown = paint();
+      status.textContent = active ? "Showing " + shown + " of " + rows.length + " " + noun(rows.length) + "." : rows.length + " " + noun(rows.length) + ". Select a column heading to sort.";
+      reset.hidden = !active && current.col < 0;
+      empty.hidden = shown > 0;
+      empty.textContent = "No " + nouns[0] + " matches the filter. Clear the filter to see all " + rows.length + ".";
+    }
+    input.addEventListener("input", apply);
+    reset.addEventListener("click", function () {
+      input.value = "";
+      picked = {};
+      chips.forEach(function (chip) { chip.setAttribute("aria-pressed", "false"); });
+      order(-1, 1, "");
+      apply();
+      input.focus();
+    });
+    each(heads, function (th) {
+      var button = th.querySelector("button.sort");
+      if (button) button.addEventListener("click", function () { reset.hidden = false; });
+    });
+    var want = (params.get("grade") || "").toUpperCase();
+    chips.forEach(function (chip) {
+      if (want.indexOf(chip.letter) >= 0 && !chip.disabled) { picked[chip.letter] = true; chip.setAttribute("aria-pressed", "true"); }
+    });
+    if (params.get("q")) input.value = params.get("q");
+    apply();
+  }
+})();
+</script>
 </body>
 </html>
