@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The bridge crew and standing orders</title>
+<meta name="description" content="What the game does for the bridge crew and standing orders, its numbers, and where each comes from.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+:root {
+  color-scheme: light dark;
+  --bg: #fbf8f1; --panel: #f0eadb; --rule: #b9ae94; --text: #231c0f; --muted: #51493a; --accent: #7a4300;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #0e0903; --panel: #16110a; --rule: #4a4130; --text: #d6cbb6; --muted: #a89f88; --accent: #ffb040; }
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 1rem/1.65 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; padding: 0 1rem 4rem; }
+.skip { position: absolute; left: 1rem; top: -4rem; background: var(--accent); color: var(--bg); padding: .5rem 1rem; z-index: 10; }
+.skip:focus { top: .5rem; }
+.wrap { max-width: 64rem; margin: 0 auto; }
+.mono, h1, h2, h3, caption, th, nav, .brand, .stamp, .grade, .val { font-family: "DM Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+a { color: var(--accent); text-underline-offset: .2em; }
+a:focus-visible, .region:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.top { padding: 2rem 0 1rem; border-bottom: 1px solid var(--rule); }
+.brand { margin: 0 0 .75rem; font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .25rem 1.5rem; }
+nav a { display: inline-block; padding: .35rem 0; }
+h1 { font-size: clamp(1.4rem, 5vw, 2rem); line-height: 1.25; margin: 2rem 0 1rem; font-weight: 500; }
+h2 { font-size: 1.25rem; margin: 2.5rem 0 .75rem; padding-top: 1.25rem; border-top: 1px solid var(--rule); font-weight: 500; }
+h3 { font-size: 1.05rem; margin: 1.5rem 0 .5rem; font-weight: 500; }
+p, li { max-width: 46rem; }
+li + li { margin-top: .35rem; }
+code { font-family: "DM Mono", ui-monospace, Consolas, monospace; font-size: .92em; overflow-wrap: anywhere; }
+.lead { font-size: 1.1rem; }
+.note { background: var(--panel); border-left: 4px solid var(--accent); padding: .75rem 1rem; max-width: 46rem; }
+.region { overflow-x: auto; margin: 1rem 0; border: 1px solid var(--rule); }
+table { border-collapse: collapse; width: 100%; min-width: 46rem; font-size: .92rem; line-height: 1.5; }
+caption { text-align: left; padding: .75rem; font-size: .95rem; color: var(--muted); }
+th, td { text-align: left; vertical-align: top; padding: .55rem .75rem; border-top: 1px solid var(--rule); }
+thead th { background: var(--panel); font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; white-space: nowrap; }
+tbody th { font-weight: 400; font-family: inherit; min-width: 14rem; }
+td.val { overflow-wrap: anywhere; min-width: 7rem; }
+.numbers td:nth-child(5), .numbers td:nth-child(6) { min-width: 13rem; }
+td.count { text-align: right; font-variant-numeric: tabular-nums; }
+.grade { display: inline-block; border: 2px solid currentColor; border-radius: 4px; min-width: 1.6rem; text-align: center; padding: 0 .3rem; font-weight: 600; margin-right: .4rem; }
+.gradeitem { white-space: nowrap; }
+.stamp { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--rule); font-size: .8rem; color: var(--muted); }
+.toc { padding-left: 1.2rem; }
+dl.keys dt { font-weight: 600; margin-top: 1rem; }
+dl.keys dd { margin: .25rem 0 0; max-width: 46rem; }
+@media (max-width: 40rem) { body { padding: 0 1rem 3rem; } th, td { padding: .5rem; } }
+@media print { .skip { display: none; } }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to the content</a>
+<div class="wrap">
+<header class="top">
+<p class="brand"><a href="https://coldweld.dev/">Coldweld</a> / The Infinite Diaspora / Reference shelf</p>
+<nav aria-label="Reference shelf"><ul>
+<li><a href="index.html">Mechanics</a></li>
+<li><a href="grades.html">Grades</a></li>
+<li><a href="sources.html">Sources</a></li>
+</ul></nav>
+</header>
+<main id="main">
+<h1>The bridge crew and standing orders</h1>
+<ul class="toc">
+<li><a href="#brief">In brief</a></li>
+<li><a href="#does">What the game does</a></li>
+<li><a href="#numbers">The numbers</a></li>
+<li><a href="#why">Why: the real physics or procedure</a></li>
+<li><a href="#departs">Where the game departs from reality</a></li>
+<li><a href="#silent">Where the sources are silent</a></li>
+<li><a href="#inspiration">Inspiration</a></li>
+<li><a href="#sources">Sources</a></li>
+<li><a href="#code">Code files</a></li>
+</ul>
+<h2 id="brief">In brief</h2>
+<p class="lead">The bridge crew is the officers who fly and fight a ship while time runs, and standing orders are the rules that tell each officer when to act alone and when to ask the captain.</p>
+<h2 id="does">What the game does</h2>
+<h3>The Bridge</h3>
+<ul>
+<li>[1] to [4] | the helm, weapons, sensors and engineering stations, each with its own orders.</li>
+<li>[7] | the drone station, on a hull with a drone bay.</li>
+<li>[0] | the observer, who watches each contact.</li>
+<li>[5] | the standing orders. [6] | the wing.</li>
+<li>[8] [9] | step through the hostiles and the wing.</li>
+<li>[V] | the camera. [I] | every instrument.</li>
+<li>[M] | the ways out of the fight.</li>
+<li>ENTER | pauses the clock or runs it.</li>
+<li>[T] | its speed: real time, faster or fastest.</li>
+<li>[N] | skips to the next call from the crew.</li>
+</ul>
+<h3>The Second Asks</h3>
+<ul>
+<li>Each station is manned by its department, at that department's skill.</li>
+<li>When two officers want things that cannot both happen, the clock stops and the Second asks you.</li>
+<li>Each officer states an order and its cost, and the Second recommends one.</li>
+<li>[O] | sets each kind of question to act and report, or to ask you first.</li>
+<li>A hull with a complement under 10 hands has no Second, so the bridge asks.</li>
+<li>The Second flies by your nerve, from the STANDING ORDERS screen.</li>
+<li>Once a fight, the Second hands the ship back if the crew breaks off or the ship cannot answer.</li>
+<li>Then you surrender, try to run, or give it back.</li>
+</ul>
+<h3>Standing Orders</h3>
+<ul>
+<li>The standing orders on [5] are what the crew does without asking you.</li>
+<li>FIRE RULE | at will in reach, in the kill zone only, or held.</li>
+<li>DODGE | weave, sidestep, every called round, or hold course.</li>
+<li>SPARE SINKS | when the crew swaps a cold sink into a hot gun.</li>
+<li>TARGET | the contact the crew works now.</li>
+<li>NEXT TARGET | the weakest, the nearest, the heaviest guns, or the one shooting at us.</li>
+<li>KEEL GUN | the glossary explains its three orders.</li>
+<li>PROCEDURES | eight kinds of question, each acted on or asked first.</li>
+</ul>
+<h2 id="numbers">The numbers</h2>
+<p>21 numbers, read from the game code. 21 grade E.</p>
+<div class="region" role="region" tabindex="0" aria-label="Numbers the game runs for the bridge crew and standing orders">
+<table class="numbers">
+<caption>Numbers the game runs for the bridge crew and standing orders</caption>
+<thead><tr>
+<th scope="col">Quantity</th>
+<th scope="col">Value</th>
+<th scope="col">Unit</th>
+<th scope="col">Grade</th>
+<th scope="col">Source</th>
+<th scope="col">Basis</th>
+</tr></thead>
+<tbody>
+<tr id="n-1"><th scope="row">Turn rate of a hull with no catalog entry, set so a quarter turn takes the old time</th><td class="val">1.6</td><td>deg/s^2</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Kept equal to the old fixed-rate turn: a quarter turn, rest to rest, in the same time, as an acceleration. It is arithmetic on an authored turn rate, so no source backs it.</td></tr>
+<tr id="n-2"><th scope="row">Crew skill: seconds of warning, chance to miss a call, launch sighting, report precision, gun spread and helm turn</th><td class="val">rookie call 8, misscall 0.25, launch False, precision 100, spread 1.5, turn 0.8, seasoned call 20, misscall 0.05, launch True, precision 10, spread 1, turn 1, veteran call 30, misscall 0, launch True, precision 0, spread 0.7, turn 1.25</td><td>mixed</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/controldeck.php">Atomic Rockets, controldeck</a>, Ship Control Officers, Combat Information Center</td><td>Skill changes timing, precision and hands. The game chose every figure for play, and the three steps follow the hire pool. The sources are silent on this figure.</td></tr>
+<tr id="n-3"><th scope="row">How close each officer temperament wants to fight</th><td class="val">hot-blooded 10, calm 20, cautious 50</td><td>km</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>One table serves the captain's weapons officer and every hostile captain. The game chose a hot-blooded officer to close, a calm one to hold, and a cautious one to stay far.</td></tr>
+<tr id="n-4"><th scope="row">Share of a line straight up or down past which a contact is called overhead or under the keel</th><td class="val">0.9</td><td>share</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>High and low have no nautical word, so the game picked a steep cutoff past which the helm says overhead.</td></tr>
+<tr id="n-5"><th scope="row">Bearing sectors in a seaman&#x27;s words: ahead, bow, beam, quarter and astern</th><td class="val">22.5, ahead, 67.5, bow, 112.5, beam, 157.5, quarter, 180, astern</td><td>deg</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Each word covers a 45 degree sector about its point, to port or starboard. The shelf sources give no sector width for these words, so the game chose even sectors. The sources are silent on this figure.</td></tr>
+<tr id="n-6"><th scope="row">Heat one dodge adds, on average</th><td class="val">5.55</td><td>heat units</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Computed from the game's own dodge time, drive heat and lit share. It is arithmetic on authored figures, so no source backs it.</td></tr>
+<tr id="n-7"><th scope="row">Hull share below which the helm asks whether to run</th><td class="val">35</td><td>% of hull</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose it to match the point at which a cautious captain turns away.</td></tr>
+<tr id="n-8"><th scope="row">Share of the hull&#x27;s maximum that makes a volley massive</th><td class="val">0.25</td><td>share of hull</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>A playtest saw ten rounds take a ship from 100 percent to 1 percent in five seconds, so the game chose a quarter hull as the point at which the Second asks.</td></tr>
+<tr id="n-9"><th scope="row">Fire control aim error at the start of a new target, by crew skill</th><td class="val">rookie 1.2, seasoned 0.8, veteran 0.5</td><td>mrad</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>A long shot is a probe, and the game chose a fixed starting error that each round the crew sees takes a share of.</td></tr>
+<tr id="n-10"><th scope="row">Share of aim error left after each round the crew sees pass, by crew skill</th><td class="val">rookie 0.6, seasoned 0.4, veteran 0.25</td><td>share</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose it so the first long shot misses, the second is closer and the third lands unless the target jinks.</td></tr>
+<tr id="n-11"><th scope="row">Burst center distance, in target lengths, that finishes ranging on a target</th><td class="val">1</td><td>target lengths</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose one target length as the point at which the crew calls the range found.</td></tr>
+<tr id="n-12"><th scope="row">The crew procedures: owner, what each raises and whether it acts or asks by default</th><td class="val">board helm, Break a boarding match, act, next weapons, Take the next target after a kill, act, target weapons, A second ship comes into the kill zone: stay on your target, or ask, act, pursuit xo, A pursuer gains on us while we run, ask, stall xo, A stand-off: nobody closing, nothing landing, ask, vital xo, A vital steps down a state: cooling, drive, reactor, life support or the guns, ask, disabled xo, We are disabled and they mean to board, ask, fire xo, A fire we can vent, cut the power to or dump, ask, power engineering, A short bank: shed loads by the bill, act, volley xo, A massive volley is inbound: run or stay, ask, window weapons, A window opens on a hostile: strike or keep, ask</td><td>table</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/controldeck.php">Atomic Rockets, controldeck</a>, Ship Control Officers, Combat Information Center</td><td>The mirror gives the frame in which stations report, an evaluator suggests and the captain decides. The list of procedures and each default is the game's own. The sources are silent on this figure.</td></tr>
+<tr id="n-13"><th scope="row">Time a keel gun target must go without dodging before the weapons officer asks to hold the bow</th><td class="val">20</td><td>s</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen so a target that has not dodged this long counts as stopped, and an aim-while-cooling keel gun can land.</td></tr>
+<tr id="n-14"><th scope="row">Words a second a crew says on the net, by skill</th><td class="val">rookie 2, seasoned 2.8, veteran 3.6</td><td>words/s</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>ACP 125(G), Communications Instructions: Radiotelephone Procedures, What the document says</td><td>ACP 125 paragraph 302 tells operators to speak slightly slower than normal conversation and gives no word rate, so the game chose the steps: a rookie spells things out and a veteran uses brevity code. The sources are silent on this figure.</td></tr>
+<tr id="n-15"><th scope="row">Time one inbound call covers a gun stream</th><td class="val">10</td><td>s</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose it as about one jink, so the crew calls once for a stream and not once for each round.</td></tr>
+<tr id="n-16"><th scope="row">Time with no hit and no closing before the Second calls a stand-off</th><td class="val">60</td><td>s</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen after a log showed two cautious hostiles holding range for hours while both ships gathered speed.</td></tr>
+<tr id="n-17"><th scope="row">Closing speed below which nothing is closing, for a stand-off</th><td class="val">0.02</td><td>km/s</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose a small speed under which two ships count as holding range.</td></tr>
+<tr id="n-18"><th scope="row">Time a pursuer must keep closing before the Second asks about it</th><td class="val">20</td><td>s</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen after a log where the Second asked 19 times in 8 fights. It is the delay before the question is raised.</td></tr>
+<tr id="n-19"><th scope="row">Hull share at which the Second hands the ship back to the captain</th><td class="val">0.3, 0.15</td><td>hull share (first, second)</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Taken from a playtest report. The Second hands the ship back first at one share and again at a lower one, and the game chose both.</td></tr>
+<tr id="n-20"><th scope="row">Skill of the officers on a ship the world crews</th><td class="val">seasoned</td><td>skill tier</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>A hull the world crews carries seasoned officers, the hire pool's middle tier. The game chose it and no source gives a crew mix.</td></tr>
+<tr id="n-21"><th scope="row">Opening gap of an ambush or a hull already alongside</th><td class="val">5, 15</td><td>km</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Matches the menu fight's close opening band. Every other fight opens at the engine's own range.</td></tr>
+</tbody></table></div>
+<h2 id="why">Why: the real physics or procedure</h2>
+<ul>
+<li>A real ship runs its watches through stations that report to a commander, and the commander decides.</li>
+<li>A crew that handles routine work alone and stops the clock only for a real choice keeps a fight playable.</li>
+<li>Skill changes how fast and how exactly a station reports, and temperament changes the advice it gives.</li>
+<li>A hostile ship flies the same crew routine as the captain, so one rule serves every ship.</li>
+</ul>
+<h2 id="departs">Where the game departs from reality</h2>
+<ul>
+<li>Every number here is authored for play. The bridge crew has no outside figure, and the notes say so (docs/notes/newtonian.md, bridge.py).</li>
+<li>A real ship does not stop its clock for a decision. The game does, so the captain can read before choosing.</li>
+</ul>
+<h2 id="silent">Where the sources are silent</h2>
+<ul>
+<li>The mirror and the repo shelf give no figure for how often a crew repeats a question, how long a stand-off lasts before a Second calls it, or how fast a crew talks on a net.</li>
+</ul>
+<h2 id="inspiration">Inspiration</h2>
+<ul>
+<li><strong>TODO(austen)</strong> (person): TODO(austen)</li>
+</ul>
+<h2 id="sources">Sources</h2>
+<ul>
+<li><a href="https://www.projectrho.com/public_html/rocket/controldeck.php">Atomic Rockets, controldeck</a>, Moment of Inertia: A long craft can jink faster by pushing sideways than by turning, which is why the helm's turn rate and the sidestep are separate numbers. (<a href="sources.html#doc-rocket-controldeck-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/controldeck.php">Atomic Rockets, controldeck</a>, Ship Control Officers, Combat Information Center: Stations report, an evaluator suggests and the captain decides. The game uses this frame for its procedures. (<a href="sources.html#doc-rocket-controldeck-php-html">all uses</a>)</li>
+</ul>
+<h2 id="code">Code files</h2>
+<ul>
+<li><code>combat/newtonian/bridge.py</code></li>
+<li><code>combat/newtonian/door.py</code></li>
+</ul>
+</main>
+<footer class="stamp">
+<p>Read from game commit 1cab5b32 (committed 2026-10-18). Pages written 2026-10-18.
+The explanations are stand-in text and may change.</p>
+</footer>
+</div>
+</body>
+</html>

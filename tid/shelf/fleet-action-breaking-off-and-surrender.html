@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fleet action, breaking off and surrender</title>
+<meta name="description" content="What the game does for fleet action, breaking off and surrender, its numbers, and where each comes from.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+:root {
+  color-scheme: light dark;
+  --bg: #fbf8f1; --panel: #f0eadb; --rule: #b9ae94; --text: #231c0f; --muted: #51493a; --accent: #7a4300;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #0e0903; --panel: #16110a; --rule: #4a4130; --text: #d6cbb6; --muted: #a89f88; --accent: #ffb040; }
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 1rem/1.65 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; padding: 0 1rem 4rem; }
+.skip { position: absolute; left: 1rem; top: -4rem; background: var(--accent); color: var(--bg); padding: .5rem 1rem; z-index: 10; }
+.skip:focus { top: .5rem; }
+.wrap { max-width: 64rem; margin: 0 auto; }
+.mono, h1, h2, h3, caption, th, nav, .brand, .stamp, .grade, .val { font-family: "DM Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+a { color: var(--accent); text-underline-offset: .2em; }
+a:focus-visible, .region:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.top { padding: 2rem 0 1rem; border-bottom: 1px solid var(--rule); }
+.brand { margin: 0 0 .75rem; font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .25rem 1.5rem; }
+nav a { display: inline-block; padding: .35rem 0; }
+h1 { font-size: clamp(1.4rem, 5vw, 2rem); line-height: 1.25; margin: 2rem 0 1rem; font-weight: 500; }
+h2 { font-size: 1.25rem; margin: 2.5rem 0 .75rem; padding-top: 1.25rem; border-top: 1px solid var(--rule); font-weight: 500; }
+h3 { font-size: 1.05rem; margin: 1.5rem 0 .5rem; font-weight: 500; }
+p, li { max-width: 46rem; }
+li + li { margin-top: .35rem; }
+code { font-family: "DM Mono", ui-monospace, Consolas, monospace; font-size: .92em; overflow-wrap: anywhere; }
+.lead { font-size: 1.1rem; }
+.note { background: var(--panel); border-left: 4px solid var(--accent); padding: .75rem 1rem; max-width: 46rem; }
+.region { overflow-x: auto; margin: 1rem 0; border: 1px solid var(--rule); }
+table { border-collapse: collapse; width: 100%; min-width: 46rem; font-size: .92rem; line-height: 1.5; }
+caption { text-align: left; padding: .75rem; font-size: .95rem; color: var(--muted); }
+th, td { text-align: left; vertical-align: top; padding: .55rem .75rem; border-top: 1px solid var(--rule); }
+thead th { background: var(--panel); font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; white-space: nowrap; }
+tbody th { font-weight: 400; font-family: inherit; min-width: 14rem; }
+td.val { overflow-wrap: anywhere; min-width: 7rem; }
+.numbers td:nth-child(5), .numbers td:nth-child(6) { min-width: 13rem; }
+td.count { text-align: right; font-variant-numeric: tabular-nums; }
+.grade { display: inline-block; border: 2px solid currentColor; border-radius: 4px; min-width: 1.6rem; text-align: center; padding: 0 .3rem; font-weight: 600; margin-right: .4rem; }
+.gradeitem { white-space: nowrap; }
+.stamp { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--rule); font-size: .8rem; color: var(--muted); }
+.toc { padding-left: 1.2rem; }
+dl.keys dt { font-weight: 600; margin-top: 1rem; }
+dl.keys dd { margin: .25rem 0 0; max-width: 46rem; }
+@media (max-width: 40rem) { body { padding: 0 1rem 3rem; } th, td { padding: .5rem; } }
+@media print { .skip { display: none; } }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to the content</a>
+<div class="wrap">
+<header class="top">
+<p class="brand"><a href="https://coldweld.dev/">Coldweld</a> / The Infinite Diaspora / Reference shelf</p>
+<nav aria-label="Reference shelf"><ul>
+<li><a href="index.html">Mechanics</a></li>
+<li><a href="grades.html">Grades</a></li>
+<li><a href="sources.html">Sources</a></li>
+</ul></nav>
+</header>
+<main id="main">
+<h1>Fleet action, breaking off and surrender</h1>
+<ul class="toc">
+<li><a href="#brief">In brief</a></li>
+<li><a href="#does">What the game does</a></li>
+<li><a href="#numbers">The numbers</a></li>
+<li><a href="#why">Why: the real physics or procedure</a></li>
+<li><a href="#departs">Where the game departs from reality</a></li>
+<li><a href="#silent">Where the sources are silent</a></li>
+<li><a href="#inspiration">Inspiration</a></li>
+<li><a href="#sources">Sources</a></li>
+<li><a href="#code">Code files</a></li>
+</ul>
+<h2 id="brief">In brief</h2>
+<p class="lead">A fleet action is a fight with more than two hulls, in which each side picks targets by a doctrine, a hull breaks off when the cost of staying grows past what it can win, and a beaten hull may yield to a boarding party.</p>
+<h2 id="does">What the game does</h2>
+<h3>Enemy Doctrine</h3>
+<ul>
+<li>Every faction fights to a DOCTRINE. Each hostile picks its target by it every 20 s.</li>
+<li>It matters once escorts or allies fly with you.</li>
+<li>Earth | HUNTS YOUR GUNS, whatever shoots hardest.</li>
+<li>Mars | PRESSES CRIPPLES, whatever is already bleeding.</li>
+<li>The Outer Guild | SPREADS FIRE across your formation.</li>
+<li>The Unclaimed | TAKES THE SOFT TARGET, your lightest hull.</li>
+<li>Bounty Hunters | COMING FOR YOU, because they were paid for you.</li>
+<li>The contact report names the doctrine before the shooting starts.</li>
+</ul>
+<h3>Wing Orders</h3>
+<ul>
+<li>[6] | orders for one ship, or Enter for the whole wing.</li>
+<li>A ship that forms on you flies beside you, and the row says what share of the fire lands on you.</li>
+<li>ENGAGE | it screens ahead and meets the hostiles first.</li>
+<li>HOLD BACK | it stays near its leader, guns cold.</li>
+<li>FOCUS FIRE | it works the weakest hostile.</li>
+<li>FORMATION | crossfire, line abreast, loose or trail.</li>
+<li>Between your orders each escort leader flies by their own temperament.</li>
+</ul>
+<h3>Ways Out</h3>
+<ul>
+<li>[M] | every way out, and why a blocked one is blocked.</li>
+<li>HAND IT TO THE SECOND | the Second fights on by your standing orders.</li>
+<li>YIELD | only when the hostiles offer terms.</li>
+<li>DEMAND SURRENDER | orders every breaking hostile to stand down.</li>
+<li>CRACK THEIR CHANNEL | names the ship each hostile is on. The last of 3 tries works.</li>
+<li>A demand or a crack holds your fire for 20 s.</li>
+<li>BREAK OFF AND RUN | on the helm, a full burn away.</li>
+<li>You are clear when every hostile is past 3,000 km.</li>
+</ul>
+<h2 id="numbers">The numbers</h2>
+<p>32 numbers, read from the game code. 32 grade E.</p>
+<div class="region" role="region" tabindex="0" aria-label="Numbers the game runs for fleet action, breaking off and surrender">
+<table class="numbers">
+<caption>Numbers the game runs for fleet action, breaking off and surrender</caption>
+<thead><tr>
+<th scope="col">Quantity</th>
+<th scope="col">Value</th>
+<th scope="col">Unit</th>
+<th scope="col">Grade</th>
+<th scope="col">Source</th>
+<th scope="col">Basis</th>
+</tr></thead>
+<tbody>
+<tr id="n-1"><th scope="row">Hours the escape pod rescue detour takes</th><td class="val">24</td><td>hours</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen by the game as one day, spent through the game clock so the daily systems tick. No source gives a pod pick-up time.</td></tr>
+<tr id="n-2"><th scope="row">Chance a wreck leaves a flight recorder</th><td class="val">0.4</td><td>share</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen by the game; a recorder is turned in at any station for a reward and standing. No source gives a recovery rate.</td></tr>
+<tr id="n-3"><th scope="row">Base chance a response force arrives while the crew strips a wreck</th><td class="val">15</td><td>percent</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen by the game: lingering to strip a wreck takes time, so the chance rises with the haul. A quick grab never rolls.</td></tr>
+<tr id="n-4"><th scope="row">Credits of boarding bonus that add one point to the interception chance</th><td class="val">20</td><td>Cr per point</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen by the game as the step that scales the chance with the boarding bonus the haul earned.</td></tr>
+<tr id="n-5"><th scope="row">Highest chance a response force arrives</th><td class="val">60</td><td>percent</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen by the game as the cap, so even a long strip is never certain to draw a response.</td></tr>
+<tr id="n-6"><th scope="row">Danger level of the response force</th><td class="val">40</td><td>level</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>A flat level for a plausible response force, tuned by playtesting rather than mirrored from the fight just won (docs/notes/fleetops.md).</td></tr>
+<tr id="n-7"><th scope="row">Base chance a boarding party holds when it defends the hull</th><td class="val">10</td><td>percent</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen by the game as the floor of the defend roll, which rises with marines aboard.</td></tr>
+<tr id="n-8"><th scope="row">Chance gained per marine when defending a hull</th><td class="val">0.5</td><td>percent per marine</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen by the game; the defend chance is the base plus the marine combat score times this, up to the cap.</td></tr>
+<tr id="n-9"><th scope="row">Highest chance of holding a hull against boarders</th><td class="val">85</td><td>percent</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The cap chosen by the game at 85, so a civilian crew of aces can still match a navy hull's party.</td></tr>
+<tr id="n-10"><th scope="row">Strike accuracy of a bay with no crew of its own</th><td class="val">55</td><td>percent</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen by the game between a rookie operator at 50 and a veteran at 70, so an enemy carrier is a threat but beatable.</td></tr>
+<tr id="n-11"><th scope="row">Hands in a leased navy hull&#x27;s free boarding party</th><td class="val">5</td><td>hands</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>A sergeant and four marines, chosen by Austen on 2026-10-07. The deck fight repels a boarding of 8 in 49 percent of fights unsuited and 77 percent suited with this party (200 trials, plus or minus 4 points), against 10 and 24 percent for 2 marines.</td></tr>
+<tr id="n-12"><th scope="row">Skill of the navy hull&#x27;s sergeant</th><td class="val">80</td><td>skill points</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen by the game at 80, a veteran by the deck fight's skill floors; no source rates a sergeant.</td></tr>
+<tr id="n-13"><th scope="row">Share of its hull a captured hull is left with</th><td class="val">0.25</td><td>share</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td><a href="https://www.govinfo.gov/content/pkg/GOVPUB-D201-PURL-gpo56195/pdf/GOVPUB-D201-PURL-gpo56195.pdf">The Commander&#x27;s Handbook on the Law of Naval Operations (NWP 1-14M), 1995 edition</a>, 7.10 Prize</td><td>Chosen by the game as a hull disabled and roughly patched and not scrapped. The handbook treats a captured enemy hull as prize for a court, and gives no condition. The sources are silent on this figure.</td></tr>
+<tr id="n-14"><th scope="row">How much a posture pulls enemy fire onto the flagship</th><td class="val">screen 2.2, line 1, standoff 0.3</td><td>multiplier</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen by the game at 2.2 for screen, 1.0 for the line and 0.30 for standoff. An earlier set (3.0 and 0.35, with a standoff penalty of 12) made hold the line dominate and standoff worst; the notes say to re-measure before quoting the balance.</td></tr>
+<tr id="n-15"><th scope="row">Hull size at or under which a target reads as easy prey</th><td class="val">360</td><td>hull points</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen by the game as roughly a light patrol craft, so a raider doctrine goes for the lightest hull.</td></tr>
+<tr id="n-16"><th scope="row">Targeting doctrine of each faction&#x27;s ships</th><td class="val">Earth &lt;function _weightthreat at 0x0000020C04A9A560&gt;, HUNTS YOUR GUNS, TERRAN FIRE CONTROL: they shoot whatever is shooting hardest., Mars &lt;function _weightcripple at 0x0000020C04A9A610&gt;, PRESSES CRIPPLES, OLYMPUS DOCTRINE: they press whatever is already bleeding., The Outer Guild &lt;function _weightspread at 0x0000020C04A9A6C0&gt;, SPREADS FIRE, LONGHAUL SATURATION: they keep your whole formation under fire rather than concentrating., The Unclaimed &lt;function _weightsoft at 0x0000020C04A9A770&gt;, Takes the soft target, RAIDERS: they want an easy kill, not a duel | they go for your lightest hull., Bounty Hunters &lt;function _weightflagship at 0x0000020C04A9A820&gt;, COMING FOR YOU, BOUNTY HUNTERS: they are paid for you specifically, and will largely ignore your wing.</td><td>rules</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen by the game: Earth hunts the hardest shooter, Mars presses the cripples, the Guild spreads fire and raiders take the soft target. Which hull an enemy shoots was a coin flip before.</td></tr>
+<tr id="n-17"><th scope="row">Hit chance gained by each added hull firing on one target</th><td class="val">4</td><td>points of hit chance</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen by the game so a pair on one target is worth something and a squadron is decisive; no source gives a bonus for concentrated fire.</td></tr>
+<tr id="n-18"><th scope="row">Most hit chance concentrated fire can add</th><td class="val">12</td><td>points of hit chance</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The cap on the focus bonus, chosen by the game so a squadron on one contact is decisive and not a rout.</td></tr>
+<tr id="n-19"><th scope="row">Hull share at which an enemy of no listed hull class breaks off</th><td class="val">0.25</td><td>share</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The fallback for a hull whose class has no entry below, chosen by the game at a quarter of the hull.</td></tr>
+<tr id="n-20"><th scope="row">Hull share at which an enemy breaks off, by hull class</th><td class="val">LIGHT CRAFT 0.4, MEDIUM CRAFT 0.3, HEAVY CRAFT 0.25</td><td>share</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen by the game: a light craft breaks at 0.40 of its hull, a medium at 0.30 and a heavy at 0.25, so a light hull breaks before a starter gun crosses all of it.</td></tr>
+<tr id="n-21"><th scope="row">Break-off threshold multiplier for a hostile bounty hunter</th><td class="val">0.45</td><td>multiplier</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen by the game: a hunter was paid to kill this captain and collects nothing by leaving, so it holds on longer.</td></tr>
+<tr id="n-22"><th scope="row">Break-off threshold multiplier for a hostile navy patrol</th><td class="val">0.7</td><td>multiplier</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen by the game: a patrol is on station, and leaving is a decision somebody answers for.</td></tr>
+<tr id="n-23"><th scope="row">Break-off threshold multiplier for a hostile with no special reason</th><td class="val">1</td><td>multiplier</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The plain threshold, for a raider who wants cargo and will not die for it.</td></tr>
+<tr id="n-24"><th scope="row">Break-off threshold multiplier for a hull with no way to shoot back</th><td class="val">2</td><td>multiplier</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen by the game at 2.0: a hull that cannot shoot back leaves early. A light craft then breaks at 0.80 of its hull and a heavy at 0.50, one or two exchanges at the measured 14 percent of a hull a round.</td></tr>
+<tr id="n-25"><th scope="row">Earliest round a lawful flag offers the stand-down</th><td class="val">2</td><td>round</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen by the game: a flag that keeps courts offers the stand-down once a fight, and not before round 2. No source gives a round.</td></tr>
+<tr id="n-26"><th scope="row">Base chance a lawful hull believes the captain&#x27;s feigned surrender</th><td class="val">70</td><td>percent</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td><a href="https://www.govinfo.gov/content/pkg/GOVPUB-D201-PURL-gpo56195/pdf/GOVPUB-D201-PURL-gpo56195.pdf">The Commander&#x27;s Handbook on the Law of Naval Operations (NWP 1-14M), 1995 edition</a>, 6.2.5 War Crimes, item 12</td><td>Chosen by the game at 70 for a clean record. The handbook lists a treacherous request for quarter, feigning surrender to gain an advantage, as a war crime, so the record answers.</td></tr>
+<tr id="n-27"><th scope="row">Chance lost for each point of the captain&#x27;s record</th><td class="val">3</td><td>percent per point</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen by the game: one perfidy is 30 on the record and takes a clean captain from 70 percent to the floor, once per flag.</td></tr>
+<tr id="n-28"><th scope="row">Lowest chance a surrender is believed</th><td class="val">5</td><td>percent</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The floor of the believed-surrender chance, chosen by the game.</td></tr>
+<tr id="n-29"><th scope="row">Highest chance a surrender is believed</th><td class="val">90</td><td>percent</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The cap of the believed-surrender chance, chosen by the game.</td></tr>
+<tr id="n-30"><th scope="row">Chance a hostile feigns surrender when it would gain from it</th><td class="val">30</td><td>percent</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td><a href="https://www.govinfo.gov/content/pkg/GOVPUB-D201-PURL-gpo56195/pdf/GOVPUB-D201-PURL-gpo56195.pdf">The Commander&#x27;s Handbook on the Law of Naval Operations (NWP 1-14M), 1995 edition</a>, 6.2.5 War Crimes, item 12</td><td>Chosen by the game: a hull feigns only when it buys a free volley, and a pirate takes the chance readily. The feint is a war crime in the handbook, which a pirate does not answer to.</td></tr>
+<tr id="n-31"><th scope="row">The same chance for a lawful hull</th><td class="val">15</td><td>percent</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen by the game at half the pirate's chance.</td></tr>
+<tr id="n-32"><th scope="row">Share of the captain&#x27;s hull at or below which a hostile may feign surrender</th><td class="val">0.5</td><td>share</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen by the game: a hull feigns only when the captain is hurt enough for one free volley to count, or when another hostile is still shooting.</td></tr>
+</tbody></table></div>
+<h2 id="why">Why: the real physics or procedure</h2>
+<ul>
+<li>A fleet action is decided by who shoots whom, so each navy trains its ships to pick targets by one rule.</li>
+<li>A ship breaks off when staying costs more than the fight can win, and a ship that was paid to kill has less reason to leave.</li>
+<li>Surrender is an offer to the other side, and the other side must accept it for it to work.</li>
+<li>Feigning surrender to gain a military advantage is treacherous, and the law of armed conflict counts it as a war crime.</li>
+<li>A captured hull goes to a court as prize, and the sources give the captor no share of it.</li>
+<li>A boarding party that takes a hull strips it, so the victor can be caught at the wreck by a response force.</li>
+</ul>
+<h2 id="departs">Where the game departs from reality</h2>
+<ul>
+<li>The game charges a captain's record for a feint as a perfidy that a lawful flag remembers once per flag. The handbook treats it as an offense for a court and names no price (docs/notes/combat.md).</li>
+<li>Enemies once picked a target by a flat random choice. A doctrine per faction replaced it without lengthening a fight (docs/notes/fleetops.md, Target doctrine and posture).</li>
+</ul>
+<h2 id="silent">Where the sources are silent</h2>
+<ul>
+<li>No source gives any chance, threshold or hit bonus on this page. The handbook gives the rule that a feigned surrender is treacherous, and the odds and the penalty are the game's own.</li>
+<li>The sources shelf says SORM never says who may strike colors and gives no procedure for yielding a ship (docs/sources/sorm.md).</li>
+</ul>
+<h2 id="inspiration">Inspiration</h2>
+<ul>
+<li><strong>TODO(austen)</strong> (person): TODO(austen)</li>
+</ul>
+<h2 id="sources">Sources</h2>
+<ul>
+<li><a href="https://www.govinfo.gov/content/pkg/GOVPUB-D201-PURL-gpo56195/pdf/GOVPUB-D201-PURL-gpo56195.pdf">The Commander&#x27;s Handbook on the Law of Naval Operations (NWP 1-14M), 1995 edition</a>, 6.2.5 War Crimes, item 12: The list of war crimes includes a treacherous request for quarter, which is feigning surrender in order to gain a military advantage. The game charges a captain's record for the same act. "feigning surrender" (<a href="sources.html#doc-docs-sources-navy-commanders-handbook-1995-md">all uses</a>)</li>
+<li><a href="https://www.govinfo.gov/content/pkg/GOVPUB-D201-PURL-gpo56195/pdf/GOVPUB-D201-PURL-gpo56195.pdf">The Commander&#x27;s Handbook on the Law of Naval Operations (NWP 1-14M), 1995 edition</a>, 7.10 Prize: A captured enemy hull goes in as prize for a court, and no source gives the captor a share. The game pays the boarding bonus as a capture bonus and not as salvage. (<a href="sources.html#doc-docs-sources-navy-commanders-handbook-1995-md">all uses</a>)</li>
+</ul>
+<h2 id="code">Code files</h2>
+<ul>
+<li><code>combat/fleetops.py</code></li>
+<li><code>combat/combat.py</code></li>
+<li><code>combat/resolution.py</code></li>
+<li><code>combat/newtonian/door.py</code></li>
+</ul>
+</main>
+<footer class="stamp">
+<p>Read from game commit 1cab5b32 (committed 2026-10-18). Pages written 2026-10-18.
+The explanations are stand-in text and may change.</p>
+</footer>
+</div>
+</body>
+</html>

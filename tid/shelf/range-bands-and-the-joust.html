@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Range bands and the joust</title>
+<meta name="description" content="What the game does for range bands and the joust, its numbers, and where each comes from.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+:root {
+  color-scheme: light dark;
+  --bg: #fbf8f1; --panel: #f0eadb; --rule: #b9ae94; --text: #231c0f; --muted: #51493a; --accent: #7a4300;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #0e0903; --panel: #16110a; --rule: #4a4130; --text: #d6cbb6; --muted: #a89f88; --accent: #ffb040; }
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 1rem/1.65 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; padding: 0 1rem 4rem; }
+.skip { position: absolute; left: 1rem; top: -4rem; background: var(--accent); color: var(--bg); padding: .5rem 1rem; z-index: 10; }
+.skip:focus { top: .5rem; }
+.wrap { max-width: 64rem; margin: 0 auto; }
+.mono, h1, h2, h3, caption, th, nav, .brand, .stamp, .grade, .val { font-family: "DM Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+a { color: var(--accent); text-underline-offset: .2em; }
+a:focus-visible, .region:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.top { padding: 2rem 0 1rem; border-bottom: 1px solid var(--rule); }
+.brand { margin: 0 0 .75rem; font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .25rem 1.5rem; }
+nav a { display: inline-block; padding: .35rem 0; }
+h1 { font-size: clamp(1.4rem, 5vw, 2rem); line-height: 1.25; margin: 2rem 0 1rem; font-weight: 500; }
+h2 { font-size: 1.25rem; margin: 2.5rem 0 .75rem; padding-top: 1.25rem; border-top: 1px solid var(--rule); font-weight: 500; }
+h3 { font-size: 1.05rem; margin: 1.5rem 0 .5rem; font-weight: 500; }
+p, li { max-width: 46rem; }
+li + li { margin-top: .35rem; }
+code { font-family: "DM Mono", ui-monospace, Consolas, monospace; font-size: .92em; overflow-wrap: anywhere; }
+.lead { font-size: 1.1rem; }
+.note { background: var(--panel); border-left: 4px solid var(--accent); padding: .75rem 1rem; max-width: 46rem; }
+.region { overflow-x: auto; margin: 1rem 0; border: 1px solid var(--rule); }
+table { border-collapse: collapse; width: 100%; min-width: 46rem; font-size: .92rem; line-height: 1.5; }
+caption { text-align: left; padding: .75rem; font-size: .95rem; color: var(--muted); }
+th, td { text-align: left; vertical-align: top; padding: .55rem .75rem; border-top: 1px solid var(--rule); }
+thead th { background: var(--panel); font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; white-space: nowrap; }
+tbody th { font-weight: 400; font-family: inherit; min-width: 14rem; }
+td.val { overflow-wrap: anywhere; min-width: 7rem; }
+.numbers td:nth-child(5), .numbers td:nth-child(6) { min-width: 13rem; }
+td.count { text-align: right; font-variant-numeric: tabular-nums; }
+.grade { display: inline-block; border: 2px solid currentColor; border-radius: 4px; min-width: 1.6rem; text-align: center; padding: 0 .3rem; font-weight: 600; margin-right: .4rem; }
+.gradeitem { white-space: nowrap; }
+.stamp { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--rule); font-size: .8rem; color: var(--muted); }
+.toc { padding-left: 1.2rem; }
+dl.keys dt { font-weight: 600; margin-top: 1rem; }
+dl.keys dd { margin: .25rem 0 0; max-width: 46rem; }
+@media (max-width: 40rem) { body { padding: 0 1rem 3rem; } th, td { padding: .5rem; } }
+@media print { .skip { display: none; } }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to the content</a>
+<div class="wrap">
+<header class="top">
+<p class="brand"><a href="https://coldweld.dev/">Coldweld</a> / The Infinite Diaspora / Reference shelf</p>
+<nav aria-label="Reference shelf"><ul>
+<li><a href="index.html">Mechanics</a></li>
+<li><a href="grades.html">Grades</a></li>
+<li><a href="sources.html">Sources</a></li>
+</ul></nav>
+</header>
+<main id="main">
+<h1>Range bands and the joust</h1>
+<ul class="toc">
+<li><a href="#brief">In brief</a></li>
+<li><a href="#does">What the game does</a></li>
+<li><a href="#numbers">The numbers</a></li>
+<li><a href="#why">Why: the real physics or procedure</a></li>
+<li><a href="#departs">Where the game departs from reality</a></li>
+<li><a href="#silent">Where the sources are silent</a></li>
+<li><a href="#inspiration">Inspiration</a></li>
+<li><a href="#sources">Sources</a></li>
+<li><a href="#code">Code files</a></li>
+</ul>
+<h2 id="brief">In brief</h2>
+<p class="lead">A range band is a stretch of distance between two ships, and the joust is the single head-on pass in which both ships fire inside the close band, where a round arrives in seconds and nobody can dodge it.</p>
+<h2 id="does">What the game does</h2>
+<h3>Range And The Kill Zone</h3>
+<ul>
+<li>Every ship has its own position and speed, and the range is real km.</li>
+<li>A round takes time to fly, and a crew dodges a round it sees coming.</li>
+<li>KILL ZONE | where your fastest round arrives before the target can turn clear.</li>
+<li>Inside it every gun fires for effect, and the ZONE column says who is in it.</li>
+<li>Outside it one round flies at a time, and each one seen to pass corrects the aim.</li>
+<li>No gun fires a round that needs more than 40 s to reach its target.</li>
+<li>CLOSE IN | on the helm, the autopilot closes and holds the range you name.</li>
+</ul>
+<h3>The Dodge</h3>
+<ul>
+<li>A round takes time to fly, so a hull that moves off its line makes it miss.</li>
+<li>WEAVE | the drive burns off the line, changing side every 8 s, until the heat fills the loop.</li>
+<li>SIDESTEP | the side jets push the hull clear. It spends tank water instead of heat.</li>
+<li>CALLED | the helm jinks off each round the sensors call.</li>
+<li>Up close a round arrives too soon to dodge, so the helm turns a face to the shooter.</li>
+<li>It picks the face whose plate costs least against that shooter's heaviest gun.</li>
+<li>A steered drone follows you in, so a dodge does not shake it.</li>
+</ul>
+<h2 id="numbers">The numbers</h2>
+<p>13 numbers, read from the game code. 1 grade B, 1 grade C, 11 grade E.</p>
+<div class="region" role="region" tabindex="0" aria-label="Numbers the game runs for range bands and the joust">
+<table class="numbers">
+<caption>Numbers the game runs for range bands and the joust</caption>
+<thead><tr>
+<th scope="col">Quantity</th>
+<th scope="col">Value</th>
+<th scope="col">Unit</th>
+<th scope="col">Grade</th>
+<th scope="col">Source</th>
+<th scope="col">Basis</th>
+</tr></thead>
+<tbody>
+<tr id="n-1"><th scope="row">Outer edges of the close band and the mid band</th><td class="val">30, 3,000</td><td>km</td><td><span class="gradeitem"><span class="grade">C</span>Derived</span></td><td><a href="https://www.projectrho.com/public_html/rocket/spacegunconvent.php">Atomic Rockets, spacegunconvent</a>, Railguns</td><td>At the six kilometers per second the railgun row uses, 30 kilometers is 5 seconds of flight and 3,000 kilometers is 8 minutes; the edges are those two flight times as distances.</td></tr>
+<tr id="n-2"><th scope="row">Distance two ships open a fight at, by band</th><td class="val">close 10, mid 1,000, long 100,000</td><td>km</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen by the game a decade inside each band, 10, 1,000 and 100,000 kilometers, so one burn crosses a band. No source gives an opening range.</td></tr>
+<tr id="n-3"><th scope="row">Closest gap two ships can reach on the line</th><td class="val">1</td><td>km</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The floor of the range line, chosen by the game.</td></tr>
+<tr id="n-4"><th scope="row">Widest gap two ships can reach on the line</th><td class="val">1,000,000</td><td>km</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The top of the range line, chosen by the game.</td></tr>
+<tr id="n-5"><th scope="row">Factor by which one burn changes a gap</th><td class="val">10</td><td>multiple</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen by the game as a decade a burn, so every band is one or two burns from the next.</td></tr>
+<tr id="n-6"><th scope="row">Hit chance gained or lost by range band (close, mid, long)</th><td class="val">12, 0, -6</td><td>points of hit chance</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The same plus 12, 0 and minus 6 the old posture carried, moved to the pair of ships on 2026-09-18 and not measured again since (docs/notes/rangeline.md).</td></tr>
+<tr id="n-7"><th scope="row">Speed of light</th><td class="val">299,792</td><td>km per second</td><td><span class="gradeitem"><span class="grade">B</span>Secondary</span></td><td><a href="https://www.projectrho.com/public_html/rocket/commdeck.php">Atomic Rockets, commdeck</a>, the speed of light passage</td><td>The page states the speed of light in a vacuum as 299,792,458 meters per second, and the game uses it as stated, because a drone steered by radio is seen late.</td></tr>
+<tr id="n-8"><th scope="row">Share of its hull below which a hull under fire dodges instead of trading</th><td class="val">0.35</td><td>share</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen by Austen on 2026-09-18: a hostile dodges only when it deems it necessary, which is when something can fire on it and it cannot fire back, or below 35 percent hull.</td></tr>
+<tr id="n-9"><th scope="row">Dodges in a row before the crew must fire or run</th><td class="val">2</td><td>dodges</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen by the game: a dodger at range cannot be hit, and without a limit two hulls could trade dodges until the autoresolve cap.</td></tr>
+<tr id="n-10"><th scope="row">Range at which both guns fire in the joust</th><td class="val">30</td><td>km</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The same 30 kilometers as the close band's outer edge, where a round's flight is too short to dodge at any closing speed a torch ship reaches. The edge is graded on its own row.</td></tr>
+<tr id="n-11"><th scope="row">Sides of the die rolled for who fires first</th><td class="val">20</td><td>sides</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>A d20 keeps the roll louder than the modifiers, so a heavy freighter with a good navigator can still take the first shot off a corvette.</td></tr>
+<tr id="n-12"><th scope="row">Acceleration that earns one point of initiative</th><td class="val">2</td><td>m/s^2</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Measured over the 40 hulls: 4.00 to 14.00 meters per second squared rated, median 6.75, and a full hold halves it. At 2.0 the hull spread is about six points, the width of the navigation spread.</td></tr>
+<tr id="n-13"><th scope="row">Navigation skill that earns one point of initiative</th><td class="val">20</td><td>skill points</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen by the game on the 0 to 100 skill scale: five points at an ace and none for a ship nobody is navigating.</td></tr>
+</tbody></table></div>
+<h2 id="why">Why: the real physics or procedure</h2>
+<ul>
+<li>In space the distance between two ships decides almost everything, and the side-to-side offset matters little.</li>
+<li>A round fired at 6 kilometers per second takes 5 seconds to cross 30 kilometers and 8 minutes to cross 3,000.</li>
+<li>A ship that can move can be anywhere in a disc around its last known place by the time a slow round arrives, so a round fired from far away rarely hits a ship that dodges.</li>
+<li>The disc grows with the square of the flight time, so the chance to dodge grows with the square of the range.</li>
+<li>At close range the flight is milliseconds and nobody dodges, so every armed ship hits and both ships die.</li>
+<li>Anything hitting something at 3 kilometers per second carries kinetic energy equal to its own mass in TNT, and the game calls that one Rick.</li>
+</ul>
+<h2 id="departs">Where the game departs from reality</h2>
+<ul>
+<li>The range line is one dimension, with no bearing and no flanking, on purpose: a map in two dimensions would make combat a movement game (docs/notes/rangeline.md).</li>
+<li>The menu fight has no velocity state, so closing speed is not modeled there. The Newtonian fight models it (docs/notes/rangeline.md, closing speed).</li>
+<li>A pass is a suicide pact by physics and by Austen's choice of 2026-09-21: a 220 millimeter round at a 500 kilometer per second closing carries about 3.5 kilotons of TNT (docs/notes/joust.md).</li>
+</ul>
+<h2 id="silent">Where the sources are silent</h2>
+<ul>
+<li>No source gives the game's range bands, opening gaps or the hit chance by band. The mirror gives the muzzle speed and the energy law, and the bands are the game's own arithmetic on the muzzle speed.</li>
+<li>The mirror gives no initiative rule. The die, the acceleration step and the navigation step are the game's own.</li>
+</ul>
+<h2 id="inspiration">Inspiration</h2>
+<ul>
+<li><strong>TODO(austen)</strong> (person): TODO(austen)</li>
+</ul>
+<h2 id="sources">Sources</h2>
+<ul>
+<li><a href="https://www.projectrho.com/public_html/rocket/spacegunconvent.php">Atomic Rockets, spacegunconvent</a>, Railguns: The maximum velocity of a railgun projectile is about six kilometers per second. The page also sets Robinson's First Law of Space Warfare: anything hitting at 3 km/s carries energy equal to its mass in TNT. "one Rick" (<a href="sources.html#doc-rocket-spacegunconvent-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/commdeck.php">Atomic Rockets, commdeck</a>, the speed of light passage: The speed of light in a vacuum is 299,792,458 meters per second. (<a href="sources.html#doc-rocket-commdeck-php-html">all uses</a>)</li>
+</ul>
+<h2 id="code">Code files</h2>
+<ul>
+<li><code>combat/rangeline.py</code></li>
+<li><code>combat/joust.py</code></li>
+<li><code>combat/initiative.py</code></li>
+<li><code>combat/resolution.py</code></li>
+</ul>
+</main>
+<footer class="stamp">
+<p>Read from game commit 1cab5b32 (committed 2026-10-18). Pages written 2026-10-18.
+The explanations are stand-in text and may change.</p>
+</footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The observer and ship condition</title>
+<meta name="description" content="What the game does for the observer and ship condition, its numbers, and where each comes from.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+:root {
+  color-scheme: light dark;
+  --bg: #fbf8f1; --panel: #f0eadb; --rule: #b9ae94; --text: #231c0f; --muted: #51493a; --accent: #7a4300;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #0e0903; --panel: #16110a; --rule: #4a4130; --text: #d6cbb6; --muted: #a89f88; --accent: #ffb040; }
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 1rem/1.65 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; padding: 0 1rem 4rem; }
+.skip { position: absolute; left: 1rem; top: -4rem; background: var(--accent); color: var(--bg); padding: .5rem 1rem; z-index: 10; }
+.skip:focus { top: .5rem; }
+.wrap { max-width: 64rem; margin: 0 auto; }
+.mono, h1, h2, h3, caption, th, nav, .brand, .stamp, .grade, .val { font-family: "DM Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+a { color: var(--accent); text-underline-offset: .2em; }
+a:focus-visible, .region:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.top { padding: 2rem 0 1rem; border-bottom: 1px solid var(--rule); }
+.brand { margin: 0 0 .75rem; font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .25rem 1.5rem; }
+nav a { display: inline-block; padding: .35rem 0; }
+h1 { font-size: clamp(1.4rem, 5vw, 2rem); line-height: 1.25; margin: 2rem 0 1rem; font-weight: 500; }
+h2 { font-size: 1.25rem; margin: 2.5rem 0 .75rem; padding-top: 1.25rem; border-top: 1px solid var(--rule); font-weight: 500; }
+h3 { font-size: 1.05rem; margin: 1.5rem 0 .5rem; font-weight: 500; }
+p, li { max-width: 46rem; }
+li + li { margin-top: .35rem; }
+code { font-family: "DM Mono", ui-monospace, Consolas, monospace; font-size: .92em; overflow-wrap: anywhere; }
+.lead { font-size: 1.1rem; }
+.note { background: var(--panel); border-left: 4px solid var(--accent); padding: .75rem 1rem; max-width: 46rem; }
+.region { overflow-x: auto; margin: 1rem 0; border: 1px solid var(--rule); }
+table { border-collapse: collapse; width: 100%; min-width: 46rem; font-size: .92rem; line-height: 1.5; }
+caption { text-align: left; padding: .75rem; font-size: .95rem; color: var(--muted); }
+th, td { text-align: left; vertical-align: top; padding: .55rem .75rem; border-top: 1px solid var(--rule); }
+thead th { background: var(--panel); font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; white-space: nowrap; }
+tbody th { font-weight: 400; font-family: inherit; min-width: 14rem; }
+td.val { overflow-wrap: anywhere; min-width: 7rem; }
+.numbers td:nth-child(5), .numbers td:nth-child(6) { min-width: 13rem; }
+td.count { text-align: right; font-variant-numeric: tabular-nums; }
+.grade { display: inline-block; border: 2px solid currentColor; border-radius: 4px; min-width: 1.6rem; text-align: center; padding: 0 .3rem; font-weight: 600; margin-right: .4rem; }
+.gradeitem { white-space: nowrap; }
+.stamp { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--rule); font-size: .8rem; color: var(--muted); }
+.toc { padding-left: 1.2rem; }
+dl.keys dt { font-weight: 600; margin-top: 1rem; }
+dl.keys dd { margin: .25rem 0 0; max-width: 46rem; }
+@media (max-width: 40rem) { body { padding: 0 1rem 3rem; } th, td { padding: .5rem; } }
+@media print { .skip { display: none; } }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to the content</a>
+<div class="wrap">
+<header class="top">
+<p class="brand"><a href="https://coldweld.dev/">Coldweld</a> / The Infinite Diaspora / Reference shelf</p>
+<nav aria-label="Reference shelf"><ul>
+<li><a href="index.html">Mechanics</a></li>
+<li><a href="grades.html">Grades</a></li>
+<li><a href="sources.html">Sources</a></li>
+</ul></nav>
+</header>
+<main id="main">
+<h1>The observer and ship condition</h1>
+<ul class="toc">
+<li><a href="#brief">In brief</a></li>
+<li><a href="#does">What the game does</a></li>
+<li><a href="#numbers">The numbers</a></li>
+<li><a href="#why">Why: the real physics or procedure</a></li>
+<li><a href="#departs">Where the game departs from reality</a></li>
+<li><a href="#silent">Where the sources are silent</a></li>
+<li><a href="#inspiration">Inspiration</a></li>
+<li><a href="#sources">Sources</a></li>
+<li><a href="#code">Code files</a></li>
+</ul>
+<h2 id="brief">In brief</h2>
+<p class="lead">The observer is a person at a lens who says what another ship looks like, and a ship condition is the plain word for how much of a hull still works.</p>
+<h2 id="does">What the game does</h2>
+<h3>The Bridge</h3>
+<ul>
+<li>[1] to [4] | the helm, weapons, sensors and engineering stations, each with its own orders.</li>
+<li>[7] | the drone station, on a hull with a drone bay.</li>
+<li>[0] | the observer, who watches each contact.</li>
+<li>[5] | the standing orders. [6] | the wing.</li>
+<li>[8] [9] | step through the hostiles and the wing.</li>
+<li>[V] | the camera. [I] | every instrument.</li>
+<li>[M] | the ways out of the fight.</li>
+<li>ENTER | pauses the clock or runs it.</li>
+<li>[T] | its speed: real time, faster or fastest.</li>
+<li>[N] | skips to the next call from the crew.</li>
+</ul>
+<h2 id="numbers">The numbers</h2>
+<p>8 numbers, read from the game code. 1 grade B, 7 grade E.</p>
+<div class="region" role="region" tabindex="0" aria-label="Numbers the game runs for the observer and ship condition">
+<table class="numbers">
+<caption>Numbers the game runs for the observer and ship condition</caption>
+<thead><tr>
+<th scope="col">Quantity</th>
+<th scope="col">Value</th>
+<th scope="col">Unit</th>
+<th scope="col">Grade</th>
+<th scope="col">Source</th>
+<th scope="col">Basis</th>
+</tr></thead>
+<tbody>
+<tr id="n-1"><th scope="row">Hull share at or above which a hull is in each condition state</th><td class="val">100, 60, 35, 10, 0</td><td>hull share</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose the cutoffs. A hull at the cautious captain's breakoff counts as crippled, so the cautious turn away there. The sources are silent on this figure.</td></tr>
+<tr id="n-2"><th scope="row">Wavelength of the light a passive look uses</th><td class="val">0</td><td>m</td><td><span class="gradeitem"><span class="grade">B</span>Secondary</span></td><td><a href="https://www.projectrho.com/public_html/rocket/usefultables.php">Atomic Rockets, usefultables</a>, The Boom Table</td><td>The mirror lists a green photon as 550 nanometers.</td></tr>
+<tr id="n-3"><th scope="row">Observer&#x27;s lens aperture as a share of the hull length</th><td class="val">0.01</td><td>share of length</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose a lens one hundredth of the hull length, so a bigger ship carries a bigger lens. No source gives a lens size. The sources are silent on this figure.</td></tr>
+<tr id="n-4"><th scope="row">How many times coarser the picture gets when our own ship jinks</th><td class="val">3</td><td>x</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose a blur so a jinking ship sees less. No source gives a figure for lens shake. The sources are silent on this figure.</td></tr>
+<tr id="n-5"><th scope="row">Detail an active sweep images to</th><td class="val">3</td><td>m</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose a fixed fine detail for an active sweep at any range inside its limit. The sources are silent on this figure.</td></tr>
+<tr id="n-6"><th scope="row">Range past which active returns are too faint to image</th><td class="val">1,500</td><td>km</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/spacewardetect.php">Atomic Rockets, spacewardetect</a>, What If I Run Silent And Cold?</td><td>The game chose a limit. The mirror gives detection ranges but no imaging limit for a sweep. The sources are silent on this figure.</td></tr>
+<tr id="n-7"><th scope="row">Cells a feature must span, seconds between looks and report detail, by observer skill</th><td class="val">rookie cells 6, period 30, detail 0, seasoned cells 4, period 15, detail 1, veteran cells 3, period 5, detail 2</td><td>mixed</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose a rookie who needs a big feature and looks rarely, and a veteran who needs a small one and looks often.</td></tr>
+<tr id="n-8"><th scope="row">Size in meters of the thing each sign is</th><td class="val">structure None, fire 10, vent 50, fins 30, drive 20, guns 5, pd 2, jets 1</td><td>m</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose the size of a mount, a plume, a vent and a fin set. A report can name one only when the lens resolves it.</td></tr>
+</tbody></table></div>
+<h2 id="why">Why: the real physics or procedure</h2>
+<ul>
+<li>A lens resolves detail by its aperture and the wavelength of the light, so a bigger lens and a shorter wavelength see finer detail.</li>
+<li>A jink shakes the observer's own lens, so a ship that dodges sees less.</li>
+<li>An active sweep images finer than a passive look but gives away the observer.</li>
+<li>A report of damage says what the hull can still do and not how a person feels.</li>
+</ul>
+<h2 id="departs">Where the game departs from reality</h2>
+<ul>
+<li>The game uses the wavelength of green light for every passive look. A real sensor on a hot hull would work in the infrared.</li>
+<li>The size of each sign (a mount, a plume, a vent) is the game's own list and not a measured set.</li>
+</ul>
+<h2 id="silent">Where the sources are silent</h2>
+<ul>
+<li>The mirror gives no lens size for a warship and no count of cells a crew needs to call a feature.</li>
+<li>The mirror gives detection ranges but no imaging limit for an active sweep.</li>
+</ul>
+<h2 id="inspiration">Inspiration</h2>
+<ul>
+<li><strong>TODO(austen)</strong> (person): TODO(austen)</li>
+</ul>
+<h2 id="sources">Sources</h2>
+<ul>
+<li><a href="https://www.projectrho.com/public_html/rocket/usefultables.php">Atomic Rockets, usefultables</a>, The Boom Table: A green photon has a wavelength of 550 nanometers. (<a href="sources.html#doc-rocket-usefultables-php-html">all uses</a>)</li>
+</ul>
+<h2 id="code">Code files</h2>
+<ul>
+<li><code>combat/newtonian/condition.py</code></li>
+</ul>
+</main>
+<footer class="stamp">
+<p>Read from game commit 1cab5b32 (committed 2026-10-18). Pages written 2026-10-18.
+The explanations are stand-in text and may change.</p>
+</footer>
+</div>
+</body>
+</html>

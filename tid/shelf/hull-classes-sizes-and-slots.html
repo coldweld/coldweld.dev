@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hull classes, sizes and slots</title>
+<meta name="description" content="What the game does for hull classes, sizes and slots, its numbers, and where each comes from.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+:root {
+  color-scheme: light dark;
+  --bg: #fbf8f1; --panel: #f0eadb; --rule: #b9ae94; --text: #231c0f; --muted: #51493a; --accent: #7a4300;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #0e0903; --panel: #16110a; --rule: #4a4130; --text: #d6cbb6; --muted: #a89f88; --accent: #ffb040; }
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 1rem/1.65 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; padding: 0 1rem 4rem; }
+.skip { position: absolute; left: 1rem; top: -4rem; background: var(--accent); color: var(--bg); padding: .5rem 1rem; z-index: 10; }
+.skip:focus { top: .5rem; }
+.wrap { max-width: 64rem; margin: 0 auto; }
+.mono, h1, h2, h3, caption, th, nav, .brand, .stamp, .grade, .val { font-family: "DM Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+a { color: var(--accent); text-underline-offset: .2em; }
+a:focus-visible, .region:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.top { padding: 2rem 0 1rem; border-bottom: 1px solid var(--rule); }
+.brand { margin: 0 0 .75rem; font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .25rem 1.5rem; }
+nav a { display: inline-block; padding: .35rem 0; }
+h1 { font-size: clamp(1.4rem, 5vw, 2rem); line-height: 1.25; margin: 2rem 0 1rem; font-weight: 500; }
+h2 { font-size: 1.25rem; margin: 2.5rem 0 .75rem; padding-top: 1.25rem; border-top: 1px solid var(--rule); font-weight: 500; }
+h3 { font-size: 1.05rem; margin: 1.5rem 0 .5rem; font-weight: 500; }
+p, li { max-width: 46rem; }
+li + li { margin-top: .35rem; }
+code { font-family: "DM Mono", ui-monospace, Consolas, monospace; font-size: .92em; overflow-wrap: anywhere; }
+.lead { font-size: 1.1rem; }
+.note { background: var(--panel); border-left: 4px solid var(--accent); padding: .75rem 1rem; max-width: 46rem; }
+.region { overflow-x: auto; margin: 1rem 0; border: 1px solid var(--rule); }
+table { border-collapse: collapse; width: 100%; min-width: 46rem; font-size: .92rem; line-height: 1.5; }
+caption { text-align: left; padding: .75rem; font-size: .95rem; color: var(--muted); }
+th, td { text-align: left; vertical-align: top; padding: .55rem .75rem; border-top: 1px solid var(--rule); }
+thead th { background: var(--panel); font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; white-space: nowrap; }
+tbody th { font-weight: 400; font-family: inherit; min-width: 14rem; }
+td.val { overflow-wrap: anywhere; min-width: 7rem; }
+.numbers td:nth-child(5), .numbers td:nth-child(6) { min-width: 13rem; }
+td.count { text-align: right; font-variant-numeric: tabular-nums; }
+.grade { display: inline-block; border: 2px solid currentColor; border-radius: 4px; min-width: 1.6rem; text-align: center; padding: 0 .3rem; font-weight: 600; margin-right: .4rem; }
+.gradeitem { white-space: nowrap; }
+.stamp { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--rule); font-size: .8rem; color: var(--muted); }
+.toc { padding-left: 1.2rem; }
+dl.keys dt { font-weight: 600; margin-top: 1rem; }
+dl.keys dd { margin: .25rem 0 0; max-width: 46rem; }
+@media (max-width: 40rem) { body { padding: 0 1rem 3rem; } th, td { padding: .5rem; } }
+@media print { .skip { display: none; } }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to the content</a>
+<div class="wrap">
+<header class="top">
+<p class="brand"><a href="https://coldweld.dev/">Coldweld</a> / The Infinite Diaspora / Reference shelf</p>
+<nav aria-label="Reference shelf"><ul>
+<li><a href="index.html">Mechanics</a></li>
+<li><a href="grades.html">Grades</a></li>
+<li><a href="sources.html">Sources</a></li>
+</ul></nav>
+</header>
+<main id="main">
+<h1>Hull classes, sizes and slots</h1>
+<ul class="toc">
+<li><a href="#brief">In brief</a></li>
+<li><a href="#does">What the game does</a></li>
+<li><a href="#numbers">The numbers</a></li>
+<li><a href="#why">Why: the real physics or procedure</a></li>
+<li><a href="#departs">Where the game departs from reality</a></li>
+<li><a href="#silent">Where the sources are silent</a></li>
+<li><a href="#inspiration">Inspiration</a></li>
+<li><a href="#sources">Sources</a></li>
+<li><a href="#code">Code files</a></li>
+</ul>
+<h2 id="brief">In brief</h2>
+<p class="lead">A hull class is the size band of a hull, light, medium or heavy craft, and it sets the reactor, the heat capacity, the reactor armor slot and the Safeguards rules for the hull.</p>
+<h2 id="does">What the game does</h2>
+<h2 id="numbers">The numbers</h2>
+<p>10 numbers, read from the game code. 10 grade E.</p>
+<div class="region" role="region" tabindex="0" aria-label="Numbers the game runs for hull classes, sizes and slots">
+<table class="numbers">
+<caption>Numbers the game runs for hull classes, sizes and slots</caption>
+<thead><tr>
+<th scope="col">Quantity</th>
+<th scope="col">Value</th>
+<th scope="col">Unit</th>
+<th scope="col">Grade</th>
+<th scope="col">Source</th>
+<th scope="col">Basis</th>
+</tr></thead>
+<tbody>
+<tr id="n-1"><th scope="row">The size class of each hull model</th><td class="val">Lyrid LIGHT CRAFT, Wayland LIGHT CRAFT, Trochilus LIGHT CRAFT, Adriatic LIGHT CRAFT, Apis LIGHT CRAFT, Ilmarinen LIGHT CRAFT, Gyges LIGHT CRAFT, Perseid LIGHT CRAFT, Tyto MEDIUM CRAFT, Fringilla MEDIUM CRAFT, Aegean MEDIUM CRAFT, Corinth MEDIUM CRAFT, Niagara MEDIUM CRAFT, Locusta MEDIUM CRAFT, Leonid MEDIUM CRAFT, San Andreas MEDIUM CRAFT, Malus MEDIUM CRAFT, Montu MEDIUM CRAFT, Tembo MEDIUM CRAFT, Gibraltar MEDIUM CRAFT, Anatolian MEDIUM CRAFT, Szabo MEDIUM CRAFT, Kiel MEDIUM CRAFT, Malacca MEDIUM CRAFT, Fraxinus MEDIUM CRAFT, Tyr MEDIUM CRAFT, Bosporus HEAVY CRAFT, Panama HEAVY CRAFT, Dardanelles HEAVY CRAFT, Suez HEAVY CRAFT, Iguazu HEAVY CRAFT, Brennan HEAVY CRAFT, Quercus HEAVY CRAFT, Victoria HEAVY CRAFT, Nergal HEAVY CRAFT, Ginkgo HEAVY CRAFT, Kaieteur HEAVY CRAFT, Ivanova HEAVY CRAFT, Angel HEAVY CRAFT, Kerrigan HEAVY CRAFT, Sequoia HEAVY CRAFT, Ares HEAVY CRAFT, Mangala HEAVY CRAFT</td><td>size class by model</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Authored per model, because a save carries the model, while price and role read back as None. The classes are the game's own. The shelf pages hold no size bands for craft.</td></tr>
+<tr id="n-2"><th scope="row">Most hull points of a light craft, for a hull nobody authored</th><td class="val">120</td><td>hull points</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>hullclass.py, The rule</td><td>The old threshold the table was generated from, kept as the fallback for a hand-built stub or a new model.</td></tr>
+<tr id="n-3"><th scope="row">Most hull points of a medium craft, for a hull nobody authored</th><td class="val">250</td><td>hull points</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>hullclass.py, The rule</td><td>The old threshold the table was generated from, kept as the fallback for a hand-built stub or a new model.</td></tr>
+<tr id="n-4"><th scope="row">Sleek hull slopes by face</th><td class="val">FORE 30, PORT 10, STARBOARD 10, UPPER 10, LOWER 10, AFT 10</td><td>degrees</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/spacewardefense.php">Atomic Rockets, spacewardefense</a>, Section 10: General Armor Tactics, sloped armor</td><td>Chosen: a sleek hull is wedged with the steepest slope at the bow. The mirror advises long, thin nosecones for warships and gives no angle for each face. The sources are silent on this figure.</td></tr>
+<tr id="n-5"><th scope="row">Square hull slopes by face</th><td class="val">FORE 0, PORT 0, STARBOARD 0, UPPER 0, LOWER 0, AFT 0</td><td>degrees</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/spacewardefense.php">Atomic Rockets, spacewardefense</a>, Section 10: General Armor Tactics, sloped armor</td><td>Zero slope on every face: a flat-faced hull. A sloped plate reads thicker by the secant of its angle (mirror, General Armor Tactics), and a slope of zero adds nothing.</td></tr>
+<tr id="n-6"><th scope="row">Reactor armor slot size by size class</th><td class="val">LIGHT CRAFT light, MEDIUM CRAFT standard, HEAVY CRAFT heavy</td><td>slot size by class</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Every hull carries one reactor armor slot, sized by its class. The plate ratings (35, 80 and 115) are authored.</td></tr>
+<tr id="n-7"><th scope="row">Hull roles that are built with reactor armor fitted</th><td class="val">frozenset({&#x27;TROOP TRANSPORT&#x27;, &#x27;CARRIER&#x27;, &#x27;CRUISER&#x27;, &#x27;DESTROYER&#x27;, &#x27;FLEET CARRIER&#x27;, &#x27;COMBAT&#x27;, &#x27;DRONE CARRIER&#x27;})</td><td>hull roles</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>A navy or pirate warship comes with the plate. A yard hull comes bare, as its guns do.</td></tr>
+<tr id="n-8"><th scope="row">Service years behind a hull before the captain</th><td class="val">200</td><td>years</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>The setting: canon, Timeline, 2076 to 2276</td><td>No captain buys a new hull, because a shipbuilding plant's output goes to whoever needs tonnage that does not yet exist. The span is the two centuries of shipbuilding iteration that canon gives a hull.</td></tr>
+<tr id="n-9"><th scope="row">The year the game begins</th><td class="val">2,500</td><td>year</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>The setting: canon, Timeline, 2276 to 2500</td><td>Canon: the game begins on 1 January 2500, after 224 years in which the plants built the same drawing.</td></tr>
+<tr id="n-10"><th scope="row">Cargo the locker holds</th><td class="val">5</td><td>tonnes</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The locker is a room ashore with a bed, a shelf and a kitchenette, and not a hull. Chosen so that a captain who sells up keeps an object that holds some cargo and cannot travel.</td></tr>
+</tbody></table></div>
+<h2 id="why">Why: the real physics or procedure</h2>
+<ul>
+<li>A hull's points say how much shooting it survives, and its class says what it is.</li>
+<li>The class sets reactor output, capacitor size, heat capacity, thermal signature, to-hit and the Safeguards license.</li>
+<li>Class is authored per model, because a save stores the model.</li>
+<li>Every hull carries one reactor armor slot, sized by its class.</li>
+<li>A sloped plate reads thicker by the secant of its angle, so a hull sloped on a face stops more there.</li>
+</ul>
+<h2 id="departs">Where the game departs from reality</h2>
+<ul>
+<li>The thresholds of 120 and 250 hull points are the fallback only, for a hull nobody authored (docs/notes/hullclass.md).</li>
+<li>The locker is a Ship object with no fuel capacity, so every body reads out of range (comment in vehicles/ship/shipdata.py).</li>
+</ul>
+<h2 id="silent">Where the sources are silent</h2>
+<ul>
+<li>The shelf and mirror pages read for this note hold no size bands for craft, so the three classes and every threshold are authored.</li>
+</ul>
+<h2 id="inspiration">Inspiration</h2>
+<ul>
+<li><strong>TODO(austen)</strong> (person): TODO(austen)</li>
+</ul>
+<h2 id="sources">Sources</h2>
+<ul>
+<li>hullclass.py, Why one number was carrying two facts: The repo's own record: class used to be read off hull points with two thresholds, and the split made class independent of points. (<a href="sources.html#doc-docs-notes-hullclass-md">all uses</a>)</li>
+<li>The setting: canon, Timeline: The shipbuilding plants have built the same drawing since 2276, and the game begins on 1 January 2500. (<a href="sources.html#doc-docs-setting-canon-md">all uses</a>)</li>
+</ul>
+<h2 id="code">Code files</h2>
+<ul>
+<li><code>vehicles/ship/hullclass.py</code></li>
+<li><code>vehicles/ship/modules/modules.py</code></li>
+<li><code>vehicles/ship/faceslopedata.py</code></li>
+<li><code>vehicles/ship/ship.py</code></li>
+<li><code>vehicles/ship/shipdata.py</code></li>
+</ul>
+</main>
+<footer class="stamp">
+<p>Read from game commit 1cab5b32 (committed 2026-10-18). Pages written 2026-10-18.
+The explanations are stand-in text and may change.</p>
+</footer>
+</div>
+</body>
+</html>

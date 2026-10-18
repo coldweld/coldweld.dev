@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Terrain, cover and harbors</title>
+<meta name="description" content="What the game does for terrain, cover and harbors, its numbers, and where each comes from.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+:root {
+  color-scheme: light dark;
+  --bg: #fbf8f1; --panel: #f0eadb; --rule: #b9ae94; --text: #231c0f; --muted: #51493a; --accent: #7a4300;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #0e0903; --panel: #16110a; --rule: #4a4130; --text: #d6cbb6; --muted: #a89f88; --accent: #ffb040; }
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 1rem/1.65 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; padding: 0 1rem 4rem; }
+.skip { position: absolute; left: 1rem; top: -4rem; background: var(--accent); color: var(--bg); padding: .5rem 1rem; z-index: 10; }
+.skip:focus { top: .5rem; }
+.wrap { max-width: 64rem; margin: 0 auto; }
+.mono, h1, h2, h3, caption, th, nav, .brand, .stamp, .grade, .val { font-family: "DM Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+a { color: var(--accent); text-underline-offset: .2em; }
+a:focus-visible, .region:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.top { padding: 2rem 0 1rem; border-bottom: 1px solid var(--rule); }
+.brand { margin: 0 0 .75rem; font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .25rem 1.5rem; }
+nav a { display: inline-block; padding: .35rem 0; }
+h1 { font-size: clamp(1.4rem, 5vw, 2rem); line-height: 1.25; margin: 2rem 0 1rem; font-weight: 500; }
+h2 { font-size: 1.25rem; margin: 2.5rem 0 .75rem; padding-top: 1.25rem; border-top: 1px solid var(--rule); font-weight: 500; }
+h3 { font-size: 1.05rem; margin: 1.5rem 0 .5rem; font-weight: 500; }
+p, li { max-width: 46rem; }
+li + li { margin-top: .35rem; }
+code { font-family: "DM Mono", ui-monospace, Consolas, monospace; font-size: .92em; overflow-wrap: anywhere; }
+.lead { font-size: 1.1rem; }
+.note { background: var(--panel); border-left: 4px solid var(--accent); padding: .75rem 1rem; max-width: 46rem; }
+.region { overflow-x: auto; margin: 1rem 0; border: 1px solid var(--rule); }
+table { border-collapse: collapse; width: 100%; min-width: 46rem; font-size: .92rem; line-height: 1.5; }
+caption { text-align: left; padding: .75rem; font-size: .95rem; color: var(--muted); }
+th, td { text-align: left; vertical-align: top; padding: .55rem .75rem; border-top: 1px solid var(--rule); }
+thead th { background: var(--panel); font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; white-space: nowrap; }
+tbody th { font-weight: 400; font-family: inherit; min-width: 14rem; }
+td.val { overflow-wrap: anywhere; min-width: 7rem; }
+.numbers td:nth-child(5), .numbers td:nth-child(6) { min-width: 13rem; }
+td.count { text-align: right; font-variant-numeric: tabular-nums; }
+.grade { display: inline-block; border: 2px solid currentColor; border-radius: 4px; min-width: 1.6rem; text-align: center; padding: 0 .3rem; font-weight: 600; margin-right: .4rem; }
+.gradeitem { white-space: nowrap; }
+.stamp { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--rule); font-size: .8rem; color: var(--muted); }
+.toc { padding-left: 1.2rem; }
+dl.keys dt { font-weight: 600; margin-top: 1rem; }
+dl.keys dd { margin: .25rem 0 0; max-width: 46rem; }
+@media (max-width: 40rem) { body { padding: 0 1rem 3rem; } th, td { padding: .5rem; } }
+@media print { .skip { display: none; } }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to the content</a>
+<div class="wrap">
+<header class="top">
+<p class="brand"><a href="https://coldweld.dev/">Coldweld</a> / The Infinite Diaspora / Reference shelf</p>
+<nav aria-label="Reference shelf"><ul>
+<li><a href="index.html">Mechanics</a></li>
+<li><a href="grades.html">Grades</a></li>
+<li><a href="sources.html">Sources</a></li>
+</ul></nav>
+</header>
+<main id="main">
+<h1>Terrain, cover and harbors</h1>
+<ul class="toc">
+<li><a href="#brief">In brief</a></li>
+<li><a href="#does">What the game does</a></li>
+<li><a href="#numbers">The numbers</a></li>
+<li><a href="#why">Why: the real physics or procedure</a></li>
+<li><a href="#departs">Where the game departs from reality</a></li>
+<li><a href="#silent">Where the sources are silent</a></li>
+<li><a href="#inspiration">Inspiration</a></li>
+<li><a href="#sources">Sources</a></li>
+<li><a href="#code">Code files</a></li>
+</ul>
+<h2 id="brief">In brief</h2>
+<p class="lead">Terrain is the rock a fight happens around: asteroids and dense clouds that a ship can hide behind, crash into, or steer round, and a station harbor that fires on anyone who shoots near it.</p>
+<h2 id="does">What the game does</h2>
+<h2 id="numbers">The numbers</h2>
+<p>28 numbers, read from the game code. 1 grade B, 27 grade E.</p>
+<div class="region" role="region" tabindex="0" aria-label="Numbers the game runs for terrain, cover and harbors">
+<table class="numbers">
+<caption>Numbers the game runs for terrain, cover and harbors</caption>
+<thead><tr>
+<th scope="col">Quantity</th>
+<th scope="col">Value</th>
+<th scope="col">Unit</th>
+<th scope="col">Grade</th>
+<th scope="col">Source</th>
+<th scope="col">Basis</th>
+</tr></thead>
+<tbody>
+<tr id="n-1"><th scope="row">Bulk density of an asteroid, for a body with no published mass</th><td class="val">2,000</td><td>kg/m^3</td><td><span class="gradeitem"><span class="grade">B</span>Secondary</span></td><td><a href="https://www.projectrho.com/public_html/rocket/usefultables.php">Atomic Rockets, usefultables</a>, Rho (density) Table</td><td>The density table on the mirror lists an average asteroid at 2,000 kg/m^3.</td></tr>
+<tr id="n-2"><th scope="row">Which belt each named mid-size body belongs to</th><td class="val">Inner Belt Gaspra, Steins, Annefrank, Braille, Donaldjohanson, Lutetia, Middle Belt Mathilde, Outer Belt Ida, Saturn </td><td>table</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game assigned each body to a belt band from recalled orbits, marked unverified in the code. The belts themselves are abstract bands. The sources are silent on this figure.</td></tr>
+<tr id="n-3"><th scope="row">Which belt each of the four giants belongs to</th><td class="val">Vesta Inner Belt, Pallas Middle Belt, Ceres Middle Belt, Hygiea Outer Belt</td><td>table</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Assigned by the game's own distances in AU.</td></tr>
+<tr id="n-4"><th scope="row">Radius from a field center within which real members and mined rocks lie</th><td class="val">120</td><td>km</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/prelimnotes.php">Atomic Rockets, prelimnotes</a>, Science-Fictional Shibboleths</td><td>The game chose a radius that puts several bodies in one fight, far closer than real spacing.</td></tr>
+<tr id="n-5"><th scope="row">Radius around a field&#x27;s center in which a fight begins</th><td class="val">150</td><td>km</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>A captain comes to work a field, so the game starts a fight at a random point inside this radius.</td></tr>
+<tr id="n-6"><th scope="row">Height above a giant&#x27;s surface at which a fight begins</th><td class="val">50, 300</td><td>km</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose a range of altitudes above a giant body.</td></tr>
+<tr id="n-7"><th scope="row">Smallest body that can hide a hull</th><td class="val">2</td><td>km</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>A hull is tens of meters long, so the game chose a body a few kilometers across as the smallest that can hide it.</td></tr>
+<tr id="n-8"><th scope="row">Dense clouds in a field</th><td class="val">1, 3</td><td>clouds</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose a few clouds, so a field has cover without being full of it.</td></tr>
+<tr id="n-9"><th scope="row">Radius of a dense cloud</th><td class="val">20, 50</td><td>km</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose a cloud tens of kilometers across.</td></tr>
+<tr id="n-10"><th scope="row">Boulder size in a cloud, used to set its density</th><td class="val">0.5</td><td>km</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>A cloud is modeled as a density and not as ten thousand rocks, so the boulder size only sets how thick it is.</td></tr>
+<tr id="n-11"><th scope="row">Optical depth at which a look or shot is masked</th><td class="val">1</td><td>optical depth</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>At an optical depth of one, light has fallen to about a third. The game chose that as the line at which sight and a shot are masked. The sources are silent on this figure.</td></tr>
+<tr id="n-12"><th scope="row">Distance the helm keeps off a rock&#x27;s surface</th><td class="val">1.5</td><td>km</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose a margin that is large next to a hull and small next to a body.</td></tr>
+<tr id="n-13"><th scope="row">Time the helm looks ahead along its own velocity to avoid rock</th><td class="val">240</td><td>s</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose a look-ahead long enough to turn a hull away at its fastest approach.</td></tr>
+<tr id="n-14"><th scope="row">Distance past a rock&#x27;s surface at which a hiding hull sits, away from the foe</th><td class="val">3</td><td>km</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose a margin on the far side of the rock.</td></tr>
+<tr id="n-15"><th scope="row">Range within which a crew looks for cover</th><td class="val">150</td><td>km</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose a range that makes cover a short move and not a long trip.</td></tr>
+<tr id="n-16"><th scope="row">Distance ahead along a body at which a hull going round it steers</th><td class="val">30</td><td>km</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose a point ahead so the hull flies the curve and not the chord.</td></tr>
+<tr id="n-17"><th scope="row">Least rock between a hull in cover and the foe</th><td class="val">1</td><td>km</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose a depth so a foe that drifts sideways does not uncover the hull at once.</td></tr>
+<tr id="n-18"><th scope="row">Speed above which touching a rock destroys a hull</th><td class="val">0.01</td><td>km/s</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose ten meters a second. No source gives a hull strength against impact. The sources are silent on this figure.</td></tr>
+<tr id="n-19"><th scope="row">Length of a station as a target for a stray round and its point defense</th><td class="val">2,000</td><td>m</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose a harbor that is much larger than a hull, which is tens of meters long.</td></tr>
+<tr id="n-20"><th scope="row">Point defense model on a station</th><td class="val">35mm PD Autocannon</td><td>catalog name</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose the heaviest catalog mount under the superheavy size.</td></tr>
+<tr id="n-21"><th scope="row">Point defense mounts on a station</th><td class="val">6</td><td>mounts</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose a number that a stray round cannot overcome.</td></tr>
+<tr id="n-22"><th scope="row">Distance of a belt harbor from a field&#x27;s center</th><td class="val">150</td><td>km</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose a distance that puts the harbor inside the fight area.</td></tr>
+<tr id="n-23"><th scope="row">Height of a giant&#x27;s harbor above the surface</th><td class="val">100</td><td>km</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose an orbit height above the giant body.</td></tr>
+<tr id="n-24"><th scope="row">Radius of the no-fire zone around a harbor</th><td class="val">25</td><td>km</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Fights happen just outside the zone, and the zone is a safe harbor to run to. The game chose the radius.</td></tr>
+<tr id="n-25"><th scope="row">Seconds between a station warning and the garrison firing</th><td class="val">5</td><td>s</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The station hails and waits this long. A longer wait let a stream kill a ship first.</td></tr>
+<tr id="n-26"><th scope="row">Quiet time after which a shooter counts as having stopped</th><td class="val">20</td><td>s</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose it so the warning ends once a shooter has stopped, while the file entry stays.</td></tr>
+<tr id="n-27"><th scope="row">Marines in a full level-1 garrison</th><td class="val">100</td><td>marines</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The count is taken from the game's own garrison strength rule. No source gives a station garrison. The sources are silent on this figure.</td></tr>
+<tr id="n-28"><th scope="row">Marines needed to man one standard coilgun</th><td class="val">25</td><td>marines</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>The game chose it so a garrison's guns come from its size.</td></tr>
+</tbody></table></div>
+<h2 id="why">Why: the real physics or procedure</h2>
+<ul>
+<li>Space is nearly empty, so a body can hide a ship only if it is larger than the ship by a wide margin.</li>
+<li>A ship that touches rock at speed is destroyed, so the helm keeps a clearance and looks ahead along its path.</li>
+<li>A line of sight through a dense cloud is blocked once the light is mostly absorbed, which is an optical depth near one.</li>
+<li>A station garrison fires on a shooter that ignores a warning.</li>
+</ul>
+<h2 id="departs">Where the game departs from reality</h2>
+<ul>
+<li>Real bodies over 1 km are about 900,000 km apart. The game puts several in one field and a dense cloud inside 300 km, because a fight needs something to hide behind.</li>
+<li>A cloud is a smooth density and not ten thousand boulders. A real field would be a swarm.</li>
+</ul>
+<h2 id="silent">Where the sources are silent</h2>
+<ul>
+<li>The mirror gives no distance at which a ship is safe from a rock, no impact speed that destroys a hull, and no size for a station harbor or its garrison.</li>
+<li>The bodies that belong to each belt come from recalled orbits and are marked unverified in terrain.py.</li>
+</ul>
+<h2 id="inspiration">Inspiration</h2>
+<ul>
+<li><strong>TODO(austen)</strong> (person): TODO(austen)</li>
+</ul>
+<h2 id="sources">Sources</h2>
+<ul>
+<li><a href="https://www.projectrho.com/public_html/rocket/usefultables.php">Atomic Rockets, usefultables</a>, Rho (density) Table: An average asteroid is 2,000 kg/m^3; carbonaceous asteroids 1,380 and stony asteroids 2,710 (kg/m^3). (<a href="sources.html#doc-rocket-usefultables-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/prelimnotes.php">Atomic Rockets, prelimnotes</a>, Science-Fictional Shibboleths: Bodies wider than 1 km are on average about 900,000 km apart. "Canon labels the fighting field as the fiction (docs/setting-canon.md)." (<a href="sources.html#doc-rocket-prelimnotes-php-html">all uses</a>)</li>
+<li><a href="https://www.projectrho.com/public_html/rocket/mining.php">Atomic Rockets, mining</a>, Asteroid Mining: The four giants Vesta, Pallas, Ceres and Hygiea take their size and mass from here and from Wikipedia. (<a href="sources.html#doc-rocket-mining-php-html">all uses</a>)</li>
+</ul>
+<h2 id="code">Code files</h2>
+<ul>
+<li><code>combat/newtonian/terrain.py</code></li>
+</ul>
+</main>
+<footer class="stamp">
+<p>Read from game commit 1cab5b32 (committed 2026-10-18). Pages written 2026-10-18.
+The explanations are stand-in text and may change.</p>
+</footer>
+</div>
+</body>
+</html>

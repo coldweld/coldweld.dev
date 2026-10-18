@@ -77,6 +77,7 @@ dl.keys dd { margin: .25rem 0 0; max-width: 46rem; }
 <li><a href="#why">Why: the real physics or procedure</a></li>
 <li><a href="#departs">Where the game departs from reality</a></li>
 <li><a href="#silent">Where the sources are silent</a></li>
+<li><a href="#inspiration">Inspiration</a></li>
 <li><a href="#sources">Sources</a></li>
 <li><a href="#code">Code files</a></li>
 </ul>
@@ -84,7 +85,7 @@ dl.keys dd { margin: .25rem 0 0; max-width: 46rem; }
 <p class="lead">Radio voice is the fixed way military ships word a call, using short set words called prowords so that every listener reads the same meaning from the same sound.</p>
 <h2 id="does">What the game does</h2>
 <h2 id="numbers">The numbers</h2>
-<p>13 numbers, read from the game code. None has a grade yet.</p>
+<p>16 numbers, read from the game code. 16 grade E.</p>
 <div class="region" role="region" tabindex="0" aria-label="Numbers the game runs for radio voice">
 <table class="numbers">
 <caption>Numbers the game runs for radio voice</caption>
@@ -97,19 +98,22 @@ dl.keys dd { margin: .25rem 0 0; max-width: 46rem; }
 <th scope="col">Basis</th>
 </tr></thead>
 <tbody>
-<tr id="n-1"><th scope="row">The register each flag speaks in</th><td class="val">Earth TACTICAL, Mars TACTICAL, The Outer Guild GUILD, The Unclaimed UNCLAIMED</td><td>register</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
-<tr id="n-2"><th scope="row">How hard each register is to read without cracking its channel</th><td class="val">TACTICAL 55, GUILD 30, UNCLAIMED 0</td><td>encryption points</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
-<tr id="n-3"><th scope="row">Chance a unit speaks about each kind of event</th><td class="val">ENGAGING 0.25, HIT 0.35, LOWPOWER 0.5, LOWAMMO 0.85, BREAKINGOFF 1, KILL 0.6, DYING 1, TAUNT 0.2, PLEADING 0.75, STANDDOWN 0.45, ORDERS 0.3, COVERING 0.18, PRESSING 0.18, RECOMMEND 0.22</td><td>fraction</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
-<tr id="n-4"><th scope="row">Most radio lines printed in one round</th><td class="val">1</td><td>lines</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
-<tr id="n-5"><th scope="row">Speaker hull share below which the line is garbled</th><td class="val">0.5</td><td>fraction</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
-<tr id="n-6"><th scope="row">Speaker hull share below which the line is lost</th><td class="val">0.2</td><td>fraction</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
-<tr id="n-7"><th scope="row">Sensor rating that buys back one step of clarity</th><td class="val">20</td><td>sensor rating</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
-<tr id="n-8"><th scope="row">Tries to crack a channel, the last of which always works</th><td class="val">3</td><td>tries</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
-<tr id="n-9"><th scope="row">Base chance of a crack, before sensors, Communications and encryption</th><td class="val">25</td><td>percent</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
-<tr id="n-10"><th scope="row">Crack chance added per sensor rating point</th><td class="val">1.2</td><td>percent points</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
-<tr id="n-11"><th scope="row">Crack chance added per point of Communications competence</th><td class="val">1.5</td><td>percent points</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
-<tr id="n-12"><th scope="row">The four stand-down hails of the TACTICAL register</th><td class="val">UNKNOWN STATION, THIS IS {name}. CUT YOUR DRIVE AND STAND DOWN., YOU ARE FIRING ON A COMMISSIONED PATROL. STAND DOWN NOW., LAST WARNING. POWER DOWN OR WE FINISH THIS., STAND DOWN AND YOU WILL BE TAKEN IN. KEEP FIRING AND YOU WILL NOT.</td><td>lines</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
-<tr id="n-13"><th scope="row">The four opening engagement calls of the TACTICAL register</th><td class="val">TALLY {count}, HIGH AND RIGHT. ENGAGING., {enemy} IS MINE. COMMITTING., CONTACT {count}. WEAPONS FREE., MOVING TO INTERCEPT. STAND BY.</td><td>lines</td><td><span class="gradeitem"><span class="grade">?</span>Ungraded</span></td><td>None recorded</td><td>Not written yet</td></tr>
+<tr id="n-1"><th scope="row">The register each flag speaks in</th><td class="val">Earth TACTICAL, Mars TACTICAL, The Outer Guild GUILD, The Unclaimed UNCLAIMED</td><td>register</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>ACP 125(G), Communications Instructions: Radiotelephone Procedures, What the document says</td><td>ACP 125 gives the allied procedure voice and says nothing about which faction speaks it. Which flag speaks which register is a setting choice. The sources are silent on this figure.</td></tr>
+<tr id="n-2"><th scope="row">How hard each register is to read without cracking its channel</th><td class="val">TACTICAL 55, GUILD 30, UNCLAIMED 0</td><td>encryption points</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>No source gives how hard a channel is to read. The values rank how disciplined each register is. The sources are silent on this figure.</td></tr>
+<tr id="n-3"><th scope="row">Chance a unit speaks about each kind of event</th><td class="val">ENGAGING 0.25, HIT 0.35, LOWPOWER 0.5, LOWAMMO 0.85, BREAKINGOFF 1, KILL 0.6, DYING 1, TAUNT 0.2, PLEADING 0.75, STANDDOWN 0.45, ORDERS 0.3, COVERING 0.18, PRESSING 0.18, RECOMMEND 0.22</td><td>fraction</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen so that chatter reads as overheard texture and not as a log. No source gives how often a unit speaks.</td></tr>
+<tr id="n-4"><th scope="row">Most radio lines printed in one round</th><td class="val">1</td><td>lines</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen so that a busy combat screen stays inside its row budget.</td></tr>
+<tr id="n-5"><th scope="row">Speaker hull share below which the line is garbled</th><td class="val">0.5</td><td>fraction</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen so that a damaged speaker garbles first. No source ties voice clarity to hull damage.</td></tr>
+<tr id="n-6"><th scope="row">Speaker hull share below which the line is lost</th><td class="val">0.2</td><td>fraction</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen so that a badly damaged speaker goes silent. No source ties voice loss to hull damage.</td></tr>
+<tr id="n-7"><th scope="row">Sensor rating that buys back one step of clarity</th><td class="val">20</td><td>sensor rating</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen so that a good sensor suite buys back one step of clarity. No source gives it.</td></tr>
+<tr id="n-8"><th scope="row">Tries to crack a channel, the last of which always works</th><td class="val">3</td><td>tries</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>A game rule that bounds the cost of cracking a channel, so the captain knows the cost before committing.</td></tr>
+<tr id="n-9"><th scope="row">Base chance of a crack, before sensors, Communications and encryption</th><td class="val">25</td><td>percent</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen for play. No source gives a chance of reading an enemy channel.</td></tr>
+<tr id="n-10"><th scope="row">Crack chance added per sensor rating point</th><td class="val">1.2</td><td>percent points</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen so that a sensor suite, which hears the enemy at all, helps a crack.</td></tr>
+<tr id="n-11"><th scope="row">Crack chance added per point of Communications competence</th><td class="val">1.5</td><td>percent points</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen to match the per-skill bonus of every other department in the game.</td></tr>
+<tr id="n-12"><th scope="row">The four stand-down hails of the TACTICAL register</th><td class="val">UNKNOWN STATION, THIS IS {name}. CUT YOUR DRIVE AND STAND DOWN., YOU ARE FIRING ON A COMMISSIONED PATROL. STAND DOWN NOW., LAST WARNING. POWER DOWN OR WE FINISH THIS., STAND DOWN AND YOU WILL BE TAKEN IN. KEEP FIRING AND YOU WILL NOT.</td><td>lines</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>ACP 125(G), Communications Instructions: Radiotelephone Procedures, Paragraphs 520, 522, 536 and 901</td><td>ACP 125 paragraphs 520 and 522 fix a call as called station, THIS IS, calling station. Only one of the four hails follows that order, and the wording is authored.</td></tr>
+<tr id="n-13"><th scope="row">The four opening engagement calls of the TACTICAL register</th><td class="val">TALLY {count}, HIGH AND RIGHT. ENGAGING., {enemy} IS MINE. COMMITTING., CONTACT {count}. WEAPONS FREE., MOVING TO INTERCEPT. STAND BY.</td><td>lines</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>ACP 125(G), Communications Instructions: Radiotelephone Procedures, Where the source is silent</td><td>TALLY, WEAPONS FREE and similar words do not appear in ACP 125, which sends the reader to ATP-01. The lines are authored and unverified. The sources are silent on this figure.</td></tr>
+<tr id="n-14"><th scope="row">What the captain&#x27;s own net is worth breaking into, with no Communications hands</th><td class="val">20</td><td>encryption points</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen so that a hull with no Communications hands transmits in plain voice and a raider can read it. No source ranks how hard a channel is to read.</td></tr>
+<tr id="n-15"><th scope="row">Encryption added to the captain&#x27;s net per point of Communications competence</th><td class="val">2</td><td>encryption points per competence point</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen so that the captain's net follows the same rule as an enemy net: more skilled hands make it harder to read.</td></tr>
+<tr id="n-16"><th scope="row">Share of a shared firing solution that survives once the enemy has cracked the captain&#x27;s net</th><td class="val">0.5</td><td>multiplier</td><td><span class="gradeitem"><span class="grade">E</span>Authored</span></td><td>No source recorded</td><td>Chosen as the mirror of the captain's own crack: the enemy anticipates which contact the wing works, so the shared solution loses value. No source gives what a read channel is worth.</td></tr>
 </tbody></table></div>
 <h2 id="why">Why: the real physics or procedure</h2>
 <ul>
@@ -140,10 +144,14 @@ dl.keys dd { margin: .25rem 0 0; max-width: 46rem; }
 <li>The Atomic Rockets mirror is silent on radio procedure: a search of rocket/*.html for proword finds no page.</li>
 <li>ACP 125 was read through its shelf page, and the original PDF was not reopened for this note.</li>
 </ul>
+<h2 id="inspiration">Inspiration</h2>
+<ul>
+<li><strong>TODO(austen)</strong> (person): TODO(austen)</li>
+</ul>
 <h2 id="sources">Sources</h2>
 <ul>
 <li>ACP 125(G), Communications Instructions: Radiotelephone Procedures, Paragraphs 520, 522, 536 and 901, Annex A to chapter 3, chapter 7 example C: Called station, THIS IS, calling station, OVER (520, 522). Every transmission ends in OVER or OUT (536). UNKNOWN STATION and the WAIT and STANDBY rules are in the proword list of Annex A. Contact reports follow chapter 9, with details in ATP-01, which is not on the shelf (901). "the end of my transmission to you and no answer is required or expected" (<a href="sources.html#doc-docs-sources-acp-125-g-radiotelephone-md">all uses</a>)</li>
-<li>Notes: combat/comms.py, _opensbycallingitself: The repo's own record: the hostile hail was changed to UNKNOWN STATION, THIS IS {name} to follow paragraphs 520 and 522, and the speaker prefix check accepts THIS IS within 40 characters so the speaker is not printed twice. (<a href="sources.html#doc-docs-notes-comms-md">all uses</a>)</li>
+<li>Design notes for combat/comms.py, _opensbycallingitself: The repo's own record: the hostile hail was changed to UNKNOWN STATION, THIS IS {name} to follow paragraphs 520 and 522, and the speaker prefix check accepts THIS IS within 40 characters so the speaker is not printed twice. (<a href="sources.html#doc-docs-notes-comms-md">all uses</a>)</li>
 </ul>
 <h2 id="code">Code files</h2>
 <ul>
@@ -152,7 +160,7 @@ dl.keys dd { margin: .25rem 0 0; max-width: 46rem; }
 </ul>
 </main>
 <footer class="stamp">
-<p>Read from game commit 702fad0f (committed 2026-10-16). Pages written 2026-10-16.
+<p>Read from game commit 1cab5b32 (committed 2026-10-18). Pages written 2026-10-18.
 The explanations are stand-in text and may change.</p>
 </footer>
 </div>
