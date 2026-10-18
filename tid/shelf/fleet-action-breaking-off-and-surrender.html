@@ -31,6 +31,7 @@ a:hover { text-decoration-thickness: 2px; }
 .top { padding: 2rem 0 1rem; border-bottom: 1px solid var(--rule); }
 .brand { margin: 0 0 .75rem; font-size: .8rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
 nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .25rem 1.5rem; }
+nav li + li { margin-top: 0; }
 nav a { display: inline-block; padding: .45rem 0; }
 nav a[aria-current] { color: var(--text); text-decoration: none; border-bottom: 2px solid var(--accent); }
 h1 { font-size: clamp(1.6rem, 4.5vw, 2.25rem); line-height: 1.2; margin: 2.25rem 0 1rem; font-weight: 500; letter-spacing: -.01em; text-wrap: balance; }
@@ -138,11 +139,29 @@ dl.keys dd { margin: .25rem 0 0; }
 }
 @media (prefers-reduced-motion: reduce) { details.section > summary::before { transition: none; } }
 @media print { .skip, .tools, .openall, .empty { display: none; } details.section > summary::before { display: none; } }
+
+:root { --sb-text: #221e16; --sb-accent: #84520a; --sb-rule: #C6CBC9; }
+@media (prefers-color-scheme: dark) { :root { --sb-text: #d6cbb6; --sb-accent: #FFB040; --sb-rule: #2a2419; } }
+.sitebar { border-bottom: 1px solid var(--sb-rule); }
+.sitebar ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0 22px; max-width: none; }
+.sitebar li { margin: 0; max-width: none; }
+.sitebar a { display: block; padding: 12px 0 10px; border: 0; border-bottom: 2px solid transparent; font: 500 12px/20px "DM Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace; letter-spacing: .12em; text-transform: uppercase; color: var(--sb-text); text-decoration: none; }
+.sitebar a:hover { color: var(--sb-accent); }
+.sitebar a[aria-current] { color: var(--sb-accent); border-bottom-color: var(--sb-accent); }
+.sitebar a:focus-visible { outline: 2px solid var(--sb-accent); outline-offset: 2px; }
 </style>
 </head>
 <body>
 <a class="skip" href="#main">Skip to the content</a>
 <div class="wrap">
+<nav class="sitebar" aria-label="Site"><ul>
+<li><a href="/">Home</a></li>
+<li><a href="/#game">The Infinite Diaspora</a></li>
+<li><a href="/tid/shelf/" aria-current="true">Reference</a></li>
+<li><a href="/#studio">About</a></li>
+<li><a href="/#find">Social</a></li>
+<li><a href="/#contact">Contact</a></li>
+</ul></nav>
 <header class="top">
 <p class="brand"><a href="https://coldweld.dev/">Coldweld</a> / The Infinite Diaspora / Reference shelf</p>
 <nav aria-label="Reference shelf"><ul>
@@ -225,7 +244,7 @@ dl.keys dd { margin: .25rem 0 0; }
 <tr id="n-13" data-grade="E"><th scope="row">Share of its hull a captured hull is left with</th><td class="val" data-key="0.25">0.25 <span class="unit">share</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><a href="https://www.govinfo.gov/content/pkg/GOVPUB-D201-PURL-gpo56195/pdf/GOVPUB-D201-PURL-gpo56195.pdf">The Commander&#x27;s Handbook on the Law of Naval Operations (NWP 1-14M), 1995 edition</a>, 7.10 Prize</td><td>Chosen by the game as a hull disabled and roughly patched and not scrapped. The handbook treats a captured enemy hull as prize for a court, and gives no condition. The sources are silent on this figure.</td></tr>
 <tr id="n-14" data-grade="E"><th scope="row">How much a posture pulls enemy fire onto the flagship</th><td class="val" data-key="2.2">screen 2.2, line 1, standoff 0.3 <span class="unit">multiplier</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Chosen by the game at 2.2 for screen, 1.0 for the line and 0.30 for standoff. An earlier set (3.0 and 0.35, with a standoff penalty of 12) made hold the line dominate and standoff worst; the notes say to re-measure before quoting the balance.</td></tr>
 <tr id="n-15" data-grade="E"><th scope="row">Hull size at or under which a target reads as easy prey</th><td class="val" data-key="360.0">360 <span class="unit">hull points</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Chosen by the game as roughly a light patrol craft, so a raider doctrine goes for the lightest hull.</td></tr>
-<tr id="n-16" data-grade="E"><th scope="row">Targeting doctrine of each faction&#x27;s ships</th><td class="val">Earth &lt;function _weightthreat at 0x000002345CECE350&gt;, HUNTS YOUR GUNS, TERRAN FIRE CONTROL: they shoot whatever is shooting hardest., Mars &lt;function _weightcripple at 0x000002345CECE400&gt;, PRESSES CRIPPLES, OLYMPUS DOCTRINE: they press whatever is already bleeding., The Outer Guild &lt;function _weightspread at 0x000002345CECE4B0&gt;, SPREADS FIRE, LONGHAUL SATURATION: they keep your whole formation under fire rather than concentrating., The Unclaimed &lt;function _weightsoft at 0x000002345CECE560&gt;, Takes the soft target, RAIDERS: they want an easy kill, not a duel | they go for your lightest hull., Bounty Hunters &lt;function _weightflagship at 0x000002345CECE610&gt;, COMING FOR YOU, BOUNTY HUNTERS: they are paid for you specifically, and will largely ignore your wing. <span class="unit">rules</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Chosen by the game: Earth hunts the hardest shooter, Mars presses the cripples, the Guild spreads fire and raiders take the soft target. Which hull an enemy shoots was a coin flip before.</td></tr>
+<tr id="n-16" data-grade="E"><th scope="row">Targeting doctrine of each faction&#x27;s ships</th><td class="val">Earth weightthreat, HUNTS YOUR GUNS, TERRAN FIRE CONTROL: they shoot whatever is shooting hardest., Mars weightcripple, PRESSES CRIPPLES, OLYMPUS DOCTRINE: they press whatever is already bleeding., The Outer Guild weightspread, SPREADS FIRE, LONGHAUL SATURATION: they keep your whole formation under fire rather than concentrating., The Unclaimed weightsoft, Takes the soft target, RAIDERS: they want an easy kill, not a duel | they go for your lightest hull., Bounty Hunters weightflagship, COMING FOR YOU, BOUNTY HUNTERS: they are paid for you specifically, and will largely ignore your wing. <span class="unit">rules</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Chosen by the game: Earth hunts the hardest shooter, Mars presses the cripples, the Guild spreads fire and raiders take the soft target. Which hull an enemy shoots was a coin flip before.</td></tr>
 <tr id="n-17" data-grade="E"><th scope="row">Hit chance gained by each added hull firing on one target</th><td class="val" data-key="4.0">4 <span class="unit">points of hit chance</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Chosen by the game so a pair on one target is worth something and a squadron is decisive; no source gives a bonus for concentrated fire.</td></tr>
 <tr id="n-18" data-grade="E"><th scope="row">Most hit chance concentrated fire can add</th><td class="val" data-key="12.0">12 <span class="unit">points of hit chance</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>The cap on the focus bonus, chosen by the game so a squadron on one contact is decisive and not a rout.</td></tr>
 <tr id="n-19" data-grade="E"><th scope="row">Hull share at which an enemy of no listed hull class breaks off</th><td class="val" data-key="0.25">0.25 <span class="unit">share</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>The fallback for a hull whose class has no entry below, chosen by the game at a quarter of the hull.</td></tr>
@@ -288,7 +307,7 @@ dl.keys dd { margin: .25rem 0 0; }
 <nav aria-label="Other mechanics"><ul class="pager"><li><a href="range-bands-and-the-joust.html" rel="prev"><span class="dir">Previous</span>Range bands and the joust</a></li><li class="next"><a href="wounds-medicine-and-salvage-after-a-fight.html" rel="next"><span class="dir">Next</span>Wounds, medicine and salvage after a fight</a></li></ul></nav>
 </main>
 <footer class="stamp">
-<p>Read from game commit efdee508 (committed 2026-10-18). Pages written 2026-10-18.
+<p>Read from game commit 41a6e662 (committed 2026-10-18). Pages written 2026-10-18.
 The explanations are stand-in text and may change.</p>
 </footer>
 </div>

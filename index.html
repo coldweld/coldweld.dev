@@ -47,6 +47,9 @@
     --screen:    #0E0903;   /* the masthead plate stays dark in both themes */
     --screen-muted: #9a917c; /* label on the plate, 6.3:1 on --screen */
     --lockup-w:  clamp(200px, 56vw, 400px);
+    --sb-text:   #d6cbb6;   /* the site bar, same on the shelf pages */
+    --sb-accent: #FFB040;
+    --sb-rule:   #2a2419;
   }
 
   @media (prefers-color-scheme: light) {
@@ -61,6 +64,9 @@
       --accent-2:  #84520a;
       --muted:     #5c5849;
       --accent-dim:#84520a;
+      --sb-text:   #221e16;
+      --sb-accent: #84520a;
+      --sb-rule:   #C6CBC9;
     }
   }
 
@@ -86,6 +92,17 @@
     max-width: 640px;
     margin: 0 auto;
   }
+
+  /* SITE BAR: the shelf pages carry the same rules and the same links. */
+
+  .sitebar { border-bottom: 1px solid var(--sb-rule); }
+  .sitebar ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0 22px; max-width: none; }
+  .sitebar li { margin: 0; max-width: none; }
+  .sitebar a { display: block; padding: 12px 0 10px; border: 0; border-bottom: 2px solid transparent; font: 500 12px/20px "DM Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace; letter-spacing: .12em; text-transform: uppercase; color: var(--sb-text); text-decoration: none; }
+  .sitebar a:hover { color: var(--sb-accent); }
+  .sitebar a[aria-current] { color: var(--sb-accent); border-bottom-color: var(--sb-accent); }
+  .sitebar a:focus-visible { outline: 2px solid var(--sb-accent); outline-offset: 2px; }
+  h2[id] { scroll-margin-top: 24px; }  /* a bar link lands with room above the heading */
 
   /* MASTHEAD */
 
@@ -227,6 +244,27 @@
   .shots figcaption { margin-top: 8px; font-size: 13px; color: var(--muted); max-width: 62ch; }
   .credit { margin-top: 18px; font-size: 12px; color: var(--muted); }
 
+  /* CAROUSEL: the script below builds it. Without the script the shots stay a list. */
+
+  .carousel { margin: 22px 0 0; }
+  .carousel:focus-visible { outline: 2px solid var(--accent); outline-offset: 6px; }
+  .carousel .shots { display: flex; gap: 0; margin: 0; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; scrollbar-width: none; }
+  .carousel .shots::-webkit-scrollbar { display: none; }
+  .carousel .shots figure { flex: 0 0 100%; min-width: 0; scroll-snap-align: start; scroll-snap-stop: always; }
+  .carousel .bar { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 16px; }
+  .carousel .step { display: inline-grid; place-items: center; width: 44px; height: 44px; padding: 0; background: transparent; color: var(--accent); border: 1px solid var(--rule); cursor: pointer; }
+  .carousel .step svg { width: 18px; height: 18px; }
+  .carousel .step:hover:not([aria-disabled="true"]) { background: var(--panel); border-color: var(--accent); }
+  .carousel .step[aria-disabled="true"] { color: var(--muted); opacity: 0.45; cursor: default; }
+  .carousel .count { margin: 0; font-size: 13px; letter-spacing: 0.08em; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .carousel .thumbs { display: grid; grid-template-columns: repeat(8, 1fr); gap: 8px; margin-top: 14px; }
+  .carousel .thumb { display: block; padding: 0; background: var(--panel); border: 1px solid var(--rule); cursor: pointer; opacity: 0.55; transition: opacity 160ms cubic-bezier(0.22, 1, 0.36, 1); }
+  .carousel .thumb img { display: block; width: 100%; height: auto; }
+  .carousel .thumb:hover { opacity: 0.85; }
+  .carousel .thumb[aria-current="true"] { opacity: 1; border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+  .carousel button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  @media (max-width: 480px) { .carousel .thumbs { grid-template-columns: repeat(4, 1fr); } }
+
   /* ENLARGE */
 
   .zoom { display: block; cursor: zoom-in; }
@@ -241,10 +279,19 @@
 
   @media (prefers-reduced-motion: reduce) {
     .row .go { transition: none; }
+    .carousel .thumb { transition: none; }
   }
 </style>
 </head>
 <body>
+<nav class="sheet sitebar" aria-label="Site"><ul>
+<li><a href="/" aria-current="page">Home</a></li>
+<li><a href="/#game">The Infinite Diaspora</a></li>
+<li><a href="/tid/shelf/">Reference</a></li>
+<li><a href="/#studio">About</a></li>
+<li><a href="/#find">Social</a></li>
+<li><a href="/#contact">Contact</a></li>
+</ul></nav>
 <main class="sheet">
 
   <header class="masthead">
@@ -380,6 +427,90 @@
   <button type="button">Close</button>
 </dialog>
 <script>
+(function () {
+  /* The first look as a carousel: one screen at a time. Swipe is the track's own scroll snap. */
+  var shots = document.querySelector(".shots");
+  if (!shots || !("inert" in HTMLElement.prototype)) return;
+  var figs = Array.prototype.slice.call(shots.querySelectorAll("figure"));
+  var n = figs.length;
+  if (n < 2) return;
+  var still = window.matchMedia("(prefers-reduced-motion: reduce)");
+  function make(tag, cls) { var el = document.createElement(tag); if (cls) el.className = cls; return el; }
+  function arrow(label, path) {
+    var b = make("button", "step");
+    b.type = "button";
+    b.setAttribute("aria-label", label);
+    b.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true"><path d="' + path + '"/></svg>';
+    return b;
+  }
+  var root = make("div", "carousel");
+  root.setAttribute("role", "region");
+  root.setAttribute("aria-roledescription", "carousel");
+  root.setAttribute("aria-label", "Screens from the game");
+  root.tabIndex = 0;
+  shots.parentNode.insertBefore(root, shots);
+  root.appendChild(shots);
+  shots.tabIndex = -1;
+  var bar = make("div", "bar"), prev = arrow("Previous screen", "M15 5 8 12l7 7"), next = arrow("Next screen", "M9 5l7 7-7 7");
+  var count = make("p", "count");
+  count.setAttribute("aria-live", "polite");
+  bar.appendChild(prev); bar.appendChild(count); bar.appendChild(next);
+  root.appendChild(bar);
+  var row = make("div", "thumbs");
+  row.setAttribute("role", "group");
+  row.setAttribute("aria-label", "Choose a screen");
+  var thumbs = figs.map(function (fig, i) {
+    var t = make("button", "thumb"), img = make("img"), src = fig.querySelector("img");
+    t.type = "button";
+    t.setAttribute("aria-label", "Screen " + (i + 1) + " of " + n);
+    img.src = src.getAttribute("src");
+    img.alt = "";
+    img.width = 160; img.height = 90;
+    t.appendChild(img);
+    t.addEventListener("click", function () { go(i); });
+    row.appendChild(t);
+    return t;
+  });
+  root.appendChild(row);
+
+  var index = 0, pending = null, timer = 0;
+  function show(i) {
+    index = i;
+    figs.forEach(function (f, k) { f.inert = k !== i; });
+    thumbs.forEach(function (t, k) { t.setAttribute("aria-current", k === i ? "true" : "false"); });
+    count.textContent = (i + 1) + " of " + n;
+    prev.setAttribute("aria-disabled", String(i === 0));
+    next.setAttribute("aria-disabled", String(i === n - 1));
+  }
+  function go(i) {
+    i = Math.max(0, Math.min(n - 1, i));
+    if (i === index) return;
+    pending = i;
+    clearTimeout(timer);
+    timer = setTimeout(function () {
+      pending = null;
+      var left = index * shots.clientWidth;
+      if (Math.abs(shots.scrollLeft - left) > 1) shots.scrollLeft = left;
+    }, 900);
+    shots.scrollTo({ left: i * shots.clientWidth, behavior: still.matches ? "auto" : "smooth" });
+    show(i);
+  }
+  shots.addEventListener("scroll", function () {
+    var i = Math.round(shots.scrollLeft / shots.clientWidth);
+    if (pending !== null) { if (i === pending) pending = null; return; }
+    if (i !== index) show(i);
+  }, { passive: true });
+  prev.addEventListener("click", function () { go(index - 1); });
+  next.addEventListener("click", function () { go(index + 1); });
+  root.addEventListener("keydown", function (e) {
+    var to = { ArrowLeft: index - 1, ArrowRight: index + 1, Home: 0, End: n - 1 }[e.key];
+    if (to === undefined || e.altKey || e.ctrlKey || e.metaKey) return;
+    e.preventDefault();
+    go(to);
+  });
+  window.addEventListener("resize", function () { shots.scrollLeft = index * shots.clientWidth; });
+  show(0);
+})();
 (function () {
   var d = document.getElementById("viewer");
   if (!d || typeof d.showModal !== "function") return;

@@ -31,6 +31,7 @@ a:hover { text-decoration-thickness: 2px; }
 .top { padding: 2rem 0 1rem; border-bottom: 1px solid var(--rule); }
 .brand { margin: 0 0 .75rem; font-size: .8rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
 nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .25rem 1.5rem; }
+nav li + li { margin-top: 0; }
 nav a { display: inline-block; padding: .45rem 0; }
 nav a[aria-current] { color: var(--text); text-decoration: none; border-bottom: 2px solid var(--accent); }
 h1 { font-size: clamp(1.6rem, 4.5vw, 2.25rem); line-height: 1.2; margin: 2.25rem 0 1rem; font-weight: 500; letter-spacing: -.01em; text-wrap: balance; }
@@ -138,11 +139,29 @@ dl.keys dd { margin: .25rem 0 0; }
 }
 @media (prefers-reduced-motion: reduce) { details.section > summary::before { transition: none; } }
 @media print { .skip, .tools, .openall, .empty { display: none; } details.section > summary::before { display: none; } }
+
+:root { --sb-text: #221e16; --sb-accent: #84520a; --sb-rule: #C6CBC9; }
+@media (prefers-color-scheme: dark) { :root { --sb-text: #d6cbb6; --sb-accent: #FFB040; --sb-rule: #2a2419; } }
+.sitebar { border-bottom: 1px solid var(--sb-rule); }
+.sitebar ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0 22px; max-width: none; }
+.sitebar li { margin: 0; max-width: none; }
+.sitebar a { display: block; padding: 12px 0 10px; border: 0; border-bottom: 2px solid transparent; font: 500 12px/20px "DM Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace; letter-spacing: .12em; text-transform: uppercase; color: var(--sb-text); text-decoration: none; }
+.sitebar a:hover { color: var(--sb-accent); }
+.sitebar a[aria-current] { color: var(--sb-accent); border-bottom-color: var(--sb-accent); }
+.sitebar a:focus-visible { outline: 2px solid var(--sb-accent); outline-offset: 2px; }
 </style>
 </head>
 <body>
 <a class="skip" href="#main">Skip to the content</a>
 <div class="wrap">
+<nav class="sitebar" aria-label="Site"><ul>
+<li><a href="/">Home</a></li>
+<li><a href="/#game">The Infinite Diaspora</a></li>
+<li><a href="/tid/shelf/" aria-current="true">Reference</a></li>
+<li><a href="/#studio">About</a></li>
+<li><a href="/#find">Social</a></li>
+<li><a href="/#contact">Contact</a></li>
+</ul></nav>
 <header class="top">
 <p class="brand"><a href="https://coldweld.dev/">Coldweld</a> / The Infinite Diaspora / Reference shelf</p>
 <nav aria-label="Reference shelf"><ul>
@@ -185,7 +204,7 @@ dl.keys dd { margin: .25rem 0 0; }
 <tr id="n-4" data-grade="E"><th scope="row">Sleek hull slopes by face</th><td class="val" data-key="30.0">FORE 30, PORT 10, STARBOARD 10, UPPER 10, LOWER 10, AFT 10 <span class="unit">degrees</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/spacewardefense.php">Atomic Rockets, spacewardefense</a>, Section 10: General Armor Tactics, sloped armor</td><td>Chosen: a sleek hull is wedged with the steepest slope at the bow. The mirror advises long, thin nosecones for warships and gives no angle for each face. The sources are silent on this figure.</td></tr>
 <tr id="n-5" data-grade="E"><th scope="row">Square hull slopes by face</th><td class="val" data-key="0.0">FORE 0, PORT 0, STARBOARD 0, UPPER 0, LOWER 0, AFT 0 <span class="unit">degrees</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><a href="https://www.projectrho.com/public_html/rocket/spacewardefense.php">Atomic Rockets, spacewardefense</a>, Section 10: General Armor Tactics, sloped armor</td><td>Zero slope on every face: a flat-faced hull. A sloped plate reads thicker by the secant of its angle (mirror, General Armor Tactics), and a slope of zero adds nothing.</td></tr>
 <tr id="n-6" data-grade="E"><th scope="row">Reactor armor slot size by size class</th><td class="val">LIGHT CRAFT light, MEDIUM CRAFT standard, HEAVY CRAFT heavy <span class="unit">slot size by class</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Every hull carries one reactor armor slot, sized by its class. The plate ratings (35, 80 and 115) are authored.</td></tr>
-<tr id="n-7" data-grade="E"><th scope="row">Hull roles that are built with reactor armor fitted</th><td class="val">frozenset({&#x27;CARRIER&#x27;, &#x27;DESTROYER&#x27;, &#x27;CRUISER&#x27;, &#x27;COMBAT&#x27;, &#x27;FLEET CARRIER&#x27;, &#x27;TROOP TRANSPORT&#x27;, &#x27;DRONE CARRIER&#x27;}) <span class="unit">hull roles</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>A navy or pirate warship comes with the plate. A yard hull comes bare, as its guns do.</td></tr>
+<tr id="n-7" data-grade="E"><th scope="row">Hull roles that are built with reactor armor fitted</th><td class="val">CARRIER, COMBAT, CRUISER, DESTROYER, DRONE CARRIER, FLEET CARRIER, TROOP TRANSPORT <span class="unit">hull roles</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>A navy or pirate warship comes with the plate. A yard hull comes bare, as its guns do.</td></tr>
 <tr id="n-8" data-grade="E"><th scope="row">Service years behind a hull before the captain</th><td class="val" data-key="200.0">200 <span class="unit">years</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td>Design notes: setting-canon, Timeline, 2076 to 2276</td><td>No captain buys a new hull, because a shipbuilding plant's output goes to whoever needs tonnage that does not yet exist. The span is the two centuries of shipbuilding iteration that canon gives a hull.</td></tr>
 <tr id="n-9" data-grade="E"><th scope="row">The year the game begins</th><td class="val" data-key="2500.0">2,500 <span class="unit">year</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td>Design notes: setting-canon, Timeline, 2276 to 2500</td><td>Canon: the game begins on 1 January 2500, after 224 years in which the plants built the same drawing.</td></tr>
 <tr id="n-10" data-grade="E"><th scope="row">Cargo the locker holds</th><td class="val" data-key="5.0">5 <span class="unit">tonnes</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>The locker is a room ashore with a bed, a shelf and a kitchenette, and not a hull. Chosen so that a captain who sells up keeps an object that holds some cargo and cannot travel.</td></tr>
@@ -233,7 +252,7 @@ dl.keys dd { margin: .25rem 0 0; }
 <nav aria-label="Other mechanics"><ul class="pager"><li><a href="production-plant-condition.html" rel="prev"><span class="dir">Previous</span>Production plant condition</a></li><li class="next"><a href="ship-vitals-and-fight-penalties.html" rel="next"><span class="dir">Next</span>Ship vitals and fight penalties</a></li></ul></nav>
 </main>
 <footer class="stamp">
-<p>Read from game commit efdee508 (committed 2026-10-18). Pages written 2026-10-18.
+<p>Read from game commit 41a6e662 (committed 2026-10-18). Pages written 2026-10-18.
 The explanations are stand-in text and may change.</p>
 </footer>
 </div>

@@ -31,6 +31,7 @@ a:hover { text-decoration-thickness: 2px; }
 .top { padding: 2rem 0 1rem; border-bottom: 1px solid var(--rule); }
 .brand { margin: 0 0 .75rem; font-size: .8rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
 nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .25rem 1.5rem; }
+nav li + li { margin-top: 0; }
 nav a { display: inline-block; padding: .45rem 0; }
 nav a[aria-current] { color: var(--text); text-decoration: none; border-bottom: 2px solid var(--accent); }
 h1 { font-size: clamp(1.6rem, 4.5vw, 2.25rem); line-height: 1.2; margin: 2.25rem 0 1rem; font-weight: 500; letter-spacing: -.01em; text-wrap: balance; }
@@ -138,11 +139,29 @@ dl.keys dd { margin: .25rem 0 0; }
 }
 @media (prefers-reduced-motion: reduce) { details.section > summary::before { transition: none; } }
 @media print { .skip, .tools, .openall, .empty { display: none; } details.section > summary::before { display: none; } }
+
+:root { --sb-text: #221e16; --sb-accent: #84520a; --sb-rule: #C6CBC9; }
+@media (prefers-color-scheme: dark) { :root { --sb-text: #d6cbb6; --sb-accent: #FFB040; --sb-rule: #2a2419; } }
+.sitebar { border-bottom: 1px solid var(--sb-rule); }
+.sitebar ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0 22px; max-width: none; }
+.sitebar li { margin: 0; max-width: none; }
+.sitebar a { display: block; padding: 12px 0 10px; border: 0; border-bottom: 2px solid transparent; font: 500 12px/20px "DM Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace; letter-spacing: .12em; text-transform: uppercase; color: var(--sb-text); text-decoration: none; }
+.sitebar a:hover { color: var(--sb-accent); }
+.sitebar a[aria-current] { color: var(--sb-accent); border-bottom-color: var(--sb-accent); }
+.sitebar a:focus-visible { outline: 2px solid var(--sb-accent); outline-offset: 2px; }
 </style>
 </head>
 <body>
 <a class="skip" href="#main">Skip to the content</a>
 <div class="wrap">
+<nav class="sitebar" aria-label="Site"><ul>
+<li><a href="/">Home</a></li>
+<li><a href="/#game">The Infinite Diaspora</a></li>
+<li><a href="/tid/shelf/" aria-current="true">Reference</a></li>
+<li><a href="/#studio">About</a></li>
+<li><a href="/#find">Social</a></li>
+<li><a href="/#contact">Contact</a></li>
+</ul></nav>
 <header class="top">
 <p class="brand"><a href="https://coldweld.dev/">Coldweld</a> / The Infinite Diaspora / Reference shelf</p>
 <nav aria-label="Reference shelf"><ul>
@@ -185,7 +204,7 @@ dl.keys dd { margin: .25rem 0 0; }
 <tr id="n-4" data-grade="E"><th scope="row">Lowest chance that a contact is a bounty hunter posse, at the WANTED floor</th><td class="val" data-key="25.0">25 <span class="unit">percent</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Chosen so that the chance scales from this value at the WANTED floor to the maximum at HIGH ALERT.</td></tr>
 <tr id="n-5" data-grade="E"><th scope="row">Highest chance that a contact is a bounty hunter posse, at HIGH ALERT</th><td class="val" data-key="60.0">60 <span class="unit">percent</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>The top of the scale described for the minimum.</td></tr>
 <tr id="n-6" data-grade="E"><th scope="row">Most points a full hold adds to the travel contact roll</th><td class="val" data-key="20.0">20 <span class="unit">percent points</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Chosen so that a full hold draws the lane: one point per step of cargo value, up to this cap.</td></tr>
-<tr id="n-7" data-grade="E"><th scope="row">Which events can happen in which phase of a leg</th><td class="val">&lt;function handledistresscall at 0x000002345D00C1A0&gt; departure, cruise, arrival, local, &lt;function handleequipmentmalfunction at 0x000002345D00C9E0&gt; departure, cruise, arrival, local, &lt;function handlederelict at 0x000002345D00C880&gt; departure, arrival, local, &lt;function handledebrisfield at 0x000002345D00C930&gt; departure, arrival, local, &lt;function handletradevessel at 0x000002345D00CBF0&gt; departure, arrival, local, &lt;function handlecustomspatrol at 0x000002345D00CE00&gt; arrival, local <span class="unit">phases by event</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>At cruise the ship moves at hundreds of km/s, so nothing comes alongside, boards or flags it down: only a signal from afar or a fault from inside can reach it. Customs waits at the far end. The phases are authored from that reasoning.</td></tr>
+<tr id="n-7" data-grade="E"><th scope="row">Which events can happen in which phase of a leg</th><td class="val">handledistresscall departure, cruise, arrival, local, handleequipmentmalfunction departure, cruise, arrival, local, handlederelict departure, arrival, local, handledebrisfield departure, arrival, local, handletradevessel departure, arrival, local, handlecustomspatrol arrival, local <span class="unit">phases by event</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>At cruise the ship moves at hundreds of km/s, so nothing comes alongside, boards or flags it down: only a signal from afar or a fault from inside can reach it. Customs waits at the far end. The phases are authored from that reasoning.</td></tr>
 </tbody></table></div>
 </div>
 </details>
@@ -229,7 +248,7 @@ dl.keys dd { margin: .25rem 0 0; }
 <nav aria-label="Other mechanics"><ul class="pager"><li><a href="atmospheric-entry-and-the-descent-corridor.html" rel="prev"><span class="dir">Previous</span>Atmospheric entry and the descent corridor</a></li><li class="next"><a href="records-bail-and-inspection.html" rel="next"><span class="dir">Next</span>Records, bail and inspection</a></li></ul></nav>
 </main>
 <footer class="stamp">
-<p>Read from game commit efdee508 (committed 2026-10-18). Pages written 2026-10-18.
+<p>Read from game commit 41a6e662 (committed 2026-10-18). Pages written 2026-10-18.
 The explanations are stand-in text and may change.</p>
 </footer>
 </div>
