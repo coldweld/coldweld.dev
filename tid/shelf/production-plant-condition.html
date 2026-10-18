@@ -138,11 +138,29 @@ dl.keys dd { margin: .25rem 0 0; }
 }
 @media (prefers-reduced-motion: reduce) { details.section > summary::before { transition: none; } }
 @media print { .skip, .tools, .openall, .empty { display: none; } details.section > summary::before { display: none; } }
+
+:root { --sb-text: #221e16; --sb-accent: #84520a; --sb-rule: #C6CBC9; }
+@media (prefers-color-scheme: dark) { :root { --sb-text: #d6cbb6; --sb-accent: #FFB040; --sb-rule: #2a2419; } }
+.sitebar { border-bottom: 1px solid var(--sb-rule); }
+.sitebar ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0 22px; max-width: none; }
+.sitebar li { margin: 0; max-width: none; }
+.sitebar a { display: block; padding: 12px 0 10px; border: 0; border-bottom: 2px solid transparent; font: 500 12px/20px "DM Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace; letter-spacing: .12em; text-transform: uppercase; color: var(--sb-text); text-decoration: none; }
+.sitebar a:hover { color: var(--sb-accent); }
+.sitebar a[aria-current] { color: var(--sb-accent); border-bottom-color: var(--sb-accent); }
+.sitebar a:focus-visible { outline: 2px solid var(--sb-accent); outline-offset: 2px; }
 </style>
 </head>
 <body>
 <a class="skip" href="#main">Skip to the content</a>
 <div class="wrap">
+<nav class="sitebar" aria-label="Site"><ul>
+<li><a href="/">Home</a></li>
+<li><a href="/#game">The Infinite Diaspora</a></li>
+<li><a href="/tid/shelf/" aria-current="true">Reference</a></li>
+<li><a href="/#studio">About</a></li>
+<li><a href="/#find">Social</a></li>
+<li><a href="/#contact">Contact</a></li>
+</ul></nav>
 <header class="top">
 <p class="brand"><a href="https://coldweld.dev/">Coldweld</a> / The Infinite Diaspora / Reference shelf</p>
 <nav aria-label="Reference shelf"><ul>
@@ -229,7 +247,7 @@ dl.keys dd { margin: .25rem 0 0; }
 <nav aria-label="Other mechanics"><ul class="pager"><li><a href="records-bail-and-inspection.html" rel="prev"><span class="dir">Previous</span>Records, bail and inspection</a></li><li class="next"><a href="hull-classes-sizes-and-slots.html" rel="next"><span class="dir">Next</span>Hull classes, sizes and slots</a></li></ul></nav>
 </main>
 <footer class="stamp">
-<p>Read from game commit efdee508 (committed 2026-10-18). Pages written 2026-10-18.
+<p>Read from game commit 85775d41 (committed 2026-10-18). Pages written 2026-10-18.
 The explanations are stand-in text and may change.</p>
 </footer>
 </div>
