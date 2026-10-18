@@ -31,6 +31,7 @@ a:hover { text-decoration-thickness: 2px; }
 .top { padding: 2rem 0 1rem; border-bottom: 1px solid var(--rule); }
 .brand { margin: 0 0 .75rem; font-size: .8rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
 nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .25rem 1.5rem; }
+nav li + li { margin-top: 0; }
 nav a { display: inline-block; padding: .45rem 0; }
 nav a[aria-current] { color: var(--text); text-decoration: none; border-bottom: 2px solid var(--accent); }
 h1 { font-size: clamp(1.6rem, 4.5vw, 2.25rem); line-height: 1.2; margin: 2.25rem 0 1rem; font-weight: 500; letter-spacing: -.01em; text-wrap: balance; }
@@ -203,7 +204,7 @@ dl.keys dd { margin: .25rem 0 0; }
 <tr id="n-4" data-grade="E"><th scope="row">Lowest chance that a contact is a bounty hunter posse, at the WANTED floor</th><td class="val" data-key="25.0">25 <span class="unit">percent</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Chosen so that the chance scales from this value at the WANTED floor to the maximum at HIGH ALERT.</td></tr>
 <tr id="n-5" data-grade="E"><th scope="row">Highest chance that a contact is a bounty hunter posse, at HIGH ALERT</th><td class="val" data-key="60.0">60 <span class="unit">percent</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>The top of the scale described for the minimum.</td></tr>
 <tr id="n-6" data-grade="E"><th scope="row">Most points a full hold adds to the travel contact roll</th><td class="val" data-key="20.0">20 <span class="unit">percent points</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>Chosen so that a full hold draws the lane: one point per step of cargo value, up to this cap.</td></tr>
-<tr id="n-7" data-grade="E"><th scope="row">Which events can happen in which phase of a leg</th><td class="val">&lt;function handledistresscall at 0x000001E67549BED0&gt; departure, cruise, arrival, local, &lt;function handleequipmentmalfunction at 0x000001E6754287D0&gt; departure, cruise, arrival, local, &lt;function handlederelict at 0x000001E675428670&gt; departure, arrival, local, &lt;function handledebrisfield at 0x000001E675428720&gt; departure, arrival, local, &lt;function handletradevessel at 0x000001E6754289E0&gt; departure, arrival, local, &lt;function handlecustomspatrol at 0x000001E675428BF0&gt; arrival, local <span class="unit">phases by event</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>At cruise the ship moves at hundreds of km/s, so nothing comes alongside, boards or flags it down: only a signal from afar or a fault from inside can reach it. Customs waits at the far end. The phases are authored from that reasoning.</td></tr>
+<tr id="n-7" data-grade="E"><th scope="row">Which events can happen in which phase of a leg</th><td class="val">handledistresscall departure, cruise, arrival, local, handleequipmentmalfunction departure, cruise, arrival, local, handlederelict departure, arrival, local, handledebrisfield departure, arrival, local, handletradevessel departure, arrival, local, handlecustomspatrol arrival, local <span class="unit">phases by event</span></td><td data-key="E"><span class="gradeitem"><span class="grade g-e">E</span>Authored</span></td><td><span class="nosource">No source recorded</span></td><td>At cruise the ship moves at hundreds of km/s, so nothing comes alongside, boards or flags it down: only a signal from afar or a fault from inside can reach it. Customs waits at the far end. The phases are authored from that reasoning.</td></tr>
 </tbody></table></div>
 </div>
 </details>
@@ -247,7 +248,7 @@ dl.keys dd { margin: .25rem 0 0; }
 <nav aria-label="Other mechanics"><ul class="pager"><li><a href="atmospheric-entry-and-the-descent-corridor.html" rel="prev"><span class="dir">Previous</span>Atmospheric entry and the descent corridor</a></li><li class="next"><a href="records-bail-and-inspection.html" rel="next"><span class="dir">Next</span>Records, bail and inspection</a></li></ul></nav>
 </main>
 <footer class="stamp">
-<p>Read from game commit 85775d41 (committed 2026-10-18). Pages written 2026-10-18.
+<p>Read from game commit 41a6e662 (committed 2026-10-18). Pages written 2026-10-18.
 The explanations are stand-in text and may change.</p>
 </footer>
 </div>
