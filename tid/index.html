@@ -85,11 +85,11 @@
     font-weight: 400;
     font-size: 16px;
     line-height: 1.65;
-    padding: 0 24px 80px;
+    padding: 0 16px 80px;
   }
 
   .sheet {
-    max-width: 640px;
+    max-width: 72rem;
     margin: 0 auto;
   }
 
@@ -154,7 +154,22 @@
     font-size: 14px;
   }
   .facts dt { color: var(--muted); }
-  .facts dd { margin: 0; color: var(--text); }
+  .facts dd { margin: 0; color: var(--text); max-width: 62ch; }
+  @media (max-width: 480px) { section[aria-labelledby="bar"] .facts { grid-template-columns: 1fr; gap: 2px 0; } section[aria-labelledby="bar"] .facts dd { margin-bottom: 12px; } }
+
+  /* CONTACT */
+
+  .contact-link {
+    display: inline-block;
+    padding: 10px 0;
+    color: var(--accent);
+    text-decoration: underline;
+    text-decoration-color: var(--accent-dim);
+    text-underline-offset: 5px;
+  }
+  .contact-link:hover,
+  .contact-link:focus-visible { text-decoration-color: var(--accent); }
+  .contact-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 
   /* COLOPHON */
 
@@ -171,7 +186,7 @@
 
   /* FIRST LOOK */
 
-  .shots { display: grid; gap: 28px; margin: 22px 0 0; }
+  .shots { display: grid; gap: 28px; margin: 22px 0 0; max-width: 880px; }
   .shots figure { margin: 0; }
   .shots img { display: block; width: 100%; height: auto; border: 1px solid var(--rule); }
   .shots figcaption { margin-top: 8px; font-size: 13px; color: var(--muted); max-width: 62ch; }
@@ -179,7 +194,7 @@
 
   /* CAROUSEL: the script below builds it. Without the script the shots stay a list. */
 
-  .carousel { margin: 22px 0 0; }
+  .carousel { margin: 22px 0 0; max-width: 880px; }
   .carousel:focus-visible { outline: 2px solid var(--accent); outline-offset: 6px; }
   .carousel .shots { display: flex; gap: 0; margin: 0; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; scrollbar-width: none; }
   .carousel .shots::-webkit-scrollbar { display: none; }
@@ -298,6 +313,11 @@
     <dt>Fun:</dt><dd> The most important design aspect of The Infinite Diaspora; fun is a player decision with a cost on both sides, and the player sees the success odds of their decision before they choose.</dd>
   </dl>
 </section>
+
+  <section class="block" aria-labelledby="contact">
+    <h2 id="contact">Contact</h2>
+    <a class="contact-link" href="mailto:hello@coldweld.dev">hello@coldweld.dev</a>
+  </section>
 
 </main>
 
