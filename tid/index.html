@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark light">
+<title>The Infinite Diaspora | coldweld</title>
+<link rel="canonical" href="https://coldweld.dev/tid/">
+<meta name="description" content="The Infinite Diaspora is a text-based hard science fiction game by coldweld, set in our solar system in the year 2500. In development.">
+
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#FFB040">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#0E0903" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#EEF0EF" media="(prefers-color-scheme: light)">
+
+<meta property="og:title" content="The Infinite Diaspora">
+<meta property="og:description" content="A text-based hard science fiction game by coldweld. In development.">
+<meta property="og:url" content="https://coldweld.dev/tid/">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://coldweld.dev/coldweld-og-1200x630.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Coldweld">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  /* Dark is the default: amber on near-black, like the lockup. */
+  :root {
+    color-scheme: dark light;
+
+    --bg:        #0E0903;
+    --panel:     #16110a;
+    --rule:      #2a2419;
+    --text:      #d6cbb6;
+    --strong:    #f1e8d4;
+    --accent:    #FFB040;
+    --accent-2:  #FFD680;
+    --muted:     #9a917c;   /* 6.3:1 on --bg */
+    --accent-dim:#a8801c;   /* 5.4:1 on --bg */
+    --screen:    #0E0903;   /* the masthead plate stays dark in both themes */
+    --screen-muted: #9a917c; /* label on the plate, 6.3:1 on --screen */
+    --lockup-w:  clamp(200px, 56vw, 400px);
+    --sb-text:   #d6cbb6;   /* the site bar, same on the shelf pages */
+    --sb-accent: #FFB040;
+    --sb-rule:   #2a2419;
+  }
+
+  @media (prefers-color-scheme: light) {
+    :root {
+      /* Cold steel, not cream: the weld is the warm part. */
+      --bg:        #EEF0EF;
+      --panel:     #E0E3E2;
+      --rule:      #C6CBC9;
+      --text:      #221e16;
+      --strong:    #100d08;
+      --accent:    #84520a;
+      --accent-2:  #84520a;
+      --muted:     #5c5849;
+      --accent-dim:#84520a;
+      --sb-text:   #221e16;
+      --sb-accent: #84520a;
+      --sb-rule:   #C6CBC9;
+    }
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html { -webkit-text-size-adjust: 100%; }
+
+  /* Text on the accent fill: --bg is 10.9:1 in dark and 5.7:1 in light */
+  ::selection { background: var(--accent); color: var(--bg); }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: "DM Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.65;
+    padding: 0 24px 80px;
+  }
+
+  .sheet {
+    max-width: 640px;
+    margin: 0 auto;
+  }
+
+  /* SITE BAR: the shelf pages carry the same rules and the same links. */
+
+  .sitebar { border-bottom: 1px solid var(--sb-rule); }
+  .sitebar ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0 22px; max-width: none; }
+  .sitebar li { margin: 0; max-width: none; }
+  .sitebar a { display: block; padding: 12px 0 10px; border: 0; border-bottom: 2px solid transparent; font: 500 12px/20px "DM Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace; letter-spacing: .12em; text-transform: uppercase; color: var(--sb-text); text-decoration: none; }
+  .sitebar a:hover { color: var(--sb-accent); }
+  .sitebar a[aria-current] { color: var(--sb-accent); border-bottom-color: var(--sb-accent); }
+  .sitebar a:focus-visible { outline: 2px solid var(--sb-accent); outline-offset: 2px; }
+  /* Reference is the top level; the games sit inside it, on a second row. */
+  .sitebar li.group { display: contents; }
+  .sitebar li.group > ul { order: 1; flex: 0 0 100%; }
+  .sitebar li.group > ul a { color: var(--muted); }
+  .sitebar li.group > ul a:hover, .sitebar li.group > ul a[aria-current] { color: var(--sb-accent); }
+  h2[id] { scroll-margin-top: 24px; }  /* a bar link lands with room above the heading */
+
+  /* BLOCKS */
+
+  .block { padding: 40px 0; border-bottom: 1px solid var(--rule); }
+
+  /* Section labels are quiet, so the game title is the one big thing. */
+  h2 {
+    margin: 0 0 14px;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    line-height: 1.4;
+    color: var(--accent);
+  }
+
+  h1.title {
+    margin: 0;
+    font-weight: 500;
+    font-size: clamp(26px, 7.4vw, 40px);
+    letter-spacing: 0.02em;
+    line-height: 1.15;
+    color: var(--strong);
+  }
+
+  .by {
+    margin: 12px 0 22px;
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  p { margin: 0; max-width: 62ch; }
+  p + p { margin-top: 14px; }
+
+  /* FACTS */
+
+  .facts {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: 6px 22px;
+    margin: 22px 0 0;
+    font-size: 14px;
+  }
+  .facts dt { color: var(--muted); }
+  .facts dd { margin: 0; color: var(--text); }
+
+  /* COLOPHON */
+
+  .colophon {
+    padding-top: 24px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 20px;
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* FIRST LOOK */
+
+  .shots { display: grid; gap: 28px; margin: 22px 0 0; }
+  .shots figure { margin: 0; }
+  .shots img { display: block; width: 100%; height: auto; border: 1px solid var(--rule); }
+  .shots figcaption { margin-top: 8px; font-size: 13px; color: var(--muted); max-width: 62ch; }
+  .credit { margin-top: 18px; font-size: 12px; color: var(--muted); }
+
+  /* CAROUSEL: the script below builds it. Without the script the shots stay a list. */
+
+  .carousel { margin: 22px 0 0; }
+  .carousel:focus-visible { outline: 2px solid var(--accent); outline-offset: 6px; }
+  .carousel .shots { display: flex; gap: 0; margin: 0; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; scrollbar-width: none; }
+  .carousel .shots::-webkit-scrollbar { display: none; }
+  .carousel .shots figure { flex: 0 0 100%; min-width: 0; scroll-snap-align: start; scroll-snap-stop: always; }
+  .carousel .bar { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 16px; }
+  .carousel .step { display: inline-grid; place-items: center; width: 44px; height: 44px; padding: 0; background: transparent; color: var(--accent); border: 1px solid var(--rule); cursor: pointer; }
+  .carousel .step svg { width: 18px; height: 18px; }
+  .carousel .step:hover:not([aria-disabled="true"]) { background: var(--panel); border-color: var(--accent); }
+  .carousel .step[aria-disabled="true"] { color: var(--muted); opacity: 0.45; cursor: default; }
+  .carousel .count { margin: 0; font-size: 13px; letter-spacing: 0.08em; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .carousel .thumbs { display: grid; grid-template-columns: repeat(8, 1fr); gap: 8px; margin-top: 14px; }
+  .carousel .thumb { display: block; padding: 0; background: var(--panel); border: 1px solid var(--rule); cursor: pointer; opacity: 0.55; transition: opacity 160ms cubic-bezier(0.22, 1, 0.36, 1); }
+  .carousel .thumb img { display: block; width: 100%; height: auto; }
+  .carousel .thumb:hover { opacity: 0.85; }
+  .carousel .thumb[aria-current="true"] { opacity: 1; border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+  .carousel button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  @media (max-width: 480px) { .carousel .thumbs { grid-template-columns: repeat(4, 1fr); } }
+
+  /* ENLARGE */
+
+  .zoom { display: block; cursor: zoom-in; }
+  .zoom:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  #viewer { border: 0; padding: 0; width: 100vw; height: 100vh; max-width: 100vw; max-height: 100vh; background: #000; color: #d6cbb6; }
+  #viewer::backdrop { background: #000; }
+  #viewer .stage { display: grid; grid-template-rows: 1fr auto; width: 100%; height: 100%; }
+  #viewer img { width: 100%; height: 100%; min-height: 0; object-fit: contain; cursor: zoom-out; }
+  #viewer p { margin: 0; padding: 10px 56px 14px 16px; font-size: 13px; max-width: none; }
+  #viewer button { position: fixed; top: 10px; right: 10px; min-width: 44px; min-height: 44px; font: inherit; font-size: 13px; background: #16110a; color: #ffd680; border: 1px solid #5a4a1a; cursor: pointer; }
+  #viewer button:focus-visible { outline: 2px solid #ffb040; outline-offset: 2px; }
+
+  @media (prefers-reduced-motion: reduce) {
+      .carousel .thumb { transition: none; }
+  }
+</style>
+</head>
+<body>
+<nav class="sheet sitebar" aria-label="Site"><ul>
+<li><a href="/">Home</a></li>
+<li class="group"><a href="/tid/shelf/">Reference</a>
+<ul>
+<li><a href="/tid/" aria-current="page">The Infinite Diaspora</a></li>
+<li><a href="/boneandbotany/">Bone &amp; Botany</a></li>
+</ul></li>
+<li><a href="/#studio">About</a></li>
+<li><a href="/#find">Social</a></li>
+<li><a href="/#contact">Contact</a></li>
+</ul></nav>
+<main class="sheet">
+
+  <section class="block" aria-labelledby="game">
+    <h1 class="title" id="game">The Infinite Diaspora</h1>
+    <p class="by">by coldweld</p>
+    <p>The Infinite Diaspora is a text-based, hard science fiction, cassette futurism game set in our very own solar system in the year 2500. You take command of your very own ship and its crew to trade, complete missions, form relationships, and more in a setting that does not care that you exist.
+	</p>
+	<p>Based in realism: Where the game can follow real physics or procedure, it does so without sacrificing player fun. The physics (flight models, ballistics, travel time), the economy (stations generate real goods, which are then consumed), and relationships (named NPCs have a personality, opinion, relationships with one another, etc.) all follow this principle.
+	</p>
+    <dl class="facts">
+      <dt>Status</dt><dd>In development</dd>
+      <dt>Release</dt><dd>Not announced</dd>
+      <dt>Platform</dt><dd>Tested only on Windows</dd>
+      <dt>Price</dt><dd>Not announced</dd>
+    </dl>
+  </section>
+  
+  <section class="block" aria-labelledby="made">
+    <h2 id="made">Artificial Intelligence content disclosure</h2>
+    <p>I use an LLM to generate and modify Python-language code. I design the game systems, mechanics, and its overall visual theme. An LLM drafted the first version of the game's text and I am currently rewriting it by hand in order to form a more cohesive story and setting. Music, sounds, and in-game computer model are sourced from human creators, who are credited in the game. The console picture is built by LLM-written code around a human-made model and will be replaced by a human-made picture.</p>
+  </section>
+
+  <section class="block" aria-labelledby="look">
+    <h2 id="look">A first look</h2>
+    <p>Screens from the game as a player sees them. Click one to enlarge it. The environment around the consoles is a placeholder that will be replaced by a human-made version.</p>
+    <div class="shots">
+      <figure>
+        <a class="zoom" href="/img/large/first-look-bridge.jpg" title="Enlarge" aria-label="Enlarge this screenshot"><img src="/img/first-look-bridge.jpg" width="1600" height="900" loading="lazy" alt="The bridge screen during a fight. The ship's hull, heat and guns, one contact with its range and position, a log line from the sensors officer, and three numbered orders from the Second, each with the cost listed under it."></a>
+        <figcaption>On the bridge, the Second offers three orders and lists what each one costs.</figcaption>
+      </figure>
+      <figure>
+        <a class="zoom" href="/img/large/first-look-hail.jpg" title="Enlarge" aria-label="Enlarge this screenshot"><img src="/img/first-look-hail.jpg" width="1600" height="900" loading="lazy" alt="A hail from a hostile ship. The toll in credits, the odds that they win a fight, the average yard bill after a fight, and four numbered choices."></a>
+        <figcaption>A raider hails you: the toll, the odds and the repair bill are on the screen before you choose.</figcaption>
+      </figure>
+      <figure>
+        <a class="zoom" href="/img/large/first-look-tactical.jpg" title="Enlarge" aria-label="Enlarge this screenshot"><img src="/img/first-look-tactical.jpg" width="1600" height="900" loading="lazy" alt="The left console during a fight, showing a tactical display. A radar ring with the contact marked, a camera view of the target ship, a table of contacts with range and state, and readouts for the target, its guns and the observer."></a>
+        <figcaption>The left console in a fight: the scanner ring, a camera on the target, and the contact table.</figcaption>
+      </figure>
+      <figure>
+        <a class="zoom" href="/img/large/first-look-engineering.jpg" title="Enlarge" aria-label="Enlarge this screenshot"><img src="/img/first-look-engineering.jpg" width="1600" height="900" loading="lazy" alt="The right console during a fight, showing engineering. A table of vitals (heat, drive, reactor, life support, thrust, fins, hull), the standing orders, and the power bank with the draw of each load."></a>
+        <figcaption>The right console in a fight: vitals, orders, and what each system draws from the power bank.</figcaption>
+      </figure>
+      <figure>
+        <a class="zoom" href="/img/large/first-look-map.jpg" title="Enlarge" aria-label="Enlarge this screenshot"><img src="/img/first-look-map.jpg" width="1600" height="900" loading="lazy" alt="A map of the solar system drawn in text. Each body has a number, and the ship's position is marked."></a>
+        <figcaption>The map: type a body's number to go there.</figcaption>
+      </figure>
+      <figure>
+        <a class="zoom" href="/img/large/first-look-destinations.jpg" title="Enlarge" aria-label="Enlarge this screenshot"><img src="/img/first-look-destinations.jpg" width="1600" height="900" loading="lazy" alt="The destination screen at the ship console. A numbered list of the inner system and the Belt, each place marked with a job available or a mission due."></a>
+        <figcaption>Choosing a destination: the inner system and the Belt, with the jobs waiting at each.</figcaption>
+      </figure>
+      <figure>
+        <a class="zoom" href="/img/large/first-look-market.jpg" title="Enlarge" aria-label="Enlarge this screenshot"><img src="/img/first-look-market.jpg" width="1600" height="900" loading="lazy" alt="A market screen at UNASA Anchor Alpha above Earth. A table of consumer goods with buy and sell prices in credits, and a note on the one good the station produces."></a>
+        <figcaption>The market at UNASA Anchor Alpha: buy and sell prices, and what the station makes itself.</figcaption>
+      </figure>
+      <figure>
+        <a class="zoom" href="/img/large/first-look-jobs.jpg" title="Enlarge" aria-label="Enlarge this screenshot"><img src="/img/first-look-jobs.jpg" width="1600" height="900" loading="lazy" alt="A job board screen listing five jobs with who offers each, the pay, the days until it is due, and the hold space it needs."></a>
+        <figcaption>The job board: who is paying, how much, by when, and what each job takes from the hold.</figcaption>
+      </figure>
+    </div>
+    <p class="credit">Console art: renders of "Quadronic 250 - computer that never existed" by AfBu (sketchfab.com/3d-models/quadronic-250-computer-that-never-existed-b945947a2c1d4b18812abe59392f715a), CC BY-SA 4.0. The pictures are changed from the original: the screen is replaced, parts are added, and the plastics are worn. These pictures are shared under the same license, CC BY-SA 4.0 (creativecommons.org/licenses/by-sa/4.0). AfBu does not endorse this game.</p>
+  </section>
+
+<section class="block" aria-labelledby="bar">
+  <h2 id="bar">Four Design Aspects</h2>
+  <dl class="facts">
+    <dt>Feature-complete:</dt><dd> Game features must be thorough. Either the whole feature is implemented, or none of it is.</dd>
+    <dt>Mechanic parity:</dt><dd> I aim to ensure that whatever the player does, an NPC will call the same code to do the same action.</dd>
+    <dt>Realism:</dt><dd> Most in-game numbers are derived from the Atomic Rockets website and real sources, where one exists, in order to ensure an accurate simulation.</dd>
+    <dt>Fun:</dt><dd> The most important design aspect of The Infinite Diaspora; fun is a player decision with a cost on both sides, and the player sees the success odds of their decision before they choose.</dd>
+  </dl>
+</section>
+
+</main>
+
+<footer class="sheet colophon">
+  <span>coldweld.dev</span>
+  <span>&copy; 2026 Coldweld</span>
+</footer>
+<dialog id="viewer" aria-label="Enlarged screenshot">
+  <div class="stage">
+    <img alt="">
+    <p></p>
+  </div>
+  <button type="button">Close</button>
+</dialog>
+<script>
+(function () {
+  /* The first look as a carousel: one screen at a time. Swipe is the track's own scroll snap. */
+  var shots = document.querySelector(".shots");
+  if (!shots || !("inert" in HTMLElement.prototype)) return;
+  var figs = Array.prototype.slice.call(shots.querySelectorAll("figure"));
+  var n = figs.length;
+  if (n < 2) return;
+  var still = window.matchMedia("(prefers-reduced-motion: reduce)");
+  function make(tag, cls) { var el = document.createElement(tag); if (cls) el.className = cls; return el; }
+  function arrow(label, path) {
+    var b = make("button", "step");
+    b.type = "button";
+    b.setAttribute("aria-label", label);
+    b.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true"><path d="' + path + '"/></svg>';
+    return b;
+  }
+  var root = make("div", "carousel");
+  root.setAttribute("role", "region");
+  root.setAttribute("aria-roledescription", "carousel");
+  root.setAttribute("aria-label", "Screens from the game");
+  root.tabIndex = 0;
+  shots.parentNode.insertBefore(root, shots);
+  root.appendChild(shots);
+  shots.tabIndex = -1;
+  var bar = make("div", "bar"), prev = arrow("Previous screen", "M15 5 8 12l7 7"), next = arrow("Next screen", "M9 5l7 7-7 7");
+  var count = make("p", "count");
+  count.setAttribute("aria-live", "polite");
+  bar.appendChild(prev); bar.appendChild(count); bar.appendChild(next);
+  root.appendChild(bar);
+  var row = make("div", "thumbs");
+  row.setAttribute("role", "group");
+  row.setAttribute("aria-label", "Choose a screen");
+  var thumbs = figs.map(function (fig, i) {
+    var t = make("button", "thumb"), img = make("img"), src = fig.querySelector("img");
+    t.type = "button";
+    t.setAttribute("aria-label", "Screen " + (i + 1) + " of " + n);
+    img.src = src.getAttribute("src");
+    img.alt = "";
+    img.width = 160; img.height = 90;
+    t.appendChild(img);
+    t.addEventListener("click", function () { go(i); });
+    row.appendChild(t);
+    return t;
+  });
+  root.appendChild(row);
+
+  var index = 0, pending = null, timer = 0;
+  function show(i) {
+    index = i;
+    figs.forEach(function (f, k) { f.inert = k !== i; });
+    thumbs.forEach(function (t, k) { t.setAttribute("aria-current", k === i ? "true" : "false"); });
+    count.textContent = (i + 1) + " of " + n;
+    prev.setAttribute("aria-disabled", String(i === 0));
+    next.setAttribute("aria-disabled", String(i === n - 1));
+  }
+  function go(i) {
+    i = Math.max(0, Math.min(n - 1, i));
+    if (i === index) return;
+    pending = i;
+    clearTimeout(timer);
+    timer = setTimeout(function () {
+      pending = null;
+      var left = index * shots.clientWidth;
+      if (Math.abs(shots.scrollLeft - left) > 1) shots.scrollLeft = left;
+    }, 900);
+    shots.scrollTo({ left: i * shots.clientWidth, behavior: still.matches ? "auto" : "smooth" });
+    show(i);
+  }
+  shots.addEventListener("scroll", function () {
+    var i = Math.round(shots.scrollLeft / shots.clientWidth);
+    if (pending !== null) { if (i === pending) pending = null; return; }
+    if (i !== index) show(i);
+  }, { passive: true });
+  prev.addEventListener("click", function () { go(index - 1); });
+  next.addEventListener("click", function () { go(index + 1); });
+  root.addEventListener("keydown", function (e) {
+    var to = { ArrowLeft: index - 1, ArrowRight: index + 1, Home: 0, End: n - 1 }[e.key];
+    if (to === undefined || e.altKey || e.ctrlKey || e.metaKey) return;
+    e.preventDefault();
+    go(to);
+  });
+  window.addEventListener("resize", function () { shots.scrollLeft = index * shots.clientWidth; });
+  show(0);
+})();
+(function () {
+  var d = document.getElementById("viewer");
+  if (!d || typeof d.showModal !== "function") return;
+  var img = d.querySelector("img"), cap = d.querySelector("p");
+  document.querySelectorAll("a.zoom").forEach(function (a) {
+    a.addEventListener("click", function (e) {
+      if (e.ctrlKey || e.metaKey || e.shiftKey) return;
+      e.preventDefault();
+      var small = a.querySelector("img"), fc = a.parentNode.querySelector("figcaption");
+      img.src = a.getAttribute("href");
+      img.alt = small ? small.alt : "";
+      cap.textContent = fc ? fc.textContent : "";
+      d.showModal();
+    });
+  });
+  d.addEventListener("click", function () { d.close(); });
+})();
+</script>
+</body>
+</html>
