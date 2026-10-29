@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark light">
+<title>Bone &amp; Botany | coldweld</title>
+<link rel="canonical" href="https://coldweld.dev/boneandbotany/">
+<meta name="description" content="Bone &amp; Botany is a free browser game about real prehistoric life, by coldweld. In development.">
+
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#FFB040">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#0E0903" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#EEF0EF" media="(prefers-color-scheme: light)">
+
+<meta property="og:title" content="Bone &amp; Botany">
+<meta property="og:description" content="A free browser game about real prehistoric life, by coldweld. In development.">
+<meta property="og:url" content="https://coldweld.dev/boneandbotany/">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://coldweld.dev/coldweld-og-1200x630.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Coldweld">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  /* Same tokens as the studio home. Dark is the default. */
+  :root {
+    color-scheme: dark light;
+
+    --bg:        #0E0903;
+    --panel:     #16110a;
+    --rule:      #2a2419;
+    --text:      #d6cbb6;
+    --strong:    #f1e8d4;
+    --accent:    #FFB040;
+    --muted:     #9a917c;
+    --accent-dim:#a8801c;
+    --museum:    #6aa6ff;   /* the game's "running" steel, the one small accent */
+    --sb-text:   #d6cbb6;
+    --sb-accent: #FFB040;
+    --sb-rule:   #2a2419;
+  }
+
+  @media (prefers-color-scheme: light) {
+    :root {
+      --bg:        #EEF0EF;
+      --panel:     #E0E3E2;
+      --rule:      #C6CBC9;
+      --text:      #221e16;
+      --strong:    #100d08;
+      --accent:    #84520a;
+      --muted:     #5c5849;
+      --accent-dim:#84520a;
+      --museum:    #0b57d0;
+      --sb-text:   #221e16;
+      --sb-accent: #84520a;
+      --sb-rule:   #C6CBC9;
+    }
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html { -webkit-text-size-adjust: 100%; }
+
+  ::selection { background: var(--accent); color: var(--bg); }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: "DM Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.65;
+    padding: 0 24px 80px;
+  }
+
+  .sheet { max-width: 640px; margin: 0 auto; }
+
+  /* SITE BAR: the same rules and links as every other page. */
+
+  .sitebar { border-bottom: 1px solid var(--sb-rule); }
+  .sitebar ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0 22px; max-width: none; }
+  .sitebar li { margin: 0; max-width: none; }
+  .sitebar a { display: block; padding: 12px 0 10px; border: 0; border-bottom: 2px solid transparent; font: 500 12px/20px "DM Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace; letter-spacing: .12em; text-transform: uppercase; color: var(--sb-text); text-decoration: none; }
+  .sitebar a:hover { color: var(--sb-accent); }
+  .sitebar a[aria-current] { color: var(--sb-accent); border-bottom-color: var(--sb-accent); }
+  .sitebar a:focus-visible { outline: 2px solid var(--sb-accent); outline-offset: 2px; }
+  /* Reference is the top level; the games sit inside it, on a second row. */
+  .sitebar li.group { display: contents; }
+  .sitebar li.group > ul { order: 1; flex: 0 0 100%; }
+  .sitebar li.group > ul a { color: var(--muted); }
+  .sitebar li.group > ul a:hover, .sitebar li.group > ul a[aria-current] { color: var(--sb-accent); }
+
+  /* BLOCKS */
+
+  .block { padding: 40px 0; border-bottom: 1px solid var(--rule); }
+  .block.first { padding-top: clamp(40px, 10vw, 72px); }
+
+  h1 {
+    margin: 0;
+    font-size: clamp(30px, 9vw, 48px);
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    line-height: 1.15;
+    color: var(--strong);
+  }
+
+  .by {
+    margin: 12px 0 28px;
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  h2 {
+    margin: 0 0 14px;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    line-height: 1.4;
+    color: var(--accent);
+  }
+
+  p { margin: 0; max-width: 62ch; }
+  p + p { margin-top: 14px; }
+
+  .lede { font-size: 19px; line-height: 1.55; color: var(--strong); }
+
+  /* FACTS */
+
+  .facts {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: 6px 22px;
+    margin: 0;
+    font-size: 14px;
+  }
+  .facts dt { color: var(--muted); }
+  .facts dd { margin: 0; color: var(--text); }
+  .facts + p { margin-top: 18px; font-size: 14px; }
+
+  /* The one museum accent: a square before the status, like the game's state marks. */
+  .mark::before {
+    content: "";
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    margin-right: 10px;
+    background: var(--museum);
+    vertical-align: 1px;
+  }
+
+  /* LINKS */
+
+  .contact-link {
+    display: inline-block;
+    padding: 10px 0;
+    color: var(--accent);
+    text-decoration: underline;
+    text-decoration-color: var(--accent-dim);
+    text-underline-offset: 5px;
+  }
+  .contact-link:hover,
+  .contact-link:focus-visible { text-decoration-color: var(--accent); }
+  .contact-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+  .back { border-bottom: 0; padding-bottom: 0; }
+
+  /* COLOPHON */
+
+  .colophon {
+    padding-top: 24px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 20px;
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+</style>
+</head>
+<body>
+<nav class="sheet sitebar" aria-label="Site"><ul>
+<li><a href="/">Home</a></li>
+<li class="group"><a href="/tid/shelf/">Reference</a>
+<ul>
+<li><a href="/#game">The Infinite Diaspora</a></li>
+<li><a href="/boneandbotany/" aria-current="page">Bone &amp; Botany</a></li>
+</ul></li>
+<li><a href="/#studio">About</a></li>
+<li><a href="/#find">Social</a></li>
+<li><a href="/#contact">Contact</a></li>
+</ul></nav>
+<main class="sheet">
+
+  <section class="block first" aria-labelledby="game">
+    <h1 id="game">Bone &amp; Botany</h1>
+    <p class="by">by coldweld</p>
+    <p class="lede">A lab researcher digs real fossils, clones the animals into a park, and the clones meet in simulated hunts.</p>
+  </section>
+
+  <section class="block" aria-labelledby="status">
+    <h2 id="status">Status</h2>
+    <dl class="facts">
+      <dt>Status</dt><dd class="mark">In development</dd>
+      <dt>Playable</dt><dd>Not yet</dd>
+      <dt>Platform</dt><dd>Browser, on phone and desktop</dd>
+      <dt>Price</dt><dd>Free</dd>
+    </dl>
+    <p>The shop sells looks only, never power.</p>
+  </section>
+
+  <section class="block" aria-labelledby="contact">
+    <h2 id="contact">Contact</h2>
+    <a class="contact-link" href="mailto:hello@coldweld.dev">hello@coldweld.dev</a>
+  </section>
+
+  <section class="block back" aria-label="Studio">
+    <a class="contact-link" href="/">Studio home</a>
+  </section>
+
+</main>
+
+<footer class="sheet colophon">
+  <span>coldweld.dev</span>
+  <span>&copy; 2026 Coldweld</span>
+</footer>
+</body>
+</html>

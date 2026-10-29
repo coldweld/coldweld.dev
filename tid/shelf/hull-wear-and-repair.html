@@ -152,6 +152,11 @@ dl.keys dd { margin: .25rem 0 0; }
 .sitebar a:hover { color: var(--sb-accent); }
 .sitebar a[aria-current] { color: var(--sb-accent); border-bottom-color: var(--sb-accent); }
 .sitebar a:focus-visible { outline: 2px solid var(--sb-accent); outline-offset: 2px; }
+/* Reference is the top level; the games sit inside it, on a second row. */
+.sitebar li.group { display: contents; }
+.sitebar li.group > ul { order: 1; flex: 0 0 100%; }
+.sitebar li.group > ul a { color: var(--muted); }
+.sitebar li.group > ul a:hover, .sitebar li.group > ul a[aria-current] { color: var(--sb-accent); }
 </style>
 </head>
 <body>
@@ -159,8 +164,11 @@ dl.keys dd { margin: .25rem 0 0; }
 <div class="wrap">
 <nav class="sitebar" aria-label="Site"><ul>
 <li><a href="/">Home</a></li>
+<li class="group"><a href="/tid/shelf/" aria-current="true">Reference</a>
+<ul>
 <li><a href="/#game">The Infinite Diaspora</a></li>
-<li><a href="/tid/shelf/" aria-current="true">Reference</a></li>
+<li><a href="/boneandbotany/">Bone &amp; Botany</a></li>
+</ul></li>
 <li><a href="/#studio">About</a></li>
 <li><a href="/#find">Social</a></li>
 <li><a href="/#contact">Contact</a></li>
